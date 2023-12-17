@@ -1,1 +1,2 @@
-export const SiteURL = "http://localhost:3000";
+export const SiteURL =
+  "https://stock-info-dkbwnz38x-tltxdmin-gmailcom.vercel.app";
