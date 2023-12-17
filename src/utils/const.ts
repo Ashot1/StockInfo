@@ -1,1 +1,1 @@
-export const SiteURL = "https://stock-info-theta.vercel.app/";
+export const SiteURL = "https://stock-info-theta.vercel.app";
