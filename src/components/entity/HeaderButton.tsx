@@ -15,7 +15,7 @@ export interface IHeaderButton {
 
 const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
   const pathname = usePathname(),
-    baseClass = "opacity-50",
+    baseClass = "opacity-50 dark:opacity-60",
     activeClass = "scale-110";
   return (
     <TransparentButton
@@ -27,7 +27,11 @@ const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
         href={link}
         className={`${pathname.startsWith(link) ? activeClass : baseClass}`}
       >
-        <Image src={icon} alt={text} className={`w-5 500p:w-6 768p:hidden`} />
+        <Image
+          src={icon}
+          alt={text}
+          className={`w-5 500p:w-6 768p:hidden dark:invert`}
+        />
         <p className={"hidden 768p:block"}>{text}</p>
       </Link>
     </TransparentButton>

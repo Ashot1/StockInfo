@@ -7,9 +7,9 @@ export default async function Info() {
 
   const session = await supabase.auth.getSession();
   return (
-    <div>
+    <>
       <p>App</p>
-      <p>{JSON.stringify(session.data.session)}</p>
-    </div>
+      <p className="break-words">{JSON.stringify(session.data.session)}</p>
+    </>
   );
 }

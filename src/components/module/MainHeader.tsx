@@ -23,7 +23,7 @@ export default function MainHeader() {
         grid place-items-center z-20 pointer-events-none"
     >
       <div
-        className="bg-[#656565] bg-opacity-20 backdrop-blur-2xl
+        className="bg-[#656565] dark:bg-white bg-opacity-20 dark:bg-opacity-20 backdrop-blur-2xl
         w-full h-full grid grid-cols-5 rounded-[30px]
         p-5 max-w-[500px] 768p:max-w-[1000px] min-w-[200px] pointer-events-auto
         animate-menuAppearsMobile 768p:animate-menuAppearsPC"
