@@ -15,8 +15,9 @@ export interface IHeaderButton {
 
 const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
   const pathname = usePathname(),
-    baseClass = "opacity-50 dark:opacity-60",
-    activeClass = "scale-110";
+    baseClass = "opacity-40 768p:opacity-60 dark:opacity-60",
+    activeClass =
+      "scale-110 768p:scale-100 bg-neutral-500 bg-opacity-20 dark:bg-opacity-30";
   return (
     <TransparentButton
       dopClass={`${raleway.className} cursor-default 768p:${
@@ -25,12 +26,16 @@ const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
     >
       <Link
         href={link}
-        className={`${pathname.startsWith(link) ? activeClass : baseClass}`}
+        className={`rounded-md p-2
+        hover:bg-neutral-500 hover:bg-opacity-30 dark:hover:bg-opacity-30
+        transition-all duration-200 ${
+          pathname.startsWith(link) ? activeClass : baseClass
+        }`}
       >
         <Image
           src={icon}
           alt={text}
-          className={`w-5 500p:w-6 768p:hidden dark:invert`}
+          className={`w-[1.35rem] 500p:w-6 768p:hidden dark:invert`}
         />
         <p className={"hidden 768p:block"}>{text}</p>
       </Link>

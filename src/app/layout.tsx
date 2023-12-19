@@ -49,6 +49,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={inter.className}>
         <ThemeProvider defaultTheme="system" enableSystem attribute="class">
+          <div id="modal"></div>
           {children}
         </ThemeProvider>
       </body>
