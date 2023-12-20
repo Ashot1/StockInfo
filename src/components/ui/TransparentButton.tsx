@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonHTMLAttributes, FC, ReactNode } from "react";
 
 export interface ITransparentButton
@@ -13,6 +15,7 @@ const TransparentButton: FC<Omit<ITransparentButton, "className">> = ({
 }) => {
   return (
     <button
+      type="button"
       className={`flex items-center justify-center ${dopClass ? dopClass : ""}`}
       {...props}
     >

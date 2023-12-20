@@ -6,14 +6,16 @@ import CurrencyIcon from "@/../public/Menu/currency.svg";
 import HeaderButton from "@/components/entity/HeaderButton";
 import Link from "next/link";
 import { russoOne } from "@/utils/fronts";
+import { URLList } from "@/utils/const";
+import MainMenuDropDown from "@/components/widgets/MainMenuDropDown";
 
 export default function MainHeader() {
   const HeaderButtons = [
-    { text: "Новости", icon: NewsIcon, link: "/news" },
-    { text: "Акции", icon: StockIcon, link: "/stocks" },
-    { text: "Главная", icon: HomeIcon, link: "/home" },
-    { text: "Облигации", icon: BondsIcon, link: "/bonds" },
-    { text: "Валюта", icon: CurrencyIcon, link: "/currency" },
+    { text: "Новости", icon: NewsIcon, link: URLList.news },
+    { text: "Акции", icon: StockIcon, link: URLList.stocks },
+    { text: "Главная", icon: HomeIcon, link: URLList.home },
+    { text: "Облигации", icon: BondsIcon, link: URLList.bonds },
+    { text: "Валюта", icon: CurrencyIcon, link: URLList.currency },
   ];
 
   return (
@@ -23,15 +25,18 @@ export default function MainHeader() {
         grid place-items-center z-20 pointer-events-none"
     >
       <div
-        className="bg-[#979797] dark:bg-white bg-opacity-30 dark:bg-opacity-20 backdrop-blur-md
+        className="bg-[#979797] dark:bg-white bg-opacity-30 dark:bg-opacity-20 backdrop-blur-md shadow-xl
         w-full h-full grid grid-cols-5 768p:grid-cols-6 rounded-[30px] 768p:rounded-[10px]
-        p-3 max-w-[500px] 768p:max-w-[1000px] min-w-[200px] pointer-events-auto
+        py-3 px-6 max-w-[500px] 768p:max-w-[1000px] min-w-[200px] pointer-events-auto
         animate-menuAppearsMobile 768p:animate-menuAppearsPC"
       >
         <p
-          className={`hidden 768p:block ${russoOne.className} text-sky-800 p-2`}
+          className={`hidden 768p:flex ${russoOne.className} text-blue-500 p-2 items-center`}
         >
-          <Link href="/">
+          <Link
+            href={URLList.home}
+            className="hover:[text-shadow:_0_0_10px_#3b82f6] transition-all duration-200"
+          >
             Stock<span className="">Info</span>
           </Link>
         </p>
@@ -43,6 +48,9 @@ export default function MainHeader() {
             key={item.link}
           />
         ))}
+        <div className="hidden 768p:flex justify-end items-center">
+          <MainMenuDropDown />
+        </div>
       </div>
     </header>
   );
