@@ -1,13 +1,20 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
-export type TUseMatchMedia = (maxWidth: number) => boolean;
+export type TUseMatchMedia = (maxWidth: number) => boolean | null;
 export const useMatchMedia: TUseMatchMedia = (maxWidth) => {
-  const condition = window.matchMedia(`(max-width: ${maxWidth}px)`).matches;
-  const [MatchState, setMatchState] = useState(condition);
+  const [MatchState, setMatchState] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setMatchState(condition);
-  }, [window.innerWidth]);
+    const checkSize = () => {
+      const condition = window.matchMedia(`(max-width: ${maxWidth}px)`).matches;
+
+      setMatchState(condition);
+    };
+    checkSize();
+    window.addEventListener("resize", checkSize);
+  }, [maxWidth]);
 
   return MatchState;
 };

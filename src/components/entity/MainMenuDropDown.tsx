@@ -23,9 +23,8 @@ export default function MainMenuDropDown() {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuItem className={center}>Профиль</DropdownMenuItem>
-        <DropdownMenuItem className={center} onClick={() => push("/about")}>
-          О сайте
-        </DropdownMenuItem>
+        <DropdownMenuItem className={center}>Настройки</DropdownMenuItem>
+        <DropdownMenuItem className={center}>Поделиться</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

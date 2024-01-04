@@ -25,7 +25,7 @@ const HeaderButtons = [
 export default function MainHeader() {
   const [IsHidden, setIsHidden] = useState(false);
   const { scrollY } = useScroll();
-  const prevScrollValue = useRef(-2);
+  const prevScrollValue = useRef(30);
   const isMobile = useMatchMedia(800);
   const direction = isMobile ? 150 : -150;
 
@@ -40,9 +40,11 @@ export default function MainHeader() {
     return () => clearTimeout(timer);
   });
 
+  if (isMobile === null) return;
+
   return (
     <motion.header
-      initial={{ y: 100 }}
+      initial={{ y: direction }}
       animate={{ y: IsHidden ? direction : 0 }}
       className="fixed w-full bottom-4 768p:bottom-auto 768p:top-6
        px-3 300p:px-6 768p:px-10
