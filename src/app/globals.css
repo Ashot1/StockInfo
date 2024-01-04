@@ -95,7 +95,6 @@ html {
 body {
   min-width: 100%;
   min-height: 100%;
-  touch-action: none;
   -webkit-tap-highlight-color: transparent;
   &::-webkit-scrollbar {
     background: transparent;
