@@ -16,7 +16,7 @@ const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
   return (
     <TransparentButton
       dopClass={`${raleway.className} cursor-default 768p:${
-        link === URLList.home && "hidden"
+        link.split("?")[0] === URLList.home && "hidden"
       }`}
     >
       <Link

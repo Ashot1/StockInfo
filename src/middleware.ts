@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
-import { SiteURL, URLList } from "@/utils/const";
-import { MiddlewareConfig } from "next/dist/build/analysis/get-page-static-info";
+import { URLList } from "@/utils/const";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -10,11 +9,11 @@ export async function middleware(req: NextRequest) {
 
   if (
     !session.data.session &&
-    !req.url.startsWith(`${SiteURL}${URLList.front}`)
+    !req.url.startsWith(`${process.env.NEXT_PUBLIC_SITEURL}${URLList.front}`)
   )
     return NextResponse.redirect(new URL(URLList.front, req.url));
 
-  if (req.url.split("?")[0] === `${SiteURL}/`)
+  if (req.url.split("?")[0] === `${process.env.NEXT_PUBLIC_SITEURL}/`)
     return NextResponse.rewrite(new URL(URLList.home, req.url));
 
   return res;
@@ -23,7 +22,3 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/", "/news", "/home", "/front"],
 };
-
-// export const config = {
-//   matcher: "/:path*",
-// };
