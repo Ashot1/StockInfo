@@ -8,12 +8,13 @@ import CurrencyIcon from "@/../public/Menu/currency.svg";
 import HeaderButton from "@/components/entity/HeaderButton";
 import Link from "next/link";
 import { URLList } from "@/utils/const";
-import MainMenuDropDown from "@/components/entity/MainMenuDropDown";
+import MainMenuDropDown from "@/components/widgets/MainMenuDropDown";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useRef, useState } from "react";
 import Logo from "@/components/ui/Logo";
 import { motion } from "framer-motion";
 import { useMatchMedia } from "@/hooks/MatchMedia";
+import { User } from "@supabase/gotrue-js";
 
 const HeaderButtons = [
   { text: "Новости", icon: NewsIcon, link: URLList.news },
@@ -22,11 +23,12 @@ const HeaderButtons = [
   { text: "Облигации", icon: BondsIcon, link: URLList.bonds },
   { text: "Валюта", icon: CurrencyIcon, link: URLList.currency },
 ];
+
 export default function MainHeader() {
   const [IsHidden, setIsHidden] = useState(false);
   const { scrollY } = useScroll();
-  const prevScrollValue = useRef(30);
-  const isMobile = useMatchMedia(800);
+  const prevScrollValue = useRef(40);
+  const isMobile = useMatchMedia(820);
   const direction = isMobile ? 150 : -150;
 
   useMotionValueEvent(scrollY, "change", (latest) => {

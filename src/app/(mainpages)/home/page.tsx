@@ -1,14 +1,13 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 import Link from "next/link";
+import MainMenuDropDown from "@/components/widgets/MainMenuDropDown";
+import { supabaseServer } from "@/utils/SupabaseServer.init";
 
 export default async function Info() {
-  const cookieStore = cookies();
-  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  const session = await supabaseServer.auth.getSession();
 
-  const session = await supabase.auth.getSession();
   return (
     <>
+      <MainMenuDropDown />
       <p>App</p>
       <Link href="/front" className="text-green-800">
         Front page
