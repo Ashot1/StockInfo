@@ -1,8 +1,13 @@
 import Link from "next/link";
 import MainMenuDropDown from "@/components/widgets/MainMenuDropDown";
-import { supabaseServer } from "@/utils/SupabaseServer.init";
+import { cookies } from "next/headers";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default async function Info() {
+  const cookieStore = cookies();
+  const supabaseServer = createServerComponentClient({
+    cookies: () => cookieStore,
+  });
   const session = await supabaseServer.auth.getSession();
 
   return (

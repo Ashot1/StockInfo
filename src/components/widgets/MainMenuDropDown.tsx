@@ -126,7 +126,7 @@ const GenerateButtons: FC<{
 
     if (btn.triggered) {
       return (
-        <Trigger asChild onClick={btn.click}>
+        <Trigger key={btn.text} asChild onClick={btn.click}>
           <DropdownMenuItem className={btn.dopClass}>
             {avatar}
             {btn.text}
@@ -135,7 +135,11 @@ const GenerateButtons: FC<{
       );
     }
     return (
-      <DropdownMenuItem className={btn.dopClass} onClick={btn.click}>
+      <DropdownMenuItem
+        key={btn.text}
+        className={btn.dopClass}
+        onClick={btn.click}
+      >
         {avatar}
         {btn.text}
       </DropdownMenuItem>

@@ -19,18 +19,14 @@ const SettingsContent: FC<ISettingsModal> = ({
 }) => {
   const types = {
     Drawer: (
-      <Drawer
-        AnotherFooter={AnotherFooter}
-        AnotherHeader={AnotherHeader}
-        children={children}
-      />
+      <Drawer AnotherFooter={AnotherFooter} AnotherHeader={AnotherHeader}>
+        {children}
+      </Drawer>
     ),
     Dialog: (
-      <Modal
-        AnotherFooter={AnotherHeader}
-        AnotherHeader={AnotherHeader}
-        children={children}
-      />
+      <Modal AnotherFooter={AnotherHeader} AnotherHeader={AnotherHeader}>
+        {children}
+      </Modal>
     ),
   };
   return types[type];
