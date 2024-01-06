@@ -11,15 +11,23 @@ import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import TripleDropDown from "@/components/entity/TripleDropDown";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
-import SettingsContent from "@/components/entity/SettingsContent";
 import { useMatchMedia } from "@/hooks/MatchMedia";
-import { Share1Icon, GearIcon } from "@radix-ui/react-icons";
+import {
+  Share1Icon,
+  GearIcon,
+  QuestionMarkCircledIcon,
+  PersonIcon,
+} from "@radix-ui/react-icons";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { DialogTriggerProps } from "@radix-ui/react-dialog";
 import { IconProps } from "@radix-ui/react-icons/dist/types";
 import { AuthContext, TUser } from "@/hoc/AuthProvider";
+import { useRouter } from "next/navigation";
+import { URLList } from "@/utils/const";
+import SettingsModalContent from "@/components/entity/SettingsModalContent";
+import ProfileModalContent from "@/components/entity/ProfileModalContent";
 
-type ContentType = null | "profile" | "settings";
+type ContentType = null | "profile" | "settings" | "editProfile";
 
 type TButtons = {
   text: string;
@@ -35,12 +43,13 @@ export default function MainMenuDropDown() {
   const center: string = "flex items-center gap-2.5";
   const [ModalContent, setModalContent] = useState<ContentType>(null);
   const isMobile = useMatchMedia(820);
-  const { user_metadata } = useContext(AuthContext);
+  const user = useContext(AuthContext);
+  const { push } = useRouter();
 
   const Buttons: TButtons = [
     {
       text: "Профиль",
-      img: user_metadata.avatar_url || "",
+      img: PersonIcon,
       click: () => setModalContent("profile"),
       dopClass: center,
       triggered: true,
@@ -59,19 +68,31 @@ export default function MainMenuDropDown() {
       dopClass: center,
       triggered: false,
     },
+    {
+      text: "Информация",
+      img: QuestionMarkCircledIcon,
+      click: () => push(URLList.front),
+      dopClass: center,
+      triggered: false,
+    },
   ];
 
   return isMobile ? (
-    <DrawerMenu Buttons={Buttons} ModalContent={ModalContent} />
+    <DrawerMenu Buttons={Buttons} ModalContent={ModalContent} user={user} />
   ) : (
-    <DialogMenu Buttons={Buttons} ModalContent={ModalContent} />
+    <DialogMenu Buttons={Buttons} ModalContent={ModalContent} user={user} />
   );
 }
 
 const DialogMenu: FC<{
   Buttons: TButtons;
   ModalContent: ContentType;
-}> = ({ Buttons, ModalContent }) => {
+  user: TUser;
+}> = ({
+  Buttons,
+  ModalContent,
+  user: { email, created_at, last_sign_in_at, user_metadata },
+}) => {
   return (
     <Dialog>
       <TripleDropDown>
@@ -79,9 +100,16 @@ const DialogMenu: FC<{
       </TripleDropDown>
       <DialogContent>
         {ModalContent === "settings" ? (
-          <SettingsContent type="Dialog" />
+          <SettingsModalContent type="Dialog" />
         ) : (
-          "profile"
+          <ProfileModalContent
+            type="Dialog"
+            email={email}
+            name={user_metadata?.full_name}
+            createdAt={created_at}
+            lastSignIn={last_sign_in_at}
+            avatar={user_metadata?.avatar_url}
+          />
         )}
       </DialogContent>
     </Dialog>
@@ -91,7 +119,12 @@ const DialogMenu: FC<{
 const DrawerMenu: FC<{
   Buttons: TButtons;
   ModalContent: ContentType;
-}> = ({ Buttons, ModalContent }) => {
+  user: TUser;
+}> = ({
+  Buttons,
+  ModalContent,
+  user: { email, created_at, last_sign_in_at, user_metadata },
+}) => {
   return (
     <Drawer>
       <TripleDropDown>
@@ -99,9 +132,16 @@ const DrawerMenu: FC<{
       </TripleDropDown>
       <DrawerContent>
         {ModalContent === "settings" ? (
-          <SettingsContent type="Drawer" />
+          <SettingsModalContent type="Drawer" />
         ) : (
-          "profile"
+          <ProfileModalContent
+            type="Drawer"
+            email={email}
+            name={user_metadata?.full_name}
+            createdAt={created_at}
+            lastSignIn={last_sign_in_at}
+            avatar={user_metadata?.avatar_url}
+          />
         )}
       </DrawerContent>
     </Drawer>

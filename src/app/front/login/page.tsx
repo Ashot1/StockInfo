@@ -36,6 +36,32 @@ export default function LoginPage() {
         Log out
       </button>
       <br />
+      <button
+        onClick={() => {
+          supabase.auth
+            .signInWithPassword({
+              email: "123@mail.ru",
+              password: "123456",
+              options: { data: { coins: 2 }, captchaToken: "" },
+            })
+            .then((response) => console.log(response))
+            .catch((e) => console.log(e.message));
+        }}
+      >
+        With email
+      </button>
+      <br />
+      <button
+        onClick={async () => {
+          supabase.auth.signInWithOAuth({
+            provider: "discord",
+            options: { redirectTo: `${location.origin}/auth/callback` },
+          });
+        }}
+      >
+        Discord
+      </button>
+      <br />
       <Link href="/front">Back</Link>
     </div>
   );

@@ -14,7 +14,6 @@ import { useRef, useState } from "react";
 import Logo from "@/components/ui/Logo";
 import { motion } from "framer-motion";
 import { useMatchMedia } from "@/hooks/MatchMedia";
-import { User } from "@supabase/gotrue-js";
 
 const HeaderButtons = [
   { text: "Новости", icon: NewsIcon, link: URLList.news },

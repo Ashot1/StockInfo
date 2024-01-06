@@ -1,5 +1,4 @@
 import { HTMLAttributes } from "react";
-import { motion } from "framer-motion";
 
 interface ILogo extends Pick<HTMLAttributes<HTMLSpanElement>, "className"> {
   scale?: number;
