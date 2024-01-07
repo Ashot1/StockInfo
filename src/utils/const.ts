@@ -1,7 +1,7 @@
 export const URLList = {
   front: "/front",
   login: "/front/login",
-  register: "/front/register",
+  register: "/front/signup",
   home: "/home",
   news: "/news",
   stocks: "/stocks",

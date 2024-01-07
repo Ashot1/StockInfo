@@ -1,10 +1,5 @@
 "use client";
 
-import StockIcon from "@/../public/Menu/stocks.svg";
-import NewsIcon from "@/../public/Menu/News.svg";
-import HomeIcon from "@/../public/Menu/home.svg";
-import BondsIcon from "@/../public/Menu/bond.svg";
-import CurrencyIcon from "@/../public/Menu/currency.svg";
 import HeaderButton from "@/components/entity/HeaderButton";
 import Link from "next/link";
 import { URLList } from "@/utils/const";
@@ -14,16 +9,13 @@ import { useRef, useState } from "react";
 import Logo from "@/components/ui/Logo";
 import { motion } from "framer-motion";
 import { useMatchMedia } from "@/hooks/MatchMedia";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
-const HeaderButtons = [
-  { text: "Новости", icon: NewsIcon, link: URLList.news },
-  { text: "Акции", icon: StockIcon, link: URLList.stocks },
-  { text: "Главная", icon: HomeIcon, link: URLList.home },
-  { text: "Облигации", icon: BondsIcon, link: URLList.bonds },
-  { text: "Валюта", icon: CurrencyIcon, link: URLList.currency },
-];
+interface IMainHeader {
+  HeaderButtons: { text: string; icon: StaticImport; link: string }[];
+}
 
-export default function MainHeader() {
+export default function MainHeader({ HeaderButtons }: IMainHeader) {
   const [IsHidden, setIsHidden] = useState(false);
   const { scrollY } = useScroll();
   const prevScrollValue = useRef(40);

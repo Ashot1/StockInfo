@@ -25,9 +25,9 @@ import { AuthContext, TUser } from "@/hoc/AuthProvider";
 import { useRouter } from "next/navigation";
 import { URLList } from "@/utils/const";
 import SettingsModalContent from "@/components/entity/SettingsModalContent";
-import ProfileModalContent from "@/components/entity/ProfileModalContent";
+import ProfileModalContent from "@/components/widgets/ProfileModalContent";
 
-type ContentType = null | "profile" | "settings" | "editProfile";
+type ContentType = null | "profile" | "settings";
 
 type TButtons = {
   text: string;
@@ -98,7 +98,7 @@ const DialogMenu: FC<{
       <TripleDropDown>
         <GenerateButtons Buttons={Buttons} Trigger={DialogTrigger} />
       </TripleDropDown>
-      <DialogContent>
+      <DialogContent className="min-h-[70dvh]">
         {ModalContent === "settings" ? (
           <SettingsModalContent type="Dialog" />
         ) : (
@@ -130,7 +130,7 @@ const DrawerMenu: FC<{
       <TripleDropDown>
         <GenerateButtons Buttons={Buttons} Trigger={DrawerTrigger} />
       </TripleDropDown>
-      <DrawerContent>
+      <DrawerContent className="h-[85dvh]">
         {ModalContent === "settings" ? (
           <SettingsModalContent type="Drawer" />
         ) : (
