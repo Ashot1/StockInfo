@@ -3,7 +3,7 @@
 import HeaderButton from "@/components/entity/HeaderButton";
 import Link from "next/link";
 import { URLList } from "@/utils/const";
-import MainMenuDropDown from "@/components/widgets/MainMenuDropDown";
+import MainMenuDropDown from "@/components/module/MainMenuDropDown";
 import { useMotionValueEvent, useScroll } from "framer-motion";
 import { useRef, useState } from "react";
 import Logo from "@/components/ui/Logo";

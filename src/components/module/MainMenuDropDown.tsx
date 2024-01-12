@@ -24,8 +24,10 @@ import { IconProps } from "@radix-ui/react-icons/dist/types";
 import { AuthContext, TUser } from "@/hoc/AuthProvider";
 import { useRouter } from "next/navigation";
 import { URLList } from "@/utils/const";
-import SettingsModalContent from "@/components/entity/SettingsModalContent";
+import SettingsModalContent from "@/components/widgets/SettingsModalContent";
 import ProfileModalContent from "@/components/widgets/ProfileModalContent";
+import { UserProfileInfo } from "@/types/Modals.type";
+import { ConvertDate } from "@/utils/ConvertDate";
 
 type ContentType = null | "profile" | "settings";
 
@@ -39,12 +41,34 @@ type TButtons = {
   triggered: boolean;
 }[];
 
+type ModalWindow = {
+  Buttons: TButtons;
+  ModalContent: ContentType;
+  Avatar: string;
+  UserInfo: UserProfileInfo;
+};
+
 export default function MainMenuDropDown() {
   const center: string = "flex items-center gap-2.5";
   const [ModalContent, setModalContent] = useState<ContentType>(null);
   const isMobile = useMatchMedia(820);
   const user = useContext(AuthContext);
   const { push } = useRouter();
+
+  const UserInfo: UserProfileInfo = [
+    { Title: "Имя", Text: user.user_metadata?.full_name, Editable: true },
+    { Title: "Email", Text: user.email, Editable: true },
+    {
+      Title: "Последний вход",
+      Text: user.last_sign_in_at && ConvertDate(user.last_sign_in_at),
+      Editable: false,
+    },
+    {
+      Title: "Зарегистрирован",
+      Text: ConvertDate(user.created_at),
+      Editable: false,
+    },
+  ];
 
   const Buttons: TButtons = [
     {
@@ -78,37 +102,41 @@ export default function MainMenuDropDown() {
   ];
 
   return isMobile ? (
-    <DrawerMenu Buttons={Buttons} ModalContent={ModalContent} user={user} />
+    <DrawerMenu
+      Buttons={Buttons}
+      ModalContent={ModalContent}
+      Avatar={user.user_metadata?.avatar_url}
+      UserInfo={UserInfo}
+    />
   ) : (
-    <DialogMenu Buttons={Buttons} ModalContent={ModalContent} user={user} />
+    <DialogMenu
+      Buttons={Buttons}
+      ModalContent={ModalContent}
+      Avatar={user.user_metadata?.avatar_url}
+      UserInfo={UserInfo}
+    />
   );
 }
 
-const DialogMenu: FC<{
-  Buttons: TButtons;
-  ModalContent: ContentType;
-  user: TUser;
-}> = ({
+const DialogMenu: FC<ModalWindow> = ({
   Buttons,
   ModalContent,
-  user: { email, created_at, last_sign_in_at, user_metadata },
+  UserInfo,
+  Avatar,
 }) => {
   return (
     <Dialog>
       <TripleDropDown>
         <GenerateButtons Buttons={Buttons} Trigger={DialogTrigger} />
       </TripleDropDown>
-      <DialogContent className="min-h-[70dvh]">
+      <DialogContent className="h-[70dvh]">
         {ModalContent === "settings" ? (
           <SettingsModalContent type="Dialog" />
         ) : (
           <ProfileModalContent
+            UserInfo={UserInfo}
             type="Dialog"
-            email={email}
-            name={user_metadata?.full_name}
-            createdAt={created_at}
-            lastSignIn={last_sign_in_at}
-            avatar={user_metadata?.avatar_url}
+            avatar={Avatar}
           />
         )}
       </DialogContent>
@@ -116,14 +144,11 @@ const DialogMenu: FC<{
   );
 };
 
-const DrawerMenu: FC<{
-  Buttons: TButtons;
-  ModalContent: ContentType;
-  user: TUser;
-}> = ({
+const DrawerMenu: FC<ModalWindow> = ({
   Buttons,
   ModalContent,
-  user: { email, created_at, last_sign_in_at, user_metadata },
+  UserInfo,
+  Avatar,
 }) => {
   return (
     <Drawer>
@@ -135,12 +160,9 @@ const DrawerMenu: FC<{
           <SettingsModalContent type="Drawer" />
         ) : (
           <ProfileModalContent
+            UserInfo={UserInfo}
             type="Drawer"
-            email={email}
-            name={user_metadata?.full_name}
-            createdAt={created_at}
-            lastSignIn={last_sign_in_at}
-            avatar={user_metadata?.avatar_url}
+            avatar={Avatar}
           />
         )}
       </DrawerContent>

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { IConfirmMessage } from "@/components/entity/CongirmMessage";
 
 export interface IModalContent {
   title: string;
@@ -16,8 +17,15 @@ export type TModalSubContent = Omit<IModalContent, "type"> & {
 
 export type TProfileModalContent = Pick<IModalContent, "type"> & {
   avatar?: string;
-  name: string;
-  email?: string;
-  createdAt: string;
-  lastSignIn?: string;
+  UserInfo: UserProfileInfo;
 };
+
+export type UserProfileInfo = {
+  Title: string;
+  Text: string | undefined;
+  Editable: boolean;
+}[];
+
+export type ProfileModeState =
+  | (IConfirmMessage & { name: "confirm" })
+  | { name: "default" };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MainMenuDropDown from "@/components/widgets/MainMenuDropDown";
+import MainMenuDropDown from "@/components/module/MainMenuDropDown";
 import { cookies } from "next/headers";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 

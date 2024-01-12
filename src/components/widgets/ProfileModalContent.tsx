@@ -1,103 +1,40 @@
 "use client";
 
 import { FC, useState } from "react";
-import { TProfileModalContent } from "@/types/Modals.type";
+import { ProfileModeState, TProfileModalContent } from "@/types/Modals.type";
 import CustomModalContent from "@/components/ui/CustomModalContent";
-import { Button } from "@/components/ui/button";
 import { DrawerFooter } from "@/components/ui/drawer";
 import { DialogFooter } from "@/components/ui/dialog";
-import { supabase } from "@/utils/Supabase.init";
-import { useRouter } from "next/navigation";
-import { URLList } from "@/utils/const";
-import toast from "react-hot-toast";
 import ConfirmMessage, {
   IConfirmMessage,
 } from "@/components/entity/CongirmMessage";
 import ProfileDefaultModalContent from "@/components/entity/ProfileDefaultModalContent";
 import { AnimatePresence, motion } from "framer-motion";
+import ProfileButtons from "@/components/entity/ProfileButtons";
 
 const ProfileModalContent: FC<TProfileModalContent> = ({
   type,
-  name,
+  UserInfo,
   avatar,
-  createdAt,
-  email,
-  lastSignIn,
 }) => {
-  const { push } = useRouter();
-  const [Mode, setMode] = useState<
-    (IConfirmMessage & { name: "confirm" }) | { name: "default" }
-  >({
+  const [Mode, setMode] = useState<ProfileModeState>({
     name: "default",
   });
-
-  const LogOut = () => {
-    toast
-      .promise(supabase.auth.signOut({ scope: "local" }), {
-        loading: "Выход...",
-        success: () => {
-          push(URLList.front);
-          return "Успешный выход";
-        },
-        error: (e) => `Ошибка - ${e.message}`,
-      })
-      .catch((e) => console.log(e));
-  };
-
-  const DeleteAccount = () => {
-    console.log("delete user");
-  };
-  const EditMode = () => {};
-
-  const BackToMain = () => setMode({ name: "default" });
-
-  const Buttons = (
-    <>
-      <Button variant="outline">Изменить</Button>
-      <Button
-        variant="secondary"
-        onClick={() =>
-          setMode({
-            name: "confirm",
-            BackFunction: BackToMain,
-            Title: "Выход",
-            Description: "Вы уверены, что хотите выйти из аккаунта?",
-            CallbackText: "Выйти",
-            Callback: LogOut,
-          })
-        }
-      >
-        Выйти
-      </Button>
-      <Button
-        variant="destructive"
-        onClick={() =>
-          setMode({
-            name: "confirm",
-            BackFunction: BackToMain,
-            Callback: DeleteAccount,
-            CallbackText: "Удалить",
-            Description:
-              "Вы уверены, что хотите удалить свой аккаунт? Отменить действие будет невозможно",
-            Title: "Удаление",
-          })
-        }
-      >
-        Удалить
-      </Button>
-    </>
-  );
   const MotionProfileDefaultModalContent = motion(ProfileDefaultModalContent);
   const MotionConfirmMessage = motion(ConfirmMessage);
 
   const Drawerfooter = (
     <DrawerFooter>
       <div className="w-full flex justify-center items-center gap-4">
-        {Buttons}
+        <ProfileButtons setMode={setMode} />
       </div>
     </DrawerFooter>
   );
-  const Dialogfooter = <DialogFooter>{Buttons}</DialogFooter>;
+  const Dialogfooter = (
+    <DialogFooter>
+      <ProfileButtons setMode={setMode} />
+    </DialogFooter>
+  );
   const footer = type === "Drawer" ? Drawerfooter : Dialogfooter;
 
   return (
@@ -110,24 +47,16 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -200, opacity: 0 }}
             transition={{ duration: 0.1 }}
-            name={name}
-            createdAt={createdAt}
+            UserInfo={UserInfo}
             footer={footer}
             avatar={avatar}
             type={type}
-            lastSignIn={lastSignIn}
-            email={email}
           />
         )}
         {Mode.name === "confirm" && (
-          <CustomModalContent
-            key="profile"
-            title="Профиль"
-            type={type}
-            AnotherFooter={<div></div>}
-          >
+          <CustomModalContent key="profile" title="Профиль" type={type}>
             <MotionConfirmMessage
-              className="w-full h-full"
+              className="w-full h-full 768p:h-[40dvh] px-5"
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 100, opacity: 0 }}
