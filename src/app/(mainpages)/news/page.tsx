@@ -19,9 +19,9 @@ export default async function News() {
   const editedAt = newsList.sitenews.columns.indexOf("modified_at");
 
   return (
-    <div className="1024p:w-[70%] 1024:ml-[15%]">
+    <div className="500p:w-[80%] 500p:ml-[10%] 1024p:ml-[15%] 1024p:w-[70%]">
       <PageTitle>Новости</PageTitle>
-      <section className="bg-neutral-300 dark:bg-neutral-900 bg-opacity-40 p-2 768p:p-4 rounded-2xl border-2 300p:w-[80%] 300p:ml-[10%] 768p:ml-0 768p:w-full">
+      <section className="bg-neutral-300 dark:bg-neutral-900 bg-opacity-40 p-2 768p:p-4 rounded-2xl border-2 500p:ml-0 500p:w-full">
         {newsList.sitenews.data.map((news, index) => {
           return (
             <NewsListItem
