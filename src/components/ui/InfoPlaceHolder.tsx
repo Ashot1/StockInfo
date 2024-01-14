@@ -11,7 +11,7 @@ export type TInfoPlaceHolder = {
 export default function InfoPlaceHolder({ text, title }: TInfoPlaceHolder) {
   return (
     <div
-      className="transition bg-[var(--grayBG)] rounded-xl px-4 py-3 text-sm hover:bg-[rgb(0,0,0,0.15)] dark:hover:bg-[rgb(255,255,255,0.15)] justify-between flex cursor-pointer"
+      className="overflow-hidden transition bg-[var(--grayBG)] rounded-xl px-4 py-3 text-sm hover:bg-[rgb(0,0,0,0.15)] dark:hover:bg-[rgb(255,255,255,0.15)] justify-between flex cursor-pointer"
       onClick={() =>
         toast.promise(navigator.clipboard.writeText(text), {
           loading: "Копирование...",
@@ -20,9 +20,9 @@ export default function InfoPlaceHolder({ text, title }: TInfoPlaceHolder) {
         })
       }
     >
-      <div>
+      <div className="max-w-[80%]">
         <span className="opacity-70">{title}</span>
-        <p>{text}</p>
+        <p className="truncate">{text}</p>
       </div>
       <CopyIcon className="size-4 opacity-40" />
     </div>

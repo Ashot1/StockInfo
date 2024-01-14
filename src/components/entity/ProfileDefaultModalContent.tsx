@@ -1,5 +1,5 @@
 import { FC, forwardRef, LegacyRef, ReactNode } from "react";
-import { TProfileModalContent } from "@/types/Modals.type";
+import { TProfileModalContent } from "@/types/Modals.types";
 import CustomModalContent from "@/components/ui/CustomModalContent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PersonIcon } from "@radix-ui/react-icons";

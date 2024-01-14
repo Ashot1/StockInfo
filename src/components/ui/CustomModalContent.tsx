@@ -3,7 +3,7 @@
 import { FC } from "react";
 import { DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { IModalContent, TModalSubContent } from "@/types/Modals.type";
+import { IModalContent, TModalSubContent } from "@/types/Modals.types";
 
 const CustomModalContent: FC<IModalContent> = ({
   title,

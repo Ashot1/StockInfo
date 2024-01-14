@@ -12,19 +12,24 @@ const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
   const pathname = usePathname(),
     baseClass = "opacity-40 768p:opacity-60 dark:opacity-60",
     activeClass =
-      "scale-110 768p:scale-100 bg-neutral-500 bg-opacity-20 dark:bg-opacity-30";
+      "scale-110 768p:scale-100 bg-neutral-500 bg-opacity-20 dark:bg-opacity-30",
+    HomePageCondition = pathname.split("?")[0] === "/" && link === URLList.home;
+
   return (
     <TransparentButton
       dopClass={`${raleway.className} cursor-default 768p:${
         link.split("?")[0] === URLList.home && "hidden"
       }`}
+      TapEffect={false}
     >
       <Link
         href={link}
         className={`rounded-md py-2 px-3 768p:px-4
         hover:bg-neutral-500 hover:bg-opacity-30 dark:hover:bg-opacity-30
         transition-all duration-200 ${
-          pathname.startsWith(link) ? activeClass : baseClass
+          pathname.startsWith(link) || HomePageCondition
+            ? activeClass
+            : baseClass
         }`}
       >
         <Image

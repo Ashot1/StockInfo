@@ -6,7 +6,7 @@ import { supabase } from "@/utils/Supabase.init";
 import { Dispatch, FC, SetStateAction } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { ProfileModeState } from "@/types/Modals.type";
+import { ProfileModeState } from "@/types/Modals.types";
 
 const ProfileButtons: FC<{
   setMode: Dispatch<SetStateAction<ProfileModeState>>;

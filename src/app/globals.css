@@ -19,7 +19,7 @@
     --secondary: 240 2.8% 90%;
     --secondary-foreground: 240 5.9% 10%;
 
-    --muted: 240 4.8% 95.9%;
+    --muted: 240 4.8% 85.9%;
     --muted-foreground: 240 3.8% 46.1%;
 
     --accent: 240 4.8% 95.9%;
@@ -75,16 +75,6 @@
     --Main: rgb(255, 255, 255);
     --scrollbar: rgb(255, 255, 255, 0.2);
     --grayBG: rgb(255, 255, 255, 0.1);
-    --gradientPageBG: radial-gradient(
-        circle at center left,
-        rgba(25, 255, 255, 0.1),
-        transparent
-      ),
-      radial-gradient(
-        circle at center right,
-        rgba(55, 255, 255, 0.1),
-        transparent
-      );
   }
 }
 
@@ -114,17 +104,5 @@ body {
   &::-webkit-scrollbar-thumb {
     background: var(--scrollbar);
     border-radius: 5px;
-  }
-  &::before {
-    overflow-x: hidden;
-    backface-visibility: hidden;
-    transform: translate3d(0, 0, 0) translateZ(0);
-    content: "";
-    position: fixed;
-    width: 100dvw;
-    height: 100dvh;
-    z-index: -1;
-    opacity: 0.2;
-    background: var(--gradientPageBG);
   }
 }

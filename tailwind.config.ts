@@ -80,20 +80,10 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        menuUpMobile_KF: {
-          from: { transform: "translateY(150px) scale(0.6)" },
-          to: { transform: "translateY(0) scale(1)" },
-        },
-        menuUpPC_KF: {
-          from: { transform: "translateY(-150px) scale(0.5)" },
-          to: { transform: "translateY(0) scale(1)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        menuAppearsMobile: "menuUpMobile_KF 1s ease-in-out",
-        menuAppearsPC: "menuUpPC_KF 1s ease-in-out",
       },
     },
   },

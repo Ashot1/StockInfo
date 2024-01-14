@@ -21,12 +21,12 @@ import {
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { DialogTriggerProps } from "@radix-ui/react-dialog";
 import { IconProps } from "@radix-ui/react-icons/dist/types";
-import { AuthContext, TUser } from "@/hoc/AuthProvider";
+import { AuthContext } from "@/hoc/AuthProvider";
 import { useRouter } from "next/navigation";
 import { URLList } from "@/utils/const";
 import SettingsModalContent from "@/components/widgets/SettingsModalContent";
 import ProfileModalContent from "@/components/widgets/ProfileModalContent";
-import { UserProfileInfo } from "@/types/Modals.type";
+import { UserProfileInfo } from "@/types/Modals.types";
 import { ConvertDate } from "@/utils/ConvertDate";
 
 type ContentType = null | "profile" | "settings";
@@ -54,6 +54,11 @@ export default function MainMenuDropDown() {
   const isMobile = useMatchMedia(820);
   const user = useContext(AuthContext);
   const { push } = useRouter();
+
+  if (!user) {
+    console.error("Ошибка пользователя");
+    return;
+  }
 
   const UserInfo: UserProfileInfo = [
     { Title: "Имя", Text: user.user_metadata?.full_name, Editable: true },

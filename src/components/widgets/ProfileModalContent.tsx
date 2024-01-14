@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useState } from "react";
-import { ProfileModeState, TProfileModalContent } from "@/types/Modals.type";
+import { ProfileModeState, TProfileModalContent } from "@/types/Modals.types";
 import CustomModalContent from "@/components/ui/CustomModalContent";
 import { DrawerFooter } from "@/components/ui/drawer";
 import { DialogFooter } from "@/components/ui/dialog";
