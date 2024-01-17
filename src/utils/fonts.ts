@@ -5,11 +5,18 @@ import {
   Russo_One,
   Tektur,
   Nunito_Sans,
+  Poiret_One,
 } from "next/font/google";
 
 export const russoOne = Russo_One({
   subsets: ["latin", "cyrillic"],
   weight: ["400"],
+  preload: true,
+});
+
+export const poiretone = Poiret_One({
+  weight: "400",
+  subsets: ["latin", "cyrillic"],
   preload: true,
 });
 

@@ -17,7 +17,7 @@ export default async function Info() {
 
   return (
     <>
-      <div className="flex justify-between 768p:justify-center">
+      <div className="flex justify-between 768p:justify-center animate-appearance">
         <span className="max-w-[50%]">
           <p className="opacity-50 text-xs 768p:text-sm 768p:text-center">
             Добро пожаловать

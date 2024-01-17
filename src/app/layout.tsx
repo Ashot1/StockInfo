@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
   themeColor: [
-    { color: "#18191d", media: "(prefers-color-scheme: dark)" },
+    { color: "rgb(18, 18, 18)", media: "(prefers-color-scheme: dark)" },
     {
-      color: "rgb(214, 219, 220)",
+      color: "rgb(242, 243, 245)",
       media: "(prefers-color-scheme: light)",
     },
   ],

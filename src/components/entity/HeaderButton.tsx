@@ -4,7 +4,7 @@ import Link from "next/link";
 import TransparentButton from "@/components/ui/TransparentButton";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { raleway } from "@/utils/fronts";
+import { raleway } from "@/utils/fonts";
 import { IHeaderButton } from "@/types/Header.types";
 import { URLList } from "@/utils/const";
 

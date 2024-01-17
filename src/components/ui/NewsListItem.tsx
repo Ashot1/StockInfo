@@ -1,5 +1,5 @@
 import { Pencil1Icon, FilePlusIcon } from "@radix-ui/react-icons";
-import { bellota, nunito } from "@/utils/fronts";
+import { bellota, nunito } from "@/utils/fonts";
 import Link from "next/link";
 import { FC } from "react";
 import { ConvertDate } from "@/utils/ConvertDate";
@@ -10,6 +10,7 @@ export interface INewsListItem {
   editedAt?: string;
   index?: number;
   link: string;
+  ClassName?: string;
 }
 
 export default function NewsListItem({
@@ -18,16 +19,19 @@ export default function NewsListItem({
   index,
   createdAt,
   link,
+  ClassName,
 }: INewsListItem) {
   return (
     <Link
       href={link}
-      className="grid grid-rows-[0.5fr_1.6fr] 768p:grid-cols-[0.2fr_1.8fr] 768p:grid-rows-1
-       cursor-pointer hover:bg-[var(--grayBG)] hover:rounded-xl border-b border-[var(--grayBG)] transition-all duration-300
-       mt-2 py-5 min-h-64 300p:min-h-48 500p:min-h-44 768p:min-h-32"
+      className={`grid grid-rows-[0.5fr_1.6fr] 768p:grid-cols-[0.2fr_1.8fr] 768p:grid-rows-1
+        cursor-pointer hover:bg-[var(--grayBG)] hover:rounded-xl border-b border-[var(--grayBG)] transition-all duration-300
+        mt-2 py-5 min-h-64 300p:min-h-48 500p:min-h-44 768p:min-h-32 ${
+          ClassName && ClassName
+        }`}
     >
       <DisplayIndex index={index} />
-      <div className="flex flex-col gap-6 justify-between">
+      <div className="flex flex-col gap-6 justify-between px-1">
         <p
           className={`text-pretty 768p:text-wrap text-center 768p:text-left text-sm 768p:text-base ${nunito.className}`}
           dangerouslySetInnerHTML={{ __html: Title }}

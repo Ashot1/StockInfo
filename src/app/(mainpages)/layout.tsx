@@ -54,7 +54,7 @@ export default async function MainPagesLayout({
       <AuthProvider value={user}>
         <MainHeader HeaderButtons={HeaderButtons} />
         <main
-          className="mt-6 768p:mt-40 mb-10
+          className="mt-6 768p:mt-40 mb-10 500p:w-[80%] 500p:ml-[10%]
          px-2 768p:px-[5dvw] 1024p:px-[10dvw] 1080p:px-[15dvw]"
         >
           {children}

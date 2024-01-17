@@ -38,6 +38,18 @@
     --Main: #333;
     --scrollbar: rgb(0, 0, 0, 0.2);
     --grayBG: rgb(0, 0, 0, 0.1);
+    --gradientBG: radial-gradient(
+        at 30% 40%,
+        hsla(202, 35%, 35%, 0.7) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 70% 60%, hsla(202, 35%, 35%, 0.7) 0px, transparent 50%);
+    --gradientBGSmall: radial-gradient(
+        at 80% 10%,
+        hsla(202, 35%, 35%, 0.8) 30px,
+        transparent 50%
+      ),
+      radial-gradient(at 20% 90%, hsla(202, 35%, 35%, 0.5) 0px, transparent 50%);
   }
 
   .dark {
@@ -75,6 +87,19 @@
     --Main: rgb(255, 255, 255);
     --scrollbar: rgb(255, 255, 255, 0.2);
     --grayBG: rgb(255, 255, 255, 0.1);
+    --gradientBG: radial-gradient(
+        at 30% 40%,
+        hsla(202, 67%, 50%, 0.3) 0px,
+        transparent 40%
+      ),
+      radial-gradient(at 70% 60%, hsla(202, 67%, 50%, 0.3) 0px, transparent 40%);
+
+    --gradientBGSmall: radial-gradient(
+        at 80% 10%,
+        hsla(202, 67%, 50%, 0.6) 50px,
+        transparent 50%
+      ),
+      radial-gradient(at 20% 90%, hsla(202, 67%, 50%, 0.4) 0px, transparent 50%);
   }
 }
 
@@ -92,6 +117,33 @@ html {
   max-width: 100dvw;
   scrollbar-gutter: stable;
   overflow-y: scroll;
+
+  overflow-x: hidden;
+  &::before {
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0) translateZ(0);
+    content: "";
+    position: absolute;
+    width: 100dvw;
+    height: 100dvh;
+    filter: blur(140px);
+    z-index: -1;
+    border-radius: 20%;
+    animation: BackgroundAnimation 4s ease-out;
+    background-image: var(--gradientBG);
+    @media (max-width: 768px) {
+      background-image: var(--gradientBGSmall);
+    }
+  }
+}
+
+@keyframes BackgroundAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 body {
@@ -105,4 +157,16 @@ body {
     background: var(--scrollbar);
     border-radius: 5px;
   }
+}
+
+.table1 {
+  font-size: 0.8rem;
+  tbody tr:nth-child(even) {
+    background: var(--grayBG);
+    border-radius: 15px;
+  }
+}
+
+.row {
+  display: none;
 }

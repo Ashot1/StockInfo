@@ -2,7 +2,13 @@ import { NewsRequest } from "@/types/News.types";
 import PageTitle from "@/components/ui/PageTitle";
 import NewsListItem from "@/components/ui/NewsListItem";
 import { URLList } from "@/utils/const";
+import { Metadata } from "next";
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "News",
+  description: "Новости Московской Биржи (MOEX)",
+};
 
 const getNews = async () => {
   const result = await fetch(
@@ -19,9 +25,12 @@ export default async function News() {
   const editedAt = newsList.sitenews.columns.indexOf("modified_at");
 
   return (
-    <div className="500p:w-[80%] 500p:ml-[10%] 1024p:ml-[15%] 1024p:w-[70%]">
+    <>
       <PageTitle>Новости</PageTitle>
-      <section className="bg-neutral-300 dark:bg-neutral-900 bg-opacity-40 p-2 768p:p-4 rounded-2xl border-2 500p:ml-0 500p:w-full">
+      <section
+        className="bg-neutral-300 dark:bg-neutral-900 bg-opacity-40 dark:bg-opacity-50
+      p-2 768p:p-4 rounded-2xl border-2 500p:ml-0 500p:w-full"
+      >
         {newsList.sitenews.data.map((news, index) => {
           return (
             <NewsListItem
@@ -31,10 +40,11 @@ export default async function News() {
               createdAt={news[createdAt] as string}
               editedAt={news[editedAt] as string}
               index={index + 1}
+              ClassName={`animate-appearance-moving delay-${100 * index}`}
             />
           );
         })}
       </section>
-    </div>
+    </>
   );
 }

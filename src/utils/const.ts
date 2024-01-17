@@ -7,4 +7,5 @@ export const URLList = {
   stocks: "/stocks",
   bonds: "/bonds",
   currency: "/currency",
+  notFound: "/notfound",
 };
