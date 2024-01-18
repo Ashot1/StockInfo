@@ -49,7 +49,7 @@
         hsla(202, 35%, 35%, 0.8) 30px,
         transparent 50%
       ),
-      radial-gradient(at 20% 90%, hsla(202, 35%, 35%, 0.5) 0px, transparent 50%);
+      radial-gradient(at 30% 80%, hsla(202, 35%, 35%, 0.5) 0px, transparent 50%);
   }
 
   .dark {
@@ -99,7 +99,7 @@
         hsla(202, 67%, 50%, 0.6) 50px,
         transparent 50%
       ),
-      radial-gradient(at 20% 90%, hsla(202, 67%, 50%, 0.4) 0px, transparent 50%);
+      radial-gradient(at 30% 80%, hsla(202, 67%, 50%, 0.4) 0px, transparent 50%);
   }
 }
 
@@ -117,7 +117,6 @@ html {
   max-width: 100dvw;
   scrollbar-gutter: stable;
   overflow-y: scroll;
-
   overflow-x: hidden;
   &::before {
     backface-visibility: hidden;
@@ -131,9 +130,11 @@ html {
     border-radius: 20%;
     animation: BackgroundAnimation 4s ease-out;
     background-image: var(--gradientBG);
-    @media (max-width: 768px) {
-      background-image: var(--gradientBGSmall);
-    }
+  }
+}
+@media (max-width: 768px) {
+  html::before {
+    background-image: var(--gradientBGSmall);
   }
 }
 
@@ -149,6 +150,7 @@ html {
 body {
   min-width: 100%;
   min-height: 100%;
+  overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
   &::-webkit-scrollbar {
     background: transparent;

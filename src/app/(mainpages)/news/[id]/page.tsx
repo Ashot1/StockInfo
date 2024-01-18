@@ -4,6 +4,8 @@ import { CurrentNewsRequest } from "@/types/News.types";
 import { raleway } from "@/utils/fonts";
 import ArrowSeparator from "@/components/ui/ArrowSeparator";
 import { redirect } from "next/navigation";
+import { ConvertDate } from "@/utils/ConvertDate";
+import { FilePlusIcon } from "@radix-ui/react-icons";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const result = await fetch(
@@ -33,6 +35,7 @@ export default async function SpecificNews({
   const CurrentNews: CurrentNewsRequest = await getCurrentNews(id);
   const title = CurrentNews.content.columns.indexOf("title");
   const body = CurrentNews.content.columns.indexOf("body");
+  const publishedAt = CurrentNews.content.columns.indexOf("published_at");
 
   if (!CurrentNews.content.data[0]) {
     redirect(URLList.notFound);
@@ -46,15 +49,18 @@ export default async function SpecificNews({
       <div className="w-full flex text-center flex-col items-center gap-14">
         <BackButton backButtonLink={URLList.news} />
         <p
-          className={`flex-1 text-pretty text-lg ${raleway.className}`}
+          className={`w-full text-pretty text-lg ${raleway.className}`}
           dangerouslySetInnerHTML={{ __html: news[title] }}
         ></p>
       </div>
       <ArrowSeparator />
-      {/*<div>{JSON.stringify(news[body])}</div>*/}
+      <span className="w-full m-0 flex justify-start mb-3 items-center gap-1 opacity-50 text-xs">
+        <FilePlusIcon />
+        {ConvertDate(news[publishedAt] as string)}
+      </span>
       <div
         className="bg-neutral-200 dark:bg-neutral-900 bg-opacity-20 dark:bg-opacity-50
-          rounded-lg p-6 shadow text-sm styledNewsContent overflow-x-auto"
+          rounded-lg p-3 768p:p-6 shadow text-sm styledNewsContent overflow-x-auto"
         dangerouslySetInnerHTML={{
           __html: news[body] as string,
         }}

@@ -1,3 +1,9 @@
+import PageTitle from "@/components/ui/PageTitle";
+
 export default function CurrencyPage() {
-  return <div>Currency</div>;
+  return (
+    <>
+      <PageTitle>Список валют</PageTitle>
+    </>
+  );
 }

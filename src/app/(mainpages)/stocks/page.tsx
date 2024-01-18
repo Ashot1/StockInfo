@@ -1,3 +1,9 @@
+import PageTitle from "@/components/ui/PageTitle";
+
 export default function StocksPage() {
-  return <div>Stocks</div>;
+  return (
+    <>
+      <PageTitle>Список акций</PageTitle>
+    </>
+  );
 }

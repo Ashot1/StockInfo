@@ -1,3 +1,9 @@
+import PageTitle from "@/components/ui/PageTitle";
+
 export default function BondsPage() {
-  return <div>Bonds</div>;
+  return (
+    <>
+      <PageTitle>Список облигаций</PageTitle>
+    </>
+  );
 }

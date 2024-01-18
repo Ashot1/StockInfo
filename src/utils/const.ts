@@ -9,3 +9,5 @@ export const URLList = {
   currency: "/currency",
   notFound: "/notfound",
 };
+
+export const PageStartCounter = 50;
