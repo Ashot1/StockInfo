@@ -25,7 +25,7 @@ const CustomPagination: FC<{
   const pathname = usePathname();
   const currentPath = pathname + `?start=${currentStart}`;
   const buttons = [];
-  const PaginationCount = Math.ceil(BlockWidth / 150);
+  const PaginationCount = Math.ceil(BlockWidth / 100);
 
   useEffect(() => {
     const resizeFunc = () => {

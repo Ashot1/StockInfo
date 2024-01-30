@@ -24,6 +24,7 @@ const HeaderButton: FC<IHeaderButton> = ({ link, icon, text }) => {
     >
       <Link
         href={link}
+        prefetch={false}
         className={`rounded-md py-2 px-3 768p:px-4
         hover:bg-neutral-500 hover:bg-opacity-30 dark:hover:bg-opacity-30
         transition-all duration-200 ${

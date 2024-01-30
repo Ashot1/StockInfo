@@ -36,8 +36,8 @@ export default async function News({
       <PageTitle>Новости</PageTitle>
       <CustomPagination currentStart={startIndex} element={"main"} />
       <section
-        className="bg-neutral-300 dark:bg-neutral-900 bg-opacity-40 dark:bg-opacity-50
-      p-2 768p:p-4 rounded-2xl border-2 500p:ml-0 500p:w-full my-5"
+        className="bg-neutral-200 dark:bg-neutral-900 bg-opacity-40 dark:bg-opacity-50
+      p-2 768p:p-4 rounded-2xl border-2 500p:ml-0 500p:w-full my-5 opacity-85"
       >
         {newsList.sitenews.data.map((news, index) => {
           return (
@@ -48,7 +48,9 @@ export default async function News({
               createdAt={news[createdAt] as string}
               editedAt={news[editedAt] as string}
               index={index + 1 + startIndex}
-              ClassName={`animate-appearance-moving delay-${100 * index}`}
+              ClassName={`animate-appearance-moving opacity-0 fill-mode-forwards delay-${
+                100 * index
+              }`}
             />
           );
         })}

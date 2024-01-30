@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/utils/utils";
 import { motion, MotionProps } from "framer-motion";
-import { RefAttributes } from "react";
+import { HTMLAttributes, RefAttributes } from "react";
 import { SlotProps } from "@radix-ui/react-collection";
 
 const buttonVariants = cva(
@@ -41,6 +41,7 @@ export interface ButtonProps
   extends Omit<SlotProps & RefAttributes<HTMLElement> & MotionProps, "ref">,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  disabled?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(

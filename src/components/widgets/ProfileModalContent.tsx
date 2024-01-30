@@ -6,7 +6,7 @@ import CustomModalContent from "@/components/ui/CustomModalContent";
 import { DrawerFooter } from "@/components/ui/drawer";
 import { DialogFooter } from "@/components/ui/dialog";
 import ConfirmMessage, {
-  IConfirmMessage,
+  TConfirmMessage,
 } from "@/components/entity/CongirmMessage";
 import ProfileDefaultModalContent from "@/components/entity/ProfileDefaultModalContent";
 import { AnimatePresence, motion } from "framer-motion";
@@ -56,6 +56,7 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
         {Mode.name === "confirm" && (
           <CustomModalContent key="profile" title="Профиль" type={type}>
             <MotionConfirmMessage
+              action={Mode.action}
               className="w-full h-full 768p:h-[40dvh] px-5"
               initial={{ x: 100, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}

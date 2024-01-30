@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: #f2f3f4;
+    --background: #d3d3d3;
     --foreground: 240 10% 3.9%;
 
     --card: 0 0% 100%;
@@ -46,10 +46,10 @@
       radial-gradient(at 70% 60%, hsla(202, 35%, 35%, 0.7) 0px, transparent 50%);
     --gradientBGSmall: radial-gradient(
         at 80% 10%,
-        hsla(202, 35%, 35%, 0.8) 30px,
-        transparent 50%
+        hsla(202, 35%, 35%, 0.9) 30px,
+        transparent 70%
       ),
-      radial-gradient(at 30% 80%, hsla(202, 35%, 35%, 0.5) 0px, transparent 50%);
+      radial-gradient(at 30% 80%, hsla(202, 35%, 35%, 0.8) 0px, transparent 50%);
   }
 
   .dark {
@@ -171,4 +171,47 @@ body {
 
 .row {
   display: none;
+}
+
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
+.delay-800 {
+  animation-delay: 800ms;
+}
+.delay-900 {
+  animation-delay: 900ms;
+}
+.delay-1100 {
+  animation-delay: 1100ms;
+}
+.delay-1200 {
+  animation-delay: 1200ms;
+}
+.delay-1300 {
+  animation-delay: 1300ms;
+}
+.delay-1400 {
+  animation-delay: 1400ms;
+}
+.delay-1500 {
+  animation-delay: 1500ms;
+}
+.delay-1600 {
+  animation-delay: 1600ms;
+}
+.delay-1700 {
+  animation-delay: 1700ms;
+}
+.delay-1800 {
+  animation-delay: 1800ms;
+}
+.delay-1900 {
+  animation-delay: 1900ms;
+}
+.delay-2000 {
+  animation-delay: 2000ms;
 }

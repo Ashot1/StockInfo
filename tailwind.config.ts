@@ -8,6 +8,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [{ pattern: /delay-(100|200|300|500|700|1000)/ }],
   theme: {
     container: {
       center: true,
@@ -92,8 +93,8 @@ const config: Config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        appearance: "appearance-kf 3s ease-out",
-        "appearance-moving": "appearance-moving-kf 4s ease-out",
+        appearance: "appearance-kf 2s ease-out",
+        "appearance-moving": "appearance-moving-kf 2.5s ease-out",
       },
     },
   },

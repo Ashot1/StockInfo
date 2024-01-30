@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
-import { IConfirmMessage } from "@/components/entity/CongirmMessage";
+import { TConfirmMessage } from "@/components/entity/CongirmMessage";
 
 export interface IModalContent {
   title: string;
@@ -27,5 +27,5 @@ export type UserProfileInfo = {
 }[];
 
 export type ProfileModeState =
-  | (IConfirmMessage & { name: "confirm" })
+  | (TConfirmMessage & { name: "confirm" })
   | { name: "default" };
