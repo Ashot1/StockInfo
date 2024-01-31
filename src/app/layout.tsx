@@ -9,9 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const viewport: Viewport = {
   themeColor: [
-    { color: "rgb(18, 18, 18)", media: "(prefers-color-scheme: dark)" },
+    { color: "#121212", media: "(prefers-color-scheme: dark)" },
     {
-      color: "rgb(242, 243, 245)",
+      color: "#d3d3d3",
       media: "(prefers-color-scheme: light)",
     },
   ],
@@ -19,6 +19,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITEURL as string),
   title: {
     default: "StockInfo",
     template: "%s | StockInfo",

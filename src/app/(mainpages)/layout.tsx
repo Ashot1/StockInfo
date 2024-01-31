@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import MainHeader from "@/components/module/MainHeader";
 import AuthProvider from "@/hoc/AuthProvider";
-import { cookies, headers } from "next/headers";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Toaster } from "react-hot-toast";
 import { URLList } from "@/utils/const";
 import StockIcon from "@/../public/Menu/stocks.svg";
@@ -10,6 +8,7 @@ import NewsIcon from "@/../public/Menu/News.svg";
 import HomeIcon from "@/../public/Menu/home.svg";
 import BondsIcon from "@/../public/Menu/bond.svg";
 import CurrencyIcon from "@/../public/Menu/currency.svg";
+import { GetUser } from "@/actions/Account";
 
 const HeaderButtons = [
   { text: "Новости", icon: NewsIcon, link: URLList.news },
@@ -24,18 +23,13 @@ export default async function MainPagesLayout({
 }: {
   children: ReactNode;
 }) {
-  const cookieStore = cookies();
-  const supabaseServer = createServerComponentClient({
-    cookies: () => cookieStore,
-  });
+  const { user, error } = await GetUser();
 
-  const {
-    data: { user },
-  } = await supabaseServer.auth.getUser();
-
-  if (!user)
+  // TODO: Сделать нормальное сообщение об ошибке
+  if (!user || error)
     return (
       <div>
+        {error}
         <h1>Произошла ошибка с аккаунтом</h1>
         <p>попробуйте заново войти в аккаунт</p>
         <a href={URLList.front}>на странице входа</a>

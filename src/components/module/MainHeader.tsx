@@ -44,7 +44,7 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
         grid place-items-center z-20 pointer-events-none"
     >
       <nav
-        className="bg-[#979797] dark:bg-white bg-opacity-25 dark:bg-opacity-20 backdrop-blur-md shadow-xl
+        className="bg-[#979797] dark:bg-white bg-opacity-20 dark:bg-opacity-10 backdrop-blur-md shadow-lg
         w-full h-full grid grid-cols-5 768p:grid-cols-6 rounded-[30px] 768p:rounded-[10px]
         py-3 px-3 768p:px-6 max-w-[500px] 768p:max-w-[1000px] min-w-[200px] pointer-events-auto"
       >

@@ -4,7 +4,7 @@ import { FC } from "react";
 import { IModalContent } from "@/types/Modals.types";
 import CustomModalContent from "@/components/ui/CustomModalContent";
 import ThemeChangeButtons from "@/components/entity/ThemeChangeButtons";
-import { version } from "@/../package.json";
+import packageJSON from "@/../package.json";
 
 const SettingsModalContent: FC<Pick<IModalContent, "type">> = ({ type }) => {
   return (
@@ -13,7 +13,7 @@ const SettingsModalContent: FC<Pick<IModalContent, "type">> = ({ type }) => {
         <ThemeChangeButtons />
       </div>
       <div className="w-full grid place-items-center opacity-50">
-        Версия: {version}
+        Версия: {packageJSON.version}
       </div>
     </CustomModalContent>
   );

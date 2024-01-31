@@ -1,19 +1,11 @@
-import Link from "next/link";
 import MainMenuDropDown from "@/components/module/MainMenuDropDown";
-import { cookies } from "next/headers";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { URLList } from "@/utils/const";
+import { GetUser } from "@/actions/Account";
 
 export default async function Info() {
-  const cookieStore = cookies();
-  const supabaseServer = createServerComponentClient({
-    cookies: () => cookieStore,
-  });
-  const session = await supabaseServer.auth.getSession();
+  const { user, error } = await GetUser();
 
-  const {
-    data: { user },
-  } = await supabaseServer.auth.getUser();
+  if (error)
+    return <div className="w-dvw h-dvh grid place-items-center">{error}</div>;
 
   return (
     <>

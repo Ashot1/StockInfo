@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 const getNews = async (start = "0") => {
   const result = await fetch(
     `https://iss.moex.com/iss/sitenews.json?iss.meta=off&start=${start}`,
+    { cache: "no-store" },
   );
   return result.json();
 };
