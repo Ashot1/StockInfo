@@ -4,14 +4,15 @@
     "launch_handler": {
         "client_mode": "navigate-existing"
     },
-    "version": "0.1.4",
+    "version": "0.2",
     "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
     "shortcuts": [
         {
             "name": "Открыть новости биржи",
             "short_name": "Новости",
             "description": "Новости Московской Биржи (MOEX)",
-            "url": "/news"
+            "url": "/news",
+            "icons": [{ "src": "/Menu/PNG/News.png", "sizes": "192x192" }]
         }
     ],
     "lang": "ru",

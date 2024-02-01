@@ -1,51 +1,48 @@
-"use client";
+'use client'
 
-import { FC, MouseEventHandler, ReactNode } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import TransparentButton from "@/components/ui/TransparentButton";
-import { MoonIcon, SunIcon, DesktopIcon } from "@radix-ui/react-icons";
-import { useTheme } from "next-themes";
+import { FC, ReactNode } from 'react'
+import { MoonIcon, SunIcon, DesktopIcon } from '@radix-ui/react-icons'
+import { useTheme } from 'next-themes'
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select'
 
 const ThemeChangeButtons: FC = () => {
-  const TBdopClass =
-    "flex gap-10 h-[65px] hover:bg-neutral-100 dark:hover:bg-neutral-800 transition";
-  const { setTheme, theme } = useTheme();
+    const { setTheme, theme } = useTheme()
 
-  const Click: MouseEventHandler<HTMLButtonElement> = (e) => {
-    setTheme((e.target as HTMLButtonElement).value);
-  };
+    const Buttons: { value: string; icon: ReactNode; text: string }[] = [
+        { value: 'light', icon: <SunIcon />, text: 'Светлая тема' },
+        { value: 'dark', icon: <MoonIcon />, text: 'Темная тема' },
+        { value: 'system', icon: <DesktopIcon />, text: 'Системная тема' },
+    ]
 
-  const Buttons: { value: string; icon: ReactNode }[] = [
-    { value: "light", icon: <SunIcon /> },
-    { value: "dark", icon: <MoonIcon /> },
-    { value: "system", icon: <DesktopIcon /> },
-  ];
+    return (
+        <div className="w-full px-5 flex justify-center mt-10">
+            <Select defaultValue={theme} onValueChange={(e) => setTheme(e)}>
+                <SelectTrigger className="w-full border-0 bg-secondary h-14">
+                    <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                    {Buttons.map((item) => (
+                        <SelectItem
+                            key={item.value}
+                            value={item.value}
+                            className="h-14 cursor-pointer"
+                        >
+                            <span className="flex gap-4 items-center">
+                                {item.icon}
+                                {item.text}
+                            </span>
+                        </SelectItem>
+                    ))}
+                </SelectContent>
+            </Select>
+        </div>
+    )
+}
 
-  return (
-    <div className="w-full px-5 flex justify-center">
-      <Card className="overflow-hidden max-w-[600px] w-[100%]">
-        <CardContent className="grid grid-cols-3 p-0">
-          {Buttons.map((btn) => {
-            let activeClass = "";
-
-            if (theme === btn.value)
-              activeClass = "bg-gray-200 dark:bg-neutral-900";
-            return (
-              <TransparentButton
-                TapEffect={false}
-                key={btn.value}
-                dopClass={`${TBdopClass} ${activeClass}`}
-                value={btn.value}
-                onClick={Click}
-              >
-                {btn.icon}
-              </TransparentButton>
-            );
-          })}
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-export default ThemeChangeButtons;
+export default ThemeChangeButtons
