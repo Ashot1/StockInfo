@@ -1,39 +1,39 @@
-"use client";
+'use client'
 
-import HeaderButton from "@/components/entity/HeaderButton";
-import Link from "next/link";
-import { URLList } from "@/utils/const";
-import MainMenuDropDown from "@/components/module/MainMenuDropDown";
-import { useMotionValueEvent, useScroll } from "framer-motion";
-import { useRef, useState } from "react";
-import Logo from "@/components/ui/Logo";
-import { motion } from "framer-motion";
-import { useMatchMedia } from "@/hooks/MatchMedia";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import HeaderButton from '@/components/entity/HeaderButton'
+import Link from 'next/link'
+import { URLList } from '@/utils/const'
+import MainMenuDropDown from '@/components/module/MainMenuDropDown'
+import { useMotionValueEvent, useScroll } from 'framer-motion'
+import { useRef, useState } from 'react'
+import Logo from '@/components/ui/Logo'
+import { motion } from 'framer-motion'
+import { useMatchMedia } from '@/hooks/MatchMedia'
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 interface IMainHeader {
-  HeaderButtons: { text: string; icon: StaticImport; link: string }[];
+  HeaderButtons: { text: string; icon: StaticImport; link: string }[]
 }
 
 export default function MainHeader({ HeaderButtons }: IMainHeader) {
-  const [IsHidden, setIsHidden] = useState(false);
-  const { scrollY } = useScroll();
-  const prevScrollValue = useRef(40);
-  const isMobile = useMatchMedia(820);
-  const direction = isMobile ? 150 : -150;
+  const [IsHidden, setIsHidden] = useState(false)
+  const { scrollY } = useScroll()
+  const prevScrollValue = useRef(40)
+  const isMobile = useMatchMedia(820)
+  const direction = isMobile ? 150 : -150
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    const difference = prevScrollValue.current < latest;
-    prevScrollValue.current = latest;
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const difference = prevScrollValue.current < latest
+    prevScrollValue.current = latest
 
     const timer = setTimeout(() => {
-      setIsHidden(difference);
-    }, 250);
+      setIsHidden(difference)
+    }, 250)
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearTimeout(timer)
+  })
 
-  if (isMobile === null) return;
+  if (isMobile === null) return
 
   return (
     <motion.header
@@ -73,5 +73,5 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
         </div>
       </nav>
     </motion.header>
-  );
+  )
 }

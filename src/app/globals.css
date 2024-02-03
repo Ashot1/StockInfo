@@ -3,241 +3,261 @@
 @tailwind utilities;
 
 @layer base {
-    :root {
-        --background: #d3d3d3;
-        --foreground: 240 10% 3.9%;
+   :root {
+      --background: #d3d3d3;
+      --foreground: 240 10% 3.9%;
 
-        --card: 0 0% 100%;
-        --card-foreground: 240 10% 3.9%;
+      --card: 0 0% 100%;
+      --card-foreground: 240 10% 3.9%;
 
-        --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 3.9%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 240 10% 3.9%;
 
-        --primary: 240 5.9% 10%;
-        --primary-foreground: 0 0% 98%;
+      --primary: 240 5.9% 10%;
+      --primary-foreground: 0 0% 98%;
 
-        --secondary: 240 2.8% 90%;
-        --secondary-foreground: 240 5.9% 10%;
+      --secondary: 240 2.8% 90%;
+      --secondary-foreground: 240 5.9% 10%;
 
-        --muted: 240 4.8% 85.9%;
-        --muted-foreground: 240 3.8% 46.1%;
+      --muted: 240 4.8% 70.9%;
+      --muted-foreground: 240 3.8% 46.1%;
 
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
+      --accent: 240 4.8% 95.9%;
+      --accent-foreground: 240 5.9% 10%;
 
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 0 0% 98%;
 
-        --border: 240 5.9% 90%;
-        /*--border: 214.3 31.8% 91.4%;*/
-        --input: 240 5.9% 90%;
-        --ring: 240 10% 3.9%;
+      --border: 240 5.9% 90%;
+      /*--border: 214.3 31.8% 91.4%;*/
+      --input: 240 5.9% 90%;
+      --ring: 240 10% 3.9%;
 
-        --radius: 0.5rem;
+      --radius: 0.5rem;
 
-        --Main: #333;
-        --scrollbar: rgb(0, 0, 0, 0.2);
-        --grayBG: rgb(0, 0, 0, 0.1);
-        --gradientBG: radial-gradient(
-                at 30% 40%,
-                hsla(202, 35%, 35%, 0.7) 0px,
-                transparent 50%
-            ),
-            radial-gradient(
-                at 70% 60%,
-                hsla(202, 35%, 35%, 0.7) 0px,
-                transparent 50%
-            );
-        --gradientBGSmall: radial-gradient(
-                at 80% 10%,
-                hsla(202, 35%, 35%, 0.9) 30px,
-                transparent 70%
-            ),
-            radial-gradient(
-                at 30% 80%,
-                hsla(202, 35%, 35%, 0.8) 0px,
-                transparent 50%
-            );
-    }
+      --Main: #333;
+      --scrollbar: rgb(0, 0, 0, 0.2);
+      --grayBG: rgb(0, 0, 0, 0.1);
+      --gradientBG: radial-gradient(
+            at 30% 40%,
+            hsla(202, 35%, 35%, 0.7) 0px,
+            transparent 50%
+         ),
+         radial-gradient(
+            at 70% 60%,
+            hsla(202, 35%, 35%, 0.7) 0px,
+            transparent 50%
+         );
+      --gradientBGSmall: radial-gradient(
+            at 80% 10%,
+            hsla(202, 35%, 35%, 0.9) 30px,
+            transparent 70%
+         ),
+         radial-gradient(
+            at 30% 80%,
+            hsla(202, 35%, 35%, 0.8) 0px,
+            transparent 50%
+         );
+   }
 
-    .dark {
-        --background: #121212;
-        --foreground: 0 0% 98%;
+   .dark {
+      --background: #121212;
+      --foreground: 0 0% 98%;
 
-        --card: 240 10% 3.9%;
-        --card-foreground: 0 0% 98%;
+      --card: 240 10% 3.9%;
+      --card-foreground: 0 0% 98%;
 
-        /*--popover: 240 10% 3.9%;*/
-        --popover: 0 0% 90%;
-        /*--popover-foreground: 0 0% 98%;*/
-        --popover-foreground: 240 10% 3.9%;
+      /*--popover: 240 10% 3.9%;*/
+      --popover: 0 0% 90%;
+      /*--popover-foreground: 0 0% 98%;*/
+      --popover-foreground: 240 10% 3.9%;
 
-        --primary: 0 0% 98%;
-        --primary-foreground: 240 5.9% 10%;
+      --primary: 0 0% 98%;
+      --primary-foreground: 240 5.9% 10%;
 
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
+      --secondary: 240 3.7% 15.9%;
+      --secondary-foreground: 0 0% 98%;
 
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
+      --muted: 240 3.7% 15.9%;
+      --muted-foreground: 240 5% 64.9%;
 
-        --accent: 240 3.7% 15.9%;
-        --accent-foreground: 0 0% 98%;
+      --accent: 240 3.7% 15.9%;
+      --accent-foreground: 0 0% 98%;
 
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 0 0% 98%;
 
-        /*--border: 240 3.7% 15.9%;*/
-        --border: 0, 0%, 12%;
-        --input: 240 3.7% 15.9%;
-        --ring: 240 4.9% 83.9%;
+      /*--border: 240 3.7% 15.9%;*/
+      --border: 0, 0%, 12%;
+      --input: 240 3.7% 15.9%;
+      --ring: 240 4.9% 83.9%;
 
-        --Main: rgb(255, 255, 255);
-        --scrollbar: rgb(255, 255, 255, 0.2);
-        --grayBG: rgb(255, 255, 255, 0.1);
-        --gradientBG: radial-gradient(
-                at 30% 40%,
-                hsla(202, 67%, 50%, 0.3) 0px,
-                transparent 40%
-            ),
-            radial-gradient(
-                at 70% 60%,
-                hsla(202, 67%, 50%, 0.3) 0px,
-                transparent 40%
-            );
+      --Main: rgb(255, 255, 255);
+      --scrollbar: rgb(255, 255, 255, 0.2);
+      --grayBG: rgb(255, 255, 255, 0.1);
+      --gradientBG: radial-gradient(
+            at 30% 40%,
+            hsla(202, 67%, 50%, 0.3) 0px,
+            transparent 40%
+         ),
+         radial-gradient(
+            at 70% 60%,
+            hsla(202, 67%, 50%, 0.3) 0px,
+            transparent 40%
+         );
 
-        --gradientBGSmall: radial-gradient(
-                at 80% 10%,
-                hsla(202, 67%, 50%, 0.6) 50px,
-                transparent 50%
-            ),
-            radial-gradient(
-                at 30% 80%,
-                hsla(202, 67%, 50%, 0.4) 0px,
-                transparent 50%
-            );
-    }
+      --gradientBGSmall: radial-gradient(
+            at 80% 10%,
+            hsla(202, 67%, 50%, 0.6) 50px,
+            transparent 50%
+         ),
+         radial-gradient(
+            at 30% 80%,
+            hsla(202, 67%, 50%, 0.4) 0px,
+            transparent 50%
+         );
+   }
 }
 
 @layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+   * {
+      @apply border-border;
+   }
+   body {
+      @apply bg-background text-foreground;
+   }
 }
 
 html {
-    min-height: 110dvh;
-    max-width: 100dvw;
-    scrollbar-gutter: stable;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    &::before {
-        backface-visibility: hidden;
-        transform: translate3d(0, 0, 0) translateZ(0);
-        content: '';
-        position: absolute;
-        width: 100dvw;
-        height: 100dvh;
-        filter: blur(140px);
-        z-index: -1;
-        border-radius: 20%;
-        animation: BackgroundAnimation 4s ease-out;
-        background-image: var(--gradientBG);
-    }
+   min-height: 110dvh;
+   max-width: 100dvw;
+   scrollbar-gutter: stable;
+   overflow-y: scroll;
+   overflow-x: hidden;
+   &::before {
+      backface-visibility: hidden;
+      transform: translate3d(0, 0, 0) translateZ(0);
+      content: '';
+      position: absolute;
+      width: 100dvw;
+      height: 100dvh;
+      filter: blur(140px);
+      z-index: -1;
+      border-radius: 20%;
+      animation: BackgroundAnimation 4s ease-out;
+      background-image: var(--gradientBG);
+   }
 }
 @media (max-width: 768px) {
-    html::before {
-        background-image: var(--gradientBGSmall);
-    }
+   html::before {
+      background-image: var(--gradientBGSmall);
+   }
 }
 
 @keyframes BackgroundAnimation {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
 }
 
 body {
-    min-width: 100%;
-    min-height: 100%;
-    overflow-x: hidden;
-    -webkit-tap-highlight-color: transparent;
-    &::-webkit-scrollbar {
-        background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-        background: var(--scrollbar);
-        border-radius: 5px;
-    }
+   min-width: 100%;
+   min-height: 100%;
+   overflow-x: hidden;
+   -webkit-tap-highlight-color: transparent;
+   &::-webkit-scrollbar {
+      background: transparent;
+   }
+   &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar);
+      border-radius: 5px;
+   }
 }
 
 .table1 {
-    font-size: 0.8rem;
-    tbody tr:nth-child(even) {
-        background: var(--grayBG);
-        border-radius: 15px;
-    }
+   font-size: 0.8rem;
+   tbody tr:nth-child(even) {
+      background: var(--grayBG);
+      border-radius: 15px;
+   }
 }
 
 .row {
-    display: none;
+   display: none;
 }
 
 .delay-400 {
-    animation-delay: 400ms;
+   animation-delay: 400ms;
 }
 .delay-600 {
-    animation-delay: 600ms;
+   animation-delay: 600ms;
 }
 .delay-800 {
-    animation-delay: 800ms;
+   animation-delay: 800ms;
 }
 .delay-900 {
-    animation-delay: 900ms;
+   animation-delay: 900ms;
 }
 .delay-1100 {
-    animation-delay: 1100ms;
+   animation-delay: 1100ms;
 }
 .delay-1200 {
-    animation-delay: 1200ms;
+   animation-delay: 1200ms;
 }
 .delay-1300 {
-    animation-delay: 1300ms;
+   animation-delay: 1300ms;
 }
 .delay-1400 {
-    animation-delay: 1400ms;
+   animation-delay: 1400ms;
 }
 .delay-1500 {
-    animation-delay: 1500ms;
+   animation-delay: 1500ms;
 }
 .delay-1600 {
-    animation-delay: 1600ms;
+   animation-delay: 1600ms;
 }
 .delay-1700 {
-    animation-delay: 1700ms;
+   animation-delay: 1700ms;
 }
 .delay-1800 {
-    animation-delay: 1800ms;
+   animation-delay: 1800ms;
 }
 .delay-1900 {
-    animation-delay: 1900ms;
+   animation-delay: 1900ms;
 }
 .delay-2000 {
-    animation-delay: 2000ms;
+   animation-delay: 2000ms;
 }
 
 .loaderShadows {
-    box-shadow:
-        0px -5px 20px 0px rgb(186, 66, 255),
-        0px 5px 20px 0px rgb(0, 225, 255),
-        inset 0 5px 16px rgb(186, 66, 255),
-        inset 0 -5px 16px rgb(0, 225, 255);
+   box-shadow:
+      0px -5px 20px 0px rgb(186, 66, 255),
+      0px 5px 20px 0px rgb(0, 225, 255),
+      inset 0 5px 16px rgb(186, 66, 255),
+      inset 0 -5px 16px rgb(0, 225, 255);
+}
+
+.custom-scroll {
+   &::-webkit-scrollbar {
+      background: transparent;
+      width: 4px;
+   }
+   &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar);
+   }
+}
+
+.styledNewsContent {
+   & a {
+      text-decoration: underline;
+      &:hover {
+         text-decoration: none;
+         color: var(--Main);
+      }
+   }
 }
 
 /*.appearance-moving-scroll {*/

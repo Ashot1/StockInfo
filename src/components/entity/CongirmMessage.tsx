@@ -1,104 +1,95 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import { FC, forwardRef, LegacyRef, useState } from "react";
-import { cn } from "@/utils/utils";
+import { Button } from '@/components/ui/button'
+import { FC, forwardRef, LegacyRef, useEffect, useTransition } from 'react'
+import { useFormState } from 'react-dom'
+import { cn } from '@/utils/utils'
 import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ServerActionAction } from "next/dist/client/components/router-reducer/router-reducer-types";
+    Card,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card'
+import toast from 'react-hot-toast'
+import { ReloadIcon } from '@radix-ui/react-icons'
 
 export type TDefaultConfirmMessageProps = {
-  Title: string;
-  Description: string;
-  BackFunction: () => void;
-  CallbackText: string;
-  className?: string;
-  action?: (data: FormData) => void;
-  Callback?: () => void;
-};
+    Title: string
+    Description: string
+    BackFunction: () => void
+    CallbackText: string
+    className?: string
+    action:
+        | ((prevState: any, data: FormData) => Promise<{ error?: string }>)
+        | (() => Promise<{ error?: string }>)
+}
 
-export type TConfirmMessage = TDefaultConfirmMessageProps;
+export type TConfirmMessage = TDefaultConfirmMessageProps
 
 const ConfirmMessage: FC<TConfirmMessage> = forwardRef(
-  (
-    {
-      Title,
-      Description,
-      Callback,
-      BackFunction,
-      CallbackText,
-      className,
-      action,
-    },
-    ref: LegacyRef<HTMLDivElement>,
-  ) => {
-    const [DisabledState, setDisabledState] = useState<boolean>(false);
+    (
+        { Title, Description, BackFunction, CallbackText, className, action },
+        ref: LegacyRef<HTMLDivElement>
+    ) => {
+        const [pending, startTransition] = useTransition()
+        const [state, formAction] = useFormState(action, { error: undefined })
 
-    const clickMain = () => {
-      if (!Callback) return;
-      setDisabledState(true);
-      Callback();
-    };
+        const Action = (payload: FormData) => {
+            startTransition(async () => await formAction(payload))
+        }
 
-    return (
-      <div ref={ref} className={cn("grid place-items-center", className)}>
-        <Card>
-          <CardHeader>
-            <CardTitle>{Title}</CardTitle>
-            <CardDescription>{Description}</CardDescription>
-          </CardHeader>
-          <CardFooter className="flex gap-3">
-            {action ? (
-              <form className="flex gap-3" action={action}>
-                <Buttons
-                  clickBack={BackFunction}
-                  state={DisabledState}
-                  text={CallbackText}
-                />
-              </form>
-            ) : (
-              <Buttons
-                clickBack={BackFunction}
-                state={DisabledState}
-                clickMain={clickMain}
-                text={CallbackText}
-              />
-            )}
-          </CardFooter>
-        </Card>
-      </div>
-    );
-  },
-);
+        useEffect(() => {
+            if (state.error) {
+                toast.error(state.error || 'Ошибка')
+            }
+        }, [state])
+
+        return (
+            <div ref={ref} className={cn('grid place-items-center', className)}>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>{Title}</CardTitle>
+                        <CardDescription>{Description}</CardDescription>
+                    </CardHeader>
+                    <CardFooter className="flex gap-3">
+                        <form className="flex gap-3" action={Action}>
+                            <Buttons
+                                clickBack={BackFunction}
+                                state={pending}
+                                text={CallbackText}
+                            />
+                        </form>
+                    </CardFooter>
+                </Card>
+            </div>
+        )
+    }
+)
 
 const Buttons: FC<{
-  state: boolean;
-  clickMain?: () => void;
-  clickBack: () => void;
-  text: string;
-}> = ({ clickBack, clickMain, state, text }) => {
-  return (
-    <>
-      <Button variant="destructive" onClick={clickMain} disabled={state}>
-        {text}
-      </Button>
-      <Button
-        variant="default"
-        onClick={(e) => {
-          e.preventDefault();
-          clickBack();
-        }}
-      >
-        Назад
-      </Button>
-    </>
-  );
-};
+    state: boolean
+    clickBack: () => void
+    text: string
+}> = ({ clickBack, state, text }) => {
+    return (
+        <>
+            <Button variant="destructive" disabled={state}>
+                {state && <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />}
+                {text}
+            </Button>
+            <Button
+                variant="default"
+                onClick={(e) => {
+                    e.preventDefault()
+                    clickBack()
+                }}
+            >
+                Назад
+            </Button>
+        </>
+    )
+}
 
-ConfirmMessage.displayName = "ConfirmMessage";
-export default ConfirmMessage;
+ConfirmMessage.displayName = 'ConfirmMessage'
+export default ConfirmMessage

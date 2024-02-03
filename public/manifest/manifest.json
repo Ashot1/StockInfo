@@ -1,67 +1,80 @@
 {
-    "theme_color": "#121212",
-    "background_color": "#121212",
-    "launch_handler": {
-        "client_mode": "navigate-existing"
-    },
-    "version": "0.2",
-    "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
-    "shortcuts": [
-        {
-            "name": "Открыть новости биржи",
-            "short_name": "Новости",
-            "description": "Новости Московской Биржи (MOEX)",
-            "url": "/news",
-            "icons": [{ "src": "/Menu/PNG/News.png", "sizes": "192x192" }]
-        }
-    ],
-    "lang": "ru",
-    "display": "standalone",
-    "scope": "/",
-    "start_url": "/",
-    "name": "StockInfo",
-    "short_name": "StockInfo",
-    "description": "Сервис для просмотра котировок акций",
-    "icons": [
-        {
-            "src": "/manifest/icons/icon-72x72.png",
-            "sizes": "72x72",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-96x96.png",
-            "sizes": "96x96",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-128x128.png",
-            "sizes": "128x128",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-144x144.png",
-            "sizes": "144x144",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-152x152.png",
-            "sizes": "152x152",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-192x192.png",
-            "sizes": "192x192",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-384x384.png",
-            "sizes": "384x384",
-            "type": "image/png"
-        },
-        {
-            "src": "/manifest/icons/icon-512x512.png",
-            "sizes": "512x512",
-            "type": "image/png"
-        }
-    ]
+   "theme_color": "#121212",
+   "background_color": "#121212",
+   "launch_handler": {
+      "client_mode": "navigate-existing"
+   },
+   "version": "0.2.1",
+   "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
+   "shortcuts": [
+      {
+         "name": "Открыть новости биржи",
+         "short_name": "Новости",
+         "description": "Новости Московской Биржи (MOEX)",
+         "url": "/news",
+         "icons": [{ "src": "/Menu/PNG/News.png", "sizes": "512x512" }]
+      }
+   ],
+   "lang": "ru",
+   "display": "standalone",
+   "scope": "/",
+   "start_url": "/",
+   "name": "StockInfo",
+   "short_name": "StockInfo",
+   "description": "Сервис для просмотра котировок акций",
+   "icons": [
+      {
+         "src": "/manifest/icons/icon-72x72.png",
+         "sizes": "72x72",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-96x96.png",
+         "sizes": "96x96",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-128x128.png",
+         "sizes": "128x128",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-144x144.png",
+         "sizes": "144x144",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-152x152.png",
+         "sizes": "152x152",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-192x192.png",
+         "sizes": "192x192",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-384x384.png",
+         "sizes": "384x384",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/icons/icon-512x512.png",
+         "sizes": "512x512",
+         "type": "image/png"
+      }
+   ],
+   "screenshots": [
+      {
+         "src": "/manifest/Screenshots/Wide.png",
+         "sizes": "1853x988",
+         "type": "image/png",
+         "form_factor": "wide"
+      },
+      {
+         "src": "/manifest/Screenshots/Small.png",
+         "sizes": "485x827",
+         "type": "image/png"
+      }
+   ]
 }

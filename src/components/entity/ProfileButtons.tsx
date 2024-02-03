@@ -1,78 +1,79 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import { supabase } from "@/utils/Supabase.init";
-import { Dispatch, FC, SetStateAction } from "react";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { ProfileModeState } from "@/types/Modals.types";
-import { DeleteUser } from "@/actions/Account";
+import { Button } from '@/components/ui/button'
+import { supabase } from '@/utils/Supabase.init'
+import { Dispatch, FC, SetStateAction } from 'react'
+import { useRouter } from 'next/navigation'
+import { ProfileModeState } from '@/types/Modals.types'
+import { DeleteUser } from '@/actions/Account'
+import TryCatch from '@/utils/TryCatch'
 
 const ProfileButtons: FC<{
-  setMode: Dispatch<SetStateAction<ProfileModeState>>;
+    setMode: Dispatch<SetStateAction<ProfileModeState>>
 }> = ({ setMode }) => {
-  const { refresh } = useRouter();
+    const { refresh } = useRouter()
 
-  // выход из аккаунта
-  const LogOut = async () => {
-    const loading = toast.loading("Выход из аккаунта");
-    const { error } = await supabase.auth.signOut({ scope: "local" });
+    // выход из аккаунта
+    const QuitAccount = async () => {
+        return TryCatch(async () => {
+            const { error } = await supabase.auth.signOut({ scope: 'local' })
+            if (error) throw error
+            refresh()
+            return { data: undefined }
+        })
+    }
 
-    if (error) return toast.error(error.message);
+    // удаление аккаунта
+    const DeleteAccount = async () => {
+        const { error } = await DeleteUser()
+        if (error) return { error: error }
+        refresh()
+        return {}
+    }
 
-    toast.success("Успешный выход", { id: loading });
-    refresh();
-  };
+    // переключение в режим редактирования
+    const EditMode = () => {}
 
-  // удаление аккаунта
-  const DeleteAccount = async () => {
-    const res = await DeleteUser();
-    if (res?.error) return toast.error((res.error as string) || "Ошибка");
-    refresh();
-  };
+    // возвращение на главную
+    const BackToMain = () => setMode({ name: 'default' })
 
-  // переключение в режим редактирования
-  const EditMode = () => {};
+    return (
+        <>
+            <Button variant="outline">Изменить</Button>
+            <Button
+                variant="secondary"
+                onClick={() =>
+                    setMode({
+                        name: 'confirm',
+                        BackFunction: BackToMain,
+                        Title: 'Выход',
+                        Description:
+                            'Вы уверены, что хотите выйти из аккаунта?',
+                        CallbackText: 'Выйти',
+                        action: QuitAccount,
+                    })
+                }
+            >
+                Выйти
+            </Button>
+            <Button
+                variant="destructive"
+                onClick={() =>
+                    setMode({
+                        name: 'confirm',
+                        BackFunction: BackToMain,
+                        CallbackText: 'Удалить',
+                        action: DeleteAccount,
+                        Description:
+                            'Вы уверены, что хотите удалить свой аккаунт? Отменить действие будет невозможно',
+                        Title: 'Удаление',
+                    })
+                }
+            >
+                Удалить
+            </Button>
+        </>
+    )
+}
 
-  // возвращение на главную
-  const BackToMain = () => setMode({ name: "default" });
-
-  return (
-    <>
-      <Button variant="outline">Изменить</Button>
-      <Button
-        variant="secondary"
-        onClick={() =>
-          setMode({
-            name: "confirm",
-            BackFunction: BackToMain,
-            Title: "Выход",
-            Description: "Вы уверены, что хотите выйти из аккаунта?",
-            CallbackText: "Выйти",
-            Callback: LogOut,
-          })
-        }
-      >
-        Выйти
-      </Button>
-      <Button
-        variant="destructive"
-        onClick={() =>
-          setMode({
-            name: "confirm",
-            BackFunction: BackToMain,
-            CallbackText: "Удалить",
-            action: DeleteAccount,
-            Description:
-              "Вы уверены, что хотите удалить свой аккаунт? Отменить действие будет невозможно",
-            Title: "Удаление",
-          })
-        }
-      >
-        Удалить
-      </Button>
-    </>
-  );
-};
-
-export default ProfileButtons;
+export default ProfileButtons

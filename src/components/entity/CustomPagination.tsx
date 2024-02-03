@@ -74,10 +74,14 @@ const CustomPagination: FC<{
             ? pathname + `?start=${currentStart - PageStartCounter}`
             : currentPath
 
-    const nextLink = pathname + `?start=${currentStart + PageStartCounter}`
+    const nextLink =
+        currentStart < maxPagesLength
+            ? pathname + `?start=${currentStart + PageStartCounter}`
+            : currentPath
 
     // проверяем, нужен ли ellipsis и делаем ссылки
-    const needEllipsisMax = currentStart < PageStartCounter * (ButtonsCount / 2)
+    const needEllipsisMax =
+        currentStart < maxPagesLength - PageStartCounter * (ButtonsCount / 2)
     const maxEllipsisLink = pathname + `?start=${maxPagesLength}`
     const needEllipsisMin = currentStart > PageStartCounter * (ButtonsCount / 2)
     const minEllipsisLink = pathname + `?start=0`
