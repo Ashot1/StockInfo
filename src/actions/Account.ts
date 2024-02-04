@@ -5,9 +5,10 @@ import {
    SupabaseClient,
 } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import { createClient } from '@supabase/supabase-js'
+import { createClient, UserAttributes } from '@supabase/supabase-js'
 import TryCatch from '@/utils/TryCatch'
 import { User } from '@supabase/gotrue-js'
+import { UserMetadata } from '@/types/Auth.types'
 
 async function checkSupabaseCookie() {
    const cookieStore = cookies()
@@ -65,5 +66,39 @@ export async function GetUser() {
       const { user } = await getSupabaseUser(supabaseUser)
 
       return { data: user }
+   })
+}
+
+export async function UpdateUser({
+   data: IncomingData,
+}: {
+   data: { [key: string]: string }
+}) {
+   return TryCatch<undefined>(async () => {
+      const { supabaseUser, cookieStore } = await checkSupabaseCookie()
+
+      const { user } = await getSupabaseUser(supabaseUser)
+
+      let attributes: UserAttributes = {}
+      const email = IncomingData.email
+
+      if (user.email !== email) attributes = { email: email }
+
+      delete IncomingData.email
+
+      for (let item in IncomingData) {
+         if (user.user_metadata[item] !== IncomingData[item])
+            Object.assign(attributes, {
+               data: IncomingData,
+            })
+      }
+
+      if (Object.keys(attributes).length <= 0) return { data: undefined }
+
+      const { error } = await supabaseUser.auth.updateUser(attributes)
+
+      if (error) throw error
+
+      return { data: undefined }
    })
 }

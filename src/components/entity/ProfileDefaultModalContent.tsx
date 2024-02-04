@@ -3,6 +3,7 @@ import { ModalContent, TProfileModalContent } from '@/types/Modals.types'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { PersonIcon } from '@radix-ui/react-icons'
 import InfoPlaceHolder from '@/components/ui/InfoPlaceHolder'
+import { cn } from '@/utils/utils'
 
 const MemoPlaceholder = memo(InfoPlaceHolder)
 
@@ -10,12 +11,12 @@ const ProfileDefaultModalContent: FC<ModalContent> = forwardRef(
    ({ avatar, UserInfo, className }, ref: LegacyRef<HTMLDivElement>) => {
       return (
          <div
-            className={`overflow-y-auto ${className} custom-scroll`}
+            className={cn(`overflow-y-auto custom-scroll`, className)}
             ref={ref}
          >
             <aside className="w-full grid place-items-center mt-3">
                {avatar ? (
-                  <Avatar className="size-14">
+                  <Avatar className="size-20">
                      <AvatarImage src={avatar} />
                      <AvatarFallback>A</AvatarFallback>
                   </Avatar>
@@ -23,12 +24,12 @@ const ProfileDefaultModalContent: FC<ModalContent> = forwardRef(
                   <PersonIcon className="size-12" />
                )}
             </aside>
-            <section className="w-full px-4 flex flex-col gap-4 mt-5 mb-5">
+            <section className="w-full px-4 500p:px-24 768p:px-6 flex flex-col gap-4 mt-10 mb-5">
                {UserInfo.map((item) => (
                   <MemoPlaceholder
                      key={item.Title}
                      title={item.Title}
-                     text={item.Text || ''}
+                     text={item.Text || 'Пусто'}
                   />
                ))}
             </section>

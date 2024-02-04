@@ -12,6 +12,14 @@ import { comfortaa } from '@/utils/fonts'
 export const metadata: Metadata = {
    title: 'Новости',
    description: 'Новости Московской Биржи (MOEX)',
+   openGraph: {
+      title: 'Новости',
+      description: 'Новости Московской Биржи (MOEX)',
+   },
+   twitter: {
+      title: 'Новости',
+      description: 'Новости Московской Биржи (MOEX)',
+   },
 }
 
 export default async function News({

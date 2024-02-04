@@ -22,12 +22,13 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import { DialogTriggerProps } from '@radix-ui/react-dialog'
 import { IconProps } from '@radix-ui/react-icons/dist/types'
 import { AuthContext } from '@/hoc/AuthProvider'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { URLList } from '@/utils/const'
 import SettingsModalContent from '@/components/widgets/SettingsModalContent'
 import ProfileModalContent from '@/components/widgets/ProfileModalContent'
 import { UserProfileInfo } from '@/types/Modals.types'
 import { ConvertDate } from '@/utils/ConvertDate'
+import toast from 'react-hot-toast'
 
 type ContentType = null | 'profile' | 'settings'
 
@@ -45,12 +46,13 @@ type ModalWindow = {
    Buttons: TButtons
    ModalContent: ContentType
    Avatar: string
-   UserInfo: UserProfileInfo
+   UserInfo: UserProfileInfo[]
 }
 
 export default function MainMenuDropDown() {
    const [ModalContent, setModalContent] = useState<ContentType>(null)
    const { push } = useRouter()
+   const path = usePathname()
 
    const center: string = 'flex items-center gap-2.5'
    const isMobile = useMatchMedia(820)
@@ -58,30 +60,58 @@ export default function MainMenuDropDown() {
    const signWith = user.app_metadata.provider
    const verifyEmail = user.user_metadata.email_verified
 
-   const UserInfo: UserProfileInfo = [
-      { Title: 'Имя', Text: user.user_metadata?.full_name, Editable: true },
-      { Title: 'Email', Text: user.email, Editable: signWith === 'email' },
+   const UserInfo: UserProfileInfo[] = [
+      {
+         Title: 'Имя',
+         Text: user.user_metadata?.full_name,
+         Editable: true,
+         Value: 'full_name',
+         type: 'text',
+      },
+      {
+         Title: 'Email',
+         Text: user.email,
+         Editable: signWith === 'email',
+         Value: 'email',
+         type: 'email',
+      },
       {
          Title: 'Подтверждение Email',
          Text: verifyEmail ? 'Выполнено' : 'Не выполнено',
          Editable: false,
+         Value: 'email_verified',
+         type: 'text',
       },
       {
          Title: 'Вход с помощью',
          Text: signWith?.toUpperCase(),
          Editable: false,
+         Value: 'provider',
+         type: 'text',
       },
       {
          Title: 'Последний вход',
          Text: user.last_sign_in_at && ConvertDate(user.last_sign_in_at),
          Editable: false,
+         Value: 'last_sign_in_at',
+         type: 'text',
       },
       {
          Title: 'Зарегистрирован',
          Text: ConvertDate(user.created_at),
          Editable: false,
+         Value: 'created_at',
+         type: 'text',
       },
    ]
+
+   const Share = () => {
+      try {
+         navigator.share({ url: `https://stock-info-theta.vercel.app${path}` })
+      } catch (e) {
+         toast.error((e as Error).message)
+      }
+   }
 
    const Buttons: TButtons = [
       {
@@ -101,7 +131,7 @@ export default function MainMenuDropDown() {
       {
          text: 'Поделиться',
          img: Share1Icon,
-         click: () => console.log('share'),
+         click: Share,
          dopClass: center,
          triggered: false,
       },

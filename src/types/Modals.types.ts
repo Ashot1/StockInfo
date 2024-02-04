@@ -1,34 +1,42 @@
-import { ReactNode } from 'react'
+import { InputHTMLAttributes, ReactNode } from 'react'
 import { DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { TConfirmMessage } from '@/components/entity/CongirmMessage'
 
 export interface IModalContent {
-    title: string
-    AnotherHeader?: ReactNode
-    AnotherFooter?: ReactNode
-    children?: ReactNode
-    type: 'Drawer' | 'Dialog'
+   title: string
+   AnotherHeader?: ReactNode
+   AnotherFooter?: ReactNode
+   children?: ReactNode
+   type: 'Drawer' | 'Dialog'
 }
 
 export type TModalSubContent = Omit<IModalContent, 'type'> & {
-    HeaderComponent: typeof DrawerHeader
-    HeaderTitleComponent: typeof DrawerTitle
+   HeaderComponent: typeof DrawerHeader
+   HeaderTitleComponent: typeof DrawerTitle
 }
 
 export type ModalContent = {
-    avatar?: string
-    UserInfo: UserProfileInfo
-    className?: string
+   avatar?: string
+   UserInfo: UserProfileInfo[]
+   className?: string
 }
 
 export type TProfileModalContent = Pick<IModalContent, 'type'> & ModalContent
 
 export type UserProfileInfo = {
-    Title: string
-    Text: string | undefined
-    Editable: boolean
-}[]
+   Title: string
+   Text: string | undefined
+   Editable: boolean
+   Value: string
+} & Pick<InputHTMLAttributes<HTMLInputElement>, 'type'>
 
 export type ProfileModeState =
-    | (Omit<TConfirmMessage, 'className'> & { name: 'confirm' })
-    | { name: 'default' }
+   | { name: 'edit' }
+   | (Omit<TConfirmMessage, 'className'> & { name: 'confirm' })
+   | { name: 'default' }
+
+export type ProfileModeEdit = {
+   className?: string
+   avatar?: string
+   Info: UserProfileInfo[]
+}

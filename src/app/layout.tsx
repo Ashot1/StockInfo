@@ -4,6 +4,7 @@ import './globals.css'
 import ThemeProvider from '@/hoc/ThemeProvider'
 import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -47,6 +48,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="ru">
          <body className={inter.className}>
             <ThemeProvider defaultTheme="system" enableSystem attribute="class">
+               <Toaster
+                  position="top-right"
+                  reverseOrder={true}
+                  toastOptions={{
+                     style: {
+                        background: 'hsl(var(--secondary))',
+                        color: 'var(--Main)',
+                     },
+                  }}
+               />
                <div id="modal"></div>
                {children}
             </ThemeProvider>

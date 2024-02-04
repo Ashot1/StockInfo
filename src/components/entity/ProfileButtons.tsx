@@ -9,71 +9,68 @@ import { DeleteUser } from '@/actions/Account'
 import TryCatch from '@/utils/TryCatch'
 
 const ProfileButtons: FC<{
-    setMode: Dispatch<SetStateAction<ProfileModeState>>
+   setMode: Dispatch<SetStateAction<ProfileModeState>>
 }> = ({ setMode }) => {
-    const { refresh } = useRouter()
+   const { refresh } = useRouter()
 
-    // выход из аккаунта
-    const QuitAccount = async () => {
-        return TryCatch(async () => {
-            const { error } = await supabase.auth.signOut({ scope: 'local' })
-            if (error) throw error
-            refresh()
-            return { data: undefined }
-        })
-    }
+   // выход из аккаунта
+   const QuitAccount = async () => {
+      return TryCatch(async () => {
+         const { error } = await supabase.auth.signOut({ scope: 'local' })
+         if (error) throw error
+         refresh()
+         return { data: undefined }
+      })
+   }
 
-    // удаление аккаунта
-    const DeleteAccount = async () => {
-        const { error } = await DeleteUser()
-        if (error) return { error: error }
-        refresh()
-        return {}
-    }
+   const QuitClick = () =>
+      setMode({
+         name: 'confirm',
+         BackFunction: BackToMain,
+         Title: 'Выход',
+         Description: 'Вы уверены, что хотите выйти из аккаунта?',
+         CallbackText: 'Выйти',
+         action: QuitAccount,
+      })
 
-    // переключение в режим редактирования
-    const EditMode = () => {}
+   // удаление аккаунта
+   const DeleteAccount = async () => {
+      const { error } = await DeleteUser()
+      if (error) return { error: error }
+      refresh()
+      return {}
+   }
 
-    // возвращение на главную
-    const BackToMain = () => setMode({ name: 'default' })
+   const DelClick = () =>
+      setMode({
+         name: 'confirm',
+         BackFunction: BackToMain,
+         CallbackText: 'Удалить',
+         action: DeleteAccount,
+         Description:
+            'Вы уверены, что хотите удалить свой аккаунт? Отменить действие будет невозможно',
+         Title: 'Удаление',
+      })
 
-    return (
-        <>
-            <Button variant="outline">Изменить</Button>
-            <Button
-                variant="secondary"
-                onClick={() =>
-                    setMode({
-                        name: 'confirm',
-                        BackFunction: BackToMain,
-                        Title: 'Выход',
-                        Description:
-                            'Вы уверены, что хотите выйти из аккаунта?',
-                        CallbackText: 'Выйти',
-                        action: QuitAccount,
-                    })
-                }
-            >
-                Выйти
-            </Button>
-            <Button
-                variant="destructive"
-                onClick={() =>
-                    setMode({
-                        name: 'confirm',
-                        BackFunction: BackToMain,
-                        CallbackText: 'Удалить',
-                        action: DeleteAccount,
-                        Description:
-                            'Вы уверены, что хотите удалить свой аккаунт? Отменить действие будет невозможно',
-                        Title: 'Удаление',
-                    })
-                }
-            >
-                Удалить
-            </Button>
-        </>
-    )
+   // режим редактирования
+   const EditClick = () => setMode({ name: 'edit' })
+
+   // возвращение на главную
+   const BackToMain = () => setMode({ name: 'default' })
+
+   return (
+      <>
+         <Button variant="outline" onClick={EditClick}>
+            Изменить
+         </Button>
+         <Button variant="secondary" onClick={QuitClick}>
+            Выйти
+         </Button>
+         <Button variant="destructive" onClick={DelClick}>
+            Удалить
+         </Button>
+      </>
+   )
 }
 
 export default ProfileButtons
