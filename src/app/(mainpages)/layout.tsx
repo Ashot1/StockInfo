@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 import MainHeader from '@/components/module/MainHeader'
 import AuthProvider from '@/hoc/AuthProvider'
 import { URLList } from '@/utils/const'
@@ -8,6 +8,8 @@ import HomeIcon from '@/../public/Menu/home.svg'
 import BondsIcon from '@/../public/Menu/bond.svg'
 import CurrencyIcon from '@/../public/Menu/currency.svg'
 import { GetUser } from '@/actions/Account'
+import Loader from '@/components/ui/loader'
+import ScrollStateBar from '@/components/ui/ScrollStateBar'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
@@ -38,10 +40,11 @@ export default async function MainPagesLayout({
    return (
       <>
          <AuthProvider value={user}>
+            <ScrollStateBar />
             <MainHeader HeaderButtons={HeaderButtons} />
             <main
-               className="mt-6 768p:mt-40 mb-10 500p:w-[80%] 500p:ml-[10%]
-                    px-2 1080p:px-[15dvw] min-h-dvh flex flex-col"
+               className="mb-10 mt-6 flex min-h-dvh flex-col
+                    px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]"
             >
                {children}
             </main>

@@ -15,8 +15,7 @@ import StyledInput from '@/components/ui/StyledInput'
 import { Button } from '@/components/ui/button'
 import { Path, SubmitHandler, useForm } from 'react-hook-form'
 import { AuthFormPatterns } from '@/utils/const'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { PersonIcon, ReloadIcon } from '@radix-ui/react-icons'
+import { ReloadIcon } from '@radix-ui/react-icons'
 import toast from 'react-hot-toast'
 import ChangeAvatar from '@/components/entity/ChangeAvatar'
 import { UpdateUser } from '@/actions/Account'
@@ -90,12 +89,12 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
 
       return (
          <div
-            className={cn(`overflow-y-auto custom-scroll`, className)}
+            className={cn(`custom-scroll overflow-y-auto`, className)}
             ref={ref}
          >
             <ChangeAvatar AvatarURL={AvatarURL} ChooseAvClick={ChooseAvClick} />
             <form onSubmit={handleSubmit(Submit)}>
-               <section className="w-full px-4 flex flex-col gap-4 500p:px-24 768p:px-6">
+               <section className="flex w-full flex-col gap-4 px-4 500p:px-24 768p:px-6">
                   {Info.map((item) => {
                      if (item.Editable)
                         return (
@@ -117,7 +116,7 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
                         )
                   })}
                </section>
-               <div className="mt-5 flex gap-4 justify-center">
+               <div className="mt-5 flex justify-center gap-4">
                   <Button variant="outline" onClick={ResetClick}>
                      Сбросить
                   </Button>

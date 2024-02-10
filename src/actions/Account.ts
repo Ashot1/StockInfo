@@ -8,7 +8,6 @@ import { cookies } from 'next/headers'
 import { createClient, UserAttributes } from '@supabase/supabase-js'
 import TryCatch from '@/utils/TryCatch'
 import { User } from '@supabase/gotrue-js'
-import { UserMetadata } from '@/types/Auth.types'
 
 async function checkSupabaseCookie() {
    const cookieStore = cookies()

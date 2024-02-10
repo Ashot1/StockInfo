@@ -2,22 +2,23 @@
 
 import TryCatch from '@/utils/TryCatch'
 import {
-    CurrentStockRequest,
-    StocksRequest,
-    StocksSearchRequest,
+   CurrentStockRequest,
+   StocksRequest,
+   StocksSearchRequest,
 } from '@/types/Stocks.types'
 
 export async function getStocksList(start: string = '0', limit: number) {
-    return TryCatch<StocksRequest>(async () => {
-        const result = await fetch(
-            `https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.data=on`
-        )
-        const data: StocksRequest = await result.json()
+   return TryCatch<StocksRequest>(async () => {
+      const result = await fetch(
+         `https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.data=on`,
+         { cache: 'no-store' }
+      )
+      const data: StocksRequest = await result.json()
 
-        if (!result || !data) throw new Error('Акции не найдены')
+      if (!result || !data) throw new Error('Акции не найдены')
 
-        return { data: data }
-    })
+      return { data: data }
+   })
 }
 
 // export async function getCurrentStock(stock: string) {

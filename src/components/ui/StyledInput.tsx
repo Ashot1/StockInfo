@@ -47,36 +47,36 @@ const StyledInput = <T extends FieldValues>({
       }
 
    return (
-      <label className="relative flex flex-col cursor-text">
+      <label className="relative flex cursor-text flex-col">
          <input
             {...additionalProps}
             name={name}
             type={type}
             defaultValue={defaultValue}
             className={cn(
-               `py-1.5 px-2 rounded-lg text-transparent duration-300
-               bg-[var(--grayBG)] focus:bg-transparent
-               border-2 border-transparent
-               focus:border-black dark:focus:border-white focus:text-black dark:focus:text-white peer`,
+               `peer rounded-lg border-2 border-transparent bg-[var(--grayBG)]
+               px-2 py-3
+               text-transparent duration-300
+               focus:border-black focus:bg-transparent focus:text-black dark:focus:border-white dark:focus:text-white`,
                comfortaa.className,
                error && 'border-red-900'
             )}
          />
          <span
             className={cn(
-               `absolute top-2 left-3 peer-focus:-top-3.5 duration-200 flex gap-3 items-center max-w-[80%] px-3 peer-focus:text-sm rounded`,
+               `absolute left-3 top-[50%] flex max-w-[80%] translate-y-[-100%] items-center gap-3 rounded px-2 duration-200 peer-focus:-top-3.5 peer-focus:translate-y-0 peer-focus:text-sm`,
                background
             )}
          >
             <p className="">{title}</p>
             {defaultValue && '/'}
             {defaultValue && (
-               <p className="opacity-25 text-sm truncate">{defaultValue}</p>
+               <p className="truncate text-sm opacity-25">{defaultValue}</p>
             )}
          </span>
 
-         <span className="min-h-6 flex gap-2 items-center ml-2 text-red-900 text-sm">
-            {error && <ExclamationTriangleIcon className="size-4 mt-0.5" />}
+         <span className="ml-2 flex min-h-6 items-center gap-2 text-sm text-red-900">
+            {error && <ExclamationTriangleIcon className="mt-0.5 size-4" />}
             {error ? error?.message || <>Ошибка</> : ''}
          </span>
       </label>

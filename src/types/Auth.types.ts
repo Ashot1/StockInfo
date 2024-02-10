@@ -1,4 +1,4 @@
-import { Provider, Session, User, WeakPassword } from '@supabase/gotrue-js'
+import { Provider } from '@supabase/gotrue-js'
 
 export type OAuthProviders = 'google' | 'discord'
 export type OAuthData =
