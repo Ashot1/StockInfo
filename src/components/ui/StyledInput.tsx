@@ -55,7 +55,7 @@ const StyledInput = <T extends FieldValues>({
             defaultValue={defaultValue}
             className={cn(
                `peer rounded-lg border-2 border-transparent bg-[var(--grayBG)]
-               px-2 py-3
+               px-2 py-2
                text-transparent duration-300
                focus:border-black focus:bg-transparent focus:text-black dark:focus:border-white dark:focus:text-white`,
                comfortaa.className,

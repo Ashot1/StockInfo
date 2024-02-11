@@ -12,66 +12,66 @@ import { useMatchMedia } from '@/hooks/MatchMedia'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 
 interface IMainHeader {
-  HeaderButtons: { text: string; icon: StaticImport; link: string }[]
+   HeaderButtons: { text: string; icon: StaticImport; link: string }[]
 }
 
 export default function MainHeader({ HeaderButtons }: IMainHeader) {
-  const [IsHidden, setIsHidden] = useState(false)
-  const { scrollY } = useScroll()
-  const prevScrollValue = useRef(40)
-  const isMobile = useMatchMedia(820)
-  const direction = isMobile ? 150 : -150
+   const [IsHidden, setIsHidden] = useState(false)
+   const { scrollY } = useScroll()
+   const prevScrollValue = useRef(40)
+   const isMobile = useMatchMedia(820)
+   const direction = isMobile ? 150 : -150
 
-  useMotionValueEvent(scrollY, 'change', (latest) => {
-    const difference = prevScrollValue.current < latest
-    prevScrollValue.current = latest
+   useMotionValueEvent(scrollY, 'change', (latest) => {
+      const difference = prevScrollValue.current < latest
+      prevScrollValue.current = latest
 
-    const timer = setTimeout(() => {
-      setIsHidden(difference)
-    }, 250)
+      const timer = setTimeout(() => {
+         setIsHidden(difference)
+      }, 250)
 
-    return () => clearTimeout(timer)
-  })
+      return () => clearTimeout(timer)
+   })
 
-  if (isMobile === null) return
+   if (isMobile === null) return
 
-  return (
-    <motion.header
-      initial={{ y: direction }}
-      animate={{ y: IsHidden ? direction : 0 }}
-      className="fixed w-full bottom-4 768p:bottom-auto 768p:top-6
-       px-3 300p:px-6 768p:px-10
-        grid place-items-center z-20 pointer-events-none"
-    >
-      <nav
-        className="bg-[#979797] dark:bg-white bg-opacity-20 dark:bg-opacity-10 backdrop-blur-md shadow-lg
-        w-full h-full grid grid-cols-5 768p:grid-cols-6 rounded-[30px] 768p:rounded-[10px]
-        py-3 px-3 768p:px-6 max-w-[500px] 768p:max-w-[1000px] min-w-[200px] pointer-events-auto"
+   return (
+      <motion.header
+         initial={{ y: direction }}
+         animate={{ y: IsHidden ? direction : 0 }}
+         className="pointer-events-none fixed bottom-4 z-30 grid
+       w-full place-items-center px-3
+        300p:px-6 768p:bottom-auto 768p:top-6 768p:px-10"
       >
-        <Link
-          href={URLList.home}
-          className="hover:[text-shadow:_0_0_10px_#3b82f6] transition-all duration-500 opacity-80
-            hover:drop-shadow-[0_0_15px_var(--Main)] items-center hidden 768p:flex"
-        >
-          <Logo
-            scale={0.55}
-            variant="filled"
-            color="var(--Main)"
-            className="h-[20px]"
-          />
-        </Link>
-        {HeaderButtons.map((item) => (
-          <HeaderButton
-            text={item.text}
-            link={item.link}
-            icon={item.icon}
-            key={item.link}
-          />
-        ))}
-        <div className="hidden 768p:flex justify-end items-center">
-          <MainMenuDropDown />
-        </div>
-      </nav>
-    </motion.header>
-  )
+         <nav
+            className="pointer-events-auto grid h-full w-full min-w-[200px] max-w-[500px]
+        grid-cols-5 rounded-[30px] bg-[#979797] bg-opacity-20 px-3 py-3 shadow-lg
+        backdrop-blur-md 768p:max-w-[1000px] 768p:grid-cols-6 768p:rounded-[10px] 768p:px-6 dark:bg-white dark:bg-opacity-10"
+         >
+            <Link
+               href={URLList.home}
+               className="hidden items-center opacity-80 transition-all
+            duration-500 hover:drop-shadow-[0_0_15px_var(--Main)] hover:[text-shadow:_0_0_10px_#3b82f6] 768p:flex"
+            >
+               <Logo
+                  scale={0.55}
+                  variant="filled"
+                  color="var(--Main)"
+                  className="h-[20px]"
+               />
+            </Link>
+            {HeaderButtons.map((item) => (
+               <HeaderButton
+                  text={item.text}
+                  link={item.link}
+                  icon={item.icon}
+                  key={item.link}
+               />
+            ))}
+            <div className="hidden items-center justify-end 768p:flex">
+               <MainMenuDropDown />
+            </div>
+         </nav>
+      </motion.header>
+   )
 }

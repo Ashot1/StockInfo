@@ -7,6 +7,7 @@ import { getNews } from '@/actions/News'
 import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { comfortaa } from '@/utils/fonts'
+import ErrorMessage from '@/components/ui/ErrorMessage'
 
 export const metadata: Metadata = {
    title: 'Новости',
@@ -28,13 +29,7 @@ export default async function News({
 }) {
    const { data: newsList, error } = await getNews(searchParams.start)
 
-   // TODO: сделать нормальное отображение
-   if (!newsList || error)
-      return (
-         <div className="grid h-full w-full place-items-center">
-            Произошла ошибка <br /> {error}
-         </div>
-      )
+   if (!newsList || error) return <ErrorMessage errMessage={error} />
 
    const id = newsList.sitenews.columns.indexOf('id')
    const title = newsList.sitenews.columns.indexOf('title')
@@ -75,7 +70,7 @@ export default async function News({
                      editedAt={news[editedAt] as string}
                      index={index + 1 + startIndex}
                      ClassName={`animate-appearance-moving opacity-0 fill-mode-forwards
-                            delay-${100 * index}
+                            delay-${100 * (index <= 20 ? index : 20)}
                             `}
                   />
                )

@@ -29,7 +29,7 @@ export default function DefaultListItem({
             className
          )}
       >
-         <div className="flex gap-3">
+         <div className="flex items-center gap-3">
             <span className="relative size-11 768p:size-14">
                <Image
                   src={img}
@@ -47,9 +47,9 @@ export default function DefaultListItem({
          </div>
          <div>
             {rightText && (
-               <p className="768p:texst-base text-sm">{rightText}</p>
+               <p className="768p:texst-base text-end text-sm">{rightText}</p>
             )}
-            {rightSubtext && (
+            {rightSubtext ? (
                <p
                   className={`${
                      rightSubtext > 0 ? 'text-green-700' : 'text-red-700'
@@ -58,6 +58,8 @@ export default function DefaultListItem({
                   {rightSubtext > 0 ? '+' : ''}
                   {rightSubtext}%
                </p>
+            ) : (
+               ''
             )}
          </div>
       </Link>

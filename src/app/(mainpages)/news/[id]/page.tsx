@@ -8,6 +8,7 @@ import { FilePlusIcon } from '@radix-ui/react-icons'
 import { getCurrentNews } from '@/actions/News'
 import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
+import ErrorMessage from '@/components/ui/ErrorMessage'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
    const { data: resJSON } = await getCurrentNews(params.id)
@@ -46,28 +47,23 @@ export default async function SpecificNews({
 }) {
    const { data: CurrentNews, error } = await getCurrentNews(id)
 
-   // TODO: сделать нормальное отображение
-   if (!CurrentNews || error)
-      return (
-         <div className="w-full h-full grid place-items-center">
-            Произошла ошибка <br /> {error}
-         </div>
-      )
-   const title = CurrentNews.content.columns.indexOf('title')
-   const body = CurrentNews.content.columns.indexOf('body')
-   const publishedAt = CurrentNews.content.columns.indexOf('published_at')
+   if (!CurrentNews || error) return <ErrorMessage errMessage={error} />
 
    if (!CurrentNews.content.data[0]) {
       redirect(URLList.notFound)
       return
    }
 
+   const title = CurrentNews.content.columns.indexOf('title')
+   const body = CurrentNews.content.columns.indexOf('body')
+   const publishedAt = CurrentNews.content.columns.indexOf('published_at')
+
    const news = CurrentNews.content.data[0]
 
    return (
       <Suspense fallback={<CenterScreenLoader />}>
          <div className="animate-appearance">
-            <div className="w-full flex text-center flex-col items-center gap-14">
+            <div className="flex w-full flex-col items-center gap-14 text-center">
                <BackButton />
                <p
                   className={`w-full text-pretty text-lg ${raleway.className}`}
@@ -75,13 +71,13 @@ export default async function SpecificNews({
                ></p>
             </div>
             <ArrowSeparator />
-            <span className="w-full m-0 flex justify-start mb-3 items-center gap-1 opacity-50 text-xs">
+            <span className="m-0 mb-3 flex w-full items-center justify-start gap-1 text-xs opacity-50">
                <FilePlusIcon />
                {ConvertDate(news[publishedAt] as string)}
             </span>
             <div
-               className="bg-neutral-200 dark:bg-neutral-900 bg-opacity-20 dark:bg-opacity-50
-          rounded-lg p-3 768p:p-6 shadow text-sm styledNewsContent overflow-x-auto"
+               className="styledNewsContent overflow-x-auto rounded-lg bg-neutral-200
+          bg-opacity-20 p-3 text-sm shadow 768p:p-6 dark:bg-neutral-900 dark:bg-opacity-50"
                dangerouslySetInnerHTML={{
                   __html: news[body] as string,
                }}

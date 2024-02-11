@@ -17,17 +17,22 @@ export async function getStocksList(start: string = '0', limit: number) {
 
       if (!result || !data) throw new Error('Акции не найдены')
 
-      return { data: data }
+      return { data }
    })
 }
 
-// export async function getCurrentStock(stock: string) {
-//     return TryCatch<CurrentStockRequest>(async () => {
-//         const result = await fetch(
-//             `https://iss.moex.com/iss/securities/${stock}.json?iss.meta=off`
-//         )
-//     })
-// }
+export async function getCurrentStock(stock: string) {
+   return TryCatch<CurrentStockRequest>(async () => {
+      const result = await fetch(
+         `https://iss.moex.com/iss/securities/${stock}.json?iss.meta=off`
+      )
+      const data: CurrentStockRequest = await result.json()
+
+      if (!result || !data) throw new Error('Акция не найдена')
+
+      return { data }
+   })
+}
 
 // export async function searchStock(stock: string) {
 //     return TryCatch<StocksSearchRequest>(async () => {

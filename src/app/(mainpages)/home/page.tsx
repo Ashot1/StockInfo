@@ -1,11 +1,11 @@
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { GetUser } from '@/actions/Account'
+import ErrorMessage from '@/components/ui/ErrorMessage'
 
 export default async function Info() {
    const { data: user, error } = await GetUser()
 
-   if (error)
-      return <div className="grid h-dvh w-dvw place-items-center">{error}</div>
+   if (error) return <ErrorMessage errMessage={error} />
 
    return (
       <>
