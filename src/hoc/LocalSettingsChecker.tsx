@@ -18,7 +18,7 @@ const LocalSettingsChecker: FC<{
       }
 
       setValue(item)
-   }, [Params.name])
+   }, [Params.name, Params.defaultValue])
 
    if (Params.conditionalRender && Value === Params.negative) return <></>
 

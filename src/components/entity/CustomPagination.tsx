@@ -29,7 +29,7 @@ const CustomPagination: FC<{
          document.querySelector<HTMLElement>(element)?.offsetWidth ||
             window.innerWidth
       )
-   }, [])
+   }, [element])
 
    // перерасчет максимальной длинны при изменении ширины окна
    useEffect(() => {
