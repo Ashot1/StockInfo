@@ -7,10 +7,18 @@ import {
    useContext,
    useState,
 } from 'react'
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import { DropdownMenuItem } from '@/components/ui/ShadCN/dropdown-menu'
+import {
+   Dialog,
+   DialogContent,
+   DialogTrigger,
+} from '@/components/ui/ShadCN/dialog'
 import TripleDropDown from '@/components/entity/TripleDropDown'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import {
+   Drawer,
+   DrawerContent,
+   DrawerTrigger,
+} from '@/components/ui/ShadCN/drawer'
 import { useMatchMedia } from '@/hooks/MatchMedia'
 import {
    Share1Icon,
@@ -18,7 +26,7 @@ import {
    QuestionMarkCircledIcon,
    PersonIcon,
 } from '@radix-ui/react-icons'
-import { Avatar, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarImage } from '@/components/ui/ShadCN/avatar'
 import { DialogTriggerProps } from '@radix-ui/react-dialog'
 import { IconProps } from '@radix-ui/react-icons/dist/types'
 import { AuthContext } from '@/hoc/AuthProvider'

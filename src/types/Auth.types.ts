@@ -13,6 +13,7 @@ export type UserMetadata = {
    avatar_url: string
    email_verified: boolean
    full_name: string
+   VisitHistory: { icon: string; title: string; url: string }[]
 }
 
 export type RegisterPasswordInfo = BasicAuthInfo & { metadata: UserMetadata }

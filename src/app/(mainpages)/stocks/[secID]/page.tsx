@@ -5,11 +5,10 @@ import { getCurrentStock } from '@/actions/Stocks'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { redirect } from 'next/navigation'
 import { URLList } from '@/utils/const'
-import Image from 'next/image'
-import ArrowSeparator from '@/components/ui/ArrowSeparator'
-import IMGcolorCard from '@/components/ui/IMGcolorCard'
-import IMGshadowCard from '@/components/ui/IMGshadowCard'
-import InfoPlaceHolder from '@/components/ui/InfoPlaceHolder'
+import IMGshadowCard from '@/components/ui/Img/IMGshadowCard'
+import ImageServerErrorCheck from '@/components/ui/Img/ImageServerErrorCheck'
+import ControlPanel from '@/components/widgets/ControlPanel'
+import MainSecurityInfo from '@/components/entity/MainSecurityInfo'
 
 export default async function CurrentStock({
    params: { secID },
@@ -41,16 +40,15 @@ export default async function CurrentStock({
    return (
       <Suspense fallback={<CenterScreenLoader />}>
          <div className="animate-appearance">
-            <div className="mb-10 grid w-full place-items-center">
-               <BackButton />
-            </div>
-            <div className="flex w-full flex-col items-center justify-center gap-4 768p:flex-row 768p:justify-center">
+            <ControlPanel />
+            <div className="mb-14 flex w-full flex-col items-center justify-center gap-4 768p:flex-row 768p:justify-center">
                <IMGshadowCard img={img} className="relative size-20">
-                  <Image
+                  <ImageServerErrorCheck
                      src={img}
                      alt={secID}
-                     fill
+                     defaultSrc="/StockPlaceHolder.png"
                      className="rounded-2xl bg-gray-500"
+                     onErrorClass={`dark:invert rounded bg-transparent dark:bg-transparent`}
                   />
                </IMGshadowCard>
                <span className="text-center">
@@ -62,18 +60,12 @@ export default async function CurrentStock({
                   </p>
                </span>
             </div>
-            <ArrowSeparator />
-            <section className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
-               {StockInfoData.map((stock) => {
-                  return (
-                     <InfoPlaceHolder
-                        key={stock[nameIndex]}
-                        title={stock[titleIndex] as string}
-                        text={stock[valueIndex] as string}
-                     />
-                  )
-               })}
-            </section>
+            <MainSecurityInfo
+               currencyList={StockInfoData}
+               titleIndex={titleIndex}
+               valueIndex={valueIndex}
+               nameIndex={nameIndex}
+            />
          </div>
       </Suspense>
    )

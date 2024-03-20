@@ -49,15 +49,25 @@
             transparent 50%
          );
       --gradientBGSmall: radial-gradient(
-            at 80% 10%,
-            hsla(202, 35%, 35%, 0.9) 30px,
-            transparent 70%
+            at 30% 40%,
+            hsla(202, 35%, 35%, 0.7) 0px,
+            transparent 50%
          ),
          radial-gradient(
-            at 30% 80%,
-            hsla(202, 35%, 35%, 0.8) 0px,
+            at 70% 60%,
+            hsla(202, 35%, 35%, 0.7) 0px,
             transparent 50%
          );
+      /*--gradientBGSmall: radial-gradient(*/
+      /*      at 80% 10%,*/
+      /*      hsla(202, 35%, 35%, 0.9) 30px,*/
+      /*      transparent 70%*/
+      /*   ),*/
+      /*   radial-gradient(*/
+      /*      at 30% 80%,*/
+      /*      hsla(202, 35%, 35%, 0.8) 0px,*/
+      /*      transparent 50%*/
+      /*   );*/
    }
 
    .dark {
@@ -105,17 +115,26 @@
             hsla(202, 67%, 50%, 0.3) 0px,
             transparent 40%
          );
-
       --gradientBGSmall: radial-gradient(
-            at 80% 10%,
-            hsla(202, 67%, 50%, 0.6) 50px,
-            transparent 50%
+            at 30% 40%,
+            hsla(202, 67%, 50%, 0.3) 0px,
+            transparent 60%
          ),
          radial-gradient(
-            at 30% 80%,
-            hsla(202, 67%, 50%, 0.4) 0px,
-            transparent 50%
+            at 70% 60%,
+            hsla(202, 67%, 50%, 0.3) 0px,
+            transparent 60%
          );
+      /*--gradientBGSmall: radial-gradient(*/
+      /*      at 80% 10%,*/
+      /*      hsla(202, 67%, 50%, 0.6) 50px,*/
+      /*      transparent 50%*/
+      /*   ),*/
+      /*   radial-gradient(*/
+      /*      at 30% 80%,*/
+      /*      hsla(202, 67%, 50%, 0.4) 0px,*/
+      /*      transparent 50%*/
+      /*   );*/
    }
 }
 
@@ -134,22 +153,24 @@ html {
    scrollbar-gutter: stable;
    overflow-y: scroll;
    overflow-x: hidden;
-   &::before {
-      backface-visibility: hidden;
-      transform: translate3d(0, 0, 0) translateZ(0);
-      content: '';
-      position: absolute;
-      width: 100dvw;
-      height: 100dvh;
-      filter: blur(140px);
-      z-index: -1;
-      border-radius: 20%;
-      animation: BackgroundAnimation 4s ease-out;
-      background-image: var(--gradientBG);
-   }
 }
+
+.glow-effect {
+   backface-visibility: hidden;
+   transform: translate3d(0, 0, 0) translateZ(0);
+   content: '';
+   position: absolute;
+   width: 100dvw;
+   height: 100dvh;
+   filter: blur(140px);
+   z-index: -1;
+   border-radius: 20%;
+   animation: BackgroundAnimation 4s ease-out;
+   background-image: var(--gradientBG);
+}
+
 @media (max-width: 768px) {
-   html::before {
+   .glow-effect {
       background-image: var(--gradientBGSmall);
    }
 }
@@ -168,6 +189,7 @@ body {
    min-height: 100%;
    overflow-x: hidden;
    -webkit-tap-highlight-color: transparent;
+   position: relative;
    &::-webkit-scrollbar {
       background: transparent;
    }
@@ -277,6 +299,21 @@ body {
       top: 0;
       left: 0;
    }
+}
+
+@keyframes ChangeWidthToScroll {
+   from {
+      scale: 0;
+   }
+   to {
+      scale: 1;
+   }
+}
+
+.scrollDependWidth {
+   animation: ChangeWidthToScroll 0.4s ease-out;
+   animation-timeline: scroll(y root);
+   width: 100dvw;
 }
 
 /*.appearance-moving-scroll {*/

@@ -2,13 +2,18 @@ import PageTitle from '@/components/ui/PageTitle'
 import { getStocksList } from '@/actions/Stocks'
 import { Suspense } from 'react'
 import { PageStartCounter, URLList } from '@/utils/const'
-import CustomPagination from '@/components/entity/CustomPagination'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { Metadata } from 'next'
-import DefaultListItem from '@/components/ui/DefaultListItem'
 import { comfortaa } from '@/utils/fonts'
 import ErrorMessage from '@/components/ui/ErrorMessage'
-import DefaultList from '@/components/ui/DefaultList'
+import DefaultList from '@/components/ui/DefaultList/DefaultList'
+import dynamic from 'next/dynamic'
+const DefaultListItem = dynamic(
+   () => import('@/components/ui/DefaultList/DefaultListItem')
+)
+const CustomPagination = dynamic(
+   () => import('@/components/entity/CustomPagination')
+)
 
 export const metadata: Metadata = {
    title: 'Акции',
@@ -20,10 +25,18 @@ export default async function StocksPage({
 }: {
    searchParams: { start?: string }
 }) {
-   const { data, error } = await getStocksList(
-      searchParams?.start,
-      PageStartCounter
+   return (
+      <>
+         <PageTitle>Список акций</PageTitle>
+         <Suspense fallback={<CenterScreenLoader />}>
+            <MainContent start={searchParams?.start} />
+         </Suspense>
+      </>
    )
+}
+
+const MainContent = async ({ start }: { start?: string }) => {
+   const { data, error } = await getStocksList(start, PageStartCounter)
 
    if (!data || error) return <ErrorMessage errMessage={error} />
 
@@ -35,11 +48,10 @@ export default async function StocksPage({
    const marketPrice3 = StocksList.indexOf('MARKETPRICE3')
    const closePrice = StocksList.indexOf('CLOSE')
    const maxSize = data['history.cursor'].columns.indexOf('TOTAL')
-   let startIndex = parseInt(searchParams.start || '0')
+   let startIndex = parseInt(start || '0')
 
    return (
-      <Suspense fallback={<CenterScreenLoader />}>
-         <PageTitle>Список акций</PageTitle>
+      <>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
@@ -93,6 +105,6 @@ export default async function StocksPage({
             element={'main'}
             maxSize={data['history.cursor'].data[0][maxSize]}
          />
-      </Suspense>
+      </>
    )
 }

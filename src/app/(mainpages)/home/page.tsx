@@ -1,9 +1,12 @@
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { GetUser } from '@/actions/Account'
 import ErrorMessage from '@/components/ui/ErrorMessage'
+import { UserMetadata } from '@/types/Auth.types'
 
 export default async function Info() {
    const { data: user, error } = await GetUser()
+
+   const metadata = user?.user_metadata as UserMetadata | undefined
 
    if (error) return <ErrorMessage errMessage={error} />
 
@@ -15,7 +18,7 @@ export default async function Info() {
                   Добро пожаловать
                </p>
                <p className="truncate 768p:text-center 768p:text-lg">
-                  {user?.user_metadata.full_name}
+                  {metadata?.full_name}
                </p>
             </span>
             <span className="768p:hidden">

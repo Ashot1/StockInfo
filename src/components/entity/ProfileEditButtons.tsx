@@ -2,7 +2,7 @@
 
 import { Dispatch, FC, SetStateAction } from 'react'
 import { ProfileModeState } from '@/types/Modals.types'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/ShadCN/button'
 
 const ProfileEditButtons: FC<{
    setMode: Dispatch<SetStateAction<ProfileModeState>>

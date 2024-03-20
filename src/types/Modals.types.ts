@@ -1,5 +1,5 @@
 import { InputHTMLAttributes, ReactNode } from 'react'
-import { DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
+import { DrawerHeader, DrawerTitle } from '@/components/ui/ShadCN/drawer'
 import { TConfirmMessage } from '@/components/entity/CongirmMessage'
 
 export interface IModalContent {

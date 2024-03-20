@@ -12,7 +12,7 @@ import {
 import { ProfileModeEdit, UserProfileInfo } from '@/types/Modals.types'
 import { cn } from '@/utils/utils'
 import StyledInput from '@/components/ui/StyledInput'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/ShadCN/button'
 import { Path, SubmitHandler, useForm } from 'react-hook-form'
 import { AuthFormPatterns } from '@/utils/const'
 import { ReloadIcon } from '@radix-ui/react-icons'

@@ -37,8 +37,9 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
 
    return (
       <motion.header
-         initial={{ y: direction }}
-         animate={{ y: IsHidden ? direction : 0 }}
+         initial={{ y: direction, scale: 0 }}
+         animate={{ y: IsHidden ? direction : 0, scale: IsHidden ? 0.4 : 1 }}
+         transition={{ duration: 0.4 }}
          className="pointer-events-none fixed bottom-4 z-30 grid
        w-full place-items-center px-3
         300p:px-6 768p:bottom-auto 768p:top-6 768p:px-10"

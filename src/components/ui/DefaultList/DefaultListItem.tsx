@@ -1,6 +1,6 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { cn } from '@/utils/utils'
+import ImageServerErrorCheck from '@/components/ui/Img/ImageServerErrorCheck'
 
 export type DefaultListItemProps = {
    img: string
@@ -31,11 +31,12 @@ export default function DefaultListItem({
       >
          <div className="flex items-center gap-3">
             <span className="relative size-11 768p:size-14">
-               <Image
+               <ImageServerErrorCheck
+                  defaultSrc="/StockPlaceHolder.png"
                   src={img}
-                  alt={subtext || 'Logo'}
-                  fill
                   className={`rounded-full bg-gray-200 text-center text-xs dark:bg-gray-500`}
+                  onErrorClass={`dark:invert rounded bg-transparent dark:bg-transparent`}
+                  alt={subtext || 'Logo'}
                />
             </span>
             <span>

@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/ShadCN/button'
 import { supabase } from '@/utils/Supabase.init'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { useRouter } from 'next/navigation'

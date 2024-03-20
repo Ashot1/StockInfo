@@ -9,6 +9,7 @@ import { getCurrentNews } from '@/actions/News'
 import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import ErrorMessage from '@/components/ui/ErrorMessage'
+import ControlPanel from '@/components/widgets/ControlPanel'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
    const { data: resJSON } = await getCurrentNews(params.id)
@@ -63,13 +64,11 @@ export default async function SpecificNews({
    return (
       <Suspense fallback={<CenterScreenLoader />}>
          <div className="animate-appearance">
-            <div className="flex w-full flex-col items-center gap-14 text-center">
-               <BackButton />
-               <p
-                  className={`w-full text-pretty text-lg ${raleway.className}`}
-                  dangerouslySetInnerHTML={{ __html: news[title] }}
-               ></p>
-            </div>
+            <ControlPanel />
+            <p
+               className={`w-full text-pretty text-center text-lg ${raleway.className}`}
+               dangerouslySetInnerHTML={{ __html: news[title] }}
+            ></p>
             <ArrowSeparator />
             <span className="m-0 mb-3 flex w-full items-center justify-start gap-1 text-xs opacity-50">
                <FilePlusIcon />

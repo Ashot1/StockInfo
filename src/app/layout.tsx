@@ -5,6 +5,8 @@ import ThemeProvider from '@/hoc/ThemeProvider'
 import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
+import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
+import { LocalStorageParameters } from '@/utils/const'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -48,6 +50,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="ru">
          <body className={inter.className}>
             <ThemeProvider defaultTheme="system" enableSystem attribute="class">
+               <LocalSettingsChecker Params={LocalStorageParameters.glowBG}>
+                  <div className="glow-effect" />
+               </LocalSettingsChecker>
                <Toaster
                   position="top-right"
                   reverseOrder={true}

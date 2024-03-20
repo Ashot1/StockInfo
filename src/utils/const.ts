@@ -1,5 +1,3 @@
-import { RegisterOptions } from 'react-hook-form'
-
 export const URLList = {
    front: '/front',
    login: '/front/login',
@@ -48,5 +46,15 @@ export const AuthFormPatterns = {
          value: 8,
          message: `Минимальная длинна 4 символа`,
       },
+   },
+}
+
+export const LocalStorageParameters = {
+   glowBG: {
+      name: 'glowBGEffect',
+      defaultValue: 'on',
+      negative: 'off',
+      positive: 'on',
+      conditionalRender: true,
    },
 }

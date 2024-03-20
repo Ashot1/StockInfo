@@ -3,8 +3,8 @@
 import { ElementType, FC, ReactNode, useState } from 'react'
 import { ProfileModeState, TProfileModalContent } from '@/types/Modals.types'
 import CustomModalContent from '@/components/ui/CustomModalContent'
-import { DrawerFooter } from '@/components/ui/drawer'
-import { DialogFooter } from '@/components/ui/dialog'
+import { DrawerFooter } from '@/components/ui/ShadCN/drawer'
+import { DialogFooter } from '@/components/ui/ShadCN/dialog'
 import ConfirmMessage from '@/components/entity/CongirmMessage'
 import ProfileDefaultModalContent from '@/components/entity/ProfileDefaultModalContent'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -29,7 +29,7 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
    // выбор футера
    const Drawerfooter = ({ BtnComponent }: { BtnComponent: ElementType }) => (
       <DrawerFooter className="animate-fast-appearance-moving-top">
-         <div className="w-full flex justify-center items-center gap-4">
+         <div className="flex w-full items-center justify-center gap-4">
             <BtnComponent setMode={setMode} />
          </div>
       </DrawerFooter>
@@ -87,7 +87,7 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
                   {...Animations.side}
                   key="confirm"
                   action={Mode.action}
-                  className="w-full h-full 768p:h-[40dvh] px-5"
+                  className="h-full w-full px-5 768p:h-[40dvh]"
                   BackFunction={Mode.BackFunction}
                   CallbackText={Mode.CallbackText}
                   Description={Mode.Description}

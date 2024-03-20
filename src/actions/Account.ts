@@ -86,10 +86,12 @@ export async function UpdateUser({
       delete IncomingData.email
 
       for (let item in IncomingData) {
-         if (user.user_metadata[item] !== IncomingData[item])
+         if (user.user_metadata[item] !== IncomingData[item]) {
             Object.assign(attributes, {
                data: IncomingData,
             })
+            break
+         }
       }
 
       if (Object.keys(attributes).length <= 0) return { data: undefined }
@@ -101,3 +103,13 @@ export async function UpdateUser({
       return { data: undefined }
    })
 }
+
+// export async function UpdateVisitHistory() {
+//    return TryCatch<undefined>(async () => {
+//       const { supabaseUser, cookieStore } = await checkSupabaseCookie()
+//
+//       const { user } = await getSupabaseUser(supabaseUser)
+//
+//
+//    })
+// }

@@ -9,7 +9,7 @@ import BondsIcon from '@/../public/Menu/bond.svg'
 import CurrencyIcon from '@/../public/Menu/currency.svg'
 import { GetUser } from '@/actions/Account'
 import Loader from '@/components/ui/loader'
-import ScrollStateBar from '@/components/ui/ScrollStateBar'
+import ScrollStateBar from '@/components/entity/ScrollStateBar'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },

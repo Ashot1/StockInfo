@@ -27,7 +27,18 @@ export default async function News({
 }: {
    searchParams: { start?: string }
 }) {
-   const { data: newsList, error } = await getNews(searchParams.start)
+   return (
+      <>
+         <PageTitle>Новости</PageTitle>
+         <Suspense fallback={<CenterScreenLoader />}>
+            <MainContent start={searchParams?.start} />
+         </Suspense>
+      </>
+   )
+}
+
+const MainContent = async ({ start }: { start?: string }) => {
+   const { data: newsList, error } = await getNews(start)
 
    if (!newsList || error) return <ErrorMessage errMessage={error} />
 
@@ -36,13 +47,11 @@ export default async function News({
    const createdAt = newsList.sitenews.columns.indexOf('published_at')
    const editedAt = newsList.sitenews.columns.indexOf('modified_at')
    const maxSize = newsList['sitenews.cursor'].columns.indexOf('TOTAL')
-   let startIndex = parseInt(searchParams.start || '0')
+   let startIndex = parseInt(start || '0')
 
    if (startIndex < 0) startIndex = 0
-
    return (
-      <Suspense fallback={<CenterScreenLoader />}>
-         <PageTitle>Новости</PageTitle>
+      <>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
@@ -81,6 +90,6 @@ export default async function News({
             element={'main'}
             maxSize={newsList['sitenews.cursor'].data[0][maxSize]}
          />
-      </Suspense>
+      </>
    )
 }

@@ -4,16 +4,27 @@ import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { getBondsList } from '@/actions/Bonds'
 import { PageStartCounter, URLList } from '@/utils/const'
 import ErrorMessage from '@/components/ui/ErrorMessage'
-import DefaultList from '@/components/ui/DefaultList'
-import CustomPagination from '@/components/entity/CustomPagination'
+import DefaultList from '@/components/ui/DefaultList/DefaultList'
 import { comfortaa } from '@/utils/fonts'
-import DefaultListItem from '@/components/ui/DefaultListItem'
+import CustomPagination from '@/components/entity/CustomPagination'
+import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 
 export default async function BondsPage({
    searchParams: { start },
 }: {
    searchParams: { start?: string }
 }) {
+   return (
+      <>
+         <PageTitle>Список облигаций</PageTitle>
+         <Suspense fallback={<CenterScreenLoader />}>
+            <MainContent start={start} />
+         </Suspense>
+      </>
+   )
+}
+
+const MainContent = async ({ start }: { start?: string }) => {
    const { data: BondsList, error } = await getBondsList(
       start,
       PageStartCounter
@@ -29,10 +40,8 @@ export default async function BondsPage({
    const maxSize = BondsList['history.cursor'].columns.indexOf('TOTAL')
 
    let startIndex = parseInt(start || '0')
-
    return (
-      <Suspense fallback={<CenterScreenLoader />}>
-         <PageTitle>Список облигаций</PageTitle>
+      <>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
@@ -69,10 +78,7 @@ export default async function BondsPage({
                return (
                   <DefaultListItem
                      key={bonds[secID]}
-                     img={
-                        ''
-                        // `/Logos/${bonds[secID]}.svg`
-                     }
+                     img={`/Logos/${bonds[secID]}.svg`}
                      subtext={`${bonds[secID]}`}
                      text={bonds[shortName] as string}
                      rightText={price}
@@ -89,6 +95,6 @@ export default async function BondsPage({
             element={'main'}
             maxSize={BondsList['history.cursor'].data[0][maxSize]}
          />
-      </Suspense>
+      </>
    )
 }
