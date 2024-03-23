@@ -50,9 +50,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="ru">
          <body className={inter.className}>
             <ThemeProvider defaultTheme="system" enableSystem attribute="class">
-               <LocalSettingsChecker Params={LocalStorageParameters.glowBG}>
-                  <div className="glow-effect" />
-               </LocalSettingsChecker>
                <Toaster
                   position="top-right"
                   reverseOrder={true}
@@ -63,7 +60,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                      },
                   }}
                />
+
+               <LocalSettingsChecker
+                  Params={LocalStorageParameters.glowBG}
+                  needAlert={true}
+                  textAlert={{
+                     title: 'Эффект свечения включен',
+                     text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
+                  }}
+               >
+                  <div className="glow-effect" />
+               </LocalSettingsChecker>
+
                <div id="modal"></div>
+
                {children}
             </ThemeProvider>
          </body>

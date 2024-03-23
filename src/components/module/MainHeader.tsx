@@ -2,7 +2,7 @@
 
 import HeaderButton from '@/components/entity/HeaderButton'
 import Link from 'next/link'
-import { URLList } from '@/utils/const'
+import { MobileScreen, URLList } from '@/utils/const'
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { useMotionValueEvent, useScroll } from 'framer-motion'
 import { useRef, useState } from 'react'
@@ -19,7 +19,7 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
    const [IsHidden, setIsHidden] = useState(false)
    const { scrollY } = useScroll()
    const prevScrollValue = useRef(40)
-   const isMobile = useMatchMedia(820)
+   const isMobile = useMatchMedia(MobileScreen)
    const direction = isMobile ? 150 : -150
 
    useMotionValueEvent(scrollY, 'change', (latest) => {

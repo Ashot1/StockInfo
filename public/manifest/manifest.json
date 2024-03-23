@@ -4,15 +4,38 @@
    "launch_handler": {
       "client_mode": "navigate-existing"
    },
-   "version": "0.3.3",
+   "version": "0.3.4",
    "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
    "shortcuts": [
       {
-         "name": "Открыть новости биржи",
+         "name": "Новости биржи",
          "short_name": "Новости",
          "description": "Новости Московской Биржи (MOEX)",
          "url": "/news",
-         "icons": [{ "src": "/Menu/PNG/News.png", "sizes": "512x512" }]
+         "icons": [{ "src": "/Menu/Shortcuts/News.png", "sizes": "128x128" }]
+      },
+      {
+         "name": "Акции",
+         "short_name": "Акции",
+         "description": "Актуальные котировки акций",
+         "url": "/stocks",
+         "icons": [{ "src": "/Menu/Shortcuts/Stocks.png", "sizes": "128x128" }]
+      },
+      {
+         "name": "Облигации",
+         "short_name": "Облигации",
+         "description": "Актуальные котировки облигаций",
+         "url": "/bonds",
+         "icons": [{ "src": "/Menu/Shortcuts/Bonds.png", "sizes": "128x128" }]
+      },
+      {
+         "name": "Валюта",
+         "short_name": "Валюта",
+         "description": "Актуальные котировки валюты",
+         "url": "/currency",
+         "icons": [
+            { "src": "/Menu/Shortcuts/Currency.png", "sizes": "128x128" }
+         ]
       }
    ],
    "lang": "ru",

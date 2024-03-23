@@ -48,6 +48,7 @@ const MainContent = async ({ start }: { start?: string }) => {
    const marketPrice3 = StocksList.indexOf('MARKETPRICE3')
    const closePrice = StocksList.indexOf('CLOSE')
    const maxSize = data['history.cursor'].columns.indexOf('TOTAL')
+   const maxPageCounter = data['history.cursor'].data[0][maxSize]
    let startIndex = parseInt(start || '0')
 
    return (
@@ -55,9 +56,14 @@ const MainContent = async ({ start }: { start?: string }) => {
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
-            maxSize={data['history.cursor'].data[0][maxSize]}
+            maxSize={maxPageCounter}
          />
-         <DefaultList>
+         <DefaultList
+            CurrentStartIndex={startIndex}
+            Step={PageStartCounter}
+            url={URLList.stocks}
+            maxLength={maxPageCounter}
+         >
             {data.history.data.length <= 0 && (
                <div
                   className={`grid w-full flex-1 place-items-center ${comfortaa.className}`}
@@ -88,7 +94,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                return (
                   <DefaultListItem
                      key={stocks[secID]}
-                     img={`/Logos/${stocks[secID]}.svg`}
+                     img={`/Logos/Stocks/${stocks[secID]}.svg`}
                      subtext={`${stocks[secID]}`}
                      text={stocks[shortName] as string}
                      rightText={price}

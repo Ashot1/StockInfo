@@ -10,10 +10,12 @@ import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import ControlPanel from '@/components/widgets/ControlPanel'
+import SwipeNavigator from '@/hoc/SwipeNavigator'
+import CalculatePagination from '@/utils/CalculatePagination'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-   const { data: resJSON } = await getCurrentNews(params.id)
-   if (!resJSON)
+   const { data: resJSON, error } = await getCurrentNews(params.id)
+   if (!resJSON || error)
       return {
          title: 'Новость с московской биржи',
          authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
@@ -46,13 +48,24 @@ export default async function SpecificNews({
 }: {
    params: { id: string }
 }) {
+   return (
+      <div className="animate-appearance">
+         <ControlPanel />
+         <Suspense fallback={<CenterScreenLoader />}>
+            <MainContent id={id} />
+         </Suspense>
+      </div>
+   )
+}
+
+const MainContent = async ({ id }: { id: string }) => {
    const { data: CurrentNews, error } = await getCurrentNews(id)
 
    if (!CurrentNews || error) return <ErrorMessage errMessage={error} />
 
    if (!CurrentNews.content.data[0]) {
       redirect(URLList.notFound)
-      return
+      return <></>
    }
 
    const title = CurrentNews.content.columns.indexOf('title')
@@ -62,26 +75,25 @@ export default async function SpecificNews({
    const news = CurrentNews.content.data[0]
 
    return (
-      <Suspense fallback={<CenterScreenLoader />}>
-         <div className="animate-appearance">
-            <ControlPanel />
-            <p
-               className={`w-full text-pretty text-center text-lg ${raleway.className}`}
-               dangerouslySetInnerHTML={{ __html: news[title] }}
-            ></p>
+      <>
+         <SwipeNavigator
+            prev={URLList.news}
+            className={`w-full text-pretty text-center text-lg ${raleway.className}`}
+         >
+            <p dangerouslySetInnerHTML={{ __html: news[title] }}></p>
             <ArrowSeparator />
-            <span className="m-0 mb-3 flex w-full items-center justify-start gap-1 text-xs opacity-50">
-               <FilePlusIcon />
-               {ConvertDate(news[publishedAt] as string)}
-            </span>
-            <div
-               className="styledNewsContent overflow-x-auto rounded-lg bg-neutral-200
+         </SwipeNavigator>
+         <span className="m-0 mb-3 flex w-full items-center justify-start gap-1 text-xs opacity-50">
+            <FilePlusIcon />
+            {ConvertDate(news[publishedAt] as string)}
+         </span>
+         <div
+            className="styledNewsContent overflow-x-auto rounded-lg bg-neutral-200
           bg-opacity-20 p-3 text-sm shadow 768p:p-6 dark:bg-neutral-900 dark:bg-opacity-50"
-               dangerouslySetInnerHTML={{
-                  __html: news[body] as string,
-               }}
-            ></div>
-         </div>
-      </Suspense>
+            dangerouslySetInnerHTML={{
+               __html: news[body] as string,
+            }}
+         ></div>
+      </>
    )
 }

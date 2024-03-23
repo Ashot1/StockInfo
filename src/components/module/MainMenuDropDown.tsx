@@ -31,7 +31,7 @@ import { DialogTriggerProps } from '@radix-ui/react-dialog'
 import { IconProps } from '@radix-ui/react-icons/dist/types'
 import { AuthContext } from '@/hoc/AuthProvider'
 import { usePathname, useRouter } from 'next/navigation'
-import { URLList } from '@/utils/const'
+import { MobileScreen, URLList } from '@/utils/const'
 import SettingsModalContent from '@/components/widgets/SettingsModalContent'
 import ProfileModalContent from '@/components/widgets/ProfileModalContent'
 import { UserProfileInfo } from '@/types/Modals.types'
@@ -63,7 +63,7 @@ export default function MainMenuDropDown() {
    const path = usePathname()
 
    const center: string = 'flex items-center gap-2.5'
-   const isMobile = useMatchMedia(820)
+   const isMobile = useMatchMedia(MobileScreen)
    const user = useContext(AuthContext)
    const signWith = user.app_metadata.provider
    const verifyEmail = user.user_metadata.email_verified

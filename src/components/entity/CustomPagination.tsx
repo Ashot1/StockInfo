@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/pagination'
 import { usePathname } from 'next/navigation'
 import { PageStartCounter } from '@/utils/const'
+import CalculatePagination from '@/utils/CalculatePagination'
 
 const CustomPagination: FC<{
    currentStart: number
@@ -73,16 +74,12 @@ const CustomPagination: FC<{
    }
 
    //создание ссылок для кнопок 'назад' и 'вперед'
-   const currentPath = pathname + `?start=${currentStart}`
-   const prevLink =
-      currentStart >= PageStartCounter
-         ? pathname + `?start=${currentStart - PageStartCounter}`
-         : currentPath
-
-   const nextLink =
-      currentStart < maxPagesLength
-         ? pathname + `?start=${currentStart + PageStartCounter}`
-         : currentPath
+   const { prevLink, nextLink } = CalculatePagination({
+      start: currentStart,
+      maxLength: maxPagesLength,
+      Step: PageStartCounter,
+      pathname,
+   })
 
    // проверяем, нужен ли ellipsis и делаем ссылки
    const needEllipsisMax =

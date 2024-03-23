@@ -12,6 +12,8 @@ export const URLList = {
 
 export const PageStartCounter = 50
 
+export const MobileScreen = 820
+
 export const AuthFormPatterns = {
    email: {
       required: {

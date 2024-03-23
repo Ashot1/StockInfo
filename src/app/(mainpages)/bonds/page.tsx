@@ -38,6 +38,7 @@ const MainContent = async ({ start }: { start?: string }) => {
    const marketPrice3 = BondsList.history.columns.indexOf('MARKETPRICE3')
    const closePrice = BondsList.history.columns.indexOf('CLOSE')
    const maxSize = BondsList['history.cursor'].columns.indexOf('TOTAL')
+   const maxPageCounter = BondsList['history.cursor'].data[0][maxSize]
 
    let startIndex = parseInt(start || '0')
    return (
@@ -45,9 +46,14 @@ const MainContent = async ({ start }: { start?: string }) => {
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
-            maxSize={BondsList['history.cursor'].data[0][maxSize]}
+            maxSize={maxPageCounter}
          />
-         <DefaultList>
+         <DefaultList
+            url={URLList.bonds}
+            Step={PageStartCounter}
+            CurrentStartIndex={startIndex}
+            maxLength={maxPageCounter}
+         >
             {BondsList.history.data.length <= 0 && (
                <div
                   className={`grid w-full flex-1 place-items-center ${comfortaa.className}`}
@@ -78,7 +84,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                return (
                   <DefaultListItem
                      key={bonds[secID]}
-                     img={`/Logos/${bonds[secID]}.svg`}
+                     img={`/Logos/Bonds/${bonds[secID]}.png`}
                      subtext={`${bonds[secID]}`}
                      text={bonds[shortName] as string}
                      rightText={price}

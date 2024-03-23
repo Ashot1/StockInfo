@@ -49,25 +49,15 @@
             transparent 50%
          );
       --gradientBGSmall: radial-gradient(
-            at 30% 40%,
-            hsla(202, 35%, 35%, 0.7) 0px,
-            transparent 50%
+            at 80% 10%,
+            hsla(202, 35%, 35%, 0.9) 30px,
+            transparent 70%
          ),
          radial-gradient(
-            at 70% 60%,
-            hsla(202, 35%, 35%, 0.7) 0px,
+            at 30% 80%,
+            hsla(202, 35%, 35%, 0.8) 0px,
             transparent 50%
          );
-      /*--gradientBGSmall: radial-gradient(*/
-      /*      at 80% 10%,*/
-      /*      hsla(202, 35%, 35%, 0.9) 30px,*/
-      /*      transparent 70%*/
-      /*   ),*/
-      /*   radial-gradient(*/
-      /*      at 30% 80%,*/
-      /*      hsla(202, 35%, 35%, 0.8) 0px,*/
-      /*      transparent 50%*/
-      /*   );*/
    }
 
    .dark {
@@ -116,25 +106,15 @@
             transparent 40%
          );
       --gradientBGSmall: radial-gradient(
-            at 30% 40%,
-            hsla(202, 67%, 50%, 0.3) 0px,
-            transparent 60%
+            at 80% 10%,
+            hsla(202, 67%, 50%, 0.6) 50px,
+            transparent 50%
          ),
          radial-gradient(
-            at 70% 60%,
-            hsla(202, 67%, 50%, 0.3) 0px,
-            transparent 60%
+            at 30% 80%,
+            hsla(202, 67%, 50%, 0.4) 0px,
+            transparent 50%
          );
-      /*--gradientBGSmall: radial-gradient(*/
-      /*      at 80% 10%,*/
-      /*      hsla(202, 67%, 50%, 0.6) 50px,*/
-      /*      transparent 50%*/
-      /*   ),*/
-      /*   radial-gradient(*/
-      /*      at 30% 80%,*/
-      /*      hsla(202, 67%, 50%, 0.4) 0px,*/
-      /*      transparent 50%*/
-      /*   );*/
    }
 }
 
@@ -159,7 +139,7 @@ html {
    backface-visibility: hidden;
    transform: translate3d(0, 0, 0) translateZ(0);
    content: '';
-   position: absolute;
+   position: fixed;
    width: 100dvw;
    height: 100dvh;
    filter: blur(140px);
@@ -315,21 +295,3 @@ body {
    animation-timeline: scroll(y root);
    width: 100dvw;
 }
-
-/*.appearance-moving-scroll {*/
-/*    animation: apMov 1s linear both;*/
-/*    animation-timeline: view(block);*/
-/*    animation-range: entry 0% entry 100%;*/
-/*    view-timeline-inset: -10%;*/
-/*}*/
-
-/*@keyframes apMov {*/
-/*    from {*/
-/*        opacity: 0;*/
-/*        translate: -30px;*/
-/*    }*/
-/*    to {*/
-/*        opacity: 1;*/
-/*        translate: 0;*/
-/*    }*/
-/*}*/

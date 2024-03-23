@@ -1,6 +1,6 @@
 import PageTitle from '@/components/ui/PageTitle'
 import NewsListItem from '@/components/ui/NewsListItem'
-import { URLList } from '@/utils/const'
+import { PageStartCounter, URLList } from '@/utils/const'
 import { Metadata } from 'next'
 import CustomPagination from '@/components/entity/CustomPagination'
 import { getNews } from '@/actions/News'
@@ -8,6 +8,8 @@ import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { comfortaa } from '@/utils/fonts'
 import ErrorMessage from '@/components/ui/ErrorMessage'
+import SwipeNavigator from '@/hoc/SwipeNavigator'
+import CalculatePagination from '@/utils/CalculatePagination'
 
 export const metadata: Metadata = {
    title: 'Новости',
@@ -47,17 +49,28 @@ const MainContent = async ({ start }: { start?: string }) => {
    const createdAt = newsList.sitenews.columns.indexOf('published_at')
    const editedAt = newsList.sitenews.columns.indexOf('modified_at')
    const maxSize = newsList['sitenews.cursor'].columns.indexOf('TOTAL')
+   const maxPageCounter = newsList['sitenews.cursor'].data[0][maxSize]
    let startIndex = parseInt(start || '0')
 
    if (startIndex < 0) startIndex = 0
+
+   const { prevLink, nextLink } = CalculatePagination({
+      start: startIndex,
+      Step: PageStartCounter,
+      maxLength: maxPageCounter,
+      pathname: URLList.news,
+   })
+
    return (
       <>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
-            maxSize={newsList['sitenews.cursor'].data[0][maxSize]}
+            maxSize={maxPageCounter}
          />
-         <section
+         <SwipeNavigator
+            next={nextLink}
+            prev={prevLink}
             className="my-5 flex flex-1 flex-col
                 rounded-2xl border-2 bg-neutral-200 bg-opacity-40 p-2 opacity-85 500p:ml-0 500p:w-full 768p:p-4 dark:bg-neutral-900 dark:bg-opacity-50"
          >
@@ -84,7 +97,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                   />
                )
             })}
-         </section>
+         </SwipeNavigator>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
