@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { cn } from '@/utils/utils'
-import ImageServerErrorCheck from '@/components/ui/Img/ImageServerErrorCheck'
+import ImageServerErrorCheck from '@/components/ui/ImageServerErrorCheck'
 
 export type DefaultListItemProps = {
    img: string

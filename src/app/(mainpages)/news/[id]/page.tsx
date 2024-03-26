@@ -1,4 +1,3 @@
-import BackButton from '@/components/entity/BackButton'
 import { URLList } from '@/utils/const'
 import { raleway } from '@/utils/fonts'
 import ArrowSeparator from '@/components/ui/ArrowSeparator'
@@ -11,7 +10,7 @@ import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import ControlPanel from '@/components/widgets/ControlPanel'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
-import CalculatePagination from '@/utils/CalculatePagination'
+import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
    const { data: resJSON, error } = await getCurrentNews(params.id)
@@ -31,14 +30,17 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
    const title = resJSON.content.data[0][titleCol] as string
 
    return {
-      title: title,
+      title,
+      description: 'Новость с московской биржи',
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
       openGraph: {
-         title: title,
+         title,
+         description: 'Новость с московской биржи',
          authors: 'Московская биржа',
       },
       twitter: {
-         title: title,
+         title,
+         description: 'Новость с московской биржи',
       },
    }
 }

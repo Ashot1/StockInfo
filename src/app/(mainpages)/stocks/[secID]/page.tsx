@@ -1,10 +1,9 @@
 import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
-import { getCurrentStock } from '@/actions/Stocks'
+import { getCurrentStock, getDividends } from '@/actions/Stocks'
 import ControlPanel from '@/components/widgets/ControlPanel'
-import SecurityMainContent from '@/components/widgets/SecurityMainContent'
 import TransformSecurityData from '@/utils/TransformSecurityData'
-import { URLList } from '@/utils/const'
+import StocksContent from '@/components/pages/StocksContent'
 
 export async function generateMetadata({
    params: { secID },
@@ -34,13 +33,16 @@ export async function generateMetadata({
 
    return {
       title: `${title[valueIndex]} - ${code[valueIndex]}`,
+      description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
       openGraph: {
          title: `${title[valueIndex]} - ${code[valueIndex]}`,
+         description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
          authors: 'Московская биржа',
       },
       twitter: {
          title: `${title[valueIndex]} - ${code[valueIndex]}`,
+         description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
       },
    }
 }
@@ -54,11 +56,7 @@ export default async function CurrentStock({
       <div className="animate-appearance">
          <ControlPanel />
          <Suspense fallback={<CenterScreenLoader />}>
-            <SecurityMainContent
-               secID={secID}
-               prevLink={URLList.stocks}
-               img={`/Logos/Stocks/${secID}.svg`}
-            />
+            <StocksContent secID={secID} />
          </Suspense>
       </div>
    )

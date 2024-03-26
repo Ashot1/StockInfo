@@ -10,6 +10,7 @@ import CurrencyIcon from '@/../public/Menu/currency.svg'
 import { GetUser } from '@/actions/Account'
 import Loader from '@/components/ui/loader'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
+import { redirect } from 'next/navigation'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
@@ -27,15 +28,15 @@ export default async function MainPagesLayout({
    const { data: user, error } = await GetUser()
 
    // TODO: Сделать нормальное сообщение об ошибке
-   if (!user || error)
-      return (
-         <div>
-            {error}
-            <h1>Произошла ошибка с аккаунтом</h1>
-            <p>попробуйте заново войти в аккаунт</p>
-            <a href={URLList.front}>на странице входа</a>
-         </div>
-      )
+   if (!user || error) return redirect(URLList.front)
+   // return (
+   //    <div>
+   //       {error}
+   //       <h1>Произошла ошибка с аккаунтом</h1>
+   //       <p>попробуйте заново войти в аккаунт</p>
+   //       <a href={URLList.front}>на странице входа</a>
+   //    </div>
+   // )
 
    return (
       <>

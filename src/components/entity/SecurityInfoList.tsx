@@ -1,6 +1,6 @@
 import InfoPlaceHolder from '@/components/ui/InfoPlaceHolder'
 
-export default function MainSecurityInfo({
+export default function SecurityInfoList({
    currencyList,
    valueIndex,
    titleIndex,

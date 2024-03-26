@@ -3,6 +3,7 @@
 import TryCatch from '@/utils/TryCatch'
 import {
    CurrentStockRequest,
+   DividendsRequest,
    StocksRequest,
    StocksSearchRequest,
 } from '@/types/Stocks.types'
@@ -28,7 +29,23 @@ export async function getCurrentStock(stock: string) {
       )
       const data: CurrentStockRequest = await result.json()
 
-      if (!result || !data) throw new Error('Акция не найдена')
+      if (!result || !data || !data.description.data.length)
+         throw new Error('Акция не найдена')
+
+      return { data }
+   })
+}
+
+export async function getDividends(stock: string) {
+   return TryCatch<DividendsRequest>(async () => {
+      const result = await fetch(
+         `http://iss.moex.com/iss/securities/${stock}/dividends.json?iss.meta=off`
+      )
+
+      const data: DividendsRequest = await result.json()
+
+      if (!result || !data || !data.dividends.data.length)
+         throw new Error('Выплат не было')
 
       return { data }
    })

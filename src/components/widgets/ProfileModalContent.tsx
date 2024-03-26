@@ -6,11 +6,11 @@ import CustomModalContent from '@/components/ui/CustomModalContent'
 import { DrawerFooter } from '@/components/ui/ShadCN/drawer'
 import { DialogFooter } from '@/components/ui/ShadCN/dialog'
 import ConfirmMessage from '@/components/entity/CongirmMessage'
-import ProfileDefaultModalContent from '@/components/entity/ProfileDefaultModalContent'
+import ProfileDefaultModalContent from '@/components/entity/ModalsContent/Profile/ProfileDefaultModalContent'
 import { AnimatePresence, motion } from 'framer-motion'
-import ProfileButtons from '@/components/entity/ProfileButtons'
-import ProfileEditModalContent from '@/components/entity/ProfileEditModalContent'
-import ProfileEditButtons from '@/components/entity/ProfileEditButtons'
+import ProfileButtons from '@/components/entity/ModalsContent/Profile/ProfileButtons'
+import ProfileEditModalContent from '@/components/entity/ModalsContent/Profile/ProfileEditModalContent'
+import ProfileEditButtons from '@/components/entity/ModalsContent/Profile/ProfileEditButtons'
 
 const ProfileModalContent: FC<TProfileModalContent> = ({
    type,

@@ -1,59 +1,24 @@
-"use client";
-import { createContext, FC, ReactNode, useEffect, useState } from "react";
-import { User } from "@supabase/gotrue-js";
-import { supabase } from "@/utils/Supabase.init";
+'use client'
+import { createContext, FC, ReactNode } from 'react'
+import { User } from '@supabase/gotrue-js'
 
-export type TUser = User;
-// & { error?: string; loading: boolean };
+export type TUser = User
 
 const defaultValues: TUser = {
-  id: "",
-  app_metadata: {},
-  user_metadata: {},
-  aud: "",
-  created_at: "",
-  // loading: true,
-};
+   id: '',
+   app_metadata: {},
+   user_metadata: {},
+   aud: '',
+   created_at: '',
+}
 
-export const AuthContext = createContext<TUser>(defaultValues);
+export const AuthContext = createContext<TUser>(defaultValues)
 
 const AuthProvider: FC<{ children: ReactNode; value: TUser }> = ({
-  children,
-  value,
+   children,
+   value,
 }) => {
-  // const [User, setUser] = useState<TUser>(defaultValues);
+   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
 
-  // useEffect(() => {
-  //   supabase.auth
-  //     .getUser()
-  //     .then((response) => {
-  //       setUser((prevState) => Object.assign(prevState, response.data.user));
-  //     })
-  //     .catch((e) =>
-  //       setUser((prevState) => Object.assign(prevState, { error: e.message })),
-  //     );
-  // }, []);
-
-  // supabase.auth.onAuthStateChange(async () => {
-  //   const {
-  //     data: { user: UserData },
-  //     error,
-  //   } = await supabase.auth.getUser();
-  //
-  //   if (error) {
-  //     setUser((prevState) =>
-  //       Object.assign(prevState, { error: error.message, loading: false }),
-  //     );
-  //   } else {
-  //     setUser((prevState) =>
-  //       Object.assign(prevState, UserData, { loading: false }),
-  //     );
-  //   }
-  // });
-
-  // if (User.error) return;
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export default AuthProvider;
+export default AuthProvider

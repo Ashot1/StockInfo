@@ -2,14 +2,14 @@ import PageTitle from '@/components/ui/PageTitle'
 import NewsListItem from '@/components/ui/NewsListItem'
 import { PageStartCounter, URLList } from '@/utils/const'
 import { Metadata } from 'next'
-import CustomPagination from '@/components/entity/CustomPagination'
+import CustomPagination from '@/components/entity/CustomElements/CustomPagination'
 import { getNews } from '@/actions/News'
 import { Suspense } from 'react'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
-import { comfortaa } from '@/utils/fonts'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import CalculatePagination from '@/utils/CalculatePagination'
+import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 
 export const metadata: Metadata = {
    title: 'Новости',
@@ -75,11 +75,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                 rounded-2xl border-2 bg-neutral-200 bg-opacity-40 p-2 opacity-85 500p:ml-0 500p:w-full 768p:p-4 dark:bg-neutral-900 dark:bg-opacity-50"
          >
             {newsList.sitenews.data.length <= 0 && (
-               <div
-                  className={`grid w-full flex-1 place-items-center ${comfortaa.className}`}
-               >
-                  Пусто
-               </div>
+               <EmptyListText text="Пусто" />
             )}
 
             {newsList.sitenews.data.map((news, index) => {

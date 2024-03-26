@@ -4,20 +4,23 @@ import { Suspense } from 'react'
 import { PageStartCounter, URLList } from '@/utils/const'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { Metadata } from 'next'
-import { comfortaa } from '@/utils/fonts'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import DefaultList from '@/components/ui/DefaultList/DefaultList'
-import dynamic from 'next/dynamic'
-const DefaultListItem = dynamic(
-   () => import('@/components/ui/DefaultList/DefaultListItem')
-)
-const CustomPagination = dynamic(
-   () => import('@/components/entity/CustomPagination')
-)
+import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
+import CustomPagination from '@/components/entity/CustomElements/CustomPagination'
+import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 
 export const metadata: Metadata = {
    title: 'Акции',
-   description: 'Новости Московской Биржи (MOEX)',
+   description: 'Список акций с Московской Биржи (MOEX)',
+   openGraph: {
+      title: 'Акции',
+      description: 'Список акций с Московской Биржи (MOEX)',
+   },
+   twitter: {
+      title: 'Акции',
+      description: 'Список акций с Московской Биржи (MOEX)',
+   },
 }
 
 export default async function StocksPage({
@@ -64,13 +67,8 @@ const MainContent = async ({ start }: { start?: string }) => {
             url={URLList.stocks}
             maxLength={maxPageCounter}
          >
-            {data.history.data.length <= 0 && (
-               <div
-                  className={`grid w-full flex-1 place-items-center ${comfortaa.className}`}
-               >
-                  Пусто
-               </div>
-            )}
+            {data.history.data.length <= 0 && <EmptyListText text="Пусто" />}
+
             {data.history.data.map((stocks, index) => {
                let price =
                   stocks[marketPrice2] ||
@@ -80,7 +78,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                const differencePrices =
                   (price as number) - (stocks[closePrice] as number)
 
-               const percent =
+               let percent =
                   (differencePrices / (stocks[closePrice] as number)) * 100
 
                price = Intl.NumberFormat('ru', {
@@ -90,6 +88,8 @@ const MainContent = async ({ start }: { start?: string }) => {
                }).format((price as number) || 0)
 
                const animIndex = index <= 20 ? index : 20
+
+               percent = percent == Infinity ? 0 : percent
 
                return (
                   <DefaultListItem

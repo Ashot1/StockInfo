@@ -9,17 +9,17 @@ import CheckBoxRow from '@/components/ui/CheckBox/CheckBoxRow'
 import { LocalStorageParameters } from '@/utils/const'
 import { useRouter } from 'next/navigation'
 
-const SettingsModalContent: FC<Pick<IModalContent, 'type'>> = ({ type }) => {
-   const toggleGlow = () => {
-      const params = LocalStorageParameters.glowBG
-      const state = localStorage.getItem(params.name)
-      localStorage.setItem(
-         params.name,
-         state === params.positive ? params.negative : params.positive
-      )
-      window.location.reload()
-   }
+const toggleGlow = () => {
+   const params = LocalStorageParameters.glowBG
+   const state = localStorage.getItem(params.name)
+   localStorage.setItem(
+      params.name,
+      state === params.positive ? params.negative : params.positive
+   )
+   window.location.reload()
+}
 
+const SettingsModalContent: FC<Pick<IModalContent, 'type'>> = ({ type }) => {
    return (
       <CustomModalContent title="Настройки" type={type}>
          <div className="flex min-h-[50dvh] flex-col gap-14 px-5">
