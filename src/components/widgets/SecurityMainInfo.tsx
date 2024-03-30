@@ -4,13 +4,11 @@ import SwipeNavigator from '@/hoc/SwipeNavigator'
 
 export default function SecurityMainInfo({
    secID,
-   prevLink,
    img,
    secCode,
    secTitle,
 }: {
    secID: string
-   prevLink?: string
    img?: string
    secTitle: string
    secCode: string
@@ -18,7 +16,7 @@ export default function SecurityMainInfo({
    return (
       <>
          <SwipeNavigator
-            prev={prevLink}
+            prev="RouterBack"
             className="mb-14 flex w-full flex-col items-center justify-center gap-4 768p:flex-row 768p:justify-center"
          >
             <IMGshadowCard

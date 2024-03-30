@@ -1,14 +1,10 @@
 import PageTitle from '@/components/ui/PageTitle'
-import { Suspense } from 'react'
-import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
-import { getBondsList } from '@/actions/Bonds'
+import { getBondsList, searchBond } from '@/actions/Bonds'
 import { PageStartCounter, URLList } from '@/utils/const'
 import ErrorMessage from '@/components/ui/ErrorMessage'
-import DefaultList from '@/components/ui/DefaultList/DefaultList'
-import CustomPagination from '@/components/entity/CustomElements/CustomPagination'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { Metadata } from 'next'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import SecurityListTemplate from '@/components/module/SecurityListTemplate'
 
 export const metadata: Metadata = {
    title: 'Облигации',
@@ -31,9 +27,7 @@ export default async function BondsPage({
    return (
       <>
          <PageTitle>Список облигаций</PageTitle>
-         <Suspense fallback={<CenterScreenLoader />}>
-            <MainContent start={start} />
-         </Suspense>
+         <MainContent start={start} />
       </>
    )
 }
@@ -53,66 +47,53 @@ const MainContent = async ({ start }: { start?: string }) => {
    const closePrice = BondsList.history.columns.indexOf('CLOSE')
    const maxSize = BondsList['history.cursor'].columns.indexOf('TOTAL')
    const maxPageCounter = BondsList['history.cursor'].data[0][maxSize]
-
    let startIndex = parseInt(start || '0')
+
    return (
-      <>
-         <CustomPagination
-            currentStart={startIndex}
-            element={'main'}
-            maxSize={maxPageCounter}
-         />
-         <DefaultList
-            url={URLList.bonds}
-            Step={PageStartCounter}
-            CurrentStartIndex={startIndex}
-            maxLength={maxPageCounter}
-         >
-            {BondsList.history.data.length <= 0 && (
-               <EmptyListText text="Пусто" />
-            )}
-            {BondsList.history.data.map((bonds, index) => {
-               let price =
-                  bonds[marketPrice2] ||
-                  bonds[marketPrice3] ||
-                  bonds[closePrice]
+      <SecurityListTemplate
+         imgURL={URLList.logos_bonds}
+         imgType="png"
+         searchRequest={searchBond}
+         dataLength={BondsList.history.data.length}
+         url={URLList.bonds}
+         step={PageStartCounter}
+         startIndex={startIndex}
+         maxSize={maxPageCounter}
+      >
+         {BondsList.history.data.map((bonds, index) => {
+            let price =
+               bonds[marketPrice2] || bonds[marketPrice3] || bonds[closePrice]
 
-               const differencePrices =
-                  (price as number) - (bonds[closePrice] as number)
+            const differencePrices =
+               (price as number) - (bonds[closePrice] as number)
 
-               let percent =
-                  (differencePrices / (bonds[closePrice] as number)) * 100
+            let percent =
+               (differencePrices / (bonds[closePrice] as number)) * 100
 
-               price = Intl.NumberFormat('ru', {
-                  style: 'currency',
-                  currency: 'RUB',
-                  currencyDisplay: 'symbol',
-               }).format((price as number) || 0)
+            price = Intl.NumberFormat('ru', {
+               style: 'currency',
+               currency: 'RUB',
+               currencyDisplay: 'symbol',
+            }).format((price as number) || 0)
 
-               const animIndex = index <= 20 ? index : 20
+            const animIndex = index <= 15 ? index : 15
 
-               percent = percent == Infinity ? 0 : percent
+            percent = percent == Infinity ? 0 : percent
 
-               return (
-                  <DefaultListItem
-                     key={bonds[secID]}
-                     img={`/Logos/Bonds/${bonds[secID]}.png`}
-                     subtext={`${bonds[secID]}`}
-                     text={bonds[shortName] as string}
-                     rightText={price}
-                     rightSubtext={parseFloat(percent.toFixed(3))}
-                     url={`${URLList.bonds}/${bonds[secID]}`}
-                     className={`animate-appearance-moving opacity-0 fill-mode-forwards
+            return (
+               <DefaultListItem
+                  key={bonds[secID]}
+                  img={`${URLList.logos_bonds}/${bonds[secID]}.png`}
+                  subtext={`${bonds[secID]}`}
+                  text={bonds[shortName] as string}
+                  rightText={price}
+                  rightSubtext={parseFloat(percent.toFixed(3))}
+                  url={`${URLList.current_bond}/${bonds[secID]}`}
+                  className={`animate-appearance-moving opacity-0 fill-mode-forwards
                             delay-${100 * animIndex}`}
-                  />
-               )
-            })}
-         </DefaultList>
-         <CustomPagination
-            currentStart={startIndex}
-            element={'main'}
-            maxSize={BondsList['history.cursor'].data[0][maxSize]}
-         />
-      </>
+               />
+            )
+         })}
+      </SecurityListTemplate>
    )
 }

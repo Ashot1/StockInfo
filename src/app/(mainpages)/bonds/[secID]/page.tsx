@@ -1,17 +1,12 @@
-import { Suspense } from 'react'
-import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { getCurrentStock } from '@/actions/Stocks'
 import ControlPanel from '@/components/widgets/ControlPanel'
-import SecurityMainInfo from '@/components/widgets/SecurityMainInfo'
 import TransformSecurityData from '@/utils/TransformSecurityData'
-import { URLList } from '@/utils/const'
-import CustomTabs from '@/components/entity/CustomElements/CustomTabs'
-import SecurityInfoList from '@/components/entity/SecurityInfoList'
-import { redirect } from 'next/navigation'
-import ErrorMessage from '@/components/ui/ErrorMessage'
 import { getCoupons } from '@/actions/Bonds'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
-import BondsContent from '@/components/pages/BondsContent'
+import CustomTable from '@/components/entity/CustomElements/CustomTable'
+import { ConvertDate } from '@/utils/ConvertDate'
+import { CouponsRequest } from '@/types/Bonds.types'
+import SecurityTemplate from '@/components/module/SecurityTemplate'
 
 export async function generateMetadata({
    params: { secID },
@@ -55,17 +50,62 @@ export async function generateMetadata({
    }
 }
 
+// PAGE
 export default async function CurrentBond({
    params: { secID },
 }: {
    params: { secID: string }
 }) {
+   const { data: CouponsData, error: CouponsError } = await getCoupons(secID)
+
+   const couponsContent = {
+      name: 'Купоны',
+      value: 'coupons',
+      component:
+         CouponsData && !CouponsError ? (
+            <CouponsList CouponsData={CouponsData} />
+         ) : (
+            <EmptyListText text={CouponsError || 'Не найдено'} />
+         ),
+   }
+
    return (
       <div className="animate-appearance">
          <ControlPanel />
-         <Suspense fallback={<CenterScreenLoader />}>
-            <BondsContent secID={secID} />
-         </Suspense>
+         <SecurityTemplate
+            secID={secID}
+            secondsContent={couponsContent}
+            url={`/Logos/Bonds/${secID}.png`}
+         />
+      </div>
+   )
+}
+
+// Another component
+const CouponsList = ({ CouponsData }: { CouponsData: CouponsRequest }) => {
+   const header = [
+      { text: 'Начало купонного периода' },
+      { text: 'Дата выплаты' },
+      { text: 'Купон' },
+      { text: 'Ставка' },
+   ]
+
+   const columns = CouponsData.coupons.columns
+   const startDate = columns.indexOf('startdate')
+   const payDate = columns.indexOf('coupondate')
+   const rub = columns.indexOf('value_rub')
+   const percents = columns.indexOf('valueprc')
+
+   const content = CouponsData.coupons.data.map((item) => [
+      ConvertDate(`${item[startDate]}'`, false),
+      ConvertDate(`${item[payDate]}`, false),
+      `${item[rub] || 'Не известно'} RUB`,
+      `${item[percents] || 'Не известно'} %`,
+   ])
+
+   return (
+      <div className="500p:px-[10%]">
+         <CustomTable header={header} content={content} />
       </div>
    )
 }

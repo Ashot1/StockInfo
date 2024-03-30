@@ -8,7 +8,7 @@ export type DefaultListItemProps = {
    text: string
    rightText?: string | number
    rightSubtext?: number
-   url: string
+   url?: string
    className?: string
 }
 
@@ -21,14 +21,8 @@ export default function DefaultListItem({
    rightSubtext,
    className,
 }: DefaultListItemProps) {
-   return (
-      <Link
-         href={url}
-         className={cn(
-            'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)]',
-            className
-         )}
-      >
+   const content = (
+      <>
          <div className="flex items-center gap-3">
             <span className="relative size-11 768p:size-14">
                <ImageServerErrorCheck
@@ -63,6 +57,27 @@ export default function DefaultListItem({
                ''
             )}
          </div>
+      </>
+   )
+
+   return url ? (
+      <Link
+         href={url}
+         className={cn(
+            'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)]',
+            className
+         )}
+      >
+         {content}
       </Link>
+   ) : (
+      <div
+         className={cn(
+            'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)]',
+            className
+         )}
+      >
+         {content}
+      </div>
    )
 }

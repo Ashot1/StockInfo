@@ -147,6 +147,7 @@ html {
    border-radius: 20%;
    animation: BackgroundAnimation 4s ease-out;
    background-image: var(--gradientBG);
+   will-change: filter;
 }
 
 @media (max-width: 768px) {

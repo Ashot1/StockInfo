@@ -1,14 +1,10 @@
 import PageTitle from '@/components/ui/PageTitle'
-import { getStocksList } from '@/actions/Stocks'
-import { Suspense } from 'react'
+import { getStocksList, searchStock } from '@/actions/Stocks'
 import { PageStartCounter, URLList } from '@/utils/const'
-import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import { Metadata } from 'next'
 import ErrorMessage from '@/components/ui/ErrorMessage'
-import DefaultList from '@/components/ui/DefaultList/DefaultList'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
-import CustomPagination from '@/components/entity/CustomElements/CustomPagination'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import SecurityListTemplate from '@/components/module/SecurityListTemplate'
 
 export const metadata: Metadata = {
    title: 'Акции',
@@ -31,9 +27,7 @@ export default async function StocksPage({
    return (
       <>
          <PageTitle>Список акций</PageTitle>
-         <Suspense fallback={<CenterScreenLoader />}>
-            <MainContent start={searchParams?.start} />
-         </Suspense>
+         <MainContent start={searchParams?.start} />
       </>
    )
 }
@@ -55,62 +49,52 @@ const MainContent = async ({ start }: { start?: string }) => {
    let startIndex = parseInt(start || '0')
 
    return (
-      <>
-         <CustomPagination
-            currentStart={startIndex}
-            element={'main'}
-            maxSize={maxPageCounter}
-         />
-         <DefaultList
-            CurrentStartIndex={startIndex}
-            Step={PageStartCounter}
-            url={URLList.stocks}
-            maxLength={maxPageCounter}
-         >
-            {data.history.data.length <= 0 && <EmptyListText text="Пусто" />}
+      <SecurityListTemplate
+         imgURL={URLList.logos_stock}
+         imgType="svg"
+         searchRequest={searchStock}
+         maxSize={maxPageCounter}
+         url={URLList.stocks}
+         startIndex={startIndex}
+         step={PageStartCounter}
+         dataLength={data.history.data.length}
+      >
+         {data.history.data.map((stocks, index) => {
+            let price =
+               stocks[marketPrice2] ||
+               stocks[marketPrice3] ||
+               stocks[closePrice]
 
-            {data.history.data.map((stocks, index) => {
-               let price =
-                  stocks[marketPrice2] ||
-                  stocks[marketPrice3] ||
-                  stocks[closePrice]
+            const differencePrices =
+               (price as number) - (stocks[closePrice] as number)
 
-               const differencePrices =
-                  (price as number) - (stocks[closePrice] as number)
+            let percent =
+               (differencePrices / (stocks[closePrice] as number)) * 100
 
-               let percent =
-                  (differencePrices / (stocks[closePrice] as number)) * 100
+            price = Intl.NumberFormat('ru', {
+               style: 'currency',
+               currency: 'RUB',
+               currencyDisplay: 'symbol',
+            }).format((price as number) || 0)
 
-               price = Intl.NumberFormat('ru', {
-                  style: 'currency',
-                  currency: 'RUB',
-                  currencyDisplay: 'symbol',
-               }).format((price as number) || 0)
+            const animIndex = index <= 15 ? index : 15
 
-               const animIndex = index <= 20 ? index : 20
+            percent = percent == Infinity ? 0 : percent
 
-               percent = percent == Infinity ? 0 : percent
-
-               return (
-                  <DefaultListItem
-                     key={stocks[secID]}
-                     img={`/Logos/Stocks/${stocks[secID]}.svg`}
-                     subtext={`${stocks[secID]}`}
-                     text={stocks[shortName] as string}
-                     rightText={price}
-                     rightSubtext={parseFloat(percent.toFixed(3))}
-                     url={`${URLList.stocks}/${stocks[secID]}`}
-                     className={`animate-appearance-moving opacity-0 fill-mode-forwards
+            return (
+               <DefaultListItem
+                  key={stocks[secID]}
+                  img={`${URLList.logos_stock}/${stocks[secID]}.svg`}
+                  subtext={`${stocks[secID]}`}
+                  text={stocks[shortName] as string}
+                  rightText={price}
+                  rightSubtext={parseFloat(percent.toFixed(3))}
+                  url={`${URLList.current_stock}/${stocks[secID]}`}
+                  className={`animate-appearance-moving opacity-0 fill-mode-forwards
                             delay-${100 * animIndex}`}
-                  />
-               )
-            })}
-         </DefaultList>
-         <CustomPagination
-            currentStart={startIndex}
-            element={'main'}
-            maxSize={data['history.cursor'].data[0][maxSize]}
-         />
-      </>
+               />
+            )
+         })}
+      </SecurityListTemplate>
    )
 }

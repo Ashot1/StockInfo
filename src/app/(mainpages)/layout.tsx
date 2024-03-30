@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
 import MainHeader from '@/components/module/MainHeader'
 import AuthProvider from '@/hoc/AuthProvider'
-import { URLList } from '@/utils/const'
+import { LocalStorageParameters, URLList } from '@/utils/const'
 import StockIcon from '@/../public/Menu/stocks.svg'
 import NewsIcon from '@/../public/Menu/News.svg'
 import HomeIcon from '@/../public/Menu/home.svg'
@@ -11,6 +11,7 @@ import { GetUser } from '@/actions/Account'
 import Loader from '@/components/ui/loader'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
+import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
@@ -40,6 +41,16 @@ export default async function MainPagesLayout({
 
    return (
       <>
+         <LocalSettingsChecker
+            Params={LocalStorageParameters.glowBG}
+            needAlert={true}
+            textAlert={{
+               title: 'Эффект свечения включен',
+               text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
+            }}
+         >
+            <div className="glow-effect" />
+         </LocalSettingsChecker>
          <AuthProvider value={user}>
             <ScrollStateBar />
             <MainHeader HeaderButtons={HeaderButtons} />

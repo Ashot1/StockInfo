@@ -11,8 +11,14 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 const MotionTabsContent = motion(TabsContent)
 
+export type TabsContentType = {
+   name: string
+   value: string
+   component: ReactNode
+}
+
 const CustomTabs: FC<{
-   content: { name: string; value: string; component: ReactNode }[]
+   content: TabsContentType[]
 }> = ({ content }) => {
    const [Value, setValue] = useState(content[0].value)
 

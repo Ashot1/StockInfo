@@ -7,23 +7,23 @@ import { useRouter } from 'next/navigation'
 
 const SwipeNavigator: FC<{
    children: ReactNode
-   next?: string
-   prev?: string
+   next?: string | 'RouterForward'
+   prev?: string | 'RouterBack'
    className?: string
 }> = ({ next, prev, children, className }) => {
    const startPos = useRef(0)
-   const { push, prefetch } = useRouter()
+   const { push, prefetch, back, forward } = useRouter()
 
    const touchEnd = (e: TouchEvent<HTMLDivElement>) => {
       const currentPos = e.changedTouches[0].clientX
       const definition = startPos.current - currentPos
 
-      if (definition > 200 && next) {
-         push(next)
+      if (definition > 150 && next) {
+         next === 'RouterForward' ? forward() : push(next)
       }
 
-      if (definition < -200 && prev) {
-         push(prev)
+      if (definition < -150 && prev) {
+         prev === 'RouterBack' ? back() : push(prev)
       }
    }
 

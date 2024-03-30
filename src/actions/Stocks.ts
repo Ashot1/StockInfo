@@ -5,8 +5,8 @@ import {
    CurrentStockRequest,
    DividendsRequest,
    StocksRequest,
-   StocksSearchRequest,
 } from '@/types/Stocks.types'
+import { SecuritySearchRequest } from '@/types/Security.types'
 
 export async function getStocksList(start: string = '0', limit: number) {
    return TryCatch<StocksRequest>(async () => {
@@ -51,15 +51,15 @@ export async function getDividends(stock: string) {
    })
 }
 
-// export async function searchStock(stock: string) {
-//     return TryCatch<StocksSearchRequest>(async () => {
-//         const result = await fetch(
-//             `https://iss.moex.com/iss/securities.json?q=${stock}&iss.meta=off`
-//         )
-//         const data: StocksSearchRequest = await result.json()
-//
-//         if (!result || !data) throw new Error('Результатов не найдено')
-//
-//         return { data: data }
-//     })
-// }
+export async function searchStock(stock: string) {
+   return TryCatch<SecuritySearchRequest>(async () => {
+      const result = await fetch(
+         `https://iss.moex.com/iss/securities.json?q=${stock}&iss.meta=off&iss.json=extended&securities.columns=secid,shortname,is_traded&engine=stock&market=shares`
+      )
+      const data: SecuritySearchRequest = await result.json()
+
+      if (!result || !data) throw new Error('Ошибка запроса')
+
+      return { data: data }
+   })
+}

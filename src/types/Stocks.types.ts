@@ -37,32 +37,6 @@ export type StocksColumns = [
 
 export type StocksCursorColumns = ['INDEX', 'TOTAL', 'PAGESIZE']
 
-export type StocksSearchRequest = {
-   securities: {
-      columns: StocksSearchColumns
-      data: (string | number)[][]
-   }
-}
-
-export type StocksSearchColumns = [
-   'id',
-   'secid',
-   'shortname',
-   'regnumber',
-   'name',
-   'isin',
-   'is_traded',
-   'emitent_id',
-   'emitent_title',
-   'emitent_inn',
-   'emitent_okpo',
-   'gosreg',
-   'type',
-   'group',
-   'primary_boardid',
-   'marketprice_boardid',
-]
-
 export type CurrentStockRequest = {
    description: {
       columns: Current_Stocks_Description_Columns

@@ -1,14 +1,26 @@
-export const URLList = {
-   front: '/front',
-   login: '/front/login',
-   register: '/front/signup',
-   home: '/home',
-   news: '/news',
-   stocks: '/stocks',
-   bonds: '/bonds',
-   currency: '/currency',
-   notFound: '/notfound',
-}
+export const URLList = new (class {
+   front = '/front'
+   login = `${this.front}/login`
+   register = `${this.front}/signup`
+
+   home = '/home'
+
+   news = '/news'
+   current_news = `${this.news}`
+
+   stocks = '/stocks'
+   current_stock = `${this.stocks}`
+   logos_stock = '/Logos/Stocks'
+
+   bonds = '/bonds'
+   current_bond = `${this.bonds}`
+   logos_bonds = '/Logos/Bonds'
+
+   currency = '/currency'
+   current_currency = `${this.currency}`
+
+   notFound = '/notfound'
+})()
 
 export const PageStartCounter = 50
 

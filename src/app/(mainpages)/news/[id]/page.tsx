@@ -5,12 +5,8 @@ import { redirect } from 'next/navigation'
 import { ConvertDate } from '@/utils/ConvertDate'
 import { FilePlusIcon } from '@radix-ui/react-icons'
 import { getCurrentNews } from '@/actions/News'
-import { Suspense } from 'react'
-import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
-import ErrorMessage from '@/components/ui/ErrorMessage'
 import ControlPanel from '@/components/widgets/ControlPanel'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
-import { Metadata } from 'next'
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
    const { data: resJSON, error } = await getCurrentNews(params.id)
@@ -53,9 +49,7 @@ export default async function SpecificNews({
    return (
       <div className="animate-appearance">
          <ControlPanel />
-         <Suspense fallback={<CenterScreenLoader />}>
-            <MainContent id={id} />
-         </Suspense>
+         <MainContent id={id} />
       </div>
    )
 }
@@ -63,12 +57,8 @@ export default async function SpecificNews({
 const MainContent = async ({ id }: { id: string }) => {
    const { data: CurrentNews, error } = await getCurrentNews(id)
 
-   if (!CurrentNews || error) return <ErrorMessage errMessage={error} />
-
-   if (!CurrentNews.content.data[0]) {
-      redirect(URLList.notFound)
-      return <></>
-   }
+   if (!CurrentNews || error || !CurrentNews.content.data[0])
+      return redirect(URLList.notFound)
 
    const title = CurrentNews.content.columns.indexOf('title')
    const body = CurrentNews.content.columns.indexOf('body')
@@ -79,7 +69,7 @@ const MainContent = async ({ id }: { id: string }) => {
    return (
       <>
          <SwipeNavigator
-            prev={URLList.news}
+            prev="RouterBack"
             className={`w-full text-pretty text-center text-lg ${raleway.className}`}
          >
             <p dangerouslySetInnerHTML={{ __html: news[title] }}></p>

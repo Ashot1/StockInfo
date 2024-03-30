@@ -5,8 +5,6 @@ import ThemeProvider from '@/hoc/ThemeProvider'
 import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
-import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
-import { LocalStorageParameters } from '@/utils/const'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -60,17 +58,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                      },
                   }}
                />
-
-               <LocalSettingsChecker
-                  Params={LocalStorageParameters.glowBG}
-                  needAlert={true}
-                  textAlert={{
-                     title: 'Эффект свечения включен',
-                     text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
-                  }}
-               >
-                  <div className="glow-effect" />
-               </LocalSettingsChecker>
 
                <div id="modal"></div>
 
