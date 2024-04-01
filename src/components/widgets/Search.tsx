@@ -35,13 +35,16 @@ const Search: FC<TSearch> = ({ searchRequest, url, imgURL, imgType }) => {
 
    return (
       <CustomModalCommand
+         className="min-h-[40dvh] 768p:min-h-0"
          onSend={sendFunc}
          placeholder="Найти"
-         hotKey={{ key: 'k', ctrl: true, shift: false }}
+         hotKey={{ key: 'i', ctrl: true, shift: false }}
          triggerText={
             <>
                <MagnifyingGlassIcon /> Поиск
-               <kbd className="text-[0.7rem]">Ctrl + K</kbd>
+               <kbd className="hidden text-[0.7rem] tracking-tighter opacity-50 300p:block">
+                  Ctrl + i
+               </kbd>
             </>
          }
       >

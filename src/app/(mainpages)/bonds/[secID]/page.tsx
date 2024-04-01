@@ -7,6 +7,7 @@ import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { ConvertDate } from '@/utils/ConvertDate'
 import { CouponsRequest } from '@/types/Bonds.types'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
+import { URLList } from '@/utils/const'
 
 export async function generateMetadata({
    params: { secID },
@@ -56,7 +57,13 @@ export default async function CurrentBond({
 }: {
    params: { secID: string }
 }) {
-   const { data: CouponsData, error: CouponsError } = await getCoupons(secID)
+   const bondReq = getCurrentStock(secID)
+   const couponsReq = getCoupons(secID)
+
+   const [bondRes, couponsRes] = await Promise.all([bondReq, couponsReq])
+
+   const { data: CouponsData, error: CouponsError } = couponsRes
+   const { data, error } = bondRes
 
    const couponsContent = {
       name: 'Купоны',
@@ -73,9 +80,12 @@ export default async function CurrentBond({
       <div className="animate-appearance">
          <ControlPanel />
          <SecurityTemplate
+            type="Bond"
+            data={data}
+            error={error}
             secID={secID}
             secondsContent={couponsContent}
-            url={`/Logos/Bonds/${secID}.png`}
+            url={`${URLList.logos_bonds}/${secID}.png`}
          />
       </div>
    )

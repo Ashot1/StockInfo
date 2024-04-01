@@ -4,6 +4,7 @@ import { FC, ReactNode, useRef } from 'react'
 import type { TouchEvent } from 'react'
 import { cn } from '@/utils/utils'
 import { useRouter } from 'next/navigation'
+import { SwipeLength } from '@/utils/const'
 
 const SwipeNavigator: FC<{
    children: ReactNode
@@ -18,11 +19,11 @@ const SwipeNavigator: FC<{
       const currentPos = e.changedTouches[0].clientX
       const definition = startPos.current - currentPos
 
-      if (definition > 150 && next) {
+      if (definition >= SwipeLength && next) {
          next === 'RouterForward' ? forward() : push(next)
       }
 
-      if (definition < -150 && prev) {
+      if (definition <= -SwipeLength && prev) {
          prev === 'RouterBack' ? back() : push(prev)
       }
    }

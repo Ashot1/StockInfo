@@ -1,4 +1,5 @@
 import { Provider } from '@supabase/gotrue-js'
+import { Enums } from '@/types/supabase.types'
 
 export type OAuthProviders = 'google' | 'discord'
 export type OAuthData =
@@ -13,7 +14,14 @@ export type UserMetadata = {
    avatar_url: string
    email_verified: boolean
    full_name: string
-   // VisitHistory: { icon: string; title: string; url: string }[]
 }
 
 export type RegisterPasswordInfo = BasicAuthInfo & { metadata: UserMetadata }
+
+export type FavoritesListTypes = Enums<'favorite_types'>
+
+export type TFavoritesList = {
+   type: FavoritesListTypes
+   secID: string
+   image: string
+}

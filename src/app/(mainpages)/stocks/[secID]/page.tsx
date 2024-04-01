@@ -54,8 +54,13 @@ export default async function CurrentStock({
 }: {
    params: { secID: string }
 }) {
-   const { data: DividendsData, error: DividendsError } =
-      await getDividends(secID)
+   const bondReq = getCurrentStock(secID)
+   const dividentsReq = getDividends(secID)
+
+   const [bondRes, dividentsRes] = await Promise.all([bondReq, dividentsReq])
+
+   const { data: DividendsData, error: DividendsError } = dividentsRes
+   const { data, error } = bondRes
 
    const dividentContent = {
       name: 'Дивиденты',
@@ -72,6 +77,9 @@ export default async function CurrentStock({
       <div className="animate-appearance">
          <ControlPanel />
          <SecurityTemplate
+            type="Stock"
+            data={data}
+            error={error}
             secondsContent={dividentContent}
             secID={secID}
             url={`/Logos/Stocks/${secID}.svg`}

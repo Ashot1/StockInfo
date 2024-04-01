@@ -7,18 +7,24 @@ import CustomTabs, {
 } from '@/components/entity/CustomElements/CustomTabs'
 import SecurityMainInfo from '@/components/widgets/SecurityMainInfo'
 import SecurityInfoList from '@/components/entity/SecurityInfoList'
+import { CurrentStockRequest } from '@/types/Stocks.types'
+import { Enums } from '@/types/supabase.types'
 
 export default async function SecurityTemplate({
    secID,
    secondsContent,
    url,
+   data,
+   error,
+   type,
 }: {
    secID: string
    secondsContent: TabsContentType
    url: string
+   data?: CurrentStockRequest
+   error?: string
+   type: Enums<'favorite_types'>
 }) {
-   const { data, error } = await getCurrentStock(secID)
-
    if (!data || error || !data.description.data.length)
       return redirect(URLList.notFound)
 
@@ -46,6 +52,7 @@ export default async function SecurityTemplate({
    return (
       <>
          <SecurityMainInfo
+            type={type}
             secCode={code[valueIndex] as string}
             secTitle={title[valueIndex] as string}
             secID={secID}

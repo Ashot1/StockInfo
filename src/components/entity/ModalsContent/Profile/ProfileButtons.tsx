@@ -1,12 +1,12 @@
 'use client'
 
 import { Button } from '@/components/ui/ShadCN/button'
-import { supabase } from '@/utils/Supabase.init'
 import { Dispatch, FC, SetStateAction } from 'react'
 import { useRouter } from 'next/navigation'
 import { ProfileModeState } from '@/types/Modals.types'
-import { DeleteUser } from '@/actions/Account'
-import TryCatch from '@/utils/TryCatch'
+import { DeleteUser } from '@/actions/Account/Account'
+import { SignOut } from '@/actions/Account/Auth'
+import toast from 'react-hot-toast'
 
 const ProfileButtons: FC<{
    setMode: Dispatch<SetStateAction<ProfileModeState>>
@@ -15,12 +15,12 @@ const ProfileButtons: FC<{
 
    // выход из аккаунта
    const QuitAccount = async () => {
-      return TryCatch(async () => {
-         const { error } = await supabase.auth.signOut({ scope: 'local' })
-         if (error) throw error
-         refresh()
-         return { data: undefined }
-      })
+      const { error } = await SignOut()
+      if (error) return { error }
+
+      refresh()
+
+      return {}
    }
 
    const QuitClick = () =>

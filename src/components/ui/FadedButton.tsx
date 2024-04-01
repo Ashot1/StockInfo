@@ -1,21 +1,41 @@
 'use client'
 
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC, HTMLProps } from 'react'
+import {
+   ButtonHTMLAttributes,
+   DetailedHTMLProps,
+   FC,
+   forwardRef,
+   HTMLAttributes,
+   HTMLProps,
+} from 'react'
 import { cn } from '@/utils/utils'
 
-const FadedButton: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
+type TSpan = { anotherElement: never } & HTMLAttributes<HTMLSpanElement>
+
+type TButton = {
+   anotherElement?: true
+} & ButtonHTMLAttributes<HTMLButtonElement>
+
+type FadedButton = TSpan | TButton
+
+const FadedButton: FC<FadedButton> = ({
+   anotherElement,
    className,
    children,
    ...props
 }) => {
+   const FadedClass =
+      'flex items-center justify-center gap-3 rounded-full bg-[var(--grayBG)] px-3 py-1.5 duration-300 hover:scale-110 cursor-pointer text-sm'
+
+   if (anotherElement)
+      return (
+         <span className={cn(FadedClass, className)} {...props}>
+            {children}
+         </span>
+      )
+
    return (
-      <button
-         className={cn(
-            'flex items-center justify-center gap-3 rounded-full bg-[var(--grayBG)] px-3 py-1.5 duration-300 hover:scale-110',
-            className
-         )}
-         {...props}
-      >
+      <button className={cn(FadedClass, className)} {...props}>
          {children}
       </button>
    )

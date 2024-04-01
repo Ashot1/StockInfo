@@ -1,5 +1,5 @@
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
-import { GetUser } from '@/actions/Account'
+import { GetUser } from '@/actions/Account/Account'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { UserMetadata } from '@/types/Auth.types'
 

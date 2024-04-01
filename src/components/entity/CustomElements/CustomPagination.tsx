@@ -9,7 +9,7 @@ import {
    PaginationLink,
    PaginationNext,
    PaginationPrevious,
-} from '@/components/ui/pagination'
+} from '@/components/ui/ShadCN/pagination'
 import { usePathname } from 'next/navigation'
 import { PageStartCounter } from '@/utils/const'
 import CalculatePagination from '@/utils/CalculatePagination'

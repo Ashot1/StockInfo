@@ -1,30 +1,34 @@
 export const URLList = new (class {
-   front = '/front'
-   login = `${this.front}/login`
-   register = `${this.front}/signup`
+   front = '/front' as const
+   login = `${this.front}/login` as const
+   register = `${this.front}/signup` as const
+   notFoundFront = `${this.front}/notFound` as const
+   errorLoginPage = `${this.front}`
 
-   home = '/home'
+   home = '/home' as const
 
-   news = '/news'
-   current_news = `${this.news}`
+   news = '/news' as const
+   current_news = `${this.news}` as const
 
-   stocks = '/stocks'
-   current_stock = `${this.stocks}`
-   logos_stock = '/Logos/Stocks'
+   stocks = '/stocks' as const
+   current_stock = `${this.stocks}` as const
+   logos_stock = '/Logos/Stocks' as const
 
-   bonds = '/bonds'
-   current_bond = `${this.bonds}`
-   logos_bonds = '/Logos/Bonds'
+   bonds = '/bonds' as const
+   current_bond = `${this.bonds}` as const
+   logos_bonds = '/Logos/Bonds' as const
 
-   currency = '/currency'
-   current_currency = `${this.currency}`
+   currency = '/currency' as const
+   current_currency = `${this.currency}` as const
 
-   notFound = '/notfound'
+   notFound = '/notFound' as const
 })()
 
 export const PageStartCounter = 50
 
 export const MobileScreen = 820
+
+export const SwipeLength = 150
 
 export const AuthFormPatterns = {
    email: {
@@ -63,7 +67,16 @@ export const AuthFormPatterns = {
    },
 }
 
-export const LocalStorageParameters = {
+export const LocalStorageParameters: Record<
+   'glowBG',
+   {
+      name: string
+      defaultValue: string
+      negative: string
+      positive: string
+      conditionalRender: boolean
+   }
+> = {
    glowBG: {
       name: 'glowBGEffect',
       defaultValue: 'on',
@@ -72,3 +85,5 @@ export const LocalStorageParameters = {
       conditionalRender: true,
    },
 }
+
+export const RevalidateTags = {}

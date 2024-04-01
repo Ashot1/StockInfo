@@ -1,38 +1,34 @@
 'use client'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { URLList } from '@/utils/const'
 import {
-   LoginWithOAuth,
    LoginWithPassword,
    RegisterWithPassword,
-} from '@/actions/CLIENT-auth'
-import { URLList } from '@/utils/const'
+   SignOut,
+} from '@/actions/Account/Auth'
+import { LoginWithOAuth } from '@/actions/Account/client'
 
 export default function LoginPage() {
-   const supabase = createClientComponentClient()
    const { push } = useRouter()
 
    return (
       <div>
-         <button onClick={async () => await LoginWithOAuth('google')}>
+         <button
+            onClick={async () => {
+               await LoginWithOAuth('google')
+            }}
+         >
             Google
          </button>
          <br />
          <br />
+         <button>Info</button>
+         <br />
+         <br />
          <button
             onClick={async () => {
-               const session = await supabase?.auth?.getSession()
-               console.log(session)
-            }}
-         >
-            Info
-         </button>
-         <br />
-         <br />
-         <button
-            onClick={() => {
-               supabase.auth.signOut()
+               await SignOut()
             }}
          >
             Log out

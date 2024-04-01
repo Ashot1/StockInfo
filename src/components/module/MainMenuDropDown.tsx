@@ -64,7 +64,7 @@ export default function MainMenuDropDown() {
 
    const center: string = 'flex items-center gap-2.5'
    const isMobile = useMatchMedia(MobileScreen)
-   const user = useContext(AuthContext)
+   const user = useContext(AuthContext).authInfo
    const signWith = user.app_metadata.provider
    const verifyEmail = user.user_metadata.email_verified
 

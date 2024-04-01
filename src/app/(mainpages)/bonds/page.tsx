@@ -1,10 +1,13 @@
 import PageTitle from '@/components/ui/PageTitle'
-import { getBondsList, searchBond } from '@/actions/Bonds'
+import { getBondsList } from '@/actions/Bonds'
 import { PageStartCounter, URLList } from '@/utils/const'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { Metadata } from 'next'
 import SecurityListTemplate from '@/components/module/SecurityListTemplate'
+import { searchBond } from '@/actions/CLIENT-CommonSecurity'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
    title: 'Облигации',

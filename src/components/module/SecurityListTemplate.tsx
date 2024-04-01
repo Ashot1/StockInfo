@@ -2,12 +2,10 @@ import CustomPagination from '@/components/entity/CustomElements/CustomPaginatio
 import DefaultList from '@/components/ui/DefaultList/DefaultList'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import { ReactNode } from 'react'
-import CustomModal from '@/components/entity/CustomElements/CustomModal'
-import { BookmarkFilledIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons'
-import CustomModalCommand from '@/components/entity/CustomElements/CustomModalCommand'
 import Search, { TSearch } from '@/components/widgets/Search'
+import FavoriteList from '@/components/widgets/FavoriteList'
 
-export default function SecurityListTemplate({
+export default async function SecurityListTemplate({
    startIndex,
    step,
    children,
@@ -25,17 +23,16 @@ export default function SecurityListTemplate({
    url: string
    dataLength: number
 } & Pick<TSearch, 'searchRequest' | 'imgURL' | 'imgType'>) {
-   //      <BookmarkFilledIcon /> Избранное
-
    return (
       <>
-         <div className="mb-10 flex items-center justify-center gap-6">
+         <div className="mb-10 flex items-center justify-center gap-2 500p:gap-6">
             <Search
                searchRequest={searchRequest}
                url={url}
                imgURL={imgURL}
                imgType={imgType}
             />
+            <FavoriteList />
          </div>
          <CustomPagination
             currentStart={startIndex}

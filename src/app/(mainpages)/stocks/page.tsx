@@ -1,10 +1,13 @@
 import PageTitle from '@/components/ui/PageTitle'
-import { getStocksList, searchStock } from '@/actions/Stocks'
+import { getStocksList } from '@/actions/Stocks'
 import { PageStartCounter, URLList } from '@/utils/const'
 import { Metadata } from 'next'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import SecurityListTemplate from '@/components/module/SecurityListTemplate'
+import { searchStock } from '@/actions/CLIENT-CommonSecurity'
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
    title: 'Акции',

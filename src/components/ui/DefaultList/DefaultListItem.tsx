@@ -28,7 +28,7 @@ export default function DefaultListItem({
                <ImageServerErrorCheck
                   defaultSrc="/StockPlaceHolder.png"
                   src={img}
-                  className={`rounded-full bg-gray-200 text-center text-xs dark:bg-gray-500`}
+                  className={`rounded-full bg-gray-600/15 text-center text-xs dark:bg-gray-600/15`}
                   onErrorClass={`dark:invert rounded bg-transparent dark:bg-transparent`}
                   alt={subtext || 'Logo'}
                />

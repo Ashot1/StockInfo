@@ -16,14 +16,17 @@ import {
 } from '@/components/ui/ShadCN/command'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import FadedButton from '@/components/ui/FadedButton'
+import { cn } from '@/utils/utils'
+import { THotKey, useHotKey } from '@/hooks/HotKeys'
 
 export type TCustomCommand = {
    placeholder: string
    triggerText: string | ReactNode
    classNameTrigger?: string
-   hotKey?: { ctrl: boolean; shift: boolean; key: string }
+   hotKey?: THotKey
    children?: ReactNode
    onSend: (value: string) => void
+   className?: string
 }
 
 const CustomModalCommand: FC<TCustomCommand> = ({
@@ -33,27 +36,12 @@ const CustomModalCommand: FC<TCustomCommand> = ({
    hotKey,
    children,
    onSend,
+   className,
 }) => {
-   const [Open, setOpen] = useState(false)
+   const [Open, setOpen] = useHotKey(hotKey)
    const [InputValue, setInputValue] = useState('')
 
-   useEffect(() => {
-      if (!hotKey) return
-
-      const listener = (e: KeyboardEvent) => {
-         const CTRL = hotKey.ctrl ? e.ctrlKey : !e.ctrlKey
-         const shift = hotKey.shift ? e.shiftKey : !e.shiftKey
-
-         if (e.key.toLowerCase() === hotKey.key.toLowerCase() && CTRL && shift)
-            setOpen(true)
-      }
-
-      window.addEventListener('keyup', listener)
-
-      return () => window.removeEventListener('keyup', listener)
-   }, [hotKey])
-
-   const keyUP = (e: KBevent<HTMLInputElement>) => {
+   const EnterSearch = (e: KBevent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
          onSend(e.currentTarget.value)
          setInputValue('')
@@ -71,13 +59,17 @@ const CustomModalCommand: FC<TCustomCommand> = ({
          <CommandDialog open={Open} onOpenChange={() => setOpen(false)}>
             <CommandInput
                placeholder={placeholder}
-               onKeyUp={keyUP}
+               onKeyUp={EnterSearch}
                onValueChange={(val) => setInputValue(val)}
                value={InputValue}
+               className="pr-7"
             />
-            <CommandList className="max-h-[60dvh]">
+            <CommandList className={cn('max-h-[60dvh]', className)}>
                <CommandEmpty>
-                  <EmptyListText text="Для фильтрации найденного измените поле ввода, для поиска - отправте название из него с помощью Enter" />
+                  <EmptyListText
+                     className="text-pretty px-2"
+                     text="Для фильтрации найденного измените поле ввода, для поиска - отправте название из него с помощью Enter"
+                  />
                </CommandEmpty>
                {children}
             </CommandList>

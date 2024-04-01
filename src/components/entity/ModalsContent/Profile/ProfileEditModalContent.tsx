@@ -18,7 +18,7 @@ import { AuthFormPatterns } from '@/utils/const'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import toast from 'react-hot-toast'
 import ChangeAvatar from '@/components/entity/ChangeAvatar'
-import { UpdateUser } from '@/actions/Account'
+import { UpdateUser } from '@/actions/Account/Account'
 import { useRouter } from 'next/navigation'
 
 export type EditableInputs = { avatar?: FileList } & {

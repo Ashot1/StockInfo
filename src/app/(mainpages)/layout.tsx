@@ -1,4 +1,4 @@
-import { ReactNode, Suspense } from 'react'
+import { ReactNode } from 'react'
 import MainHeader from '@/components/module/MainHeader'
 import AuthProvider from '@/hoc/AuthProvider'
 import { LocalStorageParameters, URLList } from '@/utils/const'
@@ -7,8 +7,7 @@ import NewsIcon from '@/../public/Menu/News.svg'
 import HomeIcon from '@/../public/Menu/home.svg'
 import BondsIcon from '@/../public/Menu/bond.svg'
 import CurrencyIcon from '@/../public/Menu/currency.svg'
-import { GetUser } from '@/actions/Account'
-import Loader from '@/components/ui/loader'
+import { GetUser, GetUserMainData } from '@/actions/Account/Account'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
@@ -26,18 +25,16 @@ export default async function MainPagesLayout({
 }: {
    children: ReactNode
 }) {
-   const { data: user, error } = await GetUser()
+   const authReq = GetUser()
+   const infoReq = GetUserMainData()
+
+   const [authRes, infoRes] = await Promise.all([authReq, infoReq])
+
+   const { data: user, error } = authRes
+   const { data: mainInfo, error: mainError } = infoRes
 
    // TODO: Сделать нормальное сообщение об ошибке
    if (!user || error) return redirect(URLList.front)
-   // return (
-   //    <div>
-   //       {error}
-   //       <h1>Произошла ошибка с аккаунтом</h1>
-   //       <p>попробуйте заново войти в аккаунт</p>
-   //       <a href={URLList.front}>на странице входа</a>
-   //    </div>
-   // )
 
    return (
       <>
@@ -51,7 +48,7 @@ export default async function MainPagesLayout({
          >
             <div className="glow-effect" />
          </LocalSettingsChecker>
-         <AuthProvider value={user}>
+         <AuthProvider value={{ authInfo: user, mainInfo: mainInfo }}>
             <ScrollStateBar />
             <MainHeader HeaderButtons={HeaderButtons} />
             <main
