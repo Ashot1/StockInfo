@@ -28,7 +28,7 @@ export const PageStartCounter = 50
 
 export const MobileScreen = 820
 
-export const SwipeLength = 150
+export const SwipeLength = 100
 
 export const AuthFormPatterns = {
    email: {

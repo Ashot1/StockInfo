@@ -18,9 +18,16 @@ export type TSearch = {
    url: string
    imgURL: string
    imgType: string
+   defaultSRC?: string
 }
 
-const Search: FC<TSearch> = ({ searchRequest, url, imgURL, imgType }) => {
+const Search: FC<TSearch> = ({
+   searchRequest,
+   url,
+   imgURL,
+   imgType,
+   defaultSRC,
+}) => {
    const [SearchData, setSearchData] = useState<
       SecuritySearchData[] | undefined
    >(undefined)
@@ -42,7 +49,7 @@ const Search: FC<TSearch> = ({ searchRequest, url, imgURL, imgType }) => {
          triggerText={
             <>
                <MagnifyingGlassIcon /> Поиск
-               <kbd className="hidden text-[0.7rem] tracking-tighter opacity-50 300p:block">
+               <kbd className="hidden text-[0.7rem] tracking-tighter opacity-50 500p:block">
                   Ctrl + i
                </kbd>
             </>
@@ -51,12 +58,9 @@ const Search: FC<TSearch> = ({ searchRequest, url, imgURL, imgType }) => {
          {SearchData && (
             <CommandGroup>
                {SearchData.map((item) => (
-                  <CommandItem
-                     key={item.secid}
-                     className="cursor-pointer"
-                     onClick={() => console.log('huy')}
-                  >
+                  <CommandItem key={item.secid} className="cursor-pointer">
                      <DefaultListItem
+                        defaultSRC={defaultSRC || '/StockPlaceHolder.png'}
                         url={`${url}/${item.secid}`}
                         text={item.shortname}
                         subtext={item.secid}

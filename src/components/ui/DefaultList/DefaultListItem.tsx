@@ -10,6 +10,7 @@ export type DefaultListItemProps = {
    rightSubtext?: number
    url?: string
    className?: string
+   defaultSRC: string
 }
 
 export default function DefaultListItem({
@@ -20,21 +21,22 @@ export default function DefaultListItem({
    url,
    rightSubtext,
    className,
+   defaultSRC,
 }: DefaultListItemProps) {
    const content = (
       <>
          <div className="flex items-center gap-3">
-            <span className="relative size-11 768p:size-14">
+            <span className="relative size-11 min-w-11 768p:size-14">
                <ImageServerErrorCheck
-                  defaultSrc="/StockPlaceHolder.png"
+                  defaultSrc={defaultSRC}
                   src={img}
                   className={`rounded-full bg-gray-600/15 text-center text-xs dark:bg-gray-600/15`}
-                  onErrorClass={`dark:invert rounded bg-transparent dark:bg-transparent`}
+                  onErrorClass={`rounded bg-transparent dark:bg-transparent`}
                   alt={subtext || 'Logo'}
                />
             </span>
             <span>
-               <p className="text-sm 768p:text-base">{text}</p>
+               <p className="clipText text-sm 768p:text-base">{text}</p>
                {subtext && (
                   <p className="76p:text-sm text-xs opacity-50">{subtext}</p>
                )}

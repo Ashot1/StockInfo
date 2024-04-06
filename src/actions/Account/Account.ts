@@ -3,14 +3,6 @@
 import { type SupabaseClient, UserAttributes } from '@supabase/supabase-js'
 import TryCatch from '@/utils/TryCatch'
 import { Tables } from '@/types/supabase.types'
-import { TFavoritesList, FavoritesListTypes } from '@/types/Auth.types'
-import { getAllStocks } from '@/actions/Stocks'
-import { TFormatedFavoriteList } from '@/components/widgets/FavoriteList'
-import {
-   SecurityGetAllData,
-   SecurityGetAllMarket,
-} from '@/types/Security.types'
-import { getAllBonds } from '@/actions/Bonds'
 import { type User } from '@supabase/gotrue-js'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
@@ -19,11 +11,13 @@ import { cache } from 'react'
 
 async function getSupabaseUser(supabase: SupabaseClient) {
    const {
-      data: { user },
+      data: { session },
       error,
-   } = await supabase.auth.getUser()
+   } = await supabase.auth.getSession()
 
    if (error) throw error
+
+   const user = session?.user
 
    if (!user || !user?.id) throw new Error('Пользователь не найден')
 
@@ -112,94 +106,6 @@ export const GetUserMainData = async () => {
          return { data: data[0] }
       })
    )
-}
-
-export async function FetchFavorites(list: TFavoritesList[]) {
-   return TryCatch<TFormatedFavoriteList[]>(async () => {
-      if (!list || list.length <= 0)
-         throw new Error('Вы еще ничего не добавили')
-
-      const SortedList: { [key in FavoritesListTypes]: string[] } = {
-         Bond: [],
-         Currency: [],
-         News: [],
-         Stock: [],
-      }
-
-      for (let i of list) {
-         const type = i.type as FavoritesListTypes
-         SortedList[type].push(i.secID)
-      }
-
-      let Securities: {
-         securities: SecurityGetAllData[]
-         marketdata: SecurityGetAllMarket[]
-      } = {
-         securities: [],
-         marketdata: [],
-      }
-
-      const fetchData = async ({
-         name,
-         fn,
-         list,
-      }: {
-         list: string[]
-         name: FavoritesListTypes
-         fn: typeof getAllStocks
-      }) => {
-         if (SortedList[name].length <= 0) return
-         const { data, error } = await fn(list)
-
-         if (!data || error) throw new Error(error || 'Ошибка получения данных')
-
-         Securities.securities = Securities.securities.concat(
-            data[1].securities
-         )
-         Securities.marketdata = Securities.marketdata.concat(
-            data[1].marketdata
-         )
-      }
-
-      const stocksReq = fetchData({
-         name: 'Stock',
-         list: SortedList.Stock,
-         fn: getAllStocks,
-      })
-      const bondsReq = fetchData({
-         name: 'Bond',
-         list: SortedList.Bond,
-         fn: getAllBonds,
-      })
-      await Promise.all([stocksReq, bondsReq])
-
-      const mainSecData = Securities.securities
-      const prices = Securities.marketdata
-
-      const formated: TFormatedFavoriteList[] = mainSecData.map((current) => {
-         const supabaseData = list.find((item) => item.secID === current.SECID)
-         const marketData = prices.find((item) => item.SECID === current.SECID)
-         let definition = undefined
-
-         if (marketData?.LAST && marketData?.OPEN) {
-            definition =
-               ((marketData.LAST - marketData.OPEN) /
-                  ((marketData.OPEN + marketData.LAST) / 2)) *
-               100
-         }
-
-         return {
-            SECID: current.SECID,
-            SHORTNAME: current.SHORTNAME,
-            image: supabaseData ? supabaseData.image : current.SECID,
-            type: supabaseData ? supabaseData.type : 'Stock',
-            price: marketData?.LAST,
-            definition: definition,
-         }
-      })
-
-      return { data: formated }
-   })
 }
 
 type TincomingData = Partial<Omit<Tables<'UserMainData'>, 'user_id'>>

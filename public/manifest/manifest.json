@@ -4,7 +4,7 @@
    "launch_handler": {
       "client_mode": "navigate-existing"
    },
-   "version": "0.5",
+   "version": "0.5.1",
    "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
    "shortcuts": [
       {
@@ -19,14 +19,14 @@
          "short_name": "Акции",
          "description": "Актуальные котировки акций",
          "url": "/stocks",
-         "icons": [{ "src": "/Menu/Shortcuts/Stocks.png", "sizes": "128x128" }]
+         "icons": [{ "src": "/Menu/Shortcuts/Stock.png", "sizes": "128x128" }]
       },
       {
          "name": "Облигации",
          "short_name": "Облигации",
          "description": "Актуальные котировки облигаций",
          "url": "/bonds",
-         "icons": [{ "src": "/Menu/Shortcuts/Bonds.png", "sizes": "128x128" }]
+         "icons": [{ "src": "/Menu/Shortcuts/Bond.png", "sizes": "128x128" }]
       },
       {
          "name": "Валюта",

@@ -8,6 +8,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import CalculatePagination from '@/utils/CalculatePagination'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import FavoriteList from '@/components/widgets/FavoriteList'
 
 export const metadata: Metadata = {
    title: 'Новости',
@@ -59,6 +60,9 @@ const MainContent = async ({ start }: { start?: string }) => {
 
    return (
       <>
+         <div className="mb-10 flex items-center justify-center gap-2 500p:gap-6">
+            <FavoriteList />
+         </div>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}

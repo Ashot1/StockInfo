@@ -85,6 +85,7 @@ const MainContent = async ({ start }: { start?: string }) => {
 
             return (
                <DefaultListItem
+                  defaultSRC="/Menu/Shortcuts/Bond.png"
                   key={bonds[secID]}
                   img={`${URLList.logos_bonds}/${bonds[secID]}.png`}
                   subtext={`${bonds[secID]}`}

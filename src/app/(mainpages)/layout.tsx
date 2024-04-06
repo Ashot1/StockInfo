@@ -33,7 +33,6 @@ export default async function MainPagesLayout({
    const { data: user, error } = authRes
    const { data: mainInfo, error: mainError } = infoRes
 
-   // TODO: Сделать нормальное сообщение об ошибке
    if (!user || error) return redirect(URLList.front)
 
    return (

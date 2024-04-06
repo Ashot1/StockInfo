@@ -296,3 +296,10 @@ body {
    animation-timeline: scroll(y root);
    width: 100dvw;
 }
+
+.clipText {
+   display: -webkit-box;
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+}

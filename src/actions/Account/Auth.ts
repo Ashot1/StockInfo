@@ -8,6 +8,8 @@ import {
 import { SupabaseCustomServer } from '@/utils/supabase/server'
 import TryCatch from '@/utils/TryCatch'
 import { SupabaseCustomClient } from '@/utils/supabase/client'
+import { redirect } from 'next/navigation'
+import { URLList } from '@/utils/const'
 
 export async function LoginWithPassword({
    password,

@@ -14,20 +14,20 @@ export async function getNews(start = '0') {
 
       if (!result || !data) throw new Error('Новости не найдены')
 
-      return { data: data as NewsRequest }
+      return { data }
    })
 }
 
 export async function getCurrentNews(id: string) {
    return TryCatch<CurrentNewsRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/sitenews/${id}.json?iss.meta=off`
+         `https://iss.moex.com/iss/sitenews/${id}.json?iss.meta=off&iss.json=extended`
       )
       const data: CurrentNewsRequest = await result.json()
 
-      if (!result || !data || !data.content.data.length)
+      if (!result || !data || !data[1].content.length)
          throw new Error('Новость не найдена')
 
-      return { data: data }
+      return { data }
    })
 }
