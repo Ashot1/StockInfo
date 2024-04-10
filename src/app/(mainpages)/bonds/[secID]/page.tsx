@@ -1,6 +1,4 @@
 import { getCurrentStock } from '@/actions/Stocks'
-import ControlPanel from '@/components/widgets/ControlPanel'
-import TransformSecurityData from '@/utils/TransformSecurityData'
 import { getCoupons } from '@/actions/Bonds'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
@@ -30,23 +28,24 @@ export async function generateMetadata({
 
    if (!data || error) return defaultMeta
 
-   const { valueIndex, nameIndex, titleIndex, title, code, StockInfoData } =
-      TransformSecurityData(data, secID)
+   const title = data[1].description.find((item) => item.name === 'SHORTNAME')
+      ?.value
+   const code = data[1].description.find((item) => item.name === 'SECID')?.value
 
    if (!title || !code) return defaultMeta
 
    return {
-      title: `${title[valueIndex]} - ${code[valueIndex]}`,
-      description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
+      title: `${title} - ${code}`,
+      description: `Основная информация об ${title} (${code})`,
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
       openGraph: {
-         title: `${title[valueIndex]} - ${code[valueIndex]}`,
-         description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
+         title: `${title} - ${code}`,
+         description: `Основная информация об ${title} (${code})`,
          authors: 'Московская биржа',
       },
       twitter: {
-         title: `${title[valueIndex]} - ${code[valueIndex]}`,
-         description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
+         title: `${title} - ${code}`,
+         description: `Основная информация об ${title} (${code})`,
       },
    }
 }
@@ -78,7 +77,6 @@ export default async function CurrentBond({
 
    return (
       <div className="animate-appearance">
-         <ControlPanel />
          <SecurityTemplate
             type="Bond"
             data={data}
@@ -100,17 +98,11 @@ const CouponsList = ({ CouponsData }: { CouponsData: CouponsRequest }) => {
       { text: 'Ставка' },
    ]
 
-   const columns = CouponsData.coupons.columns
-   const startDate = columns.indexOf('startdate')
-   const payDate = columns.indexOf('coupondate')
-   const rub = columns.indexOf('value_rub')
-   const percents = columns.indexOf('valueprc')
-
-   const content = CouponsData.coupons.data.map((item) => [
-      ConvertDate(`${item[startDate]}'`, false),
-      ConvertDate(`${item[payDate]}`, false),
-      `${item[rub] || 'Не известно'} RUB`,
-      `${item[percents] || 'Не известно'} %`,
+   const content = CouponsData[1].coupons.map((item) => [
+      ConvertDate(`${item.startdate}'`, false),
+      ConvertDate(`${item.coupondate}`, false),
+      `${item.value_rub || 'Не известно'} RUB`,
+      `${item.valueprc || 'Не известно'} %`,
    ])
 
    return (

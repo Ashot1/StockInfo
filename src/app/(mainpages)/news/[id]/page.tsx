@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { ConvertDate } from '@/utils/ConvertDate'
 import { FilePlusIcon } from '@radix-ui/react-icons'
 import { getCurrentNews } from '@/actions/News'
-import ControlPanel from '@/components/widgets/ControlPanel'
+import ControlPanel from '@/components/module/ControlPanel'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import AddToFavorite from '@/components/entity/AddToFavorite'
 
@@ -48,7 +48,6 @@ export default async function SpecificNews({
 }) {
    return (
       <div className="animate-appearance">
-         <ControlPanel />
          <MainContent id={id} />
       </div>
    )

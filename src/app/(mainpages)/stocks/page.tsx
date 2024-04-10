@@ -27,12 +27,7 @@ export default async function StocksPage({
 }: {
    searchParams: { start?: string }
 }) {
-   return (
-      <>
-         <PageTitle>Список акций</PageTitle>
-         <MainContent start={searchParams?.start} />
-      </>
-   )
+   return <MainContent start={searchParams?.start} />
 }
 
 const MainContent = async ({ start }: { start?: string }) => {
@@ -40,45 +35,32 @@ const MainContent = async ({ start }: { start?: string }) => {
 
    if (!data || error) return <ErrorMessage errMessage={error} />
 
-   const StocksList = data.history.columns
+   const StocksList = data[1].history
+   const Cursor = data[1]['history.cursor'][0]
 
-   const shortName = StocksList.indexOf('SHORTNAME')
-   const secID = StocksList.indexOf('SECID')
-   const marketPrice2 = StocksList.indexOf('MARKETPRICE2')
-   const marketPrice3 = StocksList.indexOf('MARKETPRICE3')
-   const closePrice = StocksList.indexOf('CLOSE')
-   const maxSize = data['history.cursor'].columns.indexOf('TOTAL')
-   const maxPageCounter = data['history.cursor'].data[0][maxSize]
    let startIndex = parseInt(start || '0')
 
    return (
       <SecurityListTemplate
-         imgURL={URLList.logos_stock}
-         imgType="svg"
-         searchRequest={searchStock}
-         maxSize={maxPageCounter}
+         maxSize={Cursor.TOTAL}
          url={URLList.stocks}
          startIndex={startIndex}
          step={PageStartCounter}
-         dataLength={data.history.data.length}
+         dataLength={StocksList.length}
       >
-         {data.history.data.map((stocks, index) => {
-            let price =
-               stocks[marketPrice2] ||
-               stocks[marketPrice3] ||
-               stocks[closePrice]
+         {StocksList.map((stock, index) => {
+            let price: number | string = stock.CLOSE
 
             const differencePrices =
-               (price as number) - (stocks[closePrice] as number)
+               ((price - stock.OPEN) / ((stock.OPEN + price) / 2)) * 100
 
-            let percent =
-               (differencePrices / (stocks[closePrice] as number)) * 100
+            let percent = (differencePrices / price) * 100
 
             price = Intl.NumberFormat('ru', {
                style: 'currency',
                currency: 'RUB',
                currencyDisplay: 'symbol',
-            }).format((price as number) || 0)
+            }).format(price || 0)
 
             const animIndex = index <= 15 ? index : 15
 
@@ -87,13 +69,13 @@ const MainContent = async ({ start }: { start?: string }) => {
             return (
                <DefaultListItem
                   defaultSRC="/Menu/Shortcuts/Stock.png"
-                  key={stocks[secID]}
-                  img={`${URLList.logos_stock}/${stocks[secID]}.svg`}
-                  subtext={`${stocks[secID]}`}
-                  text={stocks[shortName] as string}
+                  key={stock.SECID}
+                  img={`${URLList.logos_stock}/${stock.SECID}.svg`}
+                  subtext={`${stock.SECID}`}
+                  text={stock.SHORTNAME as string}
                   rightText={price}
                   rightSubtext={parseFloat(percent.toFixed(3))}
-                  url={`${URLList.current_stock}/${stocks[secID]}`}
+                  url={`${URLList.current_stock}/${stock.SECID}`}
                   className={`animate-appearance-moving opacity-0 fill-mode-forwards
                             delay-${100 * animIndex}`}
                />

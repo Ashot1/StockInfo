@@ -11,7 +11,7 @@ import { SecurityGetAllRequest } from '@/types/Security.types'
 export async function getStocksList(start: string = '0', limit: number) {
    return TryCatch<StocksRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.data=on`,
+         `https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.data=on&iss.json=extended&history.columns=SHORTNAME,SECID,MARKETPRICE2,MARKETPRICE3,CLOSE,OPEN`,
          { next: { revalidate: 3600 } }
       )
       const data: StocksRequest = await result.json()
@@ -25,12 +25,12 @@ export async function getStocksList(start: string = '0', limit: number) {
 export async function getCurrentStock(stock: string) {
    return TryCatch<CurrentStockRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/securities/${stock}.json?iss.meta=off`,
+         `https://iss.moex.com/iss/securities/${stock}.json?iss.meta=off&iss.json=extended&iss.only=description`,
          { next: { revalidate: 60 } }
       )
       const data: CurrentStockRequest = await result.json()
 
-      if (!result || !data || !data.description.data.length)
+      if (!result || !data || !data[1].description.length)
          throw new Error('Акция не найдена')
 
       return { data }
@@ -40,13 +40,13 @@ export async function getCurrentStock(stock: string) {
 export async function getDividends(stock: string) {
    return TryCatch<DividendsRequest>(async () => {
       const result = await fetch(
-         `http://iss.moex.com/iss/securities/${stock}/dividends.json?iss.meta=off`,
+         `http://iss.moex.com/iss/securities/${stock}/dividends.json?iss.meta=off&iss.json=extended`,
          { next: { revalidate: 3600 } }
       )
 
       const data: DividendsRequest = await result.json()
 
-      if (!result || !data || !data.dividends.data.length)
+      if (!result || !data || !data[1].dividends.length)
          throw new Error('Выплат не было')
 
       return { data }

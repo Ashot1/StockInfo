@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { cn } from '@/utils/utils'
-import ImageServerErrorCheck from '@/components/ui/ImageServerErrorCheck'
+import ImageServerErrorCheck, {
+   ImageErrorProps,
+} from '@/components/ui/Img/ImageServerErrorCheck'
 
 export type DefaultListItemProps = {
    img: string
@@ -11,7 +13,7 @@ export type DefaultListItemProps = {
    url?: string
    className?: string
    defaultSRC: string
-}
+} & Pick<ImageErrorProps, 'onErrorClass'>
 
 export default function DefaultListItem({
    img,
@@ -22,6 +24,7 @@ export default function DefaultListItem({
    rightSubtext,
    className,
    defaultSRC,
+   onErrorClass,
 }: DefaultListItemProps) {
    const content = (
       <>
@@ -31,7 +34,10 @@ export default function DefaultListItem({
                   defaultSrc={defaultSRC}
                   src={img}
                   className={`rounded-full bg-gray-600/15 text-center text-xs dark:bg-gray-600/15`}
-                  onErrorClass={`rounded bg-transparent dark:bg-transparent`}
+                  onErrorClass={cn(
+                     `rounded bg-transparent dark:bg-transparent`,
+                     onErrorClass
+                  )}
                   alt={subtext || 'Logo'}
                />
             </span>

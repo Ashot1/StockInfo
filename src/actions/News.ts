@@ -6,7 +6,7 @@ import TryCatch from '@/utils/TryCatch'
 export async function getNews(start = '0') {
    return TryCatch<NewsRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/sitenews.json?iss.meta=off&start=${start}`,
+         `https://iss.moex.com/iss/sitenews.json?iss.meta=off&start=${start}&iss.json=extended`,
          { cache: 'no-store' }
       )
 

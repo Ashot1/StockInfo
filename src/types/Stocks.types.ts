@@ -1,93 +1,66 @@
-export type StocksRequest = {
-   history: {
-      columns: StocksColumns
-      data: (string | number)[][]
-   }
-   'history.cursor': {
-      columns: StocksCursorColumns
-      data: number[][]
-   }
+export type StocksRequest = [
+   {
+      charsetinfo: {
+         name: string
+      }
+   },
+   {
+      history: StockHistory[]
+      'history.cursor': StockCursor[]
+   },
+]
+
+export type StockHistory = {
+   SHORTNAME: string
+   SECID: string
+   MARKETPRICE2: number
+   MARKETPRICE3: number
+   CLOSE: number
+   OPEN: number
 }
 
-export type StocksColumns = [
-   'BOARDID',
-   'TRADEDATE',
-   'SHORTNAME',
-   'SECID',
-   'NUMTRADES',
-   'VALUE',
-   'OPEN',
-   'LOW',
-   'HIGH',
-   'LEGALCLOSEPRICE',
-   'WAPRICE',
-   'CLOSE',
-   'VOLUME',
-   'MARKETPRICE2',
-   'MARKETPRICE3',
-   'ADMITTEDQUOTE',
-   'MP2VALTRD',
-   'MARKETPRICE3TRADESVALUE',
-   'ADMITTEDVALUE',
-   'WAVAL',
-   'TRADINGSESSION',
-   'CURRENCYID',
-   'TRENDCLSPR',
+export type StockCursor = { INDEX: number; TOTAL: number; PAGESIZE: number }
+
+export type CurrentStockRequest = [
+   {
+      charsetinfo: {
+         name: string
+      }
+   },
+   {
+      description: CurrentStockDescription[]
+   },
 ]
 
-export type StocksCursorColumns = ['INDEX', 'TOTAL', 'PAGESIZE']
-
-export type CurrentStockRequest = {
-   description: {
-      columns: Current_Stocks_Description_Columns
-      data: (string | number)[][]
-   }
-   boards: {
-      columns: Current_Stocks_boards_Columns
-      data: (string | number)[][]
-   }
+export type CurrentStockDescription = {
+   name: string
+   title: string
+   value: string
+   type: string
+   sort_order: number
+   is_hidden: number
+   precision: null | number
 }
 
-export type Current_Stocks_Description_Columns = [
-   'name',
-   'title',
-   'value',
-   'type',
-   'sort_order',
-   'is_hidden',
-   'precision',
+export type DividendsRequest = [
+   {
+      charsetinfo: {
+         name: 'utf-8'
+      }
+   },
+   { dividends: DividendsHistory[] },
 ]
+//    {
+//    dividends: {
+//       columns: DividendsColumns
+//       data: (string | number)[][]
+//    }
+// }
 
-export type Current_Stocks_boards_Columns = [
-   'secid',
-   'boardid',
-   'title',
-   'board_group_id',
-   'market_id',
-   'market',
-   'engine_id',
-   'engine',
-   'is_traded',
-   'decimals',
-   'history_from',
-   'history_till',
-   'listed_from',
-   'listed_till',
-   'is_primary',
-   'currencyid',
-]
-
-export type DividendsRequest = {
-   dividends: {
-      columns: DividendsColumns
-      data: (string | number)[][]
-   }
+export type DividendsHistory = {
+   secid: string
+   isin: string
+   registryclosedate: string
+   value: number
+   currencyid: string
 }
-
-export type DividendsColumns = [
-   'secid',
-   'isin',
-   'registryclosedate',
-   'value',
-   'currencyid',
-]

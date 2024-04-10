@@ -1,5 +1,5 @@
-import ImageServerErrorCheck from '@/components/ui/ImageServerErrorCheck'
-import IMGshadowCard from '@/hoc/IMGshadowCard'
+import ImageServerErrorCheck from '@/components/ui/Img/ImageServerErrorCheck'
+import IMGshadowCard from '@/components/ui/Img/IMGshadowCard'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import AddToFavorite from '@/components/entity/AddToFavorite'
 import { Enums } from '@/types/supabase.types'

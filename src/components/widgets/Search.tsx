@@ -21,7 +21,7 @@ export type TSearch = {
    defaultSRC?: string
 }
 
-const Search: FC<TSearch> = ({
+const Search: FC<TSearch & Pick<any, any>> = ({
    searchRequest,
    url,
    imgURL,
@@ -69,6 +69,7 @@ const Search: FC<TSearch> = ({
                            item.is_traded ? 'Торгуется' : 'Не торгуется'
                         }
                         className="w-full items-center hover:bg-transparent"
+                        onErrorClass="dark:invert"
                      />
                   </CommandItem>
                ))}

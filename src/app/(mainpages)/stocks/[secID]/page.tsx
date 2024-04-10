@@ -1,11 +1,10 @@
 import { getCurrentStock, getDividends } from '@/actions/Stocks'
-import ControlPanel from '@/components/widgets/ControlPanel'
-import TransformSecurityData from '@/utils/TransformSecurityData'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { DividendsRequest } from '@/types/Stocks.types'
 import { ConvertDate } from '@/utils/ConvertDate'
+import { URLList } from '@/utils/const'
 
 export async function generateMetadata({
    params: { secID },
@@ -28,23 +27,24 @@ export async function generateMetadata({
 
    if (!data || error) return defaultMeta
 
-   const { valueIndex, nameIndex, titleIndex, title, code, StockInfoData } =
-      TransformSecurityData(data, secID)
+   const title = data[1].description.find((item) => item.name === 'SHORTNAME')
+      ?.value
+   const code = data[1].description.find((item) => item.name === 'SECID')?.value
 
    if (!title || !code) return defaultMeta
 
    return {
-      title: `${title[valueIndex]} - ${code[valueIndex]}`,
-      description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
+      title: `${title} - ${code}`,
+      description: `Основная информация об ${title} (${code})`,
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
       openGraph: {
-         title: `${title[valueIndex]} - ${code[valueIndex]}`,
-         description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
+         title: `${title} - ${code}`,
+         description: `Основная информация об ${title} (${code})`,
          authors: 'Московская биржа',
       },
       twitter: {
-         title: `${title[valueIndex]} - ${code[valueIndex]}`,
-         description: `Основная информация об ${title[valueIndex]} (${code[valueIndex]})`,
+         title: `${title} - ${code}`,
+         description: `Основная информация об ${title} (${code})`,
       },
    }
 }
@@ -54,13 +54,13 @@ export default async function CurrentStock({
 }: {
    params: { secID: string }
 }) {
-   const bondReq = getCurrentStock(secID)
+   const stockReq = getCurrentStock(secID)
    const dividentsReq = getDividends(secID)
 
-   const [bondRes, dividentsRes] = await Promise.all([bondReq, dividentsReq])
+   const [stockRes, dividentsRes] = await Promise.all([stockReq, dividentsReq])
 
    const { data: DividendsData, error: DividendsError } = dividentsRes
-   const { data, error } = bondRes
+   const { data, error } = stockRes
 
    const dividentContent = {
       name: 'Дивиденты',
@@ -75,14 +75,13 @@ export default async function CurrentStock({
 
    return (
       <div className="animate-appearance">
-         <ControlPanel />
          <SecurityTemplate
             type="Stock"
             data={data}
             error={error}
             secondsContent={dividentContent}
             secID={secID}
-            url={`/Logos/Stocks/${secID}.svg`}
+            url={`${URLList.logos_stock}/${secID}.svg`}
          />
       </div>
    )
@@ -95,14 +94,9 @@ const DividentsList = ({
 }) => {
    const header = [{ text: 'Дата' }, { text: 'Выплата' }]
 
-   const columns = DividendsData.dividends.columns
-   const date = columns.indexOf('registryclosedate')
-   const price = columns.indexOf('value')
-   const currency = columns.indexOf('currencyid')
-
-   const content = DividendsData.dividends.data.map((item) => [
-      ConvertDate(`${item[date]}`, false),
-      `${item[price]} ${item[currency]}`,
+   const content = DividendsData[1].dividends.map((item) => [
+      ConvertDate(`${item.registryclosedate}`, false),
+      `${item.value} ${item.currencyid}`,
    ])
 
    return (

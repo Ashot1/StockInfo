@@ -7,7 +7,7 @@ import { SecurityGetAllRequest } from '@/types/Security.types'
 export async function getBondsList(start: string = '0', limit: number) {
    return TryCatch<BondsRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/history/engines/stock/markets/bonds/securities.json?start=${start}&limit=${limit}&iss.meta=off`,
+         `https://iss.moex.com/iss/history/engines/stock/markets/bonds/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.json=extended&history.columns=SHORTNAME,SECID,TRADEDATE,OPEN,CLOSE&numtrades=1`,
          { next: { revalidate: 3600 } }
       )
       const data: BondsRequest = await result.json()
@@ -21,12 +21,12 @@ export async function getBondsList(start: string = '0', limit: number) {
 export async function getCoupons(bond: string) {
    return TryCatch<CouponsRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/securities/${bond}/bondization.json?iss.meta=off`,
+         `https://iss.moex.com/iss/securities/${bond}/bondization.json?iss.meta=off&iss.json=extended&iss.only=coupons&coupons.columns=isin,startdate,coupondate,value_rub,valueprc`,
          { next: { revalidate: 3600 } }
       )
       const data: CouponsRequest = await result.json()
 
-      if (!result || !data || !data.coupons.data.length)
+      if (!result || !data || !data[1].coupons.length)
          throw new Error('Купонов нет')
 
       return { data: data }

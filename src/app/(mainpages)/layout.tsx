@@ -11,6 +11,7 @@ import { GetUser, GetUserMainData } from '@/actions/Account/Account'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
+import ControlPanel from '@/components/module/ControlPanel'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
@@ -47,6 +48,7 @@ export default async function MainPagesLayout({
          >
             <div className="glow-effect" />
          </LocalSettingsChecker>
+
          <AuthProvider value={{ authInfo: user, mainInfo: mainInfo }}>
             <ScrollStateBar />
             <MainHeader HeaderButtons={HeaderButtons} />
@@ -54,6 +56,7 @@ export default async function MainPagesLayout({
                className="mb-10 mt-6 flex min-h-dvh flex-col
                     px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]"
             >
+               <ControlPanel />
                {children}
             </main>
          </AuthProvider>

@@ -4,13 +4,21 @@ import { FC, SyntheticEvent, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/utils/utils'
 
-const ImageServerErrorCheck: FC<{
+export type ImageErrorProps = {
    src?: string
    alt: string
    defaultSrc: string
    className?: string
    onErrorClass?: string
-}> = ({ alt, className, src, defaultSrc, onErrorClass }) => {
+}
+
+const ImageServerErrorCheck: FC<ImageErrorProps> = ({
+   alt,
+   className,
+   src,
+   defaultSrc,
+   onErrorClass,
+}) => {
    const [IMG, setIMG] = useState<string | undefined>(src)
 
    const error = () => {

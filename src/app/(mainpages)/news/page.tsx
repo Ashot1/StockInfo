@@ -28,12 +28,7 @@ export default async function News({
 }: {
    searchParams: { start?: string }
 }) {
-   return (
-      <>
-         <PageTitle>Новости</PageTitle>
-         <MainContent start={searchParams?.start} />
-      </>
-   )
+   return <MainContent start={searchParams?.start} />
 }
 
 const MainContent = async ({ start }: { start?: string }) => {
@@ -41,12 +36,9 @@ const MainContent = async ({ start }: { start?: string }) => {
 
    if (!newsList || error) return <ErrorMessage errMessage={error} />
 
-   const id = newsList.sitenews.columns.indexOf('id')
-   const title = newsList.sitenews.columns.indexOf('title')
-   const createdAt = newsList.sitenews.columns.indexOf('published_at')
-   const editedAt = newsList.sitenews.columns.indexOf('modified_at')
-   const maxSize = newsList['sitenews.cursor'].columns.indexOf('TOTAL')
-   const maxPageCounter = newsList['sitenews.cursor'].data[0][maxSize]
+   const siteNews = newsList[1].sitenews
+   const cursor = newsList[1]['sitenews.cursor'][0]
+
    let startIndex = parseInt(start || '0')
 
    if (startIndex < 0) startIndex = 0
@@ -54,19 +46,16 @@ const MainContent = async ({ start }: { start?: string }) => {
    const { prevLink, nextLink } = CalculatePagination({
       start: startIndex,
       Step: PageStartCounter,
-      maxLength: maxPageCounter,
+      maxLength: cursor.TOTAL,
       pathname: URLList.news,
    })
 
    return (
       <>
-         <div className="mb-10 flex items-center justify-center gap-2 500p:gap-6">
-            <FavoriteList />
-         </div>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
-            maxSize={maxPageCounter}
+            maxSize={cursor.TOTAL}
          />
          <SwipeNavigator
             next={nextLink}
@@ -74,18 +63,16 @@ const MainContent = async ({ start }: { start?: string }) => {
             className="my-5 flex flex-1 flex-col
                 rounded-2xl border-2 bg-neutral-200 bg-opacity-40 p-2 opacity-85 500p:ml-0 500p:w-full 768p:p-4 dark:bg-neutral-900 dark:bg-opacity-50"
          >
-            {newsList.sitenews.data.length <= 0 && (
-               <EmptyListText text="Пусто" />
-            )}
+            {siteNews.length <= 0 && <EmptyListText text="Пусто" />}
 
-            {newsList.sitenews.data.map((news, index) => {
+            {siteNews.map((news, index) => {
                return (
                   <NewsListItem
-                     key={news[id]}
-                     link={`${URLList.current_news}/${news[id]}`}
-                     Title={news[title] as string}
-                     createdAt={news[createdAt] as string}
-                     editedAt={news[editedAt] as string}
+                     key={news.id}
+                     link={`${URLList.current_news}/${news.id}`}
+                     Title={news.title}
+                     createdAt={news.published_at}
+                     editedAt={news.modified_at}
                      index={index + 1 + startIndex}
                      ClassName={`animate-appearance-moving opacity-0 fill-mode-forwards
                             delay-${100 * (index <= 15 ? index : 15)}
@@ -97,7 +84,7 @@ const MainContent = async ({ start }: { start?: string }) => {
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
-            maxSize={newsList['sitenews.cursor'].data[0][maxSize]}
+            maxSize={cursor.TOTAL}
          />
       </>
    )

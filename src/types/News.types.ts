@@ -1,16 +1,28 @@
-export interface NewsRequest {
-   sitenews: {
-      columns: NewsColumns
-      data: (string | number)[][]
-   }
-   'sitenews.cursor': {
-      columns: NewsCursorColumns
-      data: number[][]
-   }
+export type NewsRequest = [
+   {
+      charsetinfo: {
+         name: string
+      }
+   },
+   {
+      sitenews: siteNewsData[]
+      'sitenews.cursor': siteNewsCursorData[]
+   },
+]
+
+export type siteNewsData = {
+   id: number
+   tag: string
+   title: string
+   published_at: string
+   modified_at: string
 }
 
-export type NewsColumns = ['id', 'tag', 'title', 'published_at', 'modified_at']
-export type NewsCursorColumns = ['INDEX', 'TOTAL', 'PAGESIZE']
+export type siteNewsCursorData = {
+   INDEX: number
+   TOTAL: number
+   PAGESIZE: number
+}
 
 export type CurrentNewsRequest = [
    {

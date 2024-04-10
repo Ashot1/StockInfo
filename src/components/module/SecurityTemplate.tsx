@@ -1,7 +1,5 @@
-import { getCurrentStock } from '@/actions/Stocks'
 import { redirect } from 'next/navigation'
 import { URLList } from '@/utils/const'
-import TransformSecurityData from '@/utils/TransformSecurityData'
 import CustomTabs, {
    TabsContentType,
 } from '@/components/entity/CustomElements/CustomTabs'
@@ -25,26 +23,20 @@ export default async function SecurityTemplate({
    error?: string
    type: Enums<'favorite_types'>
 }) {
-   if (!data || error || !data.description.data.length)
-      return redirect(URLList.notFound)
+   if (!data || error) return redirect(URLList.notFound)
 
-   const { valueIndex, nameIndex, titleIndex, title, code, StockInfoData } =
-      TransformSecurityData(data, secID)
+   const description = data[1].description
 
-   if (!title || !code) return
+   const secCode =
+      description.find((item) => item.name === 'SECID')?.value || ''
+   const secTitle =
+      description.find((item) => item.name === 'NAME')?.value || ''
 
    const Info = [
       {
          name: 'Основная информация',
          value: 'mainInfo',
-         component: (
-            <SecurityInfoList
-               currencyList={StockInfoData}
-               titleIndex={titleIndex}
-               valueIndex={valueIndex}
-               nameIndex={nameIndex}
-            />
-         ),
+         component: <SecurityInfoList currencyList={description} />,
       },
       secondsContent,
    ]
@@ -53,8 +45,8 @@ export default async function SecurityTemplate({
       <>
          <SecurityMainInfo
             type={type}
-            secCode={code[valueIndex] as string}
-            secTitle={title[valueIndex] as string}
+            secCode={secCode}
+            secTitle={secTitle}
             secID={secID}
             img={url}
          />

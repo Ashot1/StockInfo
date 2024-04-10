@@ -12,9 +12,6 @@ export default async function SecurityListTemplate({
    maxSize,
    url,
    dataLength,
-   searchRequest,
-   imgURL,
-   imgType,
 }: {
    children: ReactNode
    startIndex: number
@@ -22,18 +19,9 @@ export default async function SecurityListTemplate({
    maxSize: number
    url: string
    dataLength: number
-} & Pick<TSearch, 'searchRequest' | 'imgURL' | 'imgType'>) {
+}) {
    return (
       <>
-         <div className="mb-10 flex items-center justify-center gap-2 500p:gap-6">
-            <Search
-               searchRequest={searchRequest}
-               url={url}
-               imgURL={imgURL}
-               imgType={imgType}
-            />
-            <FavoriteList />
-         </div>
          <CustomPagination
             currentStart={startIndex}
             element={'main'}
