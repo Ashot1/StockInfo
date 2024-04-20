@@ -2,7 +2,12 @@
 
 import TryCatch from '@/utils/TryCatch'
 import { BondsRequest, CouponsRequest } from '@/types/Bonds.types'
-import { SecurityGetAllRequest } from '@/types/Security.types'
+import {
+   MarketPriceRequest,
+   PriceListReqProps,
+   SecurityGetAllRequest,
+   SecurityPriceListRequest,
+} from '@/types/Security.types'
 
 export async function getBondsList(start: string = '0', limit: number) {
    return TryCatch<BondsRequest>(async () => {
@@ -26,8 +31,7 @@ export async function getCoupons(bond: string) {
       )
       const data: CouponsRequest = await result.json()
 
-      if (!result || !data || !data[1].coupons.length)
-         throw new Error('Купонов нет')
+      if (!result || !data) throw new Error('Ошибка получения данных')
 
       return { data: data }
    })
@@ -54,6 +58,44 @@ export async function getAllBonds(
       const data: SecurityGetAllRequest = await result.json()
 
       if (!result || !data) throw new Error('Ошибка запроса')
+
+      return { data: data }
+   })
+}
+
+export async function getBondPriceList({
+   from,
+   start = 0,
+   interval = 24,
+   stock,
+   till,
+}: PriceListReqProps) {
+   return TryCatch<SecurityPriceListRequest>(async () => {
+      const result = await fetch(
+         `http://iss.moex.com/iss/engines/stock/markets/bonds/securities/${stock}/candles.json?iss.meta=off&iss.json=extended&interval=${interval}&start=${start}&from=${from}${
+            till && `&till=${till}`
+         }&candles.columns=open,close,high,low,begin,end`,
+         { next: { revalidate: 3600 } }
+      )
+
+      const data: SecurityPriceListRequest = await result.json()
+
+      if (!result || !data) throw new Error('Ошибка получения данных')
+
+      return { data }
+   })
+}
+
+export async function getBondMarketPrice(secid: string) {
+   return TryCatch<MarketPriceRequest>(async () => {
+      const result = await fetch(
+         `http://iss.moex.com/iss/engines/stock/markets/bonds/securities.json?iss.meta=off&iss.json=extended&securities=${secid}&iss.only=securities,marketdata&securities.columns=SECID&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME`,
+         { next: { revalidate: 1800 } }
+      )
+
+      const data: MarketPriceRequest = await result.json()
+
+      if (!result || !data) throw new Error('Ошибка получения данных')
 
       return { data: data }
    })

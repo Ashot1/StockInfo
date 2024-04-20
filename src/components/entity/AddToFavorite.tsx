@@ -8,7 +8,12 @@ import { UpdateUserMainData } from '@/actions/Account/Account'
 import { TFavoritesList } from '@/types/Auth.types'
 import toast from 'react-hot-toast'
 
-const AddToFavorite: FC<TFavoritesList> = ({ secID, image, type }) => {
+const AddToFavorite: FC<TFavoritesList & { className?: string }> = ({
+   secID,
+   image,
+   type,
+   className,
+}) => {
    const context = useContext(AuthContext)
    const mainInfo = context.mainInfo
    const setMainInfo = context.setMainInfo
@@ -51,6 +56,7 @@ const AddToFavorite: FC<TFavoritesList> = ({ secID, image, type }) => {
    return (
       <Button
          variant="ghost"
+         className={className}
          onClick={isFavorite ? removeFromFavorite : addToFavorite}
       >
          {isFavorite ? (

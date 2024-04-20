@@ -73,6 +73,7 @@ const MainContent = async ({ id }: { id: string }) => {
             <AddToFavorite
                secID={id}
                type="News"
+               className="mt-5"
                image={'/Menu/Shortcuts/News.png'}
             />
             <ArrowSeparator />

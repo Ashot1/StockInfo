@@ -1,6 +1,14 @@
 'use client'
 
-import { FC, ReactNode, UIEvent, useState } from 'react'
+import {
+   ComponentPropsWithRef,
+   ElementRef,
+   FC,
+   forwardRef,
+   ReactNode,
+   UIEvent,
+   useState,
+} from 'react'
 import { cn } from '@/utils/utils'
 import { max } from '@floating-ui/utils'
 import { state } from 'sucrase/dist/types/parser/traverser/base'
@@ -45,42 +53,47 @@ const variants = {
    },
 }
 
-const ScrollBlock: FC<ScrollBlockProps> = ({
-   children,
-   className,
-   direction = 'vertical',
-}) => {
-   const [State, setState] = useState<'first' | 'second' | 'fir&sec'>('second')
-   const Variant = variants[direction]
+const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
+   ({ children, className, direction = 'vertical' }, ref) => {
+      const [State, setState] = useState<'first' | 'second' | 'fir&sec'>(
+         'second'
+      )
+      const Variant = variants[direction]
 
-   const ScrollChanges = (e: UIEvent) => {
-      const maxScroll =
-            e.currentTarget.scrollHeight - e.currentTarget.clientHeight,
-         currentScroll = e.currentTarget.scrollTop
+      const ScrollChanges = (e: UIEvent) => {
+         const maxScroll =
+               e.currentTarget.scrollHeight - e.currentTarget.clientHeight,
+            currentScroll = e.currentTarget.scrollTop
 
-      if (currentScroll <= maxScroll / 4) return setState('second')
+         if (currentScroll <= maxScroll / 4) return setState('second')
 
-      if (currentScroll >= maxScroll - maxScroll / 4) return setState('first')
+         if (currentScroll >= maxScroll - maxScroll / 4)
+            return setState('first')
 
-      setState('fir&sec')
+         setState('fir&sec')
+      }
+
+      return (
+         <div
+            ref={ref}
+            onScroll={ScrollChanges}
+            className={cn(
+               `custom-scroll rounded-2xl duration-300 ${Variant.main}`,
+               State === 'first' &&
+                  `${Variant.light.first} ${Variant.dark.first}`,
+               State === 'second' &&
+                  `${Variant.light.second} ${Variant.dark.second}`,
+               State === 'fir&sec' &&
+                  `${Variant.light['fir&sec']} ${Variant.dark['fir&sec']}`,
+               className
+            )}
+         >
+            {children}
+         </div>
+      )
    }
+)
 
-   return (
-      <div
-         onScroll={ScrollChanges}
-         className={cn(
-            `custom-scroll rounded-2xl duration-300 ${Variant.main}`,
-            State === 'first' && `${Variant.light.first} ${Variant.dark.first}`,
-            State === 'second' &&
-               `${Variant.light.second} ${Variant.dark.second}`,
-            State === 'fir&sec' &&
-               `${Variant.light['fir&sec']} ${Variant.dark['fir&sec']}`,
-            className
-         )}
-      >
-         {children}
-      </div>
-   )
-}
+ScrollBlock.displayName = 'ScrollBlock'
 
 export default ScrollBlock

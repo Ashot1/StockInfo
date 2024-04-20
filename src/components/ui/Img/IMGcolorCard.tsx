@@ -6,8 +6,8 @@ import { cn } from '@/utils/utils'
 
 const IMGcolorCard: FC<{
    img: string
-   children: ReactNode
-   className: string
+   children?: ReactNode
+   className?: string
 }> = ({ img, children, className }) => {
    const { data, error } = useColor(img, 'hex')
 

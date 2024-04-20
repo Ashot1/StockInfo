@@ -40,3 +40,56 @@ export type SecurityGetAllMarket = {
    LAST: number
    UPDATETIME: string
 }
+
+export type SecurityPriceListRequest = [
+   {
+      charsetinfo: {
+         name: string
+      }
+   },
+   {
+      candles: PriceListType[]
+   },
+]
+
+export type PriceListType = {
+   open: number
+   close: number
+   high: number
+   low: number
+   begin: string
+   end: string
+}
+
+export type PriceListReqProps = {
+   stock: string
+   from: string
+   till?: string
+   interval?: number | string
+   start?: number | string
+}
+
+export type MarketPriceRequest = [
+   {
+      charsetinfo: {
+         name: string
+      }
+   },
+   {
+      securities: [
+         {
+            SECID: string
+         },
+      ]
+      marketdata: [
+         {
+            SECID: string
+            OPEN: number
+            LOW: number
+            HIGH: number
+            LAST: number
+            UPDATETIME: string
+         },
+      ]
+   },
+]

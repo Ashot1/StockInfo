@@ -1,4 +1,4 @@
-import { FC, forwardRef, LegacyRef, memo, ReactNode } from 'react'
+import { FC, ForwardedRef, forwardRef, LegacyRef, memo, ReactNode } from 'react'
 import { ModalContent, TProfileModalContent } from '@/types/Modals.types'
 import {
    Avatar,
@@ -8,13 +8,14 @@ import {
 import { PersonIcon } from '@radix-ui/react-icons'
 import InfoPlaceHolder from '@/components/ui/InfoPlaceHolder'
 import { cn } from '@/utils/utils'
+import ScrollBlock from '@/components/ui/ScrollBlock'
 
 const MemoPlaceholder = memo(InfoPlaceHolder)
 
 const ProfileDefaultModalContent: FC<ModalContent> = forwardRef(
-   ({ avatar, UserInfo, className }, ref: LegacyRef<HTMLDivElement>) => {
+   ({ avatar, UserInfo, className }, ref: ForwardedRef<HTMLDivElement>) => {
       return (
-         <div
+         <ScrollBlock
             className={cn(`custom-scroll overflow-y-auto`, className)}
             ref={ref}
          >
@@ -37,7 +38,7 @@ const ProfileDefaultModalContent: FC<ModalContent> = forwardRef(
                   />
                ))}
             </section>
-         </div>
+         </ScrollBlock>
       )
    }
 )

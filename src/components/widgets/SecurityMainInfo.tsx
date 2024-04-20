@@ -3,6 +3,7 @@ import IMGshadowCard from '@/components/ui/Img/IMGshadowCard'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import AddToFavorite from '@/components/entity/AddToFavorite'
 import { Enums } from '@/types/supabase.types'
+import PriceInfoCard from '@/components/entity/PriceInfoCard'
 
 export default function SecurityMainInfo({
    secID,
@@ -10,19 +11,21 @@ export default function SecurityMainInfo({
    secCode,
    secTitle,
    type,
+   price,
 }: {
    secID: string
    img?: string
    secTitle: string
    secCode: string
+   price?: number
    type: Enums<'favorite_types'>
 }) {
    return (
-      <>
-         <SwipeNavigator
-            prev="RouterBack"
-            className="mb-14 flex w-full flex-col items-center justify-center gap-4 768p:flex-row 768p:justify-center"
-         >
+      <SwipeNavigator
+         prev="RouterBack"
+         className="flex w-full flex-col place-items-center gap-9"
+      >
+         <div className="flex flex-col items-center gap-4 768p:flex-row">
             <IMGshadowCard
                img={img || '/StockPlaceHolder.png'}
                className="relative size-20"
@@ -46,7 +49,8 @@ export default function SecurityMainInfo({
                   image={secID || img || '/StockPlaceHolder.png'}
                />
             </div>
-         </SwipeNavigator>
-      </>
+         </div>
+         <PriceInfoCard price={price} />
+      </SwipeNavigator>
    )
 }

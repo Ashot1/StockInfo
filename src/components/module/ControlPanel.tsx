@@ -38,8 +38,8 @@ const ControlPanel = () => {
             <DefaultAdditional>
                <Search
                   searchRequest={searchStock}
-                  url={URLList.logos_stock}
-                  imgURL="/Logos/Stocks"
+                  url={URLList.stocks}
+                  imgURL={URLList.logos_stock}
                   imgType="svg"
                />
             </DefaultAdditional>
@@ -51,8 +51,8 @@ const ControlPanel = () => {
             <DefaultAdditional>
                <Search
                   searchRequest={searchBond}
-                  url={URLList.logos_bonds}
-                  imgURL="/Logos/Bonds"
+                  url={URLList.bonds}
+                  imgURL={URLList.logos_bonds}
                   imgType="png"
                />
             </DefaultAdditional>

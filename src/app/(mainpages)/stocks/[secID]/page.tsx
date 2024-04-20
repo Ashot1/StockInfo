@@ -1,17 +1,22 @@
-import { getCurrentStock, getDividends } from '@/actions/Stocks'
+import {
+   getDividends,
+   getStockMarketPrice,
+   getStockPriceList,
+} from '@/actions/Stocks'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { DividendsRequest } from '@/types/Stocks.types'
 import { ConvertDate } from '@/utils/ConvertDate'
 import { URLList } from '@/utils/const'
+import { getCurrentSecurity } from '@/actions/CommonSecurity'
 
 export async function generateMetadata({
    params: { secID },
 }: {
    params: { secID: string }
 }) {
-   const { data, error } = await getCurrentStock(secID)
+   const { data, error } = await getCurrentSecurity(secID)
 
    const defaultMeta = {
       title: 'Акция с московской биржи',
@@ -54,13 +59,26 @@ export default async function CurrentStock({
 }: {
    params: { secID: string }
 }) {
-   const stockReq = getCurrentStock(secID)
+   const stockReq = getCurrentSecurity(secID)
    const dividentsReq = getDividends(secID)
 
-   const [stockRes, dividentsRes] = await Promise.all([stockReq, dividentsReq])
+   const date = new Date()
+   date.setMonth(date.getMonth() - 1)
 
-   const { data: DividendsData, error: DividendsError } = dividentsRes
+   const priceListReq = getStockPriceList({
+      stock: secID,
+      from: date.toISOString().substring(0, 10),
+   })
+
+   const MarketDataReq = getStockMarketPrice(secID)
+
+   const [stockRes, dividentsRes, priceListRes, MarketDataRes] =
+      await Promise.all([stockReq, dividentsReq, priceListReq, MarketDataReq])
+
    const { data, error } = stockRes
+   const { data: DividendsData, error: DividendsError } = dividentsRes
+   const { data: PriceList, error: PriceListError } = priceListRes
+   const { data: MarketData, error: MarketDataError } = MarketDataRes
 
    const dividentContent = {
       name: 'Дивиденты',
@@ -73,20 +91,33 @@ export default async function CurrentStock({
          ),
    }
 
+   const MarketDataContent =
+      MarketData &&
+      MarketData[1].marketdata.find((item) => item.SECID === secID)
+
+   const priceListCondition = PriceList && PriceList[1].candles.length > 0
    return (
       <div className="animate-appearance">
          <SecurityTemplate
+            priceList={priceListCondition ? PriceList[1].candles : undefined}
             type="Stock"
             data={data}
             error={error}
             secondsContent={dividentContent}
             secID={secID}
             url={`${URLList.logos_stock}/${secID}.svg`}
+            MarketData={{
+               last: MarketDataContent?.LAST,
+               high: MarketDataContent?.HIGH,
+               low: MarketDataContent?.LOW,
+               open: MarketDataContent?.OPEN,
+            }}
          />
       </div>
    )
 }
 
+// Another component
 const DividentsList = ({
    DividendsData,
 }: {
@@ -98,6 +129,8 @@ const DividentsList = ({
       ConvertDate(`${item.registryclosedate}`, false),
       `${item.value} ${item.currencyid}`,
    ])
+
+   if (content.length == 0) return <EmptyListText text="Выплат не было" />
 
    return (
       <div className="500p:px-[10%]">

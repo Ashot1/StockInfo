@@ -8,14 +8,7 @@ import {
 import { InputHTMLAttributes } from 'react'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { cn } from '@/utils/utils'
-import {
-   bellota,
-   comfortaa,
-   poiretone,
-   raleway,
-   russoOne,
-   tektur,
-} from '@/utils/fonts'
+import { comfortaa } from '@/utils/fonts'
 
 export type StyledInputProps<T extends FieldValues> = {
    defaultValue?: string
