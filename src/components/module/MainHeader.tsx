@@ -46,7 +46,7 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
       >
          <nav
             className="pointer-events-auto grid h-full w-full min-w-[200px] max-w-[500px]
-        grid-cols-5 rounded-[30px] bg-[#979797] bg-opacity-20 px-3 py-3 shadow-lg
+        grid-cols-5 rounded-[30px] bg-[rgb(190,190,190,.1)] bg-opacity-20 px-3 py-3 shadow-lg
         backdrop-blur-md 768p:max-w-[1000px] 768p:grid-cols-6 768p:rounded-[10px] 768p:px-6 dark:bg-white dark:bg-opacity-10"
          >
             <Link

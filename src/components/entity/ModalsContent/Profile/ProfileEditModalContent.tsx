@@ -19,7 +19,6 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import toast from 'react-hot-toast'
 import ChangeAvatar from '@/components/entity/ChangeAvatar'
 import { UpdateUser } from '@/actions/Account/Account'
-import { useRouter } from 'next/navigation'
 
 export type EditableInputs = { avatar?: FileList } & {
    [key in UserProfileInfo['Value']]: UserProfileInfo['Editable'] extends true
@@ -35,7 +34,6 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
          formState: { errors, isValid, isSubmitting },
          reset,
       } = useForm<EditableInputs>({ mode: 'all' })
-      const { refresh } = useRouter()
 
       const [AvatarURL, setAvatarURL] = useState<string | undefined>(avatar)
       const InputFileRef = useRef<HTMLInputElement | null>(null)
@@ -45,7 +43,7 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
          delete data.avatar
          const { error } = await UpdateUser({ data })
          if (error) toast.error(error)
-         refresh()
+         window.location.reload()
       }
       // сброс
       const ResetClick = (e: MouseEvent) => {

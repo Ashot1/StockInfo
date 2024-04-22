@@ -74,7 +74,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                   rightText={price}
                   rightSubtext={parseFloat(percent.toFixed(3))}
                   url={`${URLList.current_stock}/${stock.SECID}`}
-                  className={`animate-appearance-moving opacity-0 fill-mode-forwards
+                  className={`animate-appearance-moving opacity-0 fill-mode-forwards hover:bg-[var(--grayBG)] hover:shadow hover:shadow-black/30 dark:hover:shadow-white/30
                             delay-${100 * animIndex}`}
                />
             )

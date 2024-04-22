@@ -1,17 +1,7 @@
 'use client'
 
-import {
-   ComponentPropsWithRef,
-   ElementRef,
-   FC,
-   forwardRef,
-   ReactNode,
-   UIEvent,
-   useState,
-} from 'react'
+import { forwardRef, ReactNode, UIEvent, useState } from 'react'
 import { cn } from '@/utils/utils'
-import { max } from '@floating-ui/utils'
-import { state } from 'sucrase/dist/types/parser/traverser/base'
 
 export type ScrollBlockProps = {
    children?: ReactNode

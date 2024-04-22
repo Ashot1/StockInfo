@@ -33,7 +33,7 @@ export default function DefaultListItem({
                <ImageServerErrorCheck
                   defaultSrc={defaultSRC}
                   src={img}
-                  className={`rounded-full bg-gray-600/15 text-center text-xs dark:bg-gray-600/15`}
+                  className={`rounded-full bg-gray-600/15 text-center text-xs drop-shadow-xl dark:bg-gray-600/15`}
                   onErrorClass={cn(
                      `rounded bg-transparent dark:bg-transparent`,
                      onErrorClass
@@ -68,24 +68,14 @@ export default function DefaultListItem({
       </>
    )
 
+   const defaultClass =
+      'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300'
+
    return url ? (
-      <Link
-         href={url}
-         className={cn(
-            'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)]',
-            className
-         )}
-      >
+      <Link href={url} className={cn(defaultClass, className)}>
          {content}
       </Link>
    ) : (
-      <div
-         className={cn(
-            'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)]',
-            className
-         )}
-      >
-         {content}
-      </div>
+      <div className={cn(defaultClass, className)}>{content}</div>
    )
 }

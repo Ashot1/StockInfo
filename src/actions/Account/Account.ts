@@ -47,9 +47,9 @@ export async function GetUser() {
    return TryCatch<User>(async () => {
       const supabase = SupabaseCustomServer()
 
-      const { user: User } = await getSupabaseUser(supabase)
+      const { user } = await getSupabaseUser(supabase)
 
-      return { data: User }
+      return { data: user }
    })
 }
 
@@ -84,6 +84,8 @@ export async function UpdateUser({
       const { error } = await supabase.auth.updateUser(attributes)
 
       if (error) throw error
+
+      revalidatePath(URLList.home)
 
       return { data: undefined }
    })
