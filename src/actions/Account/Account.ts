@@ -1,9 +1,12 @@
 'use server'
 
-import { type SupabaseClient, UserAttributes } from '@supabase/supabase-js'
+import {
+   type SupabaseClient,
+   User,
+   UserAttributes,
+} from '@supabase/supabase-js'
 import TryCatch from '@/utils/TryCatch'
 import { Tables } from '@/types/supabase.types'
-import { type User } from '@supabase/gotrue-js'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { URLList } from '@/utils/const'

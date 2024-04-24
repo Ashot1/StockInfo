@@ -1,4 +1,8 @@
-import { TFavoritesList } from '@/types/Auth.types'
+import {
+   TFavoritesList,
+   TPurchasesList,
+   TTransactionsList,
+} from '@/types/Auth.types'
 
 export type Json =
    | string
@@ -13,23 +17,29 @@ export type Database = {
       Tables: {
          UserMainData: {
             Row: {
-               favorites: TFavoritesList[]
-               purchases: Json[] | null
+               current_money: number
+               favorites: TFavoritesList[] | null
+               purchases: TPurchasesList[] | null
                start_money: number | null
+               transactions: TTransactionsList[] | null
                user_id: string
                visits: Json[] | null
             }
             Insert: {
-               favorites?: TFavoritesList[]
-               purchases?: Json[] | null
+               current_money?: number
+               favorites?: TFavoritesList[] | null
+               purchases?: TPurchasesList[] | null
                start_money?: number | null
+               transactions?: TTransactionsList[] | null
                user_id?: string
                visits?: Json[] | null
             }
             Update: {
-               favorites?: TFavoritesList[]
-               purchases?: Json[] | null
+               current_money?: number
+               favorites?: TFavoritesList[] | null
+               purchases?: TPurchasesList[] | null
                start_money?: number | null
+               transactions?: TTransactionsList[] | null
                user_id?: string
                visits?: Json[] | null
             }
@@ -44,6 +54,7 @@ export type Database = {
       }
       Enums: {
          favorite_types: 'News' | 'Bond' | 'Stock' | 'Currency'
+         transaction_types: 'buy' | 'sell'
       }
       CompositeTypes: {
          [_ in never]: never

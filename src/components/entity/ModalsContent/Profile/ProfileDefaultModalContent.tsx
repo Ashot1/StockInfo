@@ -1,5 +1,5 @@
-import { FC, ForwardedRef, forwardRef, LegacyRef, memo, ReactNode } from 'react'
-import { ModalContent, TProfileModalContent } from '@/types/Modals.types'
+import { FC, ForwardedRef, forwardRef, memo } from 'react'
+import { ModalContent } from '@/types/Modals.types'
 import {
    Avatar,
    AvatarFallback,
@@ -8,7 +8,7 @@ import {
 import { PersonIcon } from '@radix-ui/react-icons'
 import InfoPlaceHolder from '@/components/ui/InfoPlaceHolder'
 import { cn } from '@/utils/utils'
-import ScrollBlock from '@/hoc/ScrollBlock'
+import ScrollBlock from '@/components/ui/ScrollBlock'
 
 const MemoPlaceholder = memo(InfoPlaceHolder)
 

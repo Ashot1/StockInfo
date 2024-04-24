@@ -47,7 +47,7 @@ export async function FetchFavorites(list: TFavoritesList[]) {
          Stock: [],
       }
 
-      for (let i of list) {
+      for (const i of list) {
          const type = i.type as FavoritesListTypes
          SortedList[type].push(i.secID)
       }

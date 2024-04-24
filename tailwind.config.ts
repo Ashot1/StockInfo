@@ -93,6 +93,17 @@ const config: Config = {
                from: { opacity: '0', transform: 'translateY(40px)' },
                to: { opacity: '1', transform: 'translateX(0)' },
             },
+            'scaling-kf': {
+               from: {
+                  transform: 'scale(0.7)',
+               },
+               '70%': {
+                  transform: 'scale(1.1)',
+               },
+               to: {
+                  transform: 'scale(1)',
+               },
+            },
          },
          animation: {
             'accordion-down': 'accordion-down 0.2s ease-out',
@@ -103,6 +114,7 @@ const config: Config = {
             'appearance-moving-top': 'appearance-moving-top-kf 2.5s ease-out',
             'fast-appearance-moving-top':
                'appearance-moving-top-kf .3s ease-out',
+            scaling: 'scaling-kf .5s ease-in-out',
          },
       },
    },

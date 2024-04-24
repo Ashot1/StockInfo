@@ -46,6 +46,7 @@ const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
       const [State, setState] = useState<'first' | 'second' | 'fir&sec'>(
          'second'
       )
+
       const Variant = variants[direction]
 
       const ScrollChanges = (e: UIEvent) => {

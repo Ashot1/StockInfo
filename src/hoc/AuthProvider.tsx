@@ -1,7 +1,7 @@
 'use client'
 import { createContext, FC, ReactNode, useState } from 'react'
-import { User } from '@supabase/gotrue-js'
 import { Tables } from '@/types/supabase.types'
+import { User } from '@supabase/supabase-js'
 
 export type TUser = User
 
@@ -19,6 +19,8 @@ const defaultMain: Tables<'UserMainData'> = {
    purchases: [],
    start_money: 0,
    visits: [],
+   current_money: 0,
+   transactions: [],
 }
 
 type basics = {

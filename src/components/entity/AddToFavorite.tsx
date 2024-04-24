@@ -18,7 +18,7 @@ const AddToFavorite: FC<TFavoritesList & { className?: string }> = ({
    const mainInfo = context.mainInfo
    const setMainInfo = context.setMainInfo
 
-   const isFavorite = mainInfo?.favorites.find((item) => item.secID == secID)
+   const isFavorite = mainInfo?.favorites?.find((item) => item.secID == secID)
    const item = {
       image,
       secID,
@@ -26,7 +26,7 @@ const AddToFavorite: FC<TFavoritesList & { className?: string }> = ({
    }
 
    const addToFavorite = async () => {
-      if (isFavorite) return
+      if (isFavorite || !mainInfo?.favorites) return
 
       const { data, error } = await UpdateUserMainData({
          favorites: mainInfo ? [...mainInfo?.favorites, item] : [item],

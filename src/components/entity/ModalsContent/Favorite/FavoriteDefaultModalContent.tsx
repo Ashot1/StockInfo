@@ -39,7 +39,7 @@ const FavoriteDefaultModalContent: FC<{
                img={img[item.type]}
                text={item.SHORTNAME}
                subtext={item.type === 'News' ? item.SECNAME : item.SECID}
-               rightText={item.price}
+               rightText={`${item.price} ₽`}
                rightSubtext={
                   item.definition && parseFloat(item.definition.toFixed(3))
                }

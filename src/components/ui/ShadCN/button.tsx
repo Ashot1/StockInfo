@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '@/utils/utils'
 import { motion, MotionProps } from 'framer-motion'
-import { HTMLAttributes, RefAttributes } from 'react'
+import { RefAttributes } from 'react'
 import { SlotProps } from '@radix-ui/react-collection'
 
 const buttonVariants = cva(

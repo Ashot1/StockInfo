@@ -44,21 +44,25 @@ export default function DefaultListItem({
                />
             </span>
             <span>
-               <p className="clipText text-sm 768p:text-base">{text}</p>
+               <p className="clipText break-words text-xs 300p:text-sm 768p:text-base">
+                  {text}
+               </p>
                {subtext && (
-                  <p className="76p:text-sm text-xs opacity-50">{subtext}</p>
+                  <p className="text-xs opacity-50 768p:text-sm">{subtext}</p>
                )}
             </span>
          </div>
          <div>
             {rightText && (
-               <p className="768p:texst-base text-end text-sm">{rightText}</p>
+               <p className="text-nowrap text-end text-xs 300p:text-sm 768p:text-base">
+                  {rightText}
+               </p>
             )}
             {rightSubtext ? (
                <p
                   className={`${
                      rightSubtext > 0 ? 'text-green-700' : 'text-red-700'
-                  } text-end text-sm`}
+                  } text-end text-xs 300p:text-sm`}
                >
                   {rightSubtext > 0 ? '+' : ''}
                   {rightSubtext}%
@@ -82,6 +86,7 @@ export default function DefaultListItem({
    )
 }
 
+// LOADER
 export const DefaultListItemLoader: FC<{ className?: string }> = ({
    className,
 }) => {

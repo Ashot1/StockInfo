@@ -10,10 +10,11 @@ import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import { UpdateUserMainData } from '@/actions/Account/Account'
 import { AuthContext } from '@/hoc/AuthProvider'
 import toast from 'react-hot-toast'
-import ScrollBlock from '@/hoc/ScrollBlock'
+import ScrollBlock from '@/components/ui/ScrollBlock'
 import FavoriteDefaultModalContent from '@/components/entity/ModalsContent/Favorite/FavoriteDefaultModalContent'
 import FavoriteButtons from '@/components/entity/ModalsContent/Favorite/FavoriteButtons'
 import { FetchFavorites } from '@/actions/Account/client'
+import Loader from '@/components/ui/loader'
 
 export type TFormatedFavoriteList = {
    SECID: string
@@ -81,6 +82,8 @@ const FavoriteList: FC = () => {
          setMainInfo({ ...mainInfo, favorites: formatedList })
    }
 
+   const emptyCondition = FavList && FavList.length > 0
+
    return (
       <CustomSheet
          hotKey={{ ctrl: true, shift: false, key: 'y' }}
@@ -107,7 +110,7 @@ const FavoriteList: FC = () => {
                />
             </ScrollBlock>
          )}
-         {FavList && FavList.length > 0 ? (
+         {emptyCondition ? (
             <SheetFooter className="mt-10 gap-6">
                <FavoriteButtons
                   EditMode={EditMode}
