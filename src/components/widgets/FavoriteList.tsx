@@ -4,16 +4,13 @@ import { FC, useContext, useEffect, useState } from 'react'
 import { BookmarkFilledIcon } from '@radix-ui/react-icons'
 import CustomSheet from '@/components/entity/CustomElements/CustomSheet'
 import FadedButton from '@/components/ui/FadedButton'
-import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { TFavoritesList, FavoritesListTypes } from '@/types/Auth.types'
-import { Button } from '@/components/ui/ShadCN/button'
 import { SheetFooter } from '@/components/ui/ShadCN/sheet'
-import { AnimatePresence, motion } from 'framer-motion'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import { UpdateUserMainData } from '@/actions/Account/Account'
 import { AuthContext } from '@/hoc/AuthProvider'
 import toast from 'react-hot-toast'
-import ScrollBlock from '@/components/ui/ScrollBlock'
+import ScrollBlock from '@/hoc/ScrollBlock'
 import FavoriteDefaultModalContent from '@/components/entity/ModalsContent/Favorite/FavoriteDefaultModalContent'
 import FavoriteButtons from '@/components/entity/ModalsContent/Favorite/FavoriteButtons'
 import { FetchFavorites } from '@/actions/Account/client'
@@ -37,18 +34,16 @@ const FavoriteList: FC = () => {
       undefined
    )
 
-   const MotionButton = motion(Button)
-
-   const fetchFavorites = (arr: TFavoritesList[]) => {
-      FetchFavorites(arr).then(({ data, error }) => {
-         if (error || !data)
-            return toast.error(error || 'Ошибка получения избранного')
-         setFavList(data)
-      })
-   }
-
    useEffect(() => {
       if (!mainInfo?.favorites) return
+
+      const fetchFavorites = (arr: TFavoritesList[]) => {
+         FetchFavorites(arr).then(({ data, error }) => {
+            if (error || !data)
+               return toast.error(error || 'Ошибка получения избранного')
+            setFavList(data)
+         })
+      }
 
       fetchFavorites(mainInfo.favorites)
    }, [mainInfo?.favorites])

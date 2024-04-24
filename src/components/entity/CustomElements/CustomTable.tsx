@@ -15,7 +15,6 @@ export default function CustomTable({
 }: {
    caption?: string
    header: { text: string }[]
-   // content: { text: string }[][]
    content: string[][]
 }) {
    return (

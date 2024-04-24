@@ -9,15 +9,27 @@ import { revalidatePath } from 'next/cache'
 import { URLList } from '@/utils/const'
 import { cache } from 'react'
 
-async function getSupabaseUser(supabase: SupabaseClient) {
+async function getSessionUser(supabase: SupabaseClient) {
    const {
       data: { session },
       error,
    } = await supabase.auth.getSession()
 
    if (error) throw error
-
    const user = session?.user
+
+   if (!user || !user?.id) throw new Error('Пользователь не найден')
+
+   return { user }
+}
+
+async function getSupabaseUser(supabase: SupabaseClient) {
+   const {
+      data: { user },
+      error,
+   } = await supabase.auth.getUser()
+
+   if (error) throw error
 
    if (!user || !user?.id) throw new Error('Пользователь не найден')
 
@@ -47,7 +59,7 @@ export async function GetUser() {
    return TryCatch<User>(async () => {
       const supabase = SupabaseCustomServer()
 
-      const { user } = await getSupabaseUser(supabase)
+      const { user } = await getSessionUser(supabase)
 
       return { data: user }
    })
@@ -58,7 +70,7 @@ export async function UpdateUser({
 }: {
    data: { [key: string]: string }
 }) {
-   return TryCatch<undefined>(async () => {
+   return TryCatch<User>(async () => {
       const supabase = SupabaseCustomServer()
 
       const { user: User } = await getSupabaseUser(supabase)
@@ -79,15 +91,16 @@ export async function UpdateUser({
          }
       }
 
-      if (Object.keys(attributes).length <= 0) return { data: undefined }
+      if (Object.keys(attributes).length <= 0) return { data: User }
 
-      const { error } = await supabase.auth.updateUser(attributes)
+      const {
+         data: { user },
+         error,
+      } = await supabase.auth.updateUser(attributes)
 
-      if (error) throw error
+      if (error || !user) throw error
 
-      revalidatePath(URLList.home)
-
-      return { data: undefined }
+      return { data: user }
    })
 }
 
@@ -96,7 +109,7 @@ export const GetUserMainData = async () => {
       cache(async () => {
          const supabase = SupabaseCustomServer()
 
-         const { user } = await getSupabaseUser(supabase)
+         const { user } = await getSessionUser(supabase)
 
          const { data, error } = await supabase
             .from('UserMainData')

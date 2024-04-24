@@ -22,7 +22,7 @@ const FavoriteDefaultModalContent: FC<{
          Stock: `${URLList.logos_stock}/${item.image}.svg`,
          Bond: `${URLList.logos_bonds}/${item.image}.png`,
          News: item.image,
-         Currency: '',
+         Currency: `${URLList.logos_currency}/${item.image}.png`,
       }
       const url: { [key in FavoritesListTypes]: string } = {
          Bond: `${URLList.current_bond}/${item.SECID}`,
@@ -34,7 +34,7 @@ const FavoriteDefaultModalContent: FC<{
       return (
          <div className="flex items-center gap-2" key={item.SECID}>
             <MemoListItem
-               defaultSRC={`/Menu/Shortcuts/${item.type}.png`}
+               defaultIMG={`/Menu/Shortcuts/${item.type}.png`}
                url={url[item.type]}
                img={img[item.type]}
                text={item.SHORTNAME}

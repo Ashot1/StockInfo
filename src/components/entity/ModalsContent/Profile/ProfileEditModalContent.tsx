@@ -6,6 +6,7 @@ import {
    forwardRef,
    LegacyRef,
    MouseEvent,
+   useContext,
    useRef,
    useState,
 } from 'react'
@@ -19,6 +20,7 @@ import { ReloadIcon } from '@radix-ui/react-icons'
 import toast from 'react-hot-toast'
 import ChangeAvatar from '@/components/entity/ChangeAvatar'
 import { UpdateUser } from '@/actions/Account/Account'
+import { AuthContext } from '@/hoc/AuthProvider'
 
 export type EditableInputs = { avatar?: FileList } & {
    [key in UserProfileInfo['Value']]: UserProfileInfo['Editable'] extends true
@@ -37,13 +39,15 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
 
       const [AvatarURL, setAvatarURL] = useState<string | undefined>(avatar)
       const InputFileRef = useRef<HTMLInputElement | null>(null)
+      const setUser = useContext(AuthContext).setAuthInfo
 
       // сохранение изменений
       const Submit: SubmitHandler<EditableInputs> = async (data) => {
          delete data.avatar
-         const { error } = await UpdateUser({ data })
+         const { data: updatedData, error } = await UpdateUser({ data })
          if (error) toast.error(error)
-         window.location.reload()
+
+         if (setUser && updatedData) setUser(updatedData)
       }
       // сброс
       const ResetClick = (e: MouseEvent) => {

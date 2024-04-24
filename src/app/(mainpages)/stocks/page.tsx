@@ -66,7 +66,7 @@ const MainContent = async ({ start }: { start?: string }) => {
 
             return (
                <DefaultListItem
-                  defaultSRC="/Menu/Shortcuts/Stock.png"
+                  defaultIMG="/Menu/Shortcuts/Stock.png"
                   key={stock.SECID}
                   img={`${URLList.logos_stock}/${stock.SECID}.svg`}
                   subtext={`${stock.SECID}`}
@@ -74,7 +74,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                   rightText={price}
                   rightSubtext={parseFloat(percent.toFixed(3))}
                   url={`${URLList.current_stock}/${stock.SECID}`}
-                  className={`animate-appearance-moving opacity-0 fill-mode-forwards hover:bg-[var(--grayBG)] hover:shadow hover:shadow-black/30 dark:hover:shadow-white/30
+                  className={`animate-appearance-moving opacity-0 fill-mode-forwards
                             delay-${100 * animIndex}`}
                />
             )

@@ -20,6 +20,7 @@ export const URLList = new (class {
 
    currency = '/currency' as const
    current_currency = `${this.currency}` as const
+   logos_currency = '/Logos/Currency' as const
 
    notFound = '/notFound' as const
 })()

@@ -3,6 +3,8 @@ import { cn } from '@/utils/utils'
 import ImageServerErrorCheck, {
    ImageErrorProps,
 } from '@/components/ui/Img/ImageServerErrorCheck'
+import { FC } from 'react'
+import { Skeleton } from '@/components/ui/ShadCN/skeleton'
 
 export type DefaultListItemProps = {
    img: string
@@ -12,7 +14,7 @@ export type DefaultListItemProps = {
    rightSubtext?: number
    url?: string
    className?: string
-   defaultSRC: string
+   defaultIMG: string
 } & Pick<ImageErrorProps, 'onErrorClass'>
 
 export default function DefaultListItem({
@@ -23,7 +25,7 @@ export default function DefaultListItem({
    url,
    rightSubtext,
    className,
-   defaultSRC,
+   defaultIMG,
    onErrorClass,
 }: DefaultListItemProps) {
    const content = (
@@ -31,7 +33,7 @@ export default function DefaultListItem({
          <div className="flex items-center gap-3">
             <span className="relative size-11 min-w-11 768p:size-14">
                <ImageServerErrorCheck
-                  defaultSrc={defaultSRC}
+                  defaultSrc={defaultIMG}
                   src={img}
                   className={`rounded-full bg-gray-600/15 text-center text-xs drop-shadow-xl dark:bg-gray-600/15`}
                   onErrorClass={cn(
@@ -69,7 +71,7 @@ export default function DefaultListItem({
    )
 
    const defaultClass =
-      'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300'
+      'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)] hover:shadow hover:shadow-black/30 dark:hover:shadow-white/30'
 
    return url ? (
       <Link href={url} className={cn(defaultClass, className)}>
@@ -77,5 +79,32 @@ export default function DefaultListItem({
       </Link>
    ) : (
       <div className={cn(defaultClass, className)}>{content}</div>
+   )
+}
+
+export const DefaultListItemLoader: FC<{ className?: string }> = ({
+   className,
+}) => {
+   return (
+      <div
+         className={cn(
+            'flex justify-between rounded-2xl px-4 py-3 duration-300',
+            className
+         )}
+      >
+         <div className="flex items-center gap-3">
+            <span className="relative size-11 min-w-11 768p:size-14">
+               <Skeleton className="h-full w-full rounded-full" />
+            </span>
+            <span className="flex flex-col gap-2">
+               <Skeleton className="h-4 w-24" />
+               <Skeleton className="h-4 w-16" />
+            </span>
+         </div>
+         <div className="flex flex-col gap-2">
+            <Skeleton className="h-4 w-14" />
+            <Skeleton className="h-4 w-14" />
+         </div>
+      </div>
    )
 }

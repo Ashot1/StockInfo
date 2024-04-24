@@ -66,7 +66,7 @@ const MainContent = async ({ start }: { start?: string }) => {
 
             return (
                <DefaultListItem
-                  defaultSRC="/Menu/Shortcuts/Bond.png"
+                  defaultIMG="/Menu/Shortcuts/Bond.png"
                   key={bond.SECID}
                   img={`${URLList.logos_bonds}/${bond.SECID}.png`}
                   subtext={`${bond.SECID}`}
@@ -74,8 +74,9 @@ const MainContent = async ({ start }: { start?: string }) => {
                   rightText={price}
                   rightSubtext={parseFloat(percent.toFixed(3))}
                   url={`${URLList.current_bond}/${bond.SECID}`}
-                  className={`animate-appearance-moving opacity-0 fill-mode-forwards hover:bg-[var(--grayBG)] hover:shadow hover:shadow-black/30 dark:hover:shadow-white/30
-                            delay-${100 * animIndex}`}
+                  className={`animate-appearance-moving opacity-0 fill-mode-forwards delay-${
+                     100 * animIndex
+                  }`}
                />
             )
          })}

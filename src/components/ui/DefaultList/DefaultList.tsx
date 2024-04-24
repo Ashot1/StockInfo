@@ -1,8 +1,9 @@
 'use client'
 
-import { ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import CalculatePagination from '@/utils/CalculatePagination'
+import { cn } from '@/utils/utils'
 
 type WithSwipe = {
    CurrentStartIndex: number
@@ -37,5 +38,21 @@ export default function DefaultList({
       >
          {children}
       </SwipeNavigator>
+   )
+}
+
+export const DefaultListBase: FC<{
+   children: ReactNode
+   className?: string
+}> = ({ children, className }) => {
+   return (
+      <div
+         className={cn(
+            'my-8 flex flex-1 grid-cols-1 flex-col gap-6',
+            className
+         )}
+      >
+         {children}
+      </div>
    )
 }

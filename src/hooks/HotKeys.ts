@@ -12,7 +12,12 @@ export const useHotKey = (hotKey?: THotKey) => {
          const CTRL = hotKey.ctrl ? e.ctrlKey : !e.ctrlKey
          const shift = hotKey.shift ? e.shiftKey : !e.shiftKey
 
-         if (e.key.toLowerCase() === hotKey.key.toLowerCase() && CTRL && shift)
+         if (
+            e.key &&
+            e.key.toLowerCase() === hotKey.key.toLowerCase() &&
+            CTRL &&
+            shift
+         )
             setState(true)
       }
 

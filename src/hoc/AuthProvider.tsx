@@ -28,9 +28,15 @@ type basics = {
 
 export const AuthContext = createContext<
    {
-      setMainInfo: ((data: Tables<'UserMainData'>) => void) | undefined
+      setMainInfo?: (data: Tables<'UserMainData'>) => void
+      setAuthInfo?: (user: TUser) => void
    } & basics
->({ authInfo: defaultAuth, mainInfo: defaultMain, setMainInfo: undefined })
+>({
+   authInfo: defaultAuth,
+   mainInfo: defaultMain,
+   setMainInfo: undefined,
+   setAuthInfo: undefined,
+})
 
 const AuthProvider: FC<{
    children: ReactNode
@@ -38,12 +44,17 @@ const AuthProvider: FC<{
 }> = ({ children, value }) => {
    const [State, setState] = useState<basics>(value)
 
-   const changeState = (data: Tables<'UserMainData'>) => {
+   const changeMain = (data: Tables<'UserMainData'>) => {
       setState((prev) => ({ ...prev, mainInfo: data }))
+   }
+   const changeAuth = (data: TUser) => {
+      setState((prev) => ({ ...prev, authInfo: data }))
    }
 
    return (
-      <AuthContext.Provider value={{ ...State, setMainInfo: changeState }}>
+      <AuthContext.Provider
+         value={{ ...State, setMainInfo: changeMain, setAuthInfo: changeAuth }}
+      >
          {children}
       </AuthContext.Provider>
    )

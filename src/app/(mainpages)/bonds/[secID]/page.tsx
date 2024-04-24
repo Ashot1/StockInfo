@@ -108,7 +108,7 @@ export default async function CurrentBond({
             error={error}
             secID={secID}
             secondsContent={couponsContent}
-            url={`${URLList.logos_bonds}/${secID}.png`}
+            image={`${URLList.logos_bonds}/${secID}.png`}
             priceList={priceListCondition ? PriceList[1].candles : undefined}
             MarketData={{
                last: MarketDataContent?.LAST,

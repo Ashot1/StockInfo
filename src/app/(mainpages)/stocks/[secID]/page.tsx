@@ -105,7 +105,7 @@ export default async function CurrentStock({
             error={error}
             secondsContent={dividentContent}
             secID={secID}
-            url={`${URLList.logos_stock}/${secID}.svg`}
+            image={`${URLList.logos_stock}/${secID}.svg`}
             MarketData={{
                last: MarketDataContent?.LAST,
                high: MarketDataContent?.HIGH,

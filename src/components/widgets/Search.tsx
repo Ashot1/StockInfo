@@ -60,7 +60,7 @@ const Search: FC<TSearch & Pick<any, any>> = ({
                {SearchData.map((item) => (
                   <CommandItem key={item.secid} className="cursor-pointer">
                      <DefaultListItem
-                        defaultSRC={defaultSRC || '/StockPlaceHolder.png'}
+                        defaultIMG={defaultSRC || '/StockPlaceHolder.png'}
                         url={`${url}/${item.secid}`}
                         text={item.shortname}
                         subtext={item.secid}
@@ -68,7 +68,7 @@ const Search: FC<TSearch & Pick<any, any>> = ({
                         rightText={
                            item.is_traded ? 'Торгуется' : 'Не торгуется'
                         }
-                        className="w-full items-center hover:bg-transparent"
+                        className="hover:none w-full items-center"
                         onErrorClass="dark:invert"
                      />
                   </CommandItem>

@@ -4,6 +4,15 @@ import SwipeNavigator from '@/hoc/SwipeNavigator'
 import AddToFavorite from '@/components/entity/AddToFavorite'
 import { Enums } from '@/types/supabase.types'
 import PriceInfoCard from '@/components/entity/PriceInfoCard'
+import { SecurityTemplateProps } from '@/components/module/SecurityTemplate'
+
+export type SecurityMainInfoProps = {
+   secID: string
+   img?: string
+   secTitle: string
+   secCode: string
+   type: Enums<'favorite_types'>
+} & Pick<SecurityTemplateProps, 'MarketData'>
 
 export default function SecurityMainInfo({
    secID,
@@ -11,19 +20,12 @@ export default function SecurityMainInfo({
    secCode,
    secTitle,
    type,
-   price,
-}: {
-   secID: string
-   img?: string
-   secTitle: string
-   secCode: string
-   price?: number
-   type: Enums<'favorite_types'>
-}) {
+   MarketData,
+}: SecurityMainInfoProps) {
    return (
       <SwipeNavigator
          prev="RouterBack"
-         className="flex w-full flex-col place-items-center gap-9"
+         className="flex w-full flex-col place-items-center gap-14"
       >
          <div className="flex flex-col items-center gap-4 768p:flex-row">
             <IMGshadowCard
@@ -50,7 +52,7 @@ export default function SecurityMainInfo({
                />
             </div>
          </div>
-         <PriceInfoCard price={price} />
+         <PriceInfoCard MarketData={MarketData} />
       </SwipeNavigator>
    )
 }

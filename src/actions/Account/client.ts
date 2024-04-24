@@ -16,6 +16,7 @@ import {
 import { getAllStocks } from '@/actions/Stocks'
 import { getAllBonds } from '@/actions/Bonds'
 import { ConvertDate } from '@/utils/ConvertDate'
+import { getCurrency } from '@/actions/Currency'
 
 export async function LoginWithOAuth(provider: OAuthProviders) {
    return TryCatch(async () => {
@@ -59,6 +60,7 @@ export async function FetchFavorites(list: TFavoritesList[]) {
          marketdata: [],
       }
 
+      // fetch data
       const fetchData = async ({
          name,
          fn,
@@ -80,17 +82,6 @@ export async function FetchFavorites(list: TFavoritesList[]) {
             data[1].marketdata
          )
       }
-
-      const stocksReq = fetchData({
-         name: 'Stock',
-         list: SortedList.Stock,
-         fn: getAllStocks,
-      })
-      const bondsReq = fetchData({
-         name: 'Bond',
-         list: SortedList.Bond,
-         fn: getAllBonds,
-      })
 
       const newsGetAll = async () => {
          for (const item of SortedList.News) {
@@ -115,13 +106,49 @@ export async function FetchFavorites(list: TFavoritesList[]) {
             })
          }
       }
-      const newsReq = newsGetAll()
 
-      await Promise.all([stocksReq, bondsReq, newsReq])
+      const currencyGetAll = async () => {
+         const { error, data } = await getCurrency()
+         if (!data || error) throw new Error(error || 'Ошибка получения данных')
+
+         for (const secID of SortedList.Currency) {
+            const Currency = data.Valute[secID]
+
+            Securities.securities.push({
+               SECID: secID,
+               SECNAME: Currency.CharCode,
+               SHORTNAME: Currency.Name,
+            })
+            Securities.marketdata.push({
+               SECID: secID,
+               HIGH: 0,
+               OPEN: Currency.Previous,
+               LAST: Currency.Value,
+               LOW: 0,
+               UPDATETIME: '',
+            })
+         }
+      }
+
+      const stocksReq = fetchData({
+         name: 'Stock',
+         list: SortedList.Stock,
+         fn: getAllStocks,
+      })
+      const bondsReq = fetchData({
+         name: 'Bond',
+         list: SortedList.Bond,
+         fn: getAllBonds,
+      })
+      const newsReq = newsGetAll()
+      const currencyReq = currencyGetAll()
+
+      await Promise.all([stocksReq, bondsReq, newsReq, currencyReq])
 
       const mainSecData = Securities.securities
       const prices = Securities.marketdata
 
+      // formatting data
       const formated: TFormatedFavoriteList[] = mainSecData.map((current) => {
          const supabaseData = list.find((item) => item.secID === current.SECID)
          const marketData = prices.find((item) => item.SECID === current.SECID)

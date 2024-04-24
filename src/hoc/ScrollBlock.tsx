@@ -9,8 +9,6 @@ export type ScrollBlockProps = {
    direction?: 'horizontal' | 'vertical'
 }
 
-const light = ''
-
 const variants = {
    horizontal: {
       main: 'overflow-y-hidden overflow-x-scroll',

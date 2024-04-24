@@ -19,19 +19,10 @@ async function checkImageExists(imageUrl: string) {
    return response.status === 200
 }
 
-export default async function SecurityTemplate({
-   secID,
-   secondsContent,
-   url,
-   data,
-   error,
-   type,
-   priceList,
-   MarketData,
-}: {
+export type SecurityTemplateProps = {
    secID: string
-   secondsContent: TabsContentType
-   url: string
+   secondsContent?: TabsContentType
+   image: string
    data?: CurrentStockRequest
    error?: string
    type: Enums<'favorite_types'>
@@ -41,27 +32,47 @@ export default async function SecurityTemplate({
       low: number
       high: number
       last: number
+      prev: number
    }>
-}) {
+   code?: string
+   title?: string
+}
+
+export default async function SecurityTemplate({
+   secID,
+   secondsContent,
+   image,
+   data,
+   error,
+   type,
+   priceList,
+   MarketData,
+   title,
+   code,
+}: SecurityTemplateProps) {
    if (!data || error) return redirect(URLList.notFound)
 
    const description = data[1].description
 
-   const secCode =
-      description.find((item) => item.name === 'SECID')?.value || ''
-   const secTitle =
-      description.find((item) => item.name === 'NAME')?.value || ''
+   let secCode = code
+   let secTitle = title
 
-   const Info = [
+   if (!secCode)
+      secCode = description.find((item) => item.name === 'SECID')?.value || ''
+   if (!secTitle)
+      secTitle = description.find((item) => item.name === 'NAME')?.value || ''
+
+   const Info: TabsContentType[] = [
       {
          name: 'Основная информация',
          value: 'mainInfo',
          component: <SecurityInfoList currencyList={description} />,
       },
-      secondsContent,
    ]
 
-   const isValid = await checkImageExists(url)
+   if (secondsContent) Info.push(secondsContent)
+
+   const isValid = await checkImageExists(image)
 
    const priceData:
       | ChartData<'line', (number | Point | null)[], unknown>
@@ -82,12 +93,12 @@ export default async function SecurityTemplate({
             secCode={secCode}
             secTitle={secTitle}
             secID={secID}
-            img={url}
-            price={MarketData?.last}
+            img={image}
+            MarketData={MarketData}
          />
          {priceData && (
             <CustomChart
-               img={isValid ? url : '/StockPlaceHolder.png'}
+               img={isValid ? image : '/StockPlaceHolder.png'}
                data={priceData}
                className={isValid ? '' : 'dark:invert'}
             />
