@@ -3,7 +3,7 @@ import DefaultList from '@/components/ui/DefaultList/DefaultList'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import { ReactNode } from 'react'
 import Search, { TSearch } from '@/components/widgets/Search'
-import FavoriteList from '@/components/widgets/FavoriteList'
+import Favorite from '@/components/widgets/Favorite'
 
 export default async function SecurityListTemplate({
    startIndex,

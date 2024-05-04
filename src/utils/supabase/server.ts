@@ -3,14 +3,12 @@ import { CookieOptions, createServerClient } from '@supabase/ssr'
 import { Database } from '@/types/supabase.types'
 import 'server-only'
 
-export function SupabaseCustomServer(admin = false) {
+export function SupabaseCustomServer() {
    const cookieStore = cookies()
 
    return createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      admin
-         ? process.env.NEXT_PUBLIC_SUPABASE_SERVICE_KEY!
-         : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
          cookies: {
             get(name: string) {

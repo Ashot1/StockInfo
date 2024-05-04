@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useContext, useEffect, useState } from 'react'
+import { FC, useCallback, useContext, useState } from 'react'
 import { BookmarkFilledIcon } from '@radix-ui/react-icons'
 import CustomSheet from '@/components/entity/CustomElements/CustomSheet'
 import FadedButton from '@/components/ui/FadedButton'
@@ -13,8 +13,10 @@ import toast from 'react-hot-toast'
 import ScrollBlock from '@/components/ui/ScrollBlock'
 import FavoriteDefaultModalContent from '@/components/entity/ModalsContent/Favorite/FavoriteDefaultModalContent'
 import FavoriteButtons from '@/components/entity/ModalsContent/Favorite/FavoriteButtons'
-import { FetchFavorites } from '@/actions/Account/client'
-import Loader from '@/components/ui/loader'
+import { FetchFavorites } from '@/actions/Account/Client'
+import { useQuery } from '@/hooks/Query'
+import { DefaultListLoading } from '@/components/ui/DefaultList/DefaultList'
+import ErrorMessage from '@/components/ui/ErrorMessage'
 
 export type TFormatedFavoriteList = {
    SECID: string
@@ -26,28 +28,21 @@ export type TFormatedFavoriteList = {
    definition?: number
 }
 
-const FavoriteList: FC = () => {
+const Favorite: FC = () => {
    const [EditMode, setEditMode] = useState(false)
    const context = useContext(AuthContext)
    const mainInfo = context.mainInfo
    const setMainInfo = context.setMainInfo
-   const [FavList, setFavList] = useState<TFormatedFavoriteList[] | undefined>(
-      undefined
-   )
-
-   useEffect(() => {
-      if (!mainInfo?.favorites) return
-
-      const fetchFavorites = (arr: TFavoritesList[]) => {
-         FetchFavorites(arr).then(({ data, error }) => {
-            if (error || !data)
-               return toast.error(error || 'Ошибка получения избранного')
-            setFavList(data)
-         })
-      }
-
-      fetchFavorites(mainInfo.favorites)
-   }, [mainInfo?.favorites])
+   const {
+      data: FavList,
+      error,
+      loading,
+   } = useQuery<TFormatedFavoriteList[], TFormatedFavoriteList[]>({
+      queryFn: useCallback(
+         () => FetchFavorites(mainInfo?.favorites),
+         [mainInfo?.favorites]
+      ),
+   })
 
    const clearAll = async () => {
       const { data, error } = await UpdateUserMainData({
@@ -82,7 +77,7 @@ const FavoriteList: FC = () => {
          setMainInfo({ ...mainInfo, favorites: formatedList })
    }
 
-   const emptyCondition = FavList && FavList.length > 0
+   const emptyCondition = FavList && FavList.length > 0 && !loading
 
    return (
       <CustomSheet
@@ -98,7 +93,8 @@ const FavoriteList: FC = () => {
          Title="Избранное"
          className="min-w-[90dvw] px-2 500p:min-w-[40dvw] 768p:px-6"
       >
-         {FavList && (
+         {loading && <DefaultListLoading len={4} />}
+         {FavList?.length ? (
             <ScrollBlock
                direction="vertical"
                className="mt-10 grid max-h-[60dvh] min-h-[30%] grid-cols-1 gap-4"
@@ -109,7 +105,7 @@ const FavoriteList: FC = () => {
                   EditMode={EditMode}
                />
             </ScrollBlock>
-         )}
+         ) : null}
          {emptyCondition ? (
             <SheetFooter className="mt-10 gap-6">
                <FavoriteButtons
@@ -119,10 +115,14 @@ const FavoriteList: FC = () => {
                />
             </SheetFooter>
          ) : (
-            <EmptyListText text={'Вы еще ничего не добавили'} />
+            <EmptyListText
+               className="mt-24"
+               text={'Вы еще ничего не добавили'}
+            />
          )}
+         {error && <ErrorMessage errMessage={error} />}
       </CustomSheet>
    )
 }
 
-export default FavoriteList
+export default Favorite

@@ -7,7 +7,12 @@ import NewsIcon from '@/../public/Menu/News.svg'
 import HomeIcon from '@/../public/Menu/home.svg'
 import BondsIcon from '@/../public/Menu/bond.svg'
 import CurrencyIcon from '@/../public/Menu/currency.svg'
-import { GetUser, GetUserMainData } from '@/actions/Account/Account'
+import {
+   GetUser,
+   GetUserMainData,
+   getActualUserTransactions,
+   getAllUserTransactions,
+} from '@/actions/Account/Account'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
@@ -28,11 +33,17 @@ export default async function MainPagesLayout({
 }) {
    const authReq = GetUser()
    const infoReq = GetUserMainData()
+   const transactionsReq = getAllUserTransactions()
 
-   const [authRes, infoRes] = await Promise.all([authReq, infoReq])
+   const [authRes, infoRes, transactionsRes] = await Promise.all([
+      authReq,
+      infoReq,
+      transactionsReq,
+   ])
 
    const { data: user, error } = authRes
    const { data: mainInfo, error: mainError } = infoRes
+   const { data: transactions, error: transactionsError } = transactionsRes
 
    if (!user || error) return redirect(URLList.front)
 
@@ -49,7 +60,20 @@ export default async function MainPagesLayout({
             <div className="glow-effect" />
          </LocalSettingsChecker>
 
-         <AuthProvider value={{ authInfo: user, mainInfo: mainInfo }}>
+         <AuthProvider
+            value={{
+               authInfo: user,
+               mainInfo: {
+                  user_id: mainInfo?.user_id || '',
+                  transactions: transactions?.data,
+                  current_money: mainInfo?.current_money || 0,
+                  start_money: mainInfo?.start_money || 0,
+                  favorites: mainInfo?.favorites || [],
+                  purchases: mainInfo?.purchases || [],
+                  visits: mainInfo?.visits || [],
+               },
+            }}
+         >
             <ScrollStateBar />
             <MainHeader HeaderButtons={HeaderButtons} />
             <main

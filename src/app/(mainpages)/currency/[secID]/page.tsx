@@ -1,7 +1,7 @@
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import { URLList } from '@/utils/const'
 import { CurrentStockDescription } from '@/types/Stocks.types'
-import { getCurrency } from '@/actions/Currency'
+import { getCurrency } from '@/actions/Security(client)/Currency'
 import { redirect } from 'next/navigation'
 
 export async function generateMetadata({

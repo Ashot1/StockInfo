@@ -1,8 +1,8 @@
 import Link from 'next/link'
 import { cn } from '@/utils/utils'
-import ImageServerErrorCheck, {
+import ImageErrorCheck, {
    ImageErrorProps,
-} from '@/components/ui/Img/ImageServerErrorCheck'
+} from '@/components/ui/Img/ImageErrorCheck'
 import { FC } from 'react'
 import { Skeleton } from '@/components/ui/ShadCN/skeleton'
 
@@ -32,7 +32,7 @@ export default function DefaultListItem({
       <>
          <div className="flex items-center gap-3">
             <span className="relative size-11 min-w-11 768p:size-14">
-               <ImageServerErrorCheck
+               <ImageErrorCheck
                   defaultSrc={defaultIMG}
                   src={img}
                   className={`rounded-full bg-gray-600/15 text-center text-xs drop-shadow-xl dark:bg-gray-600/15`}

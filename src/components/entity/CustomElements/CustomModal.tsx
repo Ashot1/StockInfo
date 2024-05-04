@@ -25,7 +25,7 @@ const CustomModal: FC<TCustomModal> = ({
       <Dialog>
          <DialogTrigger
             className={cn(
-               'flex items-center justify-center gap-3 rounded-full bg-[var(--grayBG)] px-3 py-1.5 duration-300 hover:scale-110',
+               'flex items-center justify-center gap-3 rounded-full bg-[var(--grayBG)] px-3 py-1.5 duration-300',
                classNameTrigger
             )}
          >

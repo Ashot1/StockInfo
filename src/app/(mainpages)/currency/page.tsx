@@ -1,7 +1,9 @@
-import { getCurrency } from '@/actions/Currency'
+import { getCurrency } from '@/actions/Security(client)/Currency'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { Metadata } from 'next'
-import { DefaultListBase } from '@/components/ui/DefaultList/DefaultList'
+import DefaultList, {
+   DefaultListLoading,
+} from '@/components/ui/DefaultList/DefaultList'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { URLList } from '@/utils/const'
 
@@ -40,7 +42,7 @@ const MainContent = async () => {
    if (!data || error) return <ErrorMessage errMessage={error} />
 
    return (
-      <DefaultListBase>
+      <div className="my-8 flex flex-1 grid-cols-1 flex-col gap-6 opacity-85">
          {Object.values(data.Valute).map((item) => {
             const Current = item.Value / item.Nominal
             const Prev = item.Previous / item.Nominal
@@ -60,6 +62,6 @@ const MainContent = async () => {
                />
             )
          })}
-      </DefaultListBase>
+      </div>
    )
 }

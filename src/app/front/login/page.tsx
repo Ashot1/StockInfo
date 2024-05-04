@@ -7,7 +7,7 @@ import {
    RegisterWithPassword,
    SignOut,
 } from '@/actions/Account/Auth'
-import { LoginWithOAuth } from '@/actions/Account/client'
+import { LoginWithOAuth } from '@/actions/Account/Client'
 
 export default function LoginPage() {
    const { push } = useRouter()

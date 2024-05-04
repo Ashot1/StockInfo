@@ -47,10 +47,9 @@ const ColoredBlock: FC<BalanceBlockProps> = ({
    return (
       <button
          onClick={action}
-         // whileTap={{ scale: 0.9 }}
          className={cn(variants({ variant, className }), 'relative flex')}
       >
-         <span className="flex h-[75%] flex-col justify-center pl-4 500p:pl-8">
+         <span className="flex h-[75%] max-w-full flex-col justify-center pl-4 500p:pl-8">
             <p
                className={cn(
                   'text-start text-xs 500p:text-sm 768p:text-base',

@@ -1,7 +1,6 @@
-'use server'
-
 import { CurrentNewsRequest, NewsRequest } from '@/types/News.types'
-import TryCatch from '@/utils/TryCatch'
+import { TryCatch } from '@/utils/utils'
+import { next } from 'sucrase/dist/types/parser/tokenizer'
 
 export async function getNews(start = '0') {
    return TryCatch<NewsRequest>(async () => {
@@ -21,7 +20,8 @@ export async function getNews(start = '0') {
 export async function getCurrentNews(id: string) {
    return TryCatch<CurrentNewsRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/sitenews/${id}.json?iss.meta=off&iss.json=extended`
+         `https://iss.moex.com/iss/sitenews/${id}.json?iss.meta=off&iss.json=extended`,
+         { next: { revalidate: 600 } }
       )
       const data: CurrentNewsRequest = await result.json()
 

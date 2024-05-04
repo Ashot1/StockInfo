@@ -1,22 +1,22 @@
 'use client'
 
-import TryCatch from '@/utils/TryCatch'
 import {
    FavoritesListTypes,
    OAuthProviders,
    TFavoritesList,
 } from '@/types/Auth.types'
 import { SupabaseCustomClient } from '@/utils/supabase/client'
-import { getCurrentNews } from '@/actions/News'
-import { TFormatedFavoriteList } from '@/components/widgets/FavoriteList'
+import { getCurrentNews } from '@/actions/Security(client)/News'
+import { TFormatedFavoriteList } from '@/components/widgets/Favorite'
 import {
    SecurityGetAllData,
    SecurityGetAllMarket,
 } from '@/types/Security.types'
-import { getAllStocks } from '@/actions/Stocks'
-import { getAllBonds } from '@/actions/Bonds'
+import { getAllStocks } from '@/actions/Security(client)/Stocks'
+import { getAllBonds } from '@/actions/Security(client)/Bonds'
 import { ConvertDate } from '@/utils/ConvertDate'
-import { getCurrency } from '@/actions/Currency'
+import { getCurrency } from '@/actions/Security(client)/Currency'
+import { SortBySecurityType, TryCatch } from '@/utils/utils'
 
 export async function LoginWithOAuth(provider: OAuthProviders) {
    return TryCatch(async () => {
@@ -35,22 +35,11 @@ export async function LoginWithOAuth(provider: OAuthProviders) {
    })
 }
 
-export async function FetchFavorites(list: TFavoritesList[]) {
+export async function FetchFavorites(list?: TFavoritesList[] | null) {
    return TryCatch<TFormatedFavoriteList[]>(async () => {
-      if (!list || list.length <= 0)
-         throw new Error('Вы еще ничего не добавили')
+      if (!list || list.length <= 0) return { data: [] }
 
-      const SortedList: { [key in FavoritesListTypes]: string[] } = {
-         Bond: [],
-         Currency: [],
-         News: [],
-         Stock: [],
-      }
-
-      for (const i of list) {
-         const type = i.type as FavoritesListTypes
-         SortedList[type].push(i.secID)
-      }
+      const SortedList = SortBySecurityType(list)
 
       let Securities: {
          securities: SecurityGetAllData[]
@@ -165,12 +154,9 @@ export async function FetchFavorites(list: TFavoritesList[]) {
             SECID: current.SECID,
             SHORTNAME: current.SHORTNAME,
             SECNAME: current.SECNAME,
-            image: supabaseData ? supabaseData.image : current.SECID,
-            type: supabaseData ? supabaseData.type : 'Stock',
-            price:
-               marketData?.LAST && marketData?.LAST > 0
-                  ? marketData?.LAST
-                  : undefined,
+            image: supabaseData?.image || current.SECID,
+            type: supabaseData?.type || 'Stock',
+            price: marketData?.LAST,
             definition: definition,
          }
       })

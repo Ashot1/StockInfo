@@ -1,4 +1,4 @@
-import { getStocksList } from '@/actions/Stocks'
+import { getStocksList } from '@/actions/Security(client)/Stocks'
 import { PageStartCounter, URLList } from '@/utils/const'
 import { Metadata } from 'next'
 import ErrorMessage from '@/components/ui/ErrorMessage'

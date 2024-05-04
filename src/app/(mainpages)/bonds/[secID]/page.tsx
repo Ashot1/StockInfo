@@ -2,15 +2,15 @@ import {
    getBondMarketPrice,
    getBondPriceList,
    getCoupons,
-} from '@/actions/Bonds'
+} from '@/actions/Security(client)/Bonds'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { ConvertDate } from '@/utils/ConvertDate'
 import { CouponsRequest } from '@/types/Bonds.types'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import { URLList } from '@/utils/const'
-import { getCurrentSecurity } from '@/actions/CommonSecurity'
-import { getStockPriceList } from '@/actions/Stocks'
+import { getCurrentSecurity } from '@/actions/Security(client)/CommonSecurity'
+import { getStockPriceList } from '@/actions/Security(client)/Stocks'
 
 export async function generateMetadata({
    params: { secID },

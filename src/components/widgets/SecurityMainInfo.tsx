@@ -1,10 +1,9 @@
-import ImageServerErrorCheck from '@/components/ui/Img/ImageServerErrorCheck'
-import IMGshadowCard from '@/components/ui/Img/IMGshadowCard'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
-import AddToFavorite from '@/components/entity/AddToFavorite'
 import { Enums } from '@/types/supabase.types'
 import PriceInfoCard from '@/components/entity/PriceInfoCard'
 import { SecurityTemplateProps } from '@/components/module/SecurityTemplate'
+import TransactionsButtons from '@/components/entity/ModalsContent/Transactions/TransactionsButtons'
+import SecurityFace from '@/components/ui/SecurityFace'
 
 export type SecurityMainInfoProps = {
    secID: string
@@ -25,34 +24,25 @@ export default function SecurityMainInfo({
    return (
       <SwipeNavigator
          prev="RouterBack"
-         className="flex w-full flex-col place-items-center gap-14"
+         className="grid w-full place-items-center gap-10 768p:grid-cols-2 768p:gap-14"
       >
-         <div className="flex flex-col items-center gap-4 768p:flex-row">
-            <IMGshadowCard
-               img={img || '/StockPlaceHolder.png'}
-               className="relative size-20"
-            >
-               <ImageServerErrorCheck
-                  src={img || '/StockPlaceHolder.png'}
-                  alt={secID}
-                  defaultSrc="/StockPlaceHolder.png"
-                  className="rounded-2xl bg-gray-500/30"
-                  onErrorClass={`dark:invert rounded bg-transparent dark:bg-transparent`}
-               />
-            </IMGshadowCard>
-            <div className="flex flex-col gap-4 768p:flex-row">
-               <span className="text-center">
-                  <p className="mb-1 text-sm 768p:text-base">{secTitle}</p>
-                  <p className="text-xs opacity-45 768p:text-sm">{secCode}</p>
-               </span>
-               <AddToFavorite
-                  secID={secID}
-                  type={type}
-                  image={secID || img || '/StockPlaceHolder.png'}
-               />
-            </div>
-         </div>
-         <PriceInfoCard MarketData={MarketData} />
+         <SecurityFace
+            variant="horizontal"
+            secID={secID}
+            secCode={secCode}
+            secTitle={secTitle}
+            image={img}
+            type={type}
+         />
+         <TransactionsButtons
+            type={type}
+            secID={secID}
+            secCode={secCode}
+            secTitle={secTitle}
+            image={img}
+            current_price={MarketData?.last || 0}
+         />
+         <PriceInfoCard MarketData={MarketData} className="col-span-full" />
       </SwipeNavigator>
    )
 }

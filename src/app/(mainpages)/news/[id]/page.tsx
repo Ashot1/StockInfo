@@ -4,7 +4,7 @@ import ArrowSeparator from '@/components/ui/ArrowSeparator'
 import { redirect } from 'next/navigation'
 import { ConvertDate } from '@/utils/ConvertDate'
 import { FilePlusIcon } from '@radix-ui/react-icons'
-import { getCurrentNews } from '@/actions/News'
+import { getCurrentNews } from '@/actions/Security(client)/News'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import AddToFavorite from '@/components/entity/AddToFavorite'
 
@@ -85,7 +85,7 @@ const MainContent = async ({ id }: { id: string }) => {
          </span>
          <div
             className="styledNewsContent overflow-x-auto rounded-lg bg-neutral-200
-          bg-opacity-20 p-3 text-sm shadow 768p:p-6 dark:bg-neutral-900 dark:bg-opacity-50"
+          bg-opacity-20 p-3 text-sm shadow dark:bg-neutral-900 dark:bg-opacity-50 768p:p-6"
             dangerouslySetInnerHTML={{
                __html: body,
             }}

@@ -1,15 +1,15 @@
-// 'use client'
-
-import { Button } from '@/components/ui/ShadCN/button'
 import { cn } from '@/utils/utils'
 import { nunito, comfortaa } from '@/utils/fonts'
 import { SecurityTemplateProps } from '@/components/module/SecurityTemplate'
 
 export type PriceInfoCardProps = Partial<
    Pick<SecurityTemplateProps, 'MarketData'>
->
+> & { className?: string }
 
-export default function PriceInfoCard({ MarketData }: PriceInfoCardProps) {
+export default function PriceInfoCard({
+   MarketData,
+   className,
+}: PriceInfoCardProps) {
    const info = [
       { name: 'Мин', value: MarketData?.low },
       { name: 'Макс', value: MarketData?.high },
@@ -17,11 +17,22 @@ export default function PriceInfoCard({ MarketData }: PriceInfoCardProps) {
       { name: 'Пред', value: MarketData?.prev },
    ]
 
+   const current_price = Intl.NumberFormat('ru-RU', {
+      currency: 'RUB',
+      style: 'currency',
+      maximumFractionDigits: 3,
+   }).format(MarketData?.last || 0)
+
    return (
-      <div className="min-w-[60%] rounded-2xl border-2 border-black/40 bg-black/10 p-3 768p:min-w-[30%] dark:border-white/40 dark:bg-white/10">
+      <div
+         className={cn(
+            'min-w-[60%] rounded-2xl border-2 border-black/40 bg-black/10 p-3 dark:border-white/40 dark:bg-white/10 768p:min-w-[30%]',
+            className
+         )}
+      >
          <p className="text-sm text-black/60 dark:text-white/40">Цена</p>
          <h2 className={cn('text-lg dark:text-white', nunito.className)}>
-            {MarketData?.last || 0} ₽
+            {current_price}
          </h2>
          <span
             className={cn(
@@ -38,8 +49,6 @@ export default function PriceInfoCard({ MarketData }: PriceInfoCardProps) {
                )
             })}
          </span>
-         {/*<Button variant="">Купить</Button>*/}
-         {/*<Button>Продать</Button>*/}
       </div>
    )
 }

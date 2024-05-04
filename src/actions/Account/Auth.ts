@@ -1,15 +1,8 @@
 'use server'
 
-import {
-   LoginPasswordInfo,
-   OAuthProviders,
-   RegisterPasswordInfo,
-} from '@/types/Auth.types'
+import { LoginPasswordInfo, RegisterPasswordInfo } from '@/types/Auth.types'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
-import TryCatch from '@/utils/TryCatch'
-import { SupabaseCustomClient } from '@/utils/supabase/client'
-import { redirect } from 'next/navigation'
-import { URLList } from '@/utils/const'
+import { TryCatch } from '@/utils/utils'
 
 export async function LoginWithPassword({
    password,

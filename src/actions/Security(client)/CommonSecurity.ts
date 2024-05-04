@@ -1,5 +1,5 @@
 import { CurrentStockRequest } from '@/types/Stocks.types'
-import TryCatch from '@/utils/TryCatch'
+import { TryCatch } from '@/utils/utils'
 
 export async function getCurrentSecurity(stock: string) {
    return TryCatch<CurrentStockRequest>(async () => {

@@ -6,9 +6,12 @@ import { URLList } from '@/utils/const'
 import PageTitle from '@/components/ui/PageTitle'
 import { FC, memo, ReactNode, useContext } from 'react'
 import { AuthContext } from '@/hoc/AuthProvider'
-import FavoriteList from '@/components/widgets/FavoriteList'
+import Favorite from '@/components/widgets/Favorite'
 import Search from '@/components/widgets/Search'
-import { searchBond, searchStock } from '@/actions/CLIENT-CommonSecurity'
+import {
+   searchBond,
+   searchStock,
+} from '@/actions/Security(client)/CLIENT-CommonSecurity'
 
 const ControlPanel = () => {
    const path = usePathname()
@@ -91,7 +94,7 @@ const DefaultAdditional: FC<{ children?: ReactNode }> = ({ children }) => {
    return (
       <>
          {children}
-         <FavoriteList />
+         <Favorite />
       </>
    )
 }

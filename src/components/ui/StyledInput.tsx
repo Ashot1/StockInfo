@@ -5,7 +5,7 @@ import {
    RegisterOptions,
    UseFormRegister,
 } from 'react-hook-form'
-import { InputHTMLAttributes } from 'react'
+import { forwardRef, InputHTMLAttributes } from 'react'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { cn } from '@/utils/utils'
 import { comfortaa } from '@/utils/fonts'
@@ -18,7 +18,7 @@ export type StyledInputProps<T extends FieldValues> = {
    options?: RegisterOptions<T>
    error?: FieldError
    background?: string
-} & Pick<InputHTMLAttributes<HTMLInputElement>, 'type'>
+} & InputHTMLAttributes<HTMLInputElement>
 
 const StyledInput = <T extends FieldValues>({
    type,
@@ -29,8 +29,9 @@ const StyledInput = <T extends FieldValues>({
    options,
    error,
    background,
+   ...props
 }: StyledInputProps<T>) => {
-   let additionalProps = {}
+   let additionalProps = props
 
    if (register)
       additionalProps = {

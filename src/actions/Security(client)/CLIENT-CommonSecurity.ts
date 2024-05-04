@@ -1,6 +1,6 @@
 'use client'
 
-import TryCatch from '@/utils/TryCatch'
+import { TryCatch } from '@/utils/utils'
 import {
    SecurityGetAllRequest,
    SecuritySearchRequest,

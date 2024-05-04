@@ -2,8 +2,9 @@
 import { createContext, FC, ReactNode, useState } from 'react'
 import { Tables } from '@/types/supabase.types'
 import { User } from '@supabase/supabase-js'
+import { TTransactionsList } from '@/types/Auth.types'
 
-export type TUser = User
+type TUser = User
 
 const defaultAuth: TUser = {
    id: '',
@@ -13,7 +14,11 @@ const defaultAuth: TUser = {
    created_at: '',
 }
 
-const defaultMain: Tables<'UserMainData'> = {
+type mainInfo = Tables<'UserMainData'> & {
+   transactions: TTransactionsList[] | undefined
+}
+
+const defaultMain: mainInfo = {
    favorites: [],
    user_id: '',
    purchases: [],
@@ -25,12 +30,12 @@ const defaultMain: Tables<'UserMainData'> = {
 
 type basics = {
    authInfo: TUser
-   mainInfo?: Tables<'UserMainData'>
+   mainInfo: mainInfo
 }
 
 export const AuthContext = createContext<
    {
-      setMainInfo?: (data: Tables<'UserMainData'>) => void
+      setMainInfo?: (data: mainInfo) => void
       setAuthInfo?: (user: TUser) => void
    } & basics
 >({
@@ -42,11 +47,11 @@ export const AuthContext = createContext<
 
 const AuthProvider: FC<{
    children: ReactNode
-   value: { authInfo: TUser; mainInfo?: Tables<'UserMainData'> }
+   value: { authInfo: TUser; mainInfo: mainInfo }
 }> = ({ children, value }) => {
    const [State, setState] = useState<basics>(value)
 
-   const changeMain = (data: Tables<'UserMainData'>) => {
+   const changeMain = (data: mainInfo) => {
       setState((prev) => ({ ...prev, mainInfo: data }))
    }
    const changeAuth = (data: TUser) => {

@@ -1,6 +1,4 @@
-'use server'
-
-import TryCatch from '@/utils/TryCatch'
+import { TryCatch } from '@/utils/utils'
 import { CurrencyListRequest } from '@/types/Currency.types'
 
 export async function getCurrency() {

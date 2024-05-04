@@ -1,8 +1,4 @@
-import {
-   TFavoritesList,
-   TPurchasesList,
-   TTransactionsList,
-} from '@/types/Auth.types'
+import { TFavoritesList, TPurchasesList } from '@/types/Auth.types'
 
 export type Json =
    | string
@@ -15,13 +11,54 @@ export type Json =
 export type Database = {
    public: {
       Tables: {
+         Transactions: {
+            Row: {
+               created_at: Date
+               image: string
+               price: number
+               quantity: number
+               remainder: number
+               secID: string
+               security_type: Database['public']['Enums']['favorite_types']
+               Title: string
+               transaction_id: string
+               transaction_type: Database['public']['Enums']['transaction_types']
+               user_id: string
+            }
+            Insert: {
+               created_at?: Date
+               image?: string
+               price?: number
+               quantity?: number
+               remainder?: number
+               secID: string
+               security_type: Database['public']['Enums']['favorite_types']
+               Title?: string
+               transaction_id?: string
+               transaction_type: Database['public']['Enums']['transaction_types']
+               user_id?: string
+            }
+            Update: {
+               created_at?: Date
+               image?: string
+               price?: number
+               quantity?: number
+               remainder?: number
+               secID?: string
+               security_type?: Database['public']['Enums']['favorite_types']
+               Title?: string
+               transaction_id?: string
+               transaction_type?: Database['public']['Enums']['transaction_types']
+               user_id?: string
+            }
+            Relationships: []
+         }
          UserMainData: {
             Row: {
                current_money: number
                favorites: TFavoritesList[] | null
                purchases: TPurchasesList[] | null
                start_money: number | null
-               transactions: TTransactionsList[] | null
                user_id: string
                visits: Json[] | null
             }
@@ -30,7 +67,6 @@ export type Database = {
                favorites?: TFavoritesList[] | null
                purchases?: TPurchasesList[] | null
                start_money?: number | null
-               transactions?: TTransactionsList[] | null
                user_id?: string
                visits?: Json[] | null
             }
@@ -39,7 +75,6 @@ export type Database = {
                favorites?: TFavoritesList[] | null
                purchases?: TPurchasesList[] | null
                start_money?: number | null
-               transactions?: TTransactionsList[] | null
                user_id?: string
                visits?: Json[] | null
             }

@@ -1,4 +1,4 @@
-import { Enums } from '@/types/supabase.types'
+import { Enums, Tables } from '@/types/supabase.types'
 
 export type OAuthProviders = 'google' | 'discord'
 
@@ -23,15 +23,6 @@ export type TFavoritesList = {
    image: string
 }
 
-export type TPurchasesList = TFavoritesList & { transaction_id: number }
+export type TPurchasesList = TFavoritesList & { transaction_id: string[] }
 
-export type TTransactionsList = {
-   type: string
-   image: string
-   title: string
-   subtitle: string
-   price: number
-   date: string
-   transaction_type: TransactionTypes
-   transaction_id: number
-}
+export type TTransactionsList = Tables<'Transactions'>

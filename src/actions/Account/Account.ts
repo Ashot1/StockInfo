@@ -5,12 +5,13 @@ import {
    User,
    UserAttributes,
 } from '@supabase/supabase-js'
-import TryCatch from '@/utils/TryCatch'
 import { Tables } from '@/types/supabase.types'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { URLList } from '@/utils/const'
 import { cache } from 'react'
+import { TryCatch } from '@/utils/utils'
+import { SupabaseCustomService } from '@/utils/supabase/service'
 
 async function getSessionUser(supabase: SupabaseClient) {
    const {
@@ -26,7 +27,7 @@ async function getSessionUser(supabase: SupabaseClient) {
    return { user }
 }
 
-async function getSupabaseUser(supabase: SupabaseClient) {
+export async function getSupabaseUser(supabase: SupabaseClient) {
    const {
       data: { user },
       error,
@@ -42,7 +43,7 @@ async function getSupabaseUser(supabase: SupabaseClient) {
 export async function DeleteUser() {
    return TryCatch<undefined>(async () => {
       const supabase = SupabaseCustomServer()
-      const supabaseServer = SupabaseCustomServer(true)
+      const supabaseServer = SupabaseCustomService()
 
       const user = await getSupabaseUser(supabase)
 
@@ -108,7 +109,7 @@ export async function UpdateUser({
 }
 
 export const GetUserMainData = async () => {
-   return TryCatch(
+   return TryCatch<Tables<'UserMainData'>>(
       cache(async () => {
          const supabase = SupabaseCustomServer()
 
@@ -129,9 +130,9 @@ export const GetUserMainData = async () => {
 type TincomingData = Partial<Omit<Tables<'UserMainData'>, 'user_id'>>
 
 export async function UpdateUserMainData(incomingData: TincomingData) {
-   return TryCatch(async () => {
+   return TryCatch<Tables<'UserMainData'>>(async () => {
       const supabase = SupabaseCustomServer()
-      const supabaseServer = SupabaseCustomServer(true)
+      const supabaseServer = SupabaseCustomService()
 
       const { user } = await getSupabaseUser(supabase)
       const { data, error } = await supabaseServer
@@ -146,17 +147,98 @@ export async function UpdateUserMainData(incomingData: TincomingData) {
    })
 }
 
-export async function CreateTable(id: string) {
-   return TryCatch(async () => {
-      const supabaseServer = SupabaseCustomServer(true)
+type TgetTransaction = { data: Tables<'Transactions'>[]; count: number | null }
 
-      const { data, error } = await supabaseServer
-         .from('UserMainData')
-         .upsert({ user_id: id })
-         .select()
+export async function getAllUserTransactions(option?: {
+   column: keyof Tables<'Transactions'>
+   value: string | number
+}) {
+   return TryCatch<TgetTransaction>(async () => {
+      const supabase = SupabaseCustomServer()
 
-      if (error || !data) throw error || new Error('Ошибка создания таблицы')
+      const { user } = await getSupabaseUser(supabase)
 
-      return { data: data }
+      const supabaseService = SupabaseCustomService()
+
+      let request
+      if (option?.column) {
+         request = supabaseService
+            .from('Transactions')
+            .select()
+            .eq('user_id', user.id)
+            .eq(option.column, option.value)
+      } else {
+         request = supabaseService
+            .from('Transactions')
+            .select()
+            .eq('user_id', user.id)
+      }
+      const { data, error, count } = await request
+
+      if (!data || error)
+         throw error || new Error('Ошибка получения транзакций')
+
+      return { data: { data, count } }
    })
 }
+
+export async function getActualUserTransactions() {
+   return TryCatch<TgetTransaction>(async () => {
+      const supabase = SupabaseCustomServer()
+
+      const { user } = await getSupabaseUser(supabase)
+
+      const supabaseService = SupabaseCustomService()
+      const { data, error, count } = await supabaseService
+         .from('Transactions')
+         .select()
+         .eq('user_id', user.id)
+         .gt('remainder', 0)
+         .eq('transaction_type', 'buy')
+
+      if (!data || error)
+         throw error || new Error('Ошибка получения транзакций')
+
+      return { data: { data, count } }
+   })
+}
+//
+// export async function updateUserTransaction(
+//    transaction: Omit<TTransactionsList, 'transaction_id'> &
+//       Partial<Pick<TTransactionsList, 'transaction_id'>>
+// ) {
+//    return TryCatch<TgetTransaction>(async () => {
+//       const supabase = SupabaseCustomServer()
+//
+//       const { user } = await getSupabaseUser(supabase)
+//
+//       const { data, error, count } = await supabase
+//          .from('Transactions')
+//          .upsert({
+//             ...transaction,
+//             transaction_id: transaction.transaction_id,
+//          })
+//          .eq('user_id', user.id)
+//          .select()
+//
+//       if (!data || error)
+//          throw error || new Error('Ошибка обновления транзакций')
+//
+//       return { data: { data, count } }
+//    })
+// }
+//
+// export async function CreateTable(id: string) {
+//    return TryCatch(async () => {
+//       const supabaseServer = SupabaseCustomServer(true)
+//
+//       const { data, error } = await supabaseServer
+//          .from('UserMainData')
+//          .upsert({ user_id: id })
+//          .select()
+//
+//       if (error || !data) throw error || new Error('Ошибка создания таблицы')
+//
+//       return { data: data }
+//    })
+// }

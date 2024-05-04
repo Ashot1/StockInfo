@@ -12,7 +12,7 @@ export type ImageErrorProps = {
    onErrorClass?: string
 }
 
-const ImageServerErrorCheck: FC<ImageErrorProps> = ({
+const ImageErrorCheck: FC<ImageErrorProps> = ({
    alt,
    className,
    src,
@@ -40,4 +40,4 @@ const ImageServerErrorCheck: FC<ImageErrorProps> = ({
    )
 }
 
-export default ImageServerErrorCheck
+export default ImageErrorCheck

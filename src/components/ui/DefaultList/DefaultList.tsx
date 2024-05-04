@@ -2,8 +2,9 @@
 
 import { FC, ReactNode } from 'react'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
-import CalculatePagination from '@/utils/CalculatePagination'
+import CalculatePagination from '@/utils/Pagination'
 import { cn } from '@/utils/utils'
+import { DefaultListItemLoader } from '@/components/ui/DefaultList/DefaultListItem'
 
 type WithSwipe = {
    CurrentStartIndex: number
@@ -41,10 +42,19 @@ export default function DefaultList({
    )
 }
 
-export const DefaultListBase: FC<{
-   children: ReactNode
+export const DefaultListLoading: FC<{
    className?: string
-}> = ({ children, className }) => {
+   len?: number
+}> = ({ className, len = 50 }) => {
+   const items: ReactNode[] = []
+   for (let index = 0; index < len; index++) {
+      const animIndex = index <= 15 ? index : 15
+      const className = `animate-appearance-moving opacity-0 fill-mode-forwards delay-${
+         100 * animIndex
+      }`
+      items.push(<DefaultListItemLoader key={index} className={className} />)
+   }
+
    return (
       <div
          className={cn(
@@ -52,7 +62,7 @@ export const DefaultListBase: FC<{
             className
          )}
       >
-         {children}
+         {items}
       </div>
    )
 }

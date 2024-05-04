@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { cache } from 'react'
 
 export async function updateSession(request: NextRequest) {
    let response = NextResponse.next({
