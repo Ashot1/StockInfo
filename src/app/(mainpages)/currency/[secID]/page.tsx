@@ -17,6 +17,7 @@ export async function generateMetadata({
       openGraph: {
          title: 'Валюта',
          authors: 'Центральный Банк РФ',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/currency/${secID}`,
       },
       twitter: {
          title: 'Валюта',
@@ -38,6 +39,7 @@ export async function generateMetadata({
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
          authors: 'Центральный Банк РФ',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/currency/${secID}`,
       },
       twitter: {
          title: `${title} - ${code}`,

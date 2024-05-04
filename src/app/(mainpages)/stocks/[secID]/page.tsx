@@ -23,10 +23,13 @@ export async function generateMetadata({
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
       openGraph: {
          title: 'Акция с московской биржи',
+         description: 'Основная информация об акции с московской биржи',
          authors: 'Московская биржа',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/stocks/${secID}`,
       },
       twitter: {
          title: 'Акция с московской биржи',
+         description: 'Основная информация об акции с московской биржи',
       },
    }
 
@@ -46,6 +49,7 @@ export async function generateMetadata({
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
          authors: 'Московская биржа',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/stocks/${secID}`,
       },
       twitter: {
          title: `${title} - ${code}`,

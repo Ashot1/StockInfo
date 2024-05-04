@@ -13,6 +13,7 @@ export const metadata: Metadata = {
    openGraph: {
       title: 'Акции',
       description: 'Список акций с Московской Биржи (MOEX)',
+      url: `${process.env.NEXT_PUBLIC_SITEURL}/stocks`,
    },
    twitter: {
       title: 'Акции',

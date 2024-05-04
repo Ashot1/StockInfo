@@ -43,9 +43,9 @@ export default function PurchaseListItem({
          prefetch={false}
       >
          <IMGcolorCard img={image} key={SECID} className={className}>
-            <div className="flex flex-col py-4">
+            <div className="flex flex-col px-4 py-4">
                <div className="flex w-full items-center justify-center gap-3">
-                  <span className="relative size-10 500p:size-12">
+                  <span className="relative aspect-square size-10 min-h-10 min-w-10 500p:size-12">
                      <ImageErrorCheck
                         alt={SECID}
                         defaultSrc={`/Menu/Shortcuts/${type}.png`}

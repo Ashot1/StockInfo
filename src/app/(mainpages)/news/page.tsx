@@ -14,6 +14,7 @@ export const metadata: Metadata = {
    openGraph: {
       title: 'Новости',
       description: 'Новости Московской Биржи (MOEX)',
+      url: `${process.env.NEXT_PUBLIC_SITEURL}/news`,
    },
    twitter: {
       title: 'Новости',

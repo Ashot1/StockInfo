@@ -10,7 +10,6 @@ import { CouponsRequest } from '@/types/Bonds.types'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import { URLList } from '@/utils/const'
 import { getCurrentSecurity } from '@/actions/Security(client)/CommonSecurity'
-import { getStockPriceList } from '@/actions/Security(client)/Stocks'
 
 export async function generateMetadata({
    params: { secID },
@@ -25,6 +24,7 @@ export async function generateMetadata({
       openGraph: {
          title: 'Облигация с московской биржи',
          authors: 'Московская биржа',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/bonds/${secID}`,
       },
       twitter: {
          title: 'Облигация с московской биржи',
@@ -47,6 +47,7 @@ export async function generateMetadata({
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
          authors: 'Московская биржа',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/bonds/${secID}`,
       },
       twitter: {
          title: `${title} - ${code}`,

@@ -1,11 +1,11 @@
 'use client'
 
 import { FC, useContext } from 'react'
-import PurchaseList from '@/components/ui/GridList/PurchaseList'
+import PurchaseList from '@/components/ui/PurchaseList/PurchaseList'
 import { DataByType } from '@/utils/dataByType'
 import PurchaseListItem, {
    PurchaseListItemLoading,
-} from '@/components/ui/GridList/PurchaseListItem'
+} from '@/components/ui/PurchaseList/PurchaseListItem'
 import { cn } from '@/utils/utils'
 import { HomeContext } from '@/hoc/HomeProvider'
 import { AuthContext } from '@/hoc/AuthProvider'

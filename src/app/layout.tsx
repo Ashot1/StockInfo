@@ -12,11 +12,12 @@ export const viewport: Viewport = {
    themeColor: [
       { color: '#121212', media: '(prefers-color-scheme: dark)' },
       {
-         color: '#d3d3d3',
+         color: '#fafafa',
          media: '(prefers-color-scheme: light)',
       },
    ],
    colorScheme: 'light dark',
+   userScalable: false,
 }
 
 export const metadata: Metadata = {
@@ -25,6 +26,12 @@ export const metadata: Metadata = {
       default: 'StockInfo',
       template: '%s | StockInfo',
    },
+   appleWebApp: { title: 'StockInfo', startupImage: '/Preview.png' },
+   robots: {
+      index: true,
+      follow: true,
+      googleBot: { follow: true, index: true },
+   },
    description: packageJSON.description,
    manifest: '/manifest/manifest.json',
    icons: '/icon.png',
@@ -32,13 +39,15 @@ export const metadata: Metadata = {
    openGraph: {
       title: 'StockInfo',
       description: packageJSON.description,
-      images: '/icon.png',
+      images: '/Preview.png',
       locale: 'ru-RU',
+      type: 'website',
+      url: `${process.env.NEXT_PUBLIC_SITEURL}/home`,
    },
    twitter: {
       title: 'StockInfo',
       description: packageJSON.description,
-      images: '/icon.png',
+      images: '/Preview.png',
    },
    applicationName: 'StockInfo',
 }

@@ -15,6 +15,7 @@ export const metadata: Metadata = {
    openGraph: {
       title: 'Валюта',
       description: 'Список валюты от Центрального Банка РФ',
+      url: `${process.env.NEXT_PUBLIC_SITEURL}/currency`,
    },
    twitter: {
       title: 'Валюта',

@@ -24,7 +24,7 @@ export async function getStocksList(start: string = '0', limit: number) {
 export async function getDividends(stock: string) {
    return TryCatch<DividendsRequest>(async () => {
       const result = await fetch(
-         `http://iss.moex.com/iss/securities/${stock}/dividends.json?iss.meta=off&iss.json=extended`,
+         `https://iss.moex.com/iss/securities/${stock}/dividends.json?iss.meta=off&iss.json=extended`,
          { next: { revalidate: 3600 } }
       )
 
@@ -51,7 +51,7 @@ export async function getAllStocks(
       const formatedList = list.join(',')
 
       const result = await fetch(
-         `http://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?securities=${formatedList}&iss.json=extended&iss.meta=off&iss.only=securities,marketdata&securities.columns=SECID,SHORTNAME,SECNAME&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME${optional}`,
+         `https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?securities=${formatedList}&iss.json=extended&iss.meta=off&iss.only=securities,marketdata&securities.columns=SECID,SHORTNAME,SECNAME&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME${optional}`,
          { next: { revalidate: 3600 } }
       )
       const data: SecurityGetAllRequest = await result.json()
@@ -71,7 +71,7 @@ export async function getStockPriceList({
 }: PriceListReqProps) {
    return TryCatch<SecurityPriceListRequest>(async () => {
       const result = await fetch(
-         `http://iss.moex.com/iss/engines/stock/markets/shares/securities/${stock}/candles.json?iss.meta=off&iss.json=extended&interval=${interval}&start=${start}&from=${from}${
+         `https://iss.moex.com/iss/engines/stock/markets/shares/securities/${stock}/candles.json?iss.meta=off&iss.json=extended&interval=${interval}&start=${start}&from=${from}${
             till && `&till=${till}`
          }&candles.columns=open,close,high,low,begin,end`,
          { next: { revalidate: 3600 } }
@@ -88,7 +88,7 @@ export async function getStockPriceList({
 export async function getStockMarketPrice(secid: string) {
    return TryCatch<MarketPriceRequest>(async () => {
       const result = await fetch(
-         `http://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?iss.meta=off&iss.json=extended&securities=${secid}&iss.only=securities,marketdata&securities.columns=SECID&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME`,
+         `https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json?iss.meta=off&iss.json=extended&securities=${secid}&iss.only=securities,marketdata&securities.columns=SECID&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME`,
          { next: { revalidate: 1800 } }
       )
 

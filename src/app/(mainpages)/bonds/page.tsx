@@ -13,6 +13,7 @@ export const metadata: Metadata = {
    openGraph: {
       title: 'Облигации',
       description: 'Список облигаций с Московской Биржи (MOEX)',
+      url: `${process.env.NEXT_PUBLIC_SITEURL}/bonds`,
    },
    twitter: {
       title: 'Облигации',

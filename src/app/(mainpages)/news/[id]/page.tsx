@@ -19,6 +19,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
          openGraph: {
             title: 'Новость с московской биржи',
             authors: 'Московская биржа',
+            url: `${process.env.NEXT_PUBLIC_SITEURL}/news/${params.id}`,
          },
          twitter: {
             title: 'Новость с московской биржи',
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
          title,
          description: 'Новость с московской биржи',
          authors: 'Московская биржа',
+         url: `${process.env.NEXT_PUBLIC_SITEURL}/news/${params.id}`,
       },
       twitter: {
          title,
