@@ -129,7 +129,7 @@ const Buttons: FC<IMainHeader> = ({ HeaderButtons }) => {
                   onMouseLeave={() => setHoverElement(null)}
                   className={cn(
                      'grid flex-1 place-items-center',
-                     item.link.split('?')[0] === URLList.home && 'hidden'
+                     item.link.split('?')[0] === URLList.home && '768p:hidden'
                   )}
                >
                   <Link
