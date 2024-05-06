@@ -16,13 +16,20 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       return {
          title: 'Новость с московской биржи',
          authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
+         robots: {
+            index: true,
+            follow: true,
+            googleBot: { follow: true, index: true },
+         },
          openGraph: {
             title: 'Новость с московской биржи',
             authors: 'Московская биржа',
             url: `${process.env.NEXT_PUBLIC_SITEURL}/news/${params.id}`,
+            images: '/Preview.png',
          },
          twitter: {
             title: 'Новость с московской биржи',
+            images: '/Preview.png',
          },
       }
    const title = resJSON[1].content[0].title
@@ -31,15 +38,22 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       title,
       description: 'Новость с московской биржи',
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
+      robots: {
+         index: true,
+         follow: true,
+         googleBot: { follow: true, index: true },
+      },
       openGraph: {
          title,
          description: 'Новость с московской биржи',
          authors: 'Московская биржа',
          url: `${process.env.NEXT_PUBLIC_SITEURL}/news/${params.id}`,
+         images: '/Preview.png',
       },
       twitter: {
          title,
          description: 'Новость с московской биржи',
+         images: '/Preview.png',
       },
    }
 }

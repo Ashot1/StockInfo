@@ -14,13 +14,20 @@ export async function generateMetadata({
    const defaultMeta = {
       title: 'Валюта',
       authors: { name: 'Центральный Банк РФ', url: 'https://cbr.ru' },
+      robots: {
+         index: true,
+         follow: true,
+         googleBot: { follow: true, index: true },
+      },
       openGraph: {
          title: 'Валюта',
          authors: 'Центральный Банк РФ',
          url: `${process.env.NEXT_PUBLIC_SITEURL}/currency/${secID}`,
+         images: '/Preview.png',
       },
       twitter: {
          title: 'Валюта',
+         images: '/Preview.png',
       },
    }
 
@@ -35,15 +42,22 @@ export async function generateMetadata({
       title: `${title} - ${code}`,
       description: `Основная информация об ${title} (${code})`,
       authors: { name: 'Центральный Банк РФ', url: 'https://cbr.ru' },
+      robots: {
+         index: true,
+         follow: true,
+         googleBot: { follow: true, index: true },
+      },
       openGraph: {
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
          authors: 'Центральный Банк РФ',
          url: `${process.env.NEXT_PUBLIC_SITEURL}/currency/${secID}`,
+         images: '/Preview.png',
       },
       twitter: {
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
+         images: '/Preview.png',
       },
    }
 }

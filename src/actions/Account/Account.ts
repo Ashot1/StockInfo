@@ -8,7 +8,7 @@ import {
 import { Tables } from '@/types/supabase.types'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
 import { revalidatePath } from 'next/cache'
-import { URLList } from '@/utils/const'
+import { Start_balance, URLList } from '@/utils/const'
 import { cache } from 'react'
 import { TryCatch } from '@/utils/utils'
 import { SupabaseCustomService } from '@/utils/supabase/service'
@@ -132,12 +132,11 @@ type TincomingData = Partial<Omit<Tables<'UserMainData'>, 'user_id'>>
 export async function UpdateUserMainData(incomingData: TincomingData) {
    return TryCatch<Tables<'UserMainData'>>(async () => {
       const supabase = SupabaseCustomServer()
-      const supabaseServer = SupabaseCustomService()
 
       const { user } = await getSupabaseUser(supabase)
-      const { data, error } = await supabaseServer
+      const { data, error } = await supabase
          .from('UserMainData')
-         .update(incomingData)
+         .upsert(incomingData)
          .eq('user_id', user.id)
          .select()
 
@@ -202,31 +201,32 @@ export async function getActualUserTransactions() {
       return { data: { data, count } }
    })
 }
-//
-// export async function updateUserTransaction(
-//    transaction: Omit<TTransactionsList, 'transaction_id'> &
-//       Partial<Pick<TTransactionsList, 'transaction_id'>>
-// ) {
-//    return TryCatch<TgetTransaction>(async () => {
-//       const supabase = SupabaseCustomServer()
-//
-//       const { user } = await getSupabaseUser(supabase)
-//
-//       const { data, error, count } = await supabase
-//          .from('Transactions')
-//          .upsert({
-//             ...transaction,
-//             transaction_id: transaction.transaction_id,
-//          })
-//          .eq('user_id', user.id)
-//          .select()
-//
-//       if (!data || error)
-//          throw error || new Error('Ошибка обновления транзакций')
-//
-//       return { data: { data, count } }
-//    })
-// }
+
+export async function clearUserTransactions() {
+   return TryCatch<Tables<'UserMainData'>>(async () => {
+      const { data, error } = await UpdateUserMainData({
+         current_money: Start_balance,
+         start_money: Start_balance,
+         purchases: [],
+      })
+
+      if (error || !data) throw new Error(error || 'Ошибка обновления данных')
+
+      const supabase = SupabaseCustomServer()
+      const { user } = await getSupabaseUser(supabase)
+      const supabaseService = SupabaseCustomService()
+
+      const { error: TransactionError } = await supabaseService
+         .from('Transactions')
+         .delete()
+         .eq('user_id', user.id)
+
+      if (TransactionError) throw TransactionError
+
+      return { data: data }
+   })
+}
+
 //
 // export async function CreateTable(id: string) {
 //    return TryCatch(async () => {

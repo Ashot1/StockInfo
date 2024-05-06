@@ -1,9 +1,6 @@
 import { getCurrency } from '@/actions/Security(client)/Currency'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { Metadata } from 'next'
-import DefaultList, {
-   DefaultListLoading,
-} from '@/components/ui/DefaultList/DefaultList'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { URLList } from '@/utils/const'
 
@@ -12,14 +9,21 @@ export const revalidate = 7200
 export const metadata: Metadata = {
    title: 'Валюта',
    description: 'Список валюты от Центрального Банка РФ',
+   robots: {
+      index: true,
+      follow: true,
+      googleBot: { follow: true, index: true },
+   },
    openGraph: {
       title: 'Валюта',
       description: 'Список валюты от Центрального Банка РФ',
       url: `${process.env.NEXT_PUBLIC_SITEURL}/currency`,
+      images: '/Preview.png',
    },
    twitter: {
       title: 'Валюта',
       description: 'Список валюты от Центрального Банка РФ',
+      images: '/Preview.png',
    },
 }
 

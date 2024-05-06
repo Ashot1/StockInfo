@@ -10,8 +10,8 @@ import CurrencyIcon from '@/../public/Menu/currency.svg'
 import {
    GetUser,
    GetUserMainData,
-   getActualUserTransactions,
    getAllUserTransactions,
+   getActualUserTransactions,
 } from '@/actions/Account/Account'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
@@ -33,7 +33,7 @@ export default async function MainPagesLayout({
 }) {
    const authReq = GetUser()
    const infoReq = GetUserMainData()
-   const transactionsReq = getAllUserTransactions()
+   const transactionsReq = getActualUserTransactions()
 
    const [authRes, infoRes, transactionsRes] = await Promise.all([
       authReq,

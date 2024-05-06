@@ -10,14 +10,21 @@ export const revalidate = 3600
 export const metadata: Metadata = {
    title: 'Облигации',
    description: 'Список облигаций с Московской Биржи (MOEX)',
+   robots: {
+      index: true,
+      follow: true,
+      googleBot: { follow: true, index: true },
+   },
    openGraph: {
       title: 'Облигации',
       description: 'Список облигаций с Московской Биржи (MOEX)',
       url: `${process.env.NEXT_PUBLIC_SITEURL}/bonds`,
+      images: '/Preview.png',
    },
    twitter: {
       title: 'Облигации',
       description: 'Список облигаций с Московской Биржи (MOEX)',
+      images: '/Preview.png',
    },
 }
 

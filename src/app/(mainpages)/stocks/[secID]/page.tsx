@@ -21,15 +21,22 @@ export async function generateMetadata({
    const defaultMeta = {
       title: 'Акция с московской биржи',
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
+      robots: {
+         index: true,
+         follow: true,
+         googleBot: { follow: true, index: true },
+      },
       openGraph: {
          title: 'Акция с московской биржи',
          description: 'Основная информация об акции с московской биржи',
          authors: 'Московская биржа',
          url: `${process.env.NEXT_PUBLIC_SITEURL}/stocks/${secID}`,
+         images: '/Preview.png',
       },
       twitter: {
          title: 'Акция с московской биржи',
          description: 'Основная информация об акции с московской биржи',
+         images: '/Preview.png',
       },
    }
 
@@ -45,15 +52,22 @@ export async function generateMetadata({
       title: `${title} - ${code}`,
       description: `Основная информация об ${title} (${code})`,
       authors: { name: 'Московская биржа', url: 'https://www.moex.com/' },
+      robots: {
+         index: true,
+         follow: true,
+         googleBot: { follow: true, index: true },
+      },
       openGraph: {
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
          authors: 'Московская биржа',
          url: `${process.env.NEXT_PUBLIC_SITEURL}/stocks/${secID}`,
+         images: '/Preview.png',
       },
       twitter: {
          title: `${title} - ${code}`,
          description: `Основная информация об ${title} (${code})`,
+         images: '/Preview.png',
       },
    }
 }

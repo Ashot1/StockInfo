@@ -15,15 +15,19 @@ const IMGcolorCard: FC<{
       <div className="relative h-full">
          <div
             className={cn(
-               'z-10 min-h-full rounded-2xl bg-black/10 backdrop-blur-3xl dark:bg-white/15',
+               'z-10 min-h-full rounded-2xl bg-black/10 dark:bg-white/10',
                className
             )}
          >
             {children}
          </div>
          <span
-            style={{ background: error ? 'var(--Main)' : data }}
-            className="absolute left-[50%] top-[50%] -z-10 size-[80%] translate-x-[-50%] translate-y-[-50%] rounded-2xl opacity-50 dark:opacity-60"
+            style={{
+               background: error
+                  ? 'var(--Main)'
+                  : `radial-gradient(${data} 5%, transparent)`,
+            }}
+            className="absolute left-0 top-0 -z-10 size-full rounded-2xl opacity-40 dark:opacity-30"
          ></span>
       </div>
    )

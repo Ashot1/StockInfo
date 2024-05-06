@@ -39,7 +39,7 @@ export default function PurchaseListItem({
    return (
       <Link
          href={url}
-         className="cursor-pointer rounded-2xl duration-300 hover:shadow-2xl"
+         className="cursor-pointer rounded-2xl border-2 border-transparent duration-300 hover:border-black dark:hover:border-white"
          prefetch={false}
       >
          <IMGcolorCard img={image} key={SECID} className={className}>

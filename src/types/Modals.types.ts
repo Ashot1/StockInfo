@@ -35,6 +35,10 @@ export type ProfileModeState =
    | (Omit<TConfirmMessage, 'className'> & { name: 'confirm' })
    | { name: 'default' }
 
+export type SettingsModalMods =
+   | { name: 'default' }
+   | (Omit<TConfirmMessage, 'className'> & { name: 'confirm' })
+
 export type ProfileModeEdit = {
    className?: string
    avatar?: string

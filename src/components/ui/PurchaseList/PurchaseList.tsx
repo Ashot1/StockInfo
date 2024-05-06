@@ -9,7 +9,7 @@ export default function PurchaseList({
    children: ReactNode
 }) {
    return (
-      <div className={cn('grid gap-3 300p:grid-cols-2', className)}>
+      <div className={cn('grid gap-3 500p:grid-cols-2', className)}>
          {children}
       </div>
    )

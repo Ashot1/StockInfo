@@ -87,4 +87,4 @@ export const LocalStorageParameters: Record<
    },
 }
 
-export const RevalidateTags = {}
+export const Start_balance = 500_000

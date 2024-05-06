@@ -11,14 +11,21 @@ import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 export const metadata: Metadata = {
    title: 'Новости',
    description: 'Новости Московской Биржи (MOEX)',
+   robots: {
+      index: true,
+      follow: true,
+      googleBot: { follow: true, index: true },
+   },
    openGraph: {
       title: 'Новости',
       description: 'Новости Московской Биржи (MOEX)',
       url: `${process.env.NEXT_PUBLIC_SITEURL}/news`,
+      images: '/Preview.png',
    },
    twitter: {
       title: 'Новости',
       description: 'Новости Московской Биржи (MOEX)',
+      images: '/Preview.png',
    },
 }
 

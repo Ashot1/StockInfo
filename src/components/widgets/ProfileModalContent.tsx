@@ -1,6 +1,6 @@
 'use client'
 
-import { ElementType, FC, ReactNode, useState } from 'react'
+import { ElementType, FC, useState } from 'react'
 import { ProfileModeState, TProfileModalContent } from '@/types/Modals.types'
 import CustomModalContent from '@/components/ui/CustomModalContent'
 import { DrawerFooter } from '@/components/ui/ShadCN/drawer'

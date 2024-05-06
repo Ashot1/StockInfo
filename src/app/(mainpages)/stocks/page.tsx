@@ -10,14 +10,21 @@ export const revalidate = 3600
 export const metadata: Metadata = {
    title: 'Акции',
    description: 'Список акций с Московской Биржи (MOEX)',
+   robots: {
+      index: true,
+      follow: true,
+      googleBot: { follow: true, index: true },
+   },
    openGraph: {
       title: 'Акции',
       description: 'Список акций с Московской Биржи (MOEX)',
       url: `${process.env.NEXT_PUBLIC_SITEURL}/stocks`,
+      images: '/Preview.png',
    },
    twitter: {
       title: 'Акции',
       description: 'Список акций с Московской Биржи (MOEX)',
+      images: '/Preview.png',
    },
 }
 

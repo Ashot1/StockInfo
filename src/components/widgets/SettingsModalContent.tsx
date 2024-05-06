@@ -1,40 +1,49 @@
 'use client'
 
-import { FC } from 'react'
-import { IModalContent } from '@/types/Modals.types'
+import { FC, useState } from 'react'
+import { IModalContent, SettingsModalMods } from '@/types/Modals.types'
 import CustomModalContent from '@/components/ui/CustomModalContent'
-import ThemeChangeButtons from '@/components/entity/ThemeChangeButtons'
-import packageJSON from '@/../package.json'
-import CheckBoxRow from '@/components/ui/CheckBox/CheckBoxRow'
-import { LocalStorageParameters } from '@/utils/const'
-import { useRouter } from 'next/navigation'
-import { useLocalStorage } from '@/hooks/LocalStorage'
+import SettingsDefaultModalContent from '@/components/entity/ModalsContent/Settings/SettingsDefaultModalContent'
+import { AnimatePresence, motion } from 'framer-motion'
+import ConfirmMessage from '@/components/entity/CongirmMessage'
 
 const SettingsModalContent: FC<Pick<IModalContent, 'type'>> = ({ type }) => {
-   const params = LocalStorageParameters.glowBG
-   const [GlowBG, setGlowBG] = useLocalStorage(params.name, params.positive)
+   const [Mode, setMode] = useState<SettingsModalMods>({ name: 'default' })
+
+   const MotionSettingsDefaultModalContent = motion(SettingsDefaultModalContent)
+   const MotionConfirmMessage = motion(ConfirmMessage)
+
+   const Animations = {
+      side: {
+         initial: { x: 100, opacity: 0 },
+         animate: { x: 0, opacity: 1 },
+         exit: { x: 100, opacity: 0 },
+         transition: { duration: 0.1 },
+      },
+   }
 
    return (
       <CustomModalContent title="Настройки" type={type}>
-         <div className="flex min-h-[50dvh] flex-col gap-14 px-5">
-            <ThemeChangeButtons />
-            <CheckBoxRow
-               text="Эффект свечения"
-               click={() => {
-                  setGlowBG(
-                     GlowBG === params.positive
-                        ? params.negative
-                        : params.positive
-                  )
-
-                  setTimeout(() => window.location.reload(), 25)
-               }}
-               checked={GlowBG === params.positive}
-            />
-         </div>
-         <div className="grid w-full place-items-center opacity-50">
-            Версия: {packageJSON.version}
-         </div>
+         <AnimatePresence initial={false} mode="wait">
+            {Mode.name === 'default' && (
+               <MotionSettingsDefaultModalContent
+                  initial={{ x: -200, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -200, opacity: 0 }}
+                  transition={{ duration: 0.1 }}
+                  key="defaultSettings"
+                  setMode={setMode}
+               />
+            )}
+            {Mode.name === 'confirm' && (
+               <MotionConfirmMessage
+                  key="confirmSettings"
+                  {...Mode}
+                  {...Animations.side}
+                  className="h-full w-full px-5 768p:h-[40dvh]"
+               />
+            )}
+         </AnimatePresence>
       </CustomModalContent>
    )
 }

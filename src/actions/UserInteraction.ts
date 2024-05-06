@@ -45,7 +45,12 @@ export async function BuySecurities(
 
       for (const security of Securities) {
          if (security.quantity <= 0)
-            throw new Error(`Количество ${security.secID} не может быть <= 0`)
+            throw new Error(
+               `Количество ${security.secID} не может быть меньше 1`
+            )
+
+         if (security.price <= 0)
+            throw new Error(`Цена ${security.secID} меньше 1`)
 
          const current_purchase = newPurchase?.findIndex(
             (item) => item.secID === security.secID
