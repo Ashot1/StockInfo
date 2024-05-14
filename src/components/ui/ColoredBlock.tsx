@@ -1,9 +1,11 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, forwardRef, Ref } from 'react'
 import { cn } from '@/utils/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { raleway } from '@/utils/fonts'
+import { motion } from 'framer-motion'
+import { Skeleton } from '@/components/ui/ShadCN/skeleton'
 
 type withAction = {
    actionText: string
@@ -36,39 +38,63 @@ const variants = cva('rounded-3xl shadow-2xl animate-scaling', {
    },
 })
 
-const ColoredBlock: FC<BalanceBlockProps> = ({
-   className,
-   variant,
-   actionText,
-   action,
-   title,
-   content,
-}) => {
-   return (
-      <button
-         onClick={action}
-         className={cn(variants({ variant, className }), 'relative flex')}
-      >
-         <span className="flex h-[75%] max-w-full flex-col justify-center pl-4 500p:pl-8">
-            <p
-               className={cn(
-                  'text-start text-xs 500p:text-sm 768p:text-base',
-                  raleway.className
-               )}
-            >
-               {title}
-            </p>
-            <h1 className={cn('text-base font-bold 500p:text-lg 768p:text-xl')}>
-               {content}
-            </h1>
-         </span>
-         {actionText && (
-            <span className="absolute bottom-4 right-6 text-sm opacity-40">
-               {actionText}
+const ColoredBlock: FC<BalanceBlockProps> = forwardRef(
+   (
+      { className, variant, actionText, action, title, content },
+      ref: Ref<HTMLButtonElement>
+   ) => {
+      return (
+         <motion.button
+            ref={ref}
+            whileTap={{ scale: 0.9 }}
+            onClick={action}
+            className={cn(variants({ variant, className }), 'relative flex')}
+         >
+            <span className="flex h-[75%] max-w-full flex-col justify-center pl-4 500p:pl-8">
+               <p
+                  className={cn(
+                     'text-start text-xs 500p:text-sm 768p:text-base',
+                     raleway.className
+                  )}
+               >
+                  {title}
+               </p>
+               <h1
+                  className={cn(
+                     'text-base font-bold 500p:text-lg 768p:text-xl'
+                  )}
+               >
+                  {content}
+               </h1>
             </span>
-         )}
-      </button>
-   )
-}
+            {actionText && (
+               <span className="absolute bottom-4 right-6 text-sm opacity-40">
+                  {actionText}
+               </span>
+            )}
+         </motion.button>
+      )
+   }
+)
+
+ColoredBlock.displayName = 'ColoredBlock'
 
 export default ColoredBlock
+
+export const ColoredBlockLoading: FC<{ className?: string }> = ({
+   className,
+}) => {
+   return (
+      <div
+         className={cn(
+            variants({ variant: 'default', className }),
+            'relative flex'
+         )}
+      >
+         <span className="flex h-[75%] max-w-full flex-col justify-center gap-4 pl-4 500p:pl-8">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-8 w-48" />
+         </span>
+      </div>
+   )
+}

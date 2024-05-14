@@ -48,11 +48,13 @@ const MainContent = async () => {
 
    return (
       <div className="my-8 flex flex-1 grid-cols-1 flex-col gap-6 opacity-85">
-         {Object.values(data.Valute).map((item) => {
+         {Object.values(data.Valute).map((item, index) => {
             const Current = item.Value / item.Nominal
             const Prev = item.Previous / item.Nominal
 
             const percent = ((Current - Prev) / Prev) * 100
+
+            const animIndex = index <= 15 ? index : 15
 
             return (
                <DefaultListItem
@@ -64,6 +66,8 @@ const MainContent = async () => {
                   rightSubtext={parseFloat(percent.toFixed(3))}
                   img={`${URLList.logos_currency}/${item.CharCode}.png`}
                   defaultIMG="/Menu/Shortcuts/Currency.png"
+                  className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards
+                            delay-${100 * animIndex}`}
                />
             )
          })}

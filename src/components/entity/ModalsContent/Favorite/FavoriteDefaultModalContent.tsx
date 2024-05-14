@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from '@/components/ui/ShadCN/button'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { DividerHorizontalIcon } from '@radix-ui/react-icons'
-import { DataByType } from '@/utils/dataByType'
+import { getDataByType } from '@/utils/utils'
 
 const FavoriteDefaultModalContent: FC<{
    FavList: TFormatedFavoriteList[]
@@ -17,7 +17,7 @@ const FavoriteDefaultModalContent: FC<{
    const MemoListItem = memo(DefaultListItem)
 
    return FavList.map((item) => {
-      const { img, url } = DataByType({
+      const { img, url } = getDataByType({
          imgSRC: item.image,
          SECID: item.SECID,
       })

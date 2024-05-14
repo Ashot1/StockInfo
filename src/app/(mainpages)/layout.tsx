@@ -11,7 +11,6 @@ import {
    GetUser,
    GetUserMainData,
    getAllUserTransactions,
-   getActualUserTransactions,
 } from '@/actions/Account/Account'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
@@ -33,7 +32,7 @@ export default async function MainPagesLayout({
 }) {
    const authReq = GetUser()
    const infoReq = GetUserMainData()
-   const transactionsReq = getActualUserTransactions()
+   const transactionsReq = getAllUserTransactions()
 
    const [authRes, infoRes, transactionsRes] = await Promise.all([
       authReq,
@@ -49,17 +48,6 @@ export default async function MainPagesLayout({
 
    return (
       <>
-         <LocalSettingsChecker
-            Params={LocalStorageParameters.glowBG}
-            needAlert={true}
-            textAlert={{
-               title: 'Эффект свечения включен',
-               text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
-            }}
-         >
-            <div className="glow-effect" />
-         </LocalSettingsChecker>
-
          <AuthProvider
             value={{
                authInfo: user,
@@ -74,8 +62,20 @@ export default async function MainPagesLayout({
                },
             }}
          >
-            <ScrollStateBar />
-            <MainHeader HeaderButtons={HeaderButtons} />
+            <div>
+               <LocalSettingsChecker
+                  Params={LocalStorageParameters.glowBG}
+                  needAlert={true}
+                  textAlert={{
+                     title: 'Эффект свечения включен',
+                     text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
+                  }}
+               >
+                  <div className="glow-effect transform-gpu" />
+               </LocalSettingsChecker>
+               <MainHeader HeaderButtons={HeaderButtons} />
+               <ScrollStateBar />
+            </div>
             <main
                className="mb-10 mt-6 flex min-h-dvh flex-col
                     px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]"

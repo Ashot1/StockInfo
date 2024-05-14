@@ -5,6 +5,7 @@ import {
    TFavoritesList,
    TTransactionsList,
 } from '@/types/Auth.types'
+import { URLList } from '@/utils/const'
 
 export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs))
@@ -66,4 +67,27 @@ export function getTransactionInfo(
 
 export function CompleteDivision(num: number, divider: number) {
    return Math.floor(num / divider)
+}
+
+export function getDataByType({
+   imgSRC,
+   SECID,
+}: {
+   imgSRC: string
+   SECID: string
+}) {
+   const img: { [key in FavoritesListTypes]: string } = {
+      Stock: `${URLList.logos_stock}/${imgSRC}.svg`,
+      Bond: `${URLList.logos_bonds}/${imgSRC}.png`,
+      News: imgSRC as string,
+      Currency: `${URLList.logos_currency}/${imgSRC}.png`,
+   }
+   const url: { [key in FavoritesListTypes]: string } = {
+      Bond: `${URLList.current_bond}/${SECID}`,
+      Stock: `${URLList.current_stock}/${SECID}`,
+      News: `${URLList.current_news}/${SECID}`,
+      Currency: `${URLList.current_currency}/${SECID}`,
+   }
+
+   return { img: img, url: url }
 }

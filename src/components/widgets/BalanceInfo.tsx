@@ -1,9 +1,19 @@
 'use client'
 
 import { FC, useContext, useEffect, useState } from 'react'
-import ColoredBlock from '@/components/ui/ColoredBlock'
+import ColoredBlock, { ColoredBlockLoading } from '@/components/ui/ColoredBlock'
 import { AuthContext } from '@/hoc/AuthProvider'
 import { HomeContext } from '@/hoc/HomeProvider'
+import {
+   Drawer,
+   DrawerContent,
+   DrawerTrigger,
+} from '@/components/ui/ShadCN/drawer'
+import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
+import { getDataByType } from '@/utils/utils'
+import { ConvertDate } from '@/utils/ConvertDate'
+import ScrollBlock from '@/components/ui/ScrollBlock'
+import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 
 const BalanceInfo: FC = () => {
    const [Balance, setBalance] = useState<{ summ: string; definition: number }>(
@@ -11,6 +21,7 @@ const BalanceInfo: FC = () => {
    )
    const UserData = useContext(AuthContext).mainInfo
    const { Purchases, error, loading } = useContext(HomeContext)
+   const [ModalState, setModalState] = useState(false)
 
    useEffect(() => {
       let money = UserData?.current_money || 0
@@ -53,17 +64,57 @@ const BalanceInfo: FC = () => {
            ? 'green'
            : 'red'
 
-   if (loading) return
+   if (loading)
+      return (
+         <ColoredBlockLoading className="aspect-video w-[95%] 300p:aspect-[4/2] 300p:w-[85%] 768p:w-[50%]" />
+      )
 
    return (
-      <div className="grid w-full place-items-center">
-         <ColoredBlock
-            className="aspect-video w-[95%] 300p:aspect-[4/2] 300p:w-[85%] 768p:w-[50%]"
-            title="Ваш счет"
-            content={Balance.summ}
-            variant={cardColor}
-         />
-      </div>
+      <Drawer open={ModalState} onOpenChange={(open) => setModalState(open)}>
+         <DrawerTrigger className="grid w-full place-items-center" asChild>
+            <ColoredBlock
+               className="aspect-video w-[95%] animate-none 300p:aspect-[4/2] 300p:w-[85%] 768p:w-[50%]"
+               title="Ваш счет"
+               content={Balance.summ}
+               variant={cardColor}
+               actionText="Посмотреть транзакции ⥤"
+               action={() => setModalState(true)}
+            />
+         </DrawerTrigger>
+         <DrawerContent className="h-[85dvh] 1024p:m-auto 1024p:max-w-[60%]">
+            {!UserData.transactions && (
+               <EmptyListText text="Вы еще не совершали транзакций" />
+            )}
+            <ScrollBlock className="mt-3 px-4">
+               {UserData.transactions?.map((item) => {
+                  const { img, url } = getDataByType({
+                     imgSRC: item.image,
+                     SECID: item.secID,
+                  })
+                  const rubles = Intl.NumberFormat('ru-RU', {
+                     currency: 'RUB',
+                     style: 'currency',
+                  })
+
+                  const rightText = `${
+                     item.transaction_type === 'buy' ? 'Покупка' : 'Продажа'
+                  } ${item.quantity} шт. за ${rubles.format(item.price)}`
+
+                  return (
+                     <DefaultListItem
+                        key={item.transaction_id}
+                        img={img[item.security_type]}
+                        text={`${item.Title} (${item.secID})`}
+                        defaultIMG="/StockPlaceHolder.png"
+                        subtext={ConvertDate(item.created_at)}
+                        rightText={rightText}
+                        className="mt-4 flex-col items-center justify-center gap-3 768p:flex-row 768p:justify-between"
+                     />
+                  )
+               })}
+            </ScrollBlock>
+         </DrawerContent>
+      </Drawer>
    )
 }
 

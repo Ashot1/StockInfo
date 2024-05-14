@@ -87,7 +87,7 @@ export default async function SecurityTemplate({
    }
 
    return (
-      <div className="flex flex-col gap-16">
+      <div className="flex animate-appearance flex-col gap-16">
          <SecurityMainInfo
             type={type}
             secCode={secCode}

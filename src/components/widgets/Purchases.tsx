@@ -2,11 +2,10 @@
 
 import { FC, useContext } from 'react'
 import PurchaseList from '@/components/ui/PurchaseList/PurchaseList'
-import { DataByType } from '@/utils/dataByType'
 import PurchaseListItem, {
    PurchaseListItemLoading,
 } from '@/components/ui/PurchaseList/PurchaseListItem'
-import { cn } from '@/utils/utils'
+import { cn, getDataByType } from '@/utils/utils'
 import { HomeContext } from '@/hoc/HomeProvider'
 import { AuthContext } from '@/hoc/AuthProvider'
 import { URLList } from '@/utils/const'
@@ -29,6 +28,7 @@ const Purchases: FC = () => {
    return (
       <PurchaseList className={cn('w-[70%] 300p:w-[90%] 768p:w-[80%]')}>
          <PurchaseListItem
+            key="RUB-Purchases"
             type="Currency"
             SECID="RUB"
             url="#"
@@ -40,7 +40,7 @@ const Purchases: FC = () => {
             className="min-h-full"
          />
          {Purchases?.map((item) => {
-            const { img, url } = DataByType({
+            const { img, url } = getDataByType({
                imgSRC: item.image,
                SECID: item.SECID,
             })
@@ -49,7 +49,7 @@ const Purchases: FC = () => {
 
             return (
                <PurchaseListItem
-                  key={item.SECID}
+                  key={`${item.SECID}-Purchases`}
                   type={item.type}
                   image={img[item.type]}
                   SECID={item.SECID}

@@ -93,7 +93,7 @@ const Buttons: FC<IMainHeader> = ({ HeaderButtons }) => {
          <AnimatePresence>
             {HoverElement && (
                <motion.div
-                  className={`absolute rounded-md ${activeClass}`}
+                  className={`absolute hidden rounded-md 768p:block ${activeClass}`}
                   initial={{
                      scale: 0,
                      width: HoverElement.clientWidth,
@@ -115,7 +115,8 @@ const Buttons: FC<IMainHeader> = ({ HeaderButtons }) => {
          </AnimatePresence>
          {HeaderButtons.map((item) => {
             const HomePageCondition =
-               pathname.split('?')[0] === '/' && item.link === URLList.home
+                  pathname.split('?')[0] === '/' && item.link === URLList.home,
+               isActive = pathname.startsWith(item.link) || HomePageCondition
 
             return (
                <div
@@ -136,11 +137,9 @@ const Buttons: FC<IMainHeader> = ({ HeaderButtons }) => {
                      href={item.link}
                      prefetch={false}
                      className={cn(
-                        `relative flex items-center justify-center rounded-md px-3 py-2 transition-all before:absolute 768p:px-4`,
+                        `relative flex items-center justify-center rounded-md px-3 py-2 transition-all before:absolute hover:opacity-90 768p:px-4`,
                         raleway.className,
-                        pathname.startsWith(item.link) || HomePageCondition
-                           ? `${activeClass} ${activeBar}`
-                           : baseClass
+                        isActive ? `${activeClass} ${activeBar}` : baseClass
                      )}
                   >
                      <Image

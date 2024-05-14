@@ -52,7 +52,7 @@ export default function DefaultListItem({
                )}
             </span>
          </div>
-         <div>
+         <div className="max-w-[50%]">
             {rightText && (
                <p className="text-nowrap text-end text-xs 300p:text-sm 768p:text-base">
                   {rightText}

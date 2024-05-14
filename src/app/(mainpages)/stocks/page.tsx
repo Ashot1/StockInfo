@@ -82,7 +82,7 @@ const MainContent = async ({ start }: { start?: string }) => {
                   rightText={price}
                   rightSubtext={parseFloat(percent.toFixed(3))}
                   url={`${URLList.current_stock}/${stock.SECID}`}
-                  className={`animate-appearance-moving opacity-0 fill-mode-forwards
+                  className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards
                             delay-${100 * animIndex}`}
                />
             )

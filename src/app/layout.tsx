@@ -69,7 +69,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                />
 
                <div id="modal"></div>
-
                {children}
             </ThemeProvider>
          </body>
