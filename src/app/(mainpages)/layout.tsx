@@ -16,6 +16,8 @@ import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
 import ControlPanel from '@/components/module/ControlPanel'
+import ThemeProvider from '@/hoc/ThemeProvider'
+import Script from 'next/script'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
@@ -47,7 +49,7 @@ export default async function MainPagesLayout({
    if (!user || error) return redirect(URLList.front)
 
    return (
-      <>
+      <ThemeProvider defaultTheme="system" enableSystem attribute="class">
          <AuthProvider
             value={{
                authInfo: user,
@@ -84,6 +86,6 @@ export default async function MainPagesLayout({
                {children}
             </main>
          </AuthProvider>
-      </>
+      </ThemeProvider>
    )
 }

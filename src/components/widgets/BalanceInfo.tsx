@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/ShadCN/drawer'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
 import { getDataByType } from '@/utils/utils'
-import { ConvertDate } from '@/utils/ConvertDate'
+import { ConvertDate } from '@/utils/Date'
 import ScrollBlock from '@/components/ui/ScrollBlock'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 
@@ -108,7 +108,7 @@ const BalanceInfo: FC = () => {
                         defaultIMG="/StockPlaceHolder.png"
                         subtext={ConvertDate(item.created_at)}
                         rightText={rightText}
-                        className="mt-4 flex-col items-center justify-center gap-3 768p:flex-row 768p:justify-between"
+                        className="mt-6 flex-col justify-center gap-3 border-b 500p:flex-row 500p:justify-between"
                      />
                   )
                })}

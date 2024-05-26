@@ -2,7 +2,7 @@ import { Pencil1Icon, FilePlusIcon } from '@radix-ui/react-icons'
 import { bellota, nunito } from '@/utils/fonts'
 import Link from 'next/link'
 import { FC } from 'react'
-import { ConvertDate } from '@/utils/ConvertDate'
+import { ConvertDate } from '@/utils/Date'
 import { cn } from '@/utils/utils'
 import { Skeleton } from '@/components/ui/ShadCN/skeleton'
 

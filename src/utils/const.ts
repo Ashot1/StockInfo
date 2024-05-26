@@ -2,7 +2,6 @@ export const URLList = new (class {
    front = '/front' as const
    login = `${this.front}/login` as const
    register = `${this.front}/signup` as const
-   notFoundFront = `${this.front}/notFound` as const
    errorLoginPage = `${this.front}`
 
    home = '/home' as const

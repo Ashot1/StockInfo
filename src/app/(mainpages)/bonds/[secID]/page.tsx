@@ -5,7 +5,7 @@ import {
 } from '@/actions/Security(client)/Bonds'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
-import { ConvertDate } from '@/utils/ConvertDate'
+import { ConvertDate } from '@/utils/Date'
 import { CouponsRequest } from '@/types/Bonds.types'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import { URLList } from '@/utils/const'

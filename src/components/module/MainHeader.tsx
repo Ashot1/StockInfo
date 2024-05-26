@@ -49,8 +49,8 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
       >
          <nav
             className="pointer-events-auto flex h-full w-full min-w-[200px] max-w-[500px] justify-evenly rounded-[30px]
-        border border-[rgba(190,190,190,.3)] bg-[rgb(190,190,190,.1)] px-3 py-3 shadow-lg backdrop-blur-lg
-        duration-100 hover:border-[rgba(190,190,190,.4)] hover:bg-[rgb(190,190,190,.2)]
+        border border-[rgba(190,190,190,.3)] bg-[rgb(190,190,190,.05)] px-3 py-3 shadow-lg backdrop-blur-lg
+        duration-100 hover:border-[rgba(190,190,190,.4)] hover:bg-[rgb(210,210,210,.15)]
         dark:border-[rgba(242,242,242,.1)] dark:bg-[rgba(242,242,242,.05)]
         dark:shadow-[0_10px_25px_rgba(0,0,0,.15)] dark:hover:border-[rgba(242,242,242,.15)]
         dark:hover:bg-[rgba(242,242,242,.07)] 768p:max-w-[1000px] 768p:grid-cols-6 768p:justify-between 768p:rounded-[10px] 768p:px-6"
@@ -84,7 +84,7 @@ const Buttons: FC<IMainHeader> = ({ HeaderButtons }) => {
 
    const baseClass = 'opacity-40 768p:opacity-60 dark:opacity-60',
       activeClass =
-         'scale-110 768p:scale-100 bg-neutral-500/20 dark:bg-[rgba(242,242,242,.05)]',
+         'scale-110 768p:scale-100 bg-black/5 dark:bg-[rgba(242,242,242,.05)]',
       activeBar =
          'before:bottom-0 before:h-[2px] before:w-4 before:bg-black/90 before:shadow-[0_2px_25px_2px_black] dark:before:bg-white dark:before:shadow-[0_2px_25px_2px_#fff] before:animate-fast-appearance'
 

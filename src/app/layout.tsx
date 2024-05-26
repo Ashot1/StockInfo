@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import ThemeProvider from '@/hoc/ThemeProvider'
 import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
@@ -18,6 +17,10 @@ export const viewport: Viewport = {
    ],
    colorScheme: 'light dark',
    userScalable: false,
+   maximumScale: 1,
+   minimumScale: 1,
+   width: 'device-width',
+   viewportFit: 'cover',
 }
 
 export const metadata: Metadata = {
@@ -56,21 +59,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
    return (
       <html lang="ru">
          <body className={inter.className}>
-            <ThemeProvider defaultTheme="system" enableSystem attribute="class">
-               <Toaster
-                  position="top-right"
-                  reverseOrder={true}
-                  toastOptions={{
-                     style: {
-                        background: 'hsl(var(--secondary))',
-                        color: 'var(--Main)',
-                     },
-                  }}
-               />
-
-               <div id="modal"></div>
-               {children}
-            </ThemeProvider>
+            <Toaster
+               position="top-right"
+               reverseOrder={true}
+               toastOptions={{
+                  style: {
+                     background: 'hsl(var(--secondary))',
+                     color: 'var(--Main)',
+                  },
+               }}
+            />
+            <div id="modal"></div>
+            {children}
          </body>
       </html>
    )

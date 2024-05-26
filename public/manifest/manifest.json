@@ -4,7 +4,7 @@
    "launch_handler": {
       "client_mode": "navigate-existing"
    },
-   "version": "0.8.3",
+   "version": "0.9",
    "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
    "shortcuts": [
       {
@@ -89,14 +89,58 @@
    ],
    "screenshots": [
       {
-         "src": "/manifest/Screenshots/Wide.png",
-         "sizes": "1853x988",
+         "src": "/manifest/Screenshots/Home-wide.png",
+         "sizes": "1893x877",
          "type": "image/png",
          "form_factor": "wide"
       },
       {
-         "src": "/manifest/Screenshots/Small.png",
-         "sizes": "485x827",
+         "src": "/manifest/Screenshots/Current-stock-wide.png",
+         "sizes": "1893x877",
+         "type": "image/png",
+         "form_factor": "wide"
+      },
+      {
+         "src": "/manifest/Screenshots/Stocks-wide.png",
+         "sizes": "1893x877",
+         "type": "image/png",
+         "form_factor": "wide"
+      },
+      {
+         "src": "/manifest/Screenshots/Current-news-wide.png",
+         "sizes": "1893x877",
+         "type": "image/png",
+         "form_factor": "wide"
+      },
+      {
+         "src": "/manifest/Screenshots/News-wide.png",
+         "sizes": "1893x877",
+         "type": "image/png",
+         "form_factor": "wide"
+      },
+      {
+         "src": "/manifest/Screenshots/Home.png",
+         "sizes": "371x793",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/Screenshots/Current-stock.png",
+         "sizes": "371x793",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/Screenshots/Stocks.png",
+         "sizes": "371x793",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/Screenshots/Current-news.png",
+         "sizes": "371x793",
+         "type": "image/png"
+      },
+      {
+         "src": "/manifest/Screenshots/News.png",
+         "sizes": "371x793",
          "type": "image/png"
       }
    ]

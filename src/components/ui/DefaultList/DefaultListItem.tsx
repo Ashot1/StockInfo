@@ -78,7 +78,12 @@ export default function DefaultListItem({
       'flex cursor-pointer justify-between rounded-2xl px-4 py-3 duration-300 hover:bg-[var(--grayBG)] hover:shadow hover:shadow-black/30 dark:hover:shadow-white/30'
 
    return url ? (
-      <Link href={url} className={cn(defaultClass, className)}>
+      <Link
+         href={url}
+         className={cn(defaultClass, className)}
+         scroll={true}
+         prefetch={false}
+      >
          {content}
       </Link>
    ) : (

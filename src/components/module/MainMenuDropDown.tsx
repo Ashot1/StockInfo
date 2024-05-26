@@ -35,7 +35,7 @@ import { MobileScreen, URLList } from '@/utils/const'
 import SettingsModalContent from '@/components/widgets/SettingsModalContent'
 import ProfileModalContent from '@/components/widgets/ProfileModalContent'
 import { UserProfileInfo } from '@/types/Modals.types'
-import { ConvertDate } from '@/utils/ConvertDate'
+import { ConvertDate } from '@/utils/Date'
 import toast from 'react-hot-toast'
 
 type ContentType = null | 'profile' | 'settings'

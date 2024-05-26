@@ -9,7 +9,7 @@ import { cn, getDataByType } from '@/utils/utils'
 import { HomeContext } from '@/hoc/HomeProvider'
 import { AuthContext } from '@/hoc/AuthProvider'
 import { URLList } from '@/utils/const'
-import { ConvertDate } from '@/utils/ConvertDate'
+import { ConvertDate } from '@/utils/Date'
 
 const Purchases: FC = () => {
    const { Purchases, error, loading } = useContext(HomeContext)

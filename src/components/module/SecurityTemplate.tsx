@@ -8,7 +8,7 @@ import SecurityInfoList from '@/components/entity/SecurityInfoList'
 import { CurrentStockRequest } from '@/types/Stocks.types'
 import { Enums } from '@/types/supabase.types'
 import CustomChart from '@/components/entity/CustomElements/CustomChart'
-import { ConvertDate } from '@/utils/ConvertDate'
+import { ConvertDate } from '@/utils/Date'
 import { ChartData, Point } from 'chart.js'
 import { PriceListType } from '@/types/Security.types'
 
