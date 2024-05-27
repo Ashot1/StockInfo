@@ -14,7 +14,7 @@ export default function Error({
    error: Error & { digest?: string }
    reset: () => void
 }) {
-   useEffect(() => console.log(error), [])
+   useEffect(() => console.log(error), [error])
 
    return (
       <AuroraBackground allowFullScreen={true}>

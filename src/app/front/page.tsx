@@ -42,6 +42,7 @@ const FirstBlock: FC<{ session: Session | null }> = ({ session }) => {
                      const delay = 100 * index
                      return (
                         <p
+                           key={`${word}${index}`}
                            className={`delay-${delay} animate-appearance opacity-0 fill-mode-forwards`}
                         >
                            {word}
