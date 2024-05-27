@@ -24,7 +24,7 @@ export type BalanceBlockProps = {
 } & VariantProps<typeof variants> &
    (withAction | withoutAction)
 
-const variants = cva('rounded-3xl shadow-2xl animate-scaling', {
+const variants = cva('rounded-3xl shadow-2xl', {
    variants: {
       variant: {
          default:
@@ -48,7 +48,10 @@ const ColoredBlock: FC<BalanceBlockProps> = forwardRef(
             ref={ref}
             whileTap={{ scale: 0.9 }}
             onClick={action}
-            className={cn(variants({ variant, className }), 'relative flex')}
+            className={cn(
+               variants({ variant, className }),
+               'relative flex animate-scaling'
+            )}
          >
             <span className="flex h-[75%] max-w-full flex-col justify-center pl-4 500p:pl-8">
                <p
@@ -85,12 +88,7 @@ export const ColoredBlockLoading: FC<{ className?: string }> = ({
    className,
 }) => {
    return (
-      <div
-         className={cn(
-            variants({ variant: 'default', className }),
-            'relative flex'
-         )}
-      >
+      <div className={cn(variants({ variant: 'default', className }))}>
          <span className="flex h-[75%] max-w-full flex-col justify-center gap-4 pl-4 500p:pl-8">
             <Skeleton className="h-4 w-24" />
             <Skeleton className="h-8 w-48" />

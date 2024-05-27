@@ -166,11 +166,13 @@ export async function getAllUserTransactions(option?: {
             .select()
             .eq('user_id', user.id)
             .eq(option.column, option.value)
+            .order('created_at', { ascending: false })
       } else {
          request = supabaseService
             .from('Transactions')
             .select()
             .eq('user_id', user.id)
+            .order('created_at', { ascending: false })
       }
       const { data, error, count } = await request
 

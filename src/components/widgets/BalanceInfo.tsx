@@ -64,10 +64,7 @@ const BalanceInfo: FC = () => {
            ? 'green'
            : 'red'
 
-   if (loading)
-      return (
-         <ColoredBlockLoading className="aspect-video w-[95%] 300p:aspect-[4/2] 300p:w-[85%] 768p:w-[50%]" />
-      )
+   if (loading) return <BalanceInfoLoading />
 
    return (
       <Drawer open={ModalState} onOpenChange={(open) => setModalState(open)}>
@@ -119,3 +116,9 @@ const BalanceInfo: FC = () => {
 }
 
 export default BalanceInfo
+
+export const BalanceInfoLoading = () => {
+   return (
+      <ColoredBlockLoading className="aspect-video w-[95%] animate-none 300p:aspect-[4/2] 300p:w-[85%] 768p:w-[50%]" />
+   )
+}

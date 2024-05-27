@@ -15,15 +15,7 @@ const Purchases: FC = () => {
    const { Purchases, error, loading } = useContext(HomeContext)
    const mainInfo = useContext(AuthContext).mainInfo
 
-   if (loading)
-      return (
-         <PurchaseList className="w-[70%] 300p:w-[90%] 768p:w-[80%]">
-            <PurchaseListItemLoading key={1} />
-            <PurchaseListItemLoading key={2} />
-            <PurchaseListItemLoading key={3} />
-            <PurchaseListItemLoading key={4} />
-         </PurchaseList>
-      )
+   if (loading) return <PurchasesLoading />
 
    return (
       <PurchaseList className={cn('w-[70%] 300p:w-[90%] 768p:w-[80%]')}>
@@ -68,3 +60,14 @@ const Purchases: FC = () => {
 }
 
 export default Purchases
+
+export const PurchasesLoading = () => {
+   return (
+      <PurchaseList className="w-[70%] 300p:w-[90%] 768p:w-[80%]">
+         <PurchaseListItemLoading key={1} />
+         <PurchaseListItemLoading key={2} />
+         <PurchaseListItemLoading key={3} />
+         <PurchaseListItemLoading key={4} />
+      </PurchaseList>
+   )
+}

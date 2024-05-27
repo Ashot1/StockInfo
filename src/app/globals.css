@@ -304,3 +304,7 @@ body {
    -webkit-box-orient: vertical;
    overflow: hidden;
 }
+
+.maskText {
+   mask-image: linear-gradient(to bottom, black, transparent);
+}

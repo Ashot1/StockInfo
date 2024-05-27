@@ -7,7 +7,7 @@ import { AuroraBackground } from '@/components/ui/AuroraBackground'
 
 export default function NotFound() {
    return (
-      <AuroraBackground allowFullScreen={true}>
+      <AuroraBackground allowFullScreen>
          <div className="z-30 grid grid-cols-1 gap-3">
             <NumberText />
             <p className={cn('animate-fast-appearance', tektur.className)}>

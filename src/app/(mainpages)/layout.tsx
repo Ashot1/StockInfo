@@ -17,7 +17,6 @@ import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
 import ControlPanel from '@/components/module/ControlPanel'
 import ThemeProvider from '@/hoc/ThemeProvider'
-import Script from 'next/script'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
