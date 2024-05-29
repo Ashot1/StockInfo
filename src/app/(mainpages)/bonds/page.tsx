@@ -1,4 +1,4 @@
-import { getBondsList } from '@/actions/Security(client)/Bonds'
+import { getBondsList } from '@/actions/Security/Bonds'
 import { PageStartCounter, URLList } from '@/utils/const'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'

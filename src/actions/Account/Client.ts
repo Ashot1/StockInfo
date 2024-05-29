@@ -6,17 +6,21 @@ import {
    TFavoritesList,
 } from '@/types/Auth.types'
 import { SupabaseCustomClient } from '@/utils/supabase/client'
-import { getCurrentNews } from '@/actions/Security(client)/News'
+import { getCurrentNews } from '@/actions/Security/News'
 import { TFormatedFavoriteList } from '@/components/widgets/Favorite'
 import {
    SecurityGetAllData,
    SecurityGetAllMarket,
 } from '@/types/Security.types'
-import { getAllStocks } from '@/actions/Security(client)/Stocks'
-import { getAllBonds } from '@/actions/Security(client)/Bonds'
+import { getAllStocks } from '@/actions/Security/Stocks'
+import { getAllBonds } from '@/actions/Security/Bonds'
 import { ConvertDate } from '@/utils/Date'
-import { getCurrency } from '@/actions/Security(client)/Currency'
-import { SortBySecurityType, TryCatch } from '@/utils/utils'
+import { getCurrency } from '@/actions/Security/Currency'
+import {
+   calculateDefinition,
+   SortBySecurityType,
+   TryCatch,
+} from '@/utils/utils'
 
 export async function LoginWithOAuth(provider: OAuthProviders) {
    return TryCatch(async () => {
@@ -143,12 +147,8 @@ export async function FetchFavorites(list?: TFavoritesList[] | null) {
          const marketData = prices.find((item) => item.SECID === current.SECID)
          let definition = undefined
 
-         if (marketData?.LAST && marketData?.OPEN) {
-            definition =
-               ((marketData.LAST - marketData.OPEN) /
-                  ((marketData.OPEN + marketData.LAST) / 2)) *
-               100
-         }
+         if (marketData?.LAST && marketData?.OPEN)
+            definition = calculateDefinition(marketData.OPEN, marketData.LAST)
 
          return {
             SECID: current.SECID,

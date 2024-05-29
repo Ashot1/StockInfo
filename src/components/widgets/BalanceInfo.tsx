@@ -10,9 +10,9 @@ import {
    DrawerTrigger,
 } from '@/components/ui/ShadCN/drawer'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
-import { getDataByType } from '@/utils/utils'
+import { calculateDefinition, getDataByType } from '@/utils/utils'
 import { ConvertDate } from '@/utils/Date'
-import ScrollBlock from '@/components/ui/ScrollBlock'
+import ScrollBlock from '@/components/ui/HightOrder/ScrollBlock'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 
 const BalanceInfo: FC = () => {
@@ -43,7 +43,7 @@ const BalanceInfo: FC = () => {
 
       money += purchase_summ
       const definition = UserData?.start_money
-         ? money - UserData.start_money
+         ? calculateDefinition(UserData?.start_money, money)
          : 0
 
       setBalance({
@@ -66,6 +66,10 @@ const BalanceInfo: FC = () => {
 
    if (loading) return <BalanceInfoLoading />
 
+   const additional = `${
+      Balance.definition >= 0 ? '+' : ''
+   }${Balance.definition.toFixed(2)}%`
+
    return (
       <Drawer open={ModalState} onOpenChange={(open) => setModalState(open)}>
          <DrawerTrigger className="grid w-full place-items-center" asChild>
@@ -76,7 +80,11 @@ const BalanceInfo: FC = () => {
                variant={cardColor}
                actionText="Посмотреть транзакции ⥤"
                action={() => setModalState(true)}
-            />
+            >
+               <p className="ml-2 mt-3 text-xs opacity-45 500p:mt-5 500p:text-sm">
+                  {additional}
+               </p>
+            </ColoredBlock>
          </DrawerTrigger>
          <DrawerContent className="h-[85dvh] 1024p:m-auto 1024p:max-w-[60%]">
             {!UserData.transactions && (

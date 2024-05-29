@@ -3,7 +3,7 @@ import { poiretone, tektur } from '@/utils/fonts'
 import Link from 'next/link'
 import FadedButton from '@/components/ui/FadedButton'
 import BackButton from '@/components/entity/BackButton'
-import { AuroraBackground } from '@/components/ui/AuroraBackground'
+import { AuroraBackground } from '@/components/ui/HightOrder/AuroraBackground'
 
 export default function NotFound() {
    return (

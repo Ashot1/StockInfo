@@ -305,6 +305,135 @@ body {
    overflow: hidden;
 }
 
-.maskText {
+.startTextMask {
    mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+@media (max-width: 500px) {
+   .startTextMask {
+      color: transparent;
+      mask-image: none;
+      background: linear-gradient(to bottom, #ffffff, #c2c2c2, #9e9e9e);
+      background-clip: text;
+   }
+}
+
+.hideScrollBar {
+   scrollbar-width: none;
+   &::-webkit-scrollbar {
+      width: 0;
+   }
+}
+
+.translateCenter {
+   translate: -50% -50%;
+}
+
+.prettyButtonEffectWrapper {
+   &::after {
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      filter: blur(25px);
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      background: linear-gradient(
+         135deg,
+         royalblue,
+         #e21bda,
+         rgba(255, 232, 26, 1)
+      );
+      animation: prettyButtonEffect_kf 10s infinite;
+      background-size: 200% 200%;
+      transition: 0.4s;
+      top: 0;
+      left: 0;
+   }
+   &:hover {
+      &::after {
+         background-size: 101% 101%;
+         transition: 0.4s;
+      }
+   }
+}
+
+.prettyButtonEffect {
+   z-index: 3;
+   backdrop-filter: blur(5px);
+   background-clip: content-box;
+   &::before {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      background: linear-gradient(
+         135deg,
+         royalblue,
+         #e21bda,
+         rgba(255, 232, 26, 1)
+      );
+      animation: prettyButtonEffect_kf 10s infinite;
+      background-size: 200% 200%;
+      transition: 0.4s;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      filter: brightness(55%);
+   }
+   &:hover {
+      &::before {
+         background-size: 101% 101%;
+         transition: 0.4s;
+      }
+   }
+}
+
+@keyframes prettyButtonEffect_kf {
+   0% {
+      background-position: 0 0;
+   }
+   45% {
+      background-position: 100% 100%;
+   }
+   65% {
+      background-position: 50% 50%;
+   }
+   100% {
+      background-position: 0 0;
+   }
+}
+
+.bottomHiddenMask {
+   mask-image: linear-gradient(to bottom, black 85%, transparent);
+}
+
+.mouseFollowEffect {
+   @property --x {
+      syntax: '<number>';
+      inherits: false;
+      initial-value: 0;
+   }
+   @property --y {
+      syntax: '<number>';
+      inherits: false;
+      initial-value: 0;
+   }
+   background: radial-gradient(
+      100px circle at var(--x) var(--y),
+      rgba(255, 255, 255, 0.4),
+      transparent
+   );
+}
+
+.rotateCard {
+   transform: rotate3d(-0.7, 1, -0.1, -35deg);
+   transform-style: preserve-3d;
+   perspective: 800px;
+}
+
+.translateZFromCard {
+   transform: translateZ(60px);
+   backdrop-filter: blur(2px);
 }

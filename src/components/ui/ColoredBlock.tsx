@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, forwardRef, Ref } from 'react'
+import { FC, forwardRef, ReactNode, Ref } from 'react'
 import { cn } from '@/utils/utils'
 import { cva, VariantProps } from 'class-variance-authority'
 import { raleway } from '@/utils/fonts'
@@ -21,6 +21,7 @@ export type BalanceBlockProps = {
    className?: string
    title?: string
    content?: string
+   children?: ReactNode
 } & VariantProps<typeof variants> &
    (withAction | withoutAction)
 
@@ -39,10 +40,17 @@ const variants = cva('rounded-3xl shadow-2xl', {
 })
 
 const ColoredBlock: FC<BalanceBlockProps> = forwardRef(
-   (
-      { className, variant, actionText, action, title, content },
-      ref: Ref<HTMLButtonElement>
-   ) => {
+   (props, ref: Ref<HTMLButtonElement>) => {
+      const {
+         className,
+         variant,
+         actionText,
+         action,
+         title,
+         content,
+         children,
+      } = props
+
       return (
          <motion.button
             ref={ref}
@@ -53,7 +61,7 @@ const ColoredBlock: FC<BalanceBlockProps> = forwardRef(
                'relative flex animate-scaling'
             )}
          >
-            <span className="flex h-[75%] max-w-full flex-col justify-center pl-4 500p:pl-8">
+            <span className="flex h-[75%] max-w-[80%] flex-col justify-center pl-4 500p:pl-8">
                <p
                   className={cn(
                      'text-start text-xs 500p:text-sm 768p:text-base',
@@ -64,12 +72,13 @@ const ColoredBlock: FC<BalanceBlockProps> = forwardRef(
                </p>
                <h1
                   className={cn(
-                     'text-base font-bold 500p:text-lg 768p:text-xl'
+                     'overflow-hidden overflow-ellipsis text-base font-bold 500p:text-lg 768p:text-xl'
                   )}
                >
                   {content}
                </h1>
             </span>
+            {children}
             {actionText && (
                <span className="absolute bottom-4 right-6 text-sm opacity-40">
                   {actionText}

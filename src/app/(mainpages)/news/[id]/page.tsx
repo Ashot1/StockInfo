@@ -4,7 +4,7 @@ import ArrowSeparator from '@/components/ui/ArrowSeparator'
 import { redirect } from 'next/navigation'
 import { ConvertDate } from '@/utils/Date'
 import { FilePlusIcon } from '@radix-ui/react-icons'
-import { getCurrentNews } from '@/actions/Security(client)/News'
+import { getCurrentNews } from '@/actions/Security/News'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import AddToFavorite from '@/components/entity/AddToFavorite'
 

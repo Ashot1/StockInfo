@@ -23,8 +23,8 @@ import { useMatchMedia } from '@/hooks/MatchMedia'
 import {
    Share1Icon,
    GearIcon,
-   QuestionMarkCircledIcon,
    PersonIcon,
+   ExternalLinkIcon,
 } from '@radix-ui/react-icons'
 import { Avatar, AvatarImage } from '@/components/ui/ShadCN/avatar'
 import { DialogTriggerProps } from '@radix-ui/react-dialog'
@@ -144,8 +144,8 @@ export default function MainMenuDropDown() {
          triggered: false,
       },
       {
-         text: 'Информация',
-         img: QuestionMarkCircledIcon,
+         text: 'Главная',
+         img: ExternalLinkIcon,
          click: () => push(URLList.front),
          dopClass: center,
          triggered: false,

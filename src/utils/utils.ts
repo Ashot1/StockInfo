@@ -17,7 +17,7 @@ export async function TryCatch<T>(
    try {
       return await fn()
    } catch (error) {
-      console.log(error)
+      console.error(error)
       return { error: (error as Error).message }
    }
 }
@@ -90,4 +90,8 @@ export function getDataByType({
    }
 
    return { img: img, url: url }
+}
+
+export function calculateDefinition(open: number, last: number) {
+   return ((last - open) / ((open + last) / 2)) * 100
 }

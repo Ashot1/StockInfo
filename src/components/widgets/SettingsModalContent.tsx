@@ -2,7 +2,7 @@
 
 import { FC, useState } from 'react'
 import { IModalContent, SettingsModalMods } from '@/types/Modals.types'
-import CustomModalContent from '@/components/ui/CustomModalContent'
+import CustomModalContent from '@/components/ui/HightOrder/CustomModalContent'
 import SettingsDefaultModalContent from '@/components/entity/ModalsContent/Settings/SettingsDefaultModalContent'
 import { AnimatePresence, motion } from 'framer-motion'
 import ConfirmMessage from '@/components/entity/CongirmMessage'

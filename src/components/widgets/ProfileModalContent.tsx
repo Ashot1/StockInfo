@@ -2,7 +2,7 @@
 
 import { ElementType, FC, useState } from 'react'
 import { ProfileModeState, TProfileModalContent } from '@/types/Modals.types'
-import CustomModalContent from '@/components/ui/CustomModalContent'
+import CustomModalContent from '@/components/ui/HightOrder/CustomModalContent'
 import { DrawerFooter } from '@/components/ui/ShadCN/drawer'
 import { DialogFooter } from '@/components/ui/ShadCN/dialog'
 import ConfirmMessage from '@/components/entity/CongirmMessage'

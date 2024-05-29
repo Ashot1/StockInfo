@@ -2,14 +2,14 @@ import {
    getDividends,
    getStockMarketPrice,
    getStockPriceList,
-} from '@/actions/Security(client)/Stocks'
+} from '@/actions/Security/Stocks'
 import SecurityTemplate from '@/components/module/SecurityTemplate'
 import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { DividendsRequest } from '@/types/Stocks.types'
 import { ConvertDate } from '@/utils/Date'
 import { URLList } from '@/utils/const'
-import { getCurrentSecurity } from '@/actions/Security(client)/CommonSecurity'
+import { getCurrentSecurity } from '@/actions/Security/CommonSecurity'
 
 export async function generateMetadata({
    params: { secID },

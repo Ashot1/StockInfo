@@ -11,7 +11,7 @@ import Search from '@/components/widgets/Search'
 import {
    searchBond,
    searchStock,
-} from '@/actions/Security(client)/CLIENT-CommonSecurity'
+} from '@/actions/Security/CLIENT-CommonSecurity'
 
 const ControlPanel = () => {
    const path = usePathname()

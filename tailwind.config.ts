@@ -125,6 +125,8 @@ const config: Config = {
             'appearance-moving-top': 'appearance-moving-top-kf 2.5s ease-out',
             'fast-appearance-moving-top':
                'appearance-moving-top-kf .3s ease-out',
+            'middle-appearance-moving-top':
+               'appearance-moving-top-kf .9s ease-out',
             scaling: 'scaling-kf .5s ease-in-out',
             aurora: 'aurora 60s linear infinite',
          },

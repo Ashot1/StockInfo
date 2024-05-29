@@ -18,7 +18,7 @@ const Purchases: FC = () => {
    if (loading) return <PurchasesLoading />
 
    return (
-      <PurchaseList className={cn('w-[70%] 300p:w-[90%] 768p:w-[80%]')}>
+      <PurchaseList className={cn('w-[70%] 300p:w-[80%] 768p:w-[80%]')}>
          <PurchaseListItem
             key="RUB-Purchases"
             type="Currency"

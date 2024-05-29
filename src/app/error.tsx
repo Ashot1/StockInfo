@@ -1,6 +1,6 @@
 'use client'
 import { FC, useEffect } from 'react'
-import { AuroraBackground } from '@/components/ui/AuroraBackground'
+import { AuroraBackground } from '@/components/ui/HightOrder/AuroraBackground'
 import { cn } from '@/utils/utils'
 import FadedButton from '@/components/ui/FadedButton'
 import Link from 'next/link'

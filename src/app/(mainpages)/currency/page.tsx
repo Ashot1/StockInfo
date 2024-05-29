@@ -1,4 +1,4 @@
-import { getCurrency } from '@/actions/Security(client)/Currency'
+import { getCurrency } from '@/actions/Security/Currency'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { Metadata } from 'next'
 import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
