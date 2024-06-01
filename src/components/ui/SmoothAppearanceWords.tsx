@@ -4,6 +4,7 @@ import { cn } from '@/utils/utils'
 
 export interface SmoothAppearanceWords extends HTMLAttributes<HTMLDivElement> {
    className?: string
+   wordClassName?: string
    words: string[]
    timeout?: number
 }
@@ -11,6 +12,7 @@ export interface SmoothAppearanceWords extends HTMLAttributes<HTMLDivElement> {
 const SmoothAppearanceWords: FC<SmoothAppearanceWords> = ({
    words,
    className,
+   wordClassName,
    timeout = 6000,
 }) => {
    const [CurrentIndex, setCurrentIndex] = useState(0)
@@ -25,7 +27,7 @@ const SmoothAppearanceWords: FC<SmoothAppearanceWords> = ({
       )
 
       return () => clearInterval(interval)
-   }, [words])
+   }, [words, timeout])
 
    if (words.length <= 0) return
 
@@ -38,7 +40,10 @@ const SmoothAppearanceWords: FC<SmoothAppearanceWords> = ({
             return (
                <p
                   key={`${word}${index}`}
-                  className={`delay-${delay} animate-appearance opacity-0 fill-mode-forwards`}
+                  className={cn(
+                     `delay-${delay} animate-appearance opacity-0 fill-mode-forwards`,
+                     wordClassName
+                  )}
                >
                   {word}
                </p>

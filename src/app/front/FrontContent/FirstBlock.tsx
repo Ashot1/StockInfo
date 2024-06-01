@@ -8,12 +8,16 @@ import { russoOne } from '@/utils/fonts'
 import SmoothAppearanceWords from '@/components/ui/SmoothAppearanceWords'
 import PrettyButton from '@/components/ui/PrettyButton'
 
-export default function FirstBlock({
+export default async function FirstBlock({
    session,
    className,
+   id,
+   nextLink,
 }: {
    session: Session | null
    className?: string
+   id: string
+   nextLink: string
 }) {
    const words = [
       'Покупай ценные бумаги на виртуальной платформе',
@@ -23,10 +27,7 @@ export default function FirstBlock({
    ]
 
    return (
-      <AuroraBackground
-         className={cn('bottomHiddenMask', className)}
-         id="firstBlock"
-      >
+      <AuroraBackground className={cn('bottomHiddenMask', className)} id={id}>
          <div className="flex flex-col gap-2 text-pretty text-center text-white">
             <h2
                className={cn(
@@ -48,8 +49,8 @@ export default function FirstBlock({
             Начать
          </PrettyButton>
          <Link
-            href="#secondBlock"
-            className="absolute bottom-20 flex animate-pulse flex-col items-center justify-center text-sm text-white/20"
+            href={nextLink}
+            className="absolute bottom-[15%] flex animate-pulse flex-col items-center justify-center text-sm text-white/20"
          >
             Узнать больше <CaretDownIcon className="size-6" />
          </Link>

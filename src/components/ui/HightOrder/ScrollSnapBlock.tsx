@@ -1,13 +1,6 @@
 'use client'
 
-import {
-   DetailedHTMLProps,
-   FC,
-   HTMLAttributes,
-   MouseEventHandler,
-   ReactNode,
-   useEffect,
-} from 'react'
+import { FC, HTMLAttributes, ReactNode, useEffect } from 'react'
 import ScrollDotMenu, {
    ScrollDotMenuDirections,
    ScrollDotMenuProps,
@@ -58,8 +51,8 @@ const ScrollSnapBlock: FC<ScrollSnapBlockProps> = ({
       >
          {isMobile !== null && (
             <ScrollDotMenu
-               links={links}
-               direction={isMobile ? 'top' : 'right'}
+               links={links?.map((item) => `#${item}`)}
+               direction={isMobile ? direction.mobile : direction.wide}
                activeItemLink={NowInVision}
             />
          )}

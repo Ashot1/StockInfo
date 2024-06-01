@@ -4,12 +4,15 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/ShadCN/button'
 import { cn } from '@/utils/utils'
 import { ClassValue } from 'clsx'
+import { motion } from 'framer-motion'
 
 export interface PrettyButtonProps {
    href?: string
    children: string
    className?: ClassValue
 }
+
+const MotionLink = motion(Link)
 
 export default function PrettyButton({
    href,
@@ -21,9 +24,13 @@ export default function PrettyButton({
 
    if (href) {
       return (
-         <Link href={href} className={cn(WrapperClasName, classNameProp)}>
+         <MotionLink
+            whileTap={{ scale: 0.9 }}
+            href={href}
+            className={cn(WrapperClasName, classNameProp)}
+         >
             <span className={className}>{children}</span>
-         </Link>
+         </MotionLink>
       )
    }
    return (

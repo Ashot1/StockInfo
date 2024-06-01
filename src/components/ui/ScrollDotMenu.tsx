@@ -1,14 +1,31 @@
-import { HTMLAttributes } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
 import { cn } from '@/utils/utils'
 import Link from 'next/link'
 
 export type ScrollDotMenuDirections = 'left' | 'top' | 'right' | 'bottom'
 
-export interface ScrollDotMenuProps extends HTMLAttributes<HTMLDivElement> {
+export type ScrollDotMenuProps = {
    className?: string
-   links: string[]
    direction?: ScrollDotMenuDirections
+} & (DefaultLinks | CustomLinks) &
+   HTMLAttributes<HTMLDivElement>
+
+type CustomLinks = {
+   links?: never
+   activeItemLink?: never
+   CustomNavigateJSX: ReactNode
+}
+type DefaultLinks = {
    activeItemLink?: string
+   links: string[] | undefined
+   CustomNavigateJSX?: never
+}
+
+const stylesDirection: Record<ScrollDotMenuDirections, string> = {
+   left: 'left-6 top-1/2',
+   top: 'top-10 left-1/2',
+   bottom: 'bottom-6 left-1/2',
+   right: 'right-6 top-1/2',
 }
 
 export default function ScrollDotMenu({
@@ -16,15 +33,9 @@ export default function ScrollDotMenu({
    className,
    direction = 'right',
    activeItemLink,
+   CustomNavigateJSX,
    ...props
 }: ScrollDotMenuProps) {
-   const stylesDirection: Record<ScrollDotMenuDirections, string> = {
-      left: 'left-6 top-1/2',
-      top: 'top-10 left-1/2',
-      bottom: 'bottom-10 left-1/2',
-      right: 'right-6 top-1/2',
-   }
-
    return (
       <div
          className={cn(
@@ -39,16 +50,19 @@ export default function ScrollDotMenu({
          )}
          {...props}
       >
-         {links.map((link) => (
-            <Link
-               key={link}
-               href={link}
-               className={cn(
-                  'size-3 rounded-full bg-primary/30 duration-500 500p:size-2.5 768p:hover:bg-primary/80',
-                  link === activeItemLink && 'bg-primary/85'
-               )}
-            />
-         ))}
+         {CustomNavigateJSX ? CustomNavigateJSX : null}
+         {links?.map((link) => {
+            return (
+               <Link
+                  key={link}
+                  href={link}
+                  className={cn(
+                     'size-3 rounded-full bg-primary/30 duration-500 500p:size-2.5 768p:hover:bg-primary/80',
+                     link === activeItemLink && 'bg-primary/85'
+                  )}
+               />
+            )
+         })}
       </div>
    )
 }
