@@ -4,7 +4,7 @@
    "launch_handler": {
       "client_mode": "navigate-existing"
    },
-   "version": "0.9.3",
+   "version": "0.9.4",
    "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
    "shortcuts": [
       {
@@ -90,6 +90,12 @@
    "screenshots": [
       {
          "src": "/manifest/Screenshots/Home-wide.png",
+         "sizes": "1893x877",
+         "type": "image/png",
+         "form_factor": "wide"
+      },
+      {
+         "src": "/manifest/Screenshots/Favorites-wide.png",
          "sizes": "1893x877",
          "type": "image/png",
          "form_factor": "wide"

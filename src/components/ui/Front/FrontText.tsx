@@ -11,7 +11,7 @@ const FrontText: FC<FrontText> = ({ className, children, ...props }) => {
    return (
       <motion.p
          className={cn(
-            'z-20 self-start overflow-hidden text-pretty rounded-2xl p-4 text-center text-sm backdrop-blur 768p:self-center 768p:text-end 1024p:text-base',
+            'z-20 overflow-hidden text-pretty rounded-2xl p-4 text-sm backdrop-blur 1024p:text-base',
             comfortaa.className,
             className
          )}

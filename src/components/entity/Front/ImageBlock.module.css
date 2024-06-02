@@ -1,0 +1,22 @@
+.image_bg {
+   background-repeat: no-repeat;
+   background-size: cover;
+   mask-image: radial-gradient(ellipse at center, black 50%, transparent);
+}
+
+@media (max-width: 500px) {
+   .image_bg {
+      mask-image: linear-gradient(
+         to bottom,
+         transparent,
+         black 20%,
+         transparent
+      );
+   }
+}
+
+@media (max-width: 900px) {
+   .image_bg {
+      background-position: 50% 10%;
+   }
+}

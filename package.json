@@ -1,7 +1,7 @@
 {
    "name": "stockinfo",
    "description": "Сервис для просмотра котировок акций",
-   "version": "0.9.3",
+   "version": "0.9.4",
    "private": true,
    "scripts": {
       "dev": "next dev",
@@ -28,7 +28,7 @@
       "clsx": "^2.1.1",
       "cmdk": "^1.0.0",
       "color-thief-react": "^2.1.0",
-      "framer-motion": "^11.2.6",
+      "framer-motion": "^11.2.10",
       "next": "^14.2.3",
       "next-themes": "^0.3.0",
       "react": "^18.3.1",
@@ -36,6 +36,7 @@
       "react-dom": "^18.3.1",
       "react-hook-form": "^7.51.5",
       "react-hot-toast": "^2.4.1",
+      "sharp": "^0.33.4",
       "tailwind-merge": "^2.3.0",
       "tailwindcss-animate": "^1.0.7",
       "uuid": "^9.0.1",

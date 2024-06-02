@@ -1,40 +1,40 @@
 import { SupabaseCustomServer } from '@/utils/supabase/server'
-import FirstBlock from '@/app/front/FrontContent/FirstBlock'
-import SecondBlock from '@/app/front/FrontContent/SecondBlock'
 import ScrollSnapBlock from '@/components/ui/HightOrder/ScrollSnapBlock'
-import ThirdBlock from '@/app/front/FrontContent/ThirdBlock'
-import FourthBlock from '@/app/front/FrontContent/FourthBlock'
+import MainBlock from '@/app/front/FrontContent/MainBlock'
+import FollowBlock from '@/app/front/FrontContent/FollowBlock'
+import BuyBlock from '@/app/front/FrontContent/BuyBlock'
+import NewsBlock from '@/app/front/FrontContent/NewsBlock'
+import SwipeBlock from '@/app/front/FrontContent/SwipeBlock'
+import TechBlock from '@/app/front/FrontContent/TechBlock'
+import FavoritesBlock from '@/app/front/FrontContent/FavoritesBlock'
 
 export default async function HomePage() {
    const {
       data: { session },
    } = await SupabaseCustomServer().auth.getSession()
 
-   const links = ['firstBlock', 'secondBlock', 'thirdBlock', 'fourthBlock']
+   const links = [
+      'firstBlock',
+      'secondBlock',
+      'thirdBlock',
+      'fourthBlock',
+      'fifthBlock',
+      'sixthBlock',
+      'seventhBlock',
+   ]
 
    return (
       <ScrollSnapBlock
          links={links}
          direction={{ wide: 'right', mobile: 'bottom' }}
       >
-         <FirstBlock
-            nextLink={`#${links[1]}`}
-            session={session}
-            className="snap-selector min-h-screen snap-center"
-            id={links[0]}
-         />
-         <SecondBlock
-            className="snap-selector min-h-screen snap-center px-[10%] 1080p:px-[20%]"
-            id={links[1]}
-         />
-         <ThirdBlock
-            className="snap-selector min-h-screen snap-center"
-            id={links[2]}
-         />
-         <FourthBlock
-            className="snap-selector min-h-screen snap-center px-[10%] 1080p:px-[20%]"
-            id={links[3]}
-         />
+         <MainBlock session={session} id={links[0]} nextLink={`#${links[1]}`} />
+         <FollowBlock id={links[1]} />
+         <BuyBlock id={links[2]} />
+         <NewsBlock id={links[3]} />
+         <SwipeBlock id={links[4]} />
+         <TechBlock id={links[5]} />
+         <FavoritesBlock id={links[6]} />
       </ScrollSnapBlock>
    )
 }
