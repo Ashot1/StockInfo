@@ -1,14 +1,15 @@
 import { FC } from 'react'
 import CustomContentBlock from '@/components/entity/Front/CustomContentBlock'
-import nextjs from '../assets/Technologies/next-js.svg'
-import tailwind from '../assets/Technologies/Tailwind.png'
-import supabase from '../assets/Technologies/supabase-logo-icon.png'
-import shadcn from '../assets/Technologies/shadcn.png'
-import framer from '../assets/Technologies/framer-motion.svg'
-import react from '../assets/Technologies/react.png'
+import nextjs from './assets/Technologies/next-js.svg'
+import tailwind from './assets/Technologies/Tailwind.png'
+import supabase from './assets/Technologies/supabase-logo-icon.png'
+import shadcn from './assets/Technologies/shadcn.png'
+import framer from './assets/Technologies/framer-motion.svg'
+import react from './assets/Technologies/react.png'
 import Image from 'next/image'
 import { cn } from '@/utils/utils'
 import Link from 'next/link'
+import gradient from './assets/gradient.svg'
 
 const TechBlock: FC<{ id: string }> = async ({ id }) => {
    const img = [
@@ -36,6 +37,7 @@ const TechBlock: FC<{ id: string }> = async ({ id }) => {
 
    return (
       <CustomContentBlock
+         gradient={gradient}
          id={id}
          className="snap-selector min-h-screen snap-center snap-always px-[10%] 1080p:px-[20%]"
          text={{

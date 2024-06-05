@@ -26,7 +26,7 @@ export default async function HomePage() {
    return (
       <ScrollSnapBlock
          links={links}
-         direction={{ wide: 'right', mobile: 'bottom' }}
+         navigationPosition={{ wide: 'right', mobile: 'bottom' }}
       >
          <MainBlock session={session} id={links[0]} nextLink={`#${links[1]}`} />
          <FollowBlock id={links[1]} />

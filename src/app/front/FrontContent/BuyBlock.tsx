@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import PhoneBlock from '@/components/entity/Front/PhoneBlock'
-import gradient from '../assets/gradient.svg'
-import BuyGif from '../assets/gifs/BUY.gif'
+import gradient from './assets/gradient.svg'
+import BuyGif from './assets/gifs/BUY.gif'
 
 const BuyBlock: FC<{ id: string }> = async ({ id }) => {
    return (

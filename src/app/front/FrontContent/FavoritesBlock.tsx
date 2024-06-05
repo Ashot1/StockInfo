@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import gradient from '../assets/gradient.svg'
+import gradient from './assets/gradient.svg'
 import ImageBlock from '@/components/entity/Front/ImageBlock'
 
 const FavoritesBlock: FC<{ id: string }> = async ({ id }) => {

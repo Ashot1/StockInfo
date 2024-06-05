@@ -4,6 +4,7 @@ import { cn, getDataByType } from '@/utils/utils'
 import { russoOne } from '@/utils/fonts'
 import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
 import { FC } from 'react'
+import gradient from './assets/gradient.svg'
 
 const FollowBlock: FC<{ id: string }> = async ({ id }) => {
    const Securities = [
@@ -25,6 +26,7 @@ const FollowBlock: FC<{ id: string }> = async ({ id }) => {
    return (
       <CustomContentBlock
          className="snap-selector min-h-screen snap-center snap-always px-[10%] 1080p:px-[20%]"
+         gradient={gradient}
          id={id}
          text={{
             content: `Следите за актуальными котировками акций в реальном времени.

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import ImageBlock from '@/components/entity/Front/ImageBlock'
-import gradient from '../assets/gradient.svg'
+import gradient from './assets/gradient.svg'
 
 const NewsBlock: FC<{ id: string }> = async ({ id }) => {
    return (

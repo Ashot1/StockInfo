@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import { cn } from '@/utils/utils'
 import { comfortaa } from '@/utils/fonts'
 import Image from 'next/image'
-import gradient from '../../../app/front/assets/gradient.svg'
 import FrontTitle from '@/components/ui/Front/FrontTitle'
 
 export default async function CustomContentBlock({
@@ -11,12 +10,14 @@ export default async function CustomContentBlock({
    text,
    children,
    revert = false,
+   gradient,
 }: {
    className?: string
    id: string
    text: { content: string; title: string }
    children: ReactNode
    revert?: boolean
+   gradient?: string
 }) {
    return (
       <div
@@ -60,7 +61,7 @@ export default async function CustomContentBlock({
                   : '-top-[10%] 500p:-top-60 768p:-left-[60dvw] 768p:bottom-32 1024p:-left-[30%] 4k:left-[10%] 4k:top-0'
             )}
          >
-            <Image src={gradient} alt="gradient" />
+            {gradient && <Image src={gradient} alt="gradient" />}
          </span>
       </div>
    )

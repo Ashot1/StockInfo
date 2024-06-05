@@ -5,7 +5,7 @@ import {
    RegisterOptions,
    UseFormRegister,
 } from 'react-hook-form'
-import { forwardRef, InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes } from 'react'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { cn } from '@/utils/utils'
 import { comfortaa } from '@/utils/fonts'

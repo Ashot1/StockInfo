@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import PhoneBlock from '@/components/entity/Front/PhoneBlock'
-import gradient from '../assets/gradient.svg'
-import swipeGIF from '../assets/gifs/swipe.gif'
+import gradient from './assets/gradient.svg'
+import swipeGIF from './assets/gifs/swipe.gif'
 
 const SwipeBlock: FC<{ id: string }> = async ({ id }) => {
    return (

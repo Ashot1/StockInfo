@@ -15,49 +15,82 @@ export interface ScrollSnapBlockProps
       HTMLAttributes<HTMLDivElement> {
    children: ReactNode
    className?: string
-   direction?: {
+   navigatesClassName?: string
+   navigationPosition?: {
       wide: ScrollDotMenuDirections
       mobile: ScrollDotMenuDirections
    }
+   direction?: 'horizontal' | 'vertical'
+   autoScroll?: { duration?: number; mode: 'wideOnly' | boolean }
 }
+
+// у всех children должен быть .snap-selector и .snap-center
 
 const ScrollSnapBlock: FC<ScrollSnapBlockProps> = ({
    children,
    links,
    className,
-   direction = { wide: 'right', mobile: 'top' },
+   navigatesClassName,
+   navigationPosition = { wide: 'right', mobile: 'top' },
+   direction,
+   autoScroll = { duration: 4000, mode: false },
    ...props
 }) => {
    const isMobile = useMatchMedia(750)
    const NowInVision = useChildObserver(
-      { parentSelector: '.parent-snap-selector', selector: '.snap-selector' },
+      {
+         parentSelector: '.parent-snap-selector',
+         selector: '.snap-selector',
+      },
       [links]
    )
    const { replace } = useRouter()
+   const formatedLinks = links?.map((item) => `#${item}`)
 
    useEffect(() => {
-      if (!NowInVision) return
+      if (!NowInVision || !formatedLinks) return
+      if (!autoScroll.duration || !autoScroll.mode) return
+      if (autoScroll.mode === 'wideOnly' && isMobile) return
 
-      replace(NowInVision)
-   }, [NowInVision])
+      const nextElement = formatedLinks.indexOf(NowInVision) + 1
+
+      const link =
+         nextElement < formatedLinks.length
+            ? formatedLinks[nextElement]
+            : formatedLinks[0]
+
+      const nextSlide = setTimeout(() => {
+         replace(link)
+      }, autoScroll.duration)
+
+      return () => clearTimeout(nextSlide)
+   }, [NowInVision, autoScroll, formatedLinks])
 
    return (
-      <div
-         className={cn(
-            'scroll-hidden hideScrollBar parent-snap-selector max-h-dvh snap-y snap-mandatory overflow-y-scroll scroll-smooth',
-            className
-         )}
-         {...props}
-      >
+      <>
+         <div
+            className={cn(
+               'scroll-hidden hideScrollBar parent-snap-selector max-h-dvh snap-mandatory scroll-smooth',
+               direction === 'horizontal'
+                  ? 'flex snap-x overflow-x-scroll'
+                  : 'snap-y overflow-y-scroll',
+               className
+            )}
+            {...props}
+         >
+            {children}
+         </div>
          {isMobile !== null && (
             <ScrollDotMenu
-               links={links?.map((item) => `#${item}`)}
-               direction={isMobile ? direction.mobile : direction.wide}
+               links={formatedLinks}
+               direction={
+                  isMobile ? navigationPosition.mobile : navigationPosition.wide
+               }
                activeItemLink={NowInVision}
+               className={navigatesClassName}
             />
          )}
-         {children}
-      </div>
+      </>
    )
 }
 

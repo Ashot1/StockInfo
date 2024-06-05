@@ -20,7 +20,7 @@ export const useChildObserver = (
 
       const observer = new IntersectionObserver(callBack, {
          root: parent,
-         threshold: 1,
+         threshold: 0.9,
       })
 
       const sections = parent.querySelectorAll(options.selector)
