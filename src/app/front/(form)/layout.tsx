@@ -27,7 +27,7 @@ export default function FormLayout({ children }: { children: ReactNode }) {
          id: 'thirdBlock',
          title: 'Знания — сила',
          content: 'Изучайте рыночные данные и принимайте обоснованные решения.',
-         img: '/signup/study.png',
+         img: '/signup/study2.png',
       },
       {
          id: 'fourthBlock',
