@@ -21,6 +21,8 @@ import toast from 'react-hot-toast'
 import ChangeAvatar from '@/components/entity/ChangeAvatar'
 import { UpdateUser } from '@/actions/Account/Account'
 import { AuthContext } from '@/hoc/AuthProvider'
+import { SupabaseCustomClient } from '@/utils/supabase/client'
+import { object } from 'prop-types'
 
 export type EditableInputs = { avatar?: FileList } & {
    [key in UserProfileInfo['Value']]: UserProfileInfo['Editable'] extends true
@@ -39,16 +41,44 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
 
       const [AvatarURL, setAvatarURL] = useState<string | undefined>(avatar)
       const InputFileRef = useRef<HTMLInputElement | null>(null)
-      const setUser = useContext(AuthContext).setAuthInfo
+      const context = useContext(AuthContext)
+      const setUser = context.setAuthInfo
 
       // сохранение изменений
       const Submit: SubmitHandler<EditableInputs> = async (data) => {
+         const supabase = SupabaseCustomClient()
+
+         if (data.avatar) {
+            const extension = data.avatar[0].name.split('.').at(-1)
+
+            const { data: UploadData, error: UploadError } =
+               await supabase.storage
+                  .from('Avatars')
+                  .upload(
+                     `public/${context.authInfo.id}.${extension}`,
+                     data.avatar[0],
+                     {
+                        upsert: true,
+                     }
+                  )
+            if (UploadError) toast.error('Не удалось загрузить аватар')
+
+            Object.assign(data, {
+               avatar_url:
+                  `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/Avatars/` +
+                  UploadData?.path,
+            })
+         }
+
          delete data.avatar
+
          const { data: updatedData, error } = await UpdateUser({ data })
+
          if (error) toast.error(error)
 
          if (setUser && updatedData) setUser(updatedData)
       }
+      console.log(context.authInfo.user_metadata)
       // сброс
       const ResetClick = (e: MouseEvent) => {
          e.preventDefault()
@@ -137,6 +167,7 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
                   onChange={onAvatarInputChange}
                   type="file"
                   className="hidden"
+                  accept="image/*"
                   ref={(e) => {
                      hiddenInputRef(e)
                      InputFileRef.current = e

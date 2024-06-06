@@ -53,6 +53,7 @@ const TechBlock: FC<{ id: string }> = async ({ id }) => {
          <div className="grid grid-cols-3 gap-6">
             {img.map((item) => (
                <Link
+                  target="_blank"
                   key={item.url}
                   href={item.url}
                   className="flex max-w-20 rounded-2xl border-2 border-transparent p-4 duration-300 hover:border-white/30 hover:bg-gray-500 768p:max-w-24"

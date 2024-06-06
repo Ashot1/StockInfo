@@ -35,6 +35,7 @@ const StyledInput = <T extends FieldValues>({
 
    if (register)
       additionalProps = {
+         ...props,
          ...register(name as Path<T>, {
             ...options,
          }),

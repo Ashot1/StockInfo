@@ -7,8 +7,20 @@ import Logo from '@/components/ui/Logo'
 import Link from 'next/link'
 import { URLList } from '@/utils/const'
 import { Cross1Icon } from '@radix-ui/react-icons'
+import { GetUser } from '@/actions/Account/Account'
+import { redirect } from 'next/navigation'
+import { SupabaseCustomServer } from '@/utils/supabase/server'
 
-export default function FormLayout({ children }: { children: ReactNode }) {
+export default async function FormLayout({
+   children,
+}: {
+   children: ReactNode
+}) {
+   const supabase = SupabaseCustomServer()
+   const { data } = await supabase.auth.getSession()
+
+   if (data.session?.user) redirect(URLList.home)
+
    const links = [
       {
          id: 'firstBlock',

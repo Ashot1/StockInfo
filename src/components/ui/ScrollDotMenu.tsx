@@ -54,6 +54,7 @@ export default function ScrollDotMenu({
          {links?.map((link) => {
             return (
                <Link
+                  replace
                   key={link}
                   href={link}
                   className={cn(

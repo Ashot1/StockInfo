@@ -7,8 +7,7 @@ import {
 } from '@supabase/supabase-js'
 import { Tables } from '@/types/supabase.types'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
-import { revalidatePath } from 'next/cache'
-import { Start_balance, URLList } from '@/utils/const'
+import { Start_balance } from '@/utils/const'
 import { cache } from 'react'
 import { TryCatch } from '@/utils/utils'
 import { SupabaseCustomService } from '@/utils/supabase/service'
@@ -45,15 +44,30 @@ export async function DeleteUser() {
       const supabase = SupabaseCustomServer()
       const supabaseServer = SupabaseCustomService()
 
-      const user = await getSupabaseUser(supabase)
+      const { user } = await getSupabaseUser(supabase)
 
       const { error: DeleteError } = await supabaseServer.auth.admin.deleteUser(
-         user.user.id
+         user.id
       )
 
       if (DeleteError) throw DeleteError
 
-      revalidatePath(URLList.home)
+      const { error: DeleteMainError } = await supabaseServer
+         .from('UserMainData')
+         .delete()
+         .eq('user_id', user.id)
+
+      const { error: DeleteTransactionsError } = await supabaseServer
+         .from('Transactions')
+         .delete()
+         .eq('user_id', user.id)
+
+      if (DeleteMainError || DeleteTransactionsError)
+         throw DeleteMainError || DeleteTransactionsError
+
+      const { error } = await supabase.auth.signOut()
+
+      if (error) throw error
 
       return { data: undefined }
    })
@@ -72,7 +86,7 @@ export async function GetUser() {
 export async function UpdateUser({
    data: IncomingData,
 }: {
-   data: { [key: string]: string }
+   data: Record<string, string>
 }) {
    return TryCatch<User>(async () => {
       const supabase = SupabaseCustomServer()
@@ -81,7 +95,6 @@ export async function UpdateUser({
 
       let attributes: UserAttributes = {}
       const email = IncomingData.email
-
       if (User.email !== email) attributes = { email: email }
 
       delete IncomingData.email
@@ -229,18 +242,17 @@ export async function clearUserTransactions() {
    })
 }
 
-//
-// export async function CreateTable(id: string) {
-//    return TryCatch(async () => {
-//       const supabaseServer = SupabaseCustomServer(true)
-//
-//       const { data, error } = await supabaseServer
-//          .from('UserMainData')
-//          .upsert({ user_id: id })
-//          .select()
-//
-//       if (error || !data) throw error || new Error('Ошибка создания таблицы')
-//
-//       return { data: data }
-//    })
-// }
+export async function CreateTable(id: string) {
+   return TryCatch(async () => {
+      const supabaseServer = SupabaseCustomService()
+
+      const { data, error } = await supabaseServer
+         .from('UserMainData')
+         .insert({ user_id: id })
+         .select()
+
+      if (error || !data) throw error || new Error('Ошибка создания таблицы')
+
+      return { data: data }
+   })
+}
