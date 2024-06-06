@@ -22,7 +22,6 @@ import ChangeAvatar from '@/components/entity/ChangeAvatar'
 import { UpdateUser } from '@/actions/Account/Account'
 import { AuthContext } from '@/hoc/AuthProvider'
 import { SupabaseCustomClient } from '@/utils/supabase/client'
-import { object } from 'prop-types'
 
 export type EditableInputs = { avatar?: FileList } & {
    [key in UserProfileInfo['Value']]: UserProfileInfo['Editable'] extends true
@@ -48,7 +47,7 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
       const Submit: SubmitHandler<EditableInputs> = async (data) => {
          const supabase = SupabaseCustomClient()
 
-         if (data.avatar) {
+         if (data.avatar?.length) {
             const extension = data.avatar[0].name.split('.').at(-1)
 
             const { data: UploadData, error: UploadError } =
@@ -78,7 +77,6 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
 
          if (setUser && updatedData) setUser(updatedData)
       }
-      console.log(context.authInfo.user_metadata)
       // сброс
       const ResetClick = (e: MouseEvent) => {
          e.preventDefault()
