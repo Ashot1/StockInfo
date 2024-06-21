@@ -248,7 +248,11 @@ export async function CreateTable(id: string) {
 
       const { data, error } = await supabaseServer
          .from('UserMainData')
-         .insert({ user_id: id })
+         .insert({
+            user_id: id,
+            start_money: Start_balance,
+            current_money: Start_balance,
+         })
          .select()
 
       if (error || !data) throw error || new Error('Ошибка создания таблицы')

@@ -35,10 +35,8 @@ const TransactionsButtons: FC<TransactionsButtonsProps> = ({
          {
             secID: secID,
             image: secID,
-            price: current_price,
             quantity: parseInt(Quantity),
             security_type: type,
-            Title: secTitle,
          },
       ])
       if (!data || error) return toast.error(error || 'Ошибка изменения')
@@ -57,9 +55,7 @@ const TransactionsButtons: FC<TransactionsButtonsProps> = ({
          {
             secID: secID,
             quantity: parseInt(Quantity),
-            price: current_price,
             security_type: type,
-            Title: secTitle,
             image: secID,
          },
       ])

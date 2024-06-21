@@ -1,16 +1,16 @@
 import SwipeNavigator from '@/hoc/SwipeNavigator'
-import { Enums } from '@/types/supabase.types'
 import PriceInfoCard from '@/components/entity/PriceInfoCard'
 import { SecurityTemplateProps } from '@/components/module/SecurityTemplate'
 import TransactionsButtons from '@/components/entity/ModalsContent/Transactions/TransactionsButtons'
 import SecurityFace from '@/components/ui/SecurityFace'
+import { FavoritesListTypes } from '@/types/Auth.types'
 
 export type SecurityMainInfoProps = {
    secID: string
    img?: string
    secTitle: string
    secCode: string
-   type: Enums<'favorite_types'>
+   type: FavoritesListTypes
 } & Pick<SecurityTemplateProps, 'MarketData'>
 
 export default function SecurityMainInfo({
