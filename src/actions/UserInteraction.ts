@@ -120,10 +120,10 @@ export async function BuySecurities(
       // вычитаем с баланса стоимость всех покупок и проверяем, не 0 ниже ли он
       balance = balance - full_price
 
-      if (!prevUserData?.current_money)
-         throw new Error(prevError || 'Ошибка получения данных')
-
       if (balance < 0) throw new Error('Недостаточно средств')
+
+      if (!prevUserData?.current_money)
+         throw new Error(prevError || 'Баланс не найден')
 
       if (!newTransactions) throw new Error('Ошибка создания транзакции')
 
@@ -205,6 +205,9 @@ export async function SellSecurities(
          SecuritiesData.map((item) => [item.SECID, { ...item }])
       )
       for (const security of Securities) {
+         if (security.quantity <= 0)
+            throw new Error(`Цена ${security.secID} меньше 1`)
+
          // получаем все транзакции и данные о бумаге
          const CurrentSecInfo = SecuritiesInfo.get(security.secID)
          const transactions = transactionsDataBase?.filter(

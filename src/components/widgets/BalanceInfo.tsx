@@ -66,9 +66,9 @@ const BalanceInfo: FC = () => {
 
    if (loading) return <BalanceInfoLoading />
 
-   const additional = `${
-      Balance.definition >= 0 ? '+' : ''
-   }${Balance.definition.toFixed(2)}%`
+   const additional =
+      Balance.definition !== 0 &&
+      `${Balance.definition >= 0 ? '+' : ''}${Balance.definition.toFixed(2)}%`
 
    return (
       <Drawer open={ModalState} onOpenChange={(open) => setModalState(open)}>
@@ -87,7 +87,7 @@ const BalanceInfo: FC = () => {
             </ColoredBlock>
          </DrawerTrigger>
          <DrawerContent className="h-[85dvh] 1024p:m-auto 1024p:max-w-[60%]">
-            {!UserData.transactions && (
+            {!UserData.transactions?.length && (
                <EmptyListText text="Вы еще не совершали транзакций" />
             )}
             <ScrollBlock className="mt-3 px-4">

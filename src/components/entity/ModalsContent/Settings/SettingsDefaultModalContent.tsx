@@ -23,7 +23,7 @@ const SettingsDefaultModalContent = forwardRef(
    ) => {
       const params = LocalStorageParameters.glowBG
       const [GlowBG, setGlowBG] = useLocalStorage(params.name, params.positive)
-      const { mainInfo, setMainInfo } = useContext(AuthContext)
+      const { setMainInfo } = useContext(AuthContext)
 
       const clear = async () => {
          const { data, error } = await clearUserTransactions()
@@ -31,7 +31,7 @@ const SettingsDefaultModalContent = forwardRef(
             return { error: error || 'Ошибка получения данных' }
 
          if (setMainInfo)
-            setMainInfo({ ...data, transactions: mainInfo.transactions })
+            setMainInfo({ ...data, transactions: [], purchases: [] })
 
          toast.success('Данные успешно сброшены')
 
