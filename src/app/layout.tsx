@@ -4,6 +4,7 @@ import './globals.css'
 import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
+import RootLoader from '@/components/ui/Loaders/RootLoader'
 
 const inter = Inter({ subsets: ['latin'] })
 

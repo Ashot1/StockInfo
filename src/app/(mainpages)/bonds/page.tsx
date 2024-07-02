@@ -1,11 +1,12 @@
 import { getBondsList } from '@/actions/Security/Bonds'
-import { PageStartCounter, URLList } from '@/utils/const'
+import { PageStartCounter, URLList } from '@/utils/config'
 import ErrorMessage from '@/components/ui/ErrorMessage'
-import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
+import DefaultListItem from '@/components/ui/Lists/DefaultList/DefaultListItem'
 import { Metadata } from 'next'
-import SecurityListTemplate from '@/components/module/SecurityListTemplate'
+import SecurityListTemplate from '@/components/widgets/SecurityListTemplate'
+import { convertMoney } from '@/utils/utils'
 
-export const revalidate = 3600
+export const revalidate = 300
 
 export const metadata: Metadata = {
    title: 'Облигации',
@@ -55,22 +56,12 @@ const MainContent = async ({ start }: { start?: string }) => {
          maxSize={cursor.TOTAL}
       >
          {history.map((bond, index) => {
-            let price: number | string = bond.CLOSE
+            let price: number | string =
+               bond.MARKETPRICE2 || bond.MARKETPRICE3 || bond.CLOSE
 
-            const differencePrices =
-               ((price - bond.OPEN) / ((bond.OPEN + price) / 2)) * 100
-
-            let percent = (differencePrices / price) * 100
-
-            price = Intl.NumberFormat('ru', {
-               style: 'currency',
-               currency: 'RUB',
-               currencyDisplay: 'symbol',
-            }).format(price || 0)
+            price = convertMoney(price || 0)
 
             const animIndex = index <= 15 ? index : 15
-
-            percent = percent == Infinity ? 0 : percent
 
             return (
                <DefaultListItem
@@ -80,7 +71,6 @@ const MainContent = async ({ start }: { start?: string }) => {
                   subtext={`${bond.SECID}`}
                   text={bond.SHORTNAME}
                   rightText={price}
-                  rightSubtext={parseFloat(percent.toFixed(3))}
                   url={`${URLList.current_bond}/${bond.SECID}`}
                   className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards delay-${
                      100 * animIndex

@@ -13,7 +13,7 @@ const FrontTitle: FC<{ className?: string; children: ReactNode }> = ({
       <motion.h1
          initial={{ backgroundSize: 0 }}
          whileInView={{ backgroundSize: '100%' }}
-         transition={{ duration: 2 }}
+         transition={{ duration: 1 }}
          className={cn(
             `relative inline-block content-center text-pretty rounded-md bg-gradient-to-r from-indigo-300 to-purple-300 
             bg-no-repeat py-2 text-center text-lg brightness-90 dark:from-indigo-500 dark:to-purple-500 768p:py-0 1024p:text-xl`,

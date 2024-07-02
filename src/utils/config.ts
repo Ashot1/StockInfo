@@ -5,6 +5,7 @@ export const URLList = new (class {
    errorLoginPage = `${this.front}`
 
    home = '/home' as const
+   transactions = `${this.home}/transactions` as const
 
    news = '/news' as const
    current_news = `${this.news}` as const
@@ -62,13 +63,19 @@ export const AuthFormPatterns = {
       },
       minLength: {
          value: 8,
-         message: `Минимальная длинна 4 символа`,
+         message: `Минимальная длинна 8 символа`,
+      },
+   },
+   passwordWithoutRequire: {
+      minLength: {
+         value: 8,
+         message: `Минимальная длинна 8 символа`,
       },
    },
 }
 
 export const LocalStorageParameters: Record<
-   'glowBG',
+   'glowBG' | 'staticHeaderMode' | 'purchaseAnimation',
    {
       name: string
       defaultValue: string
@@ -84,6 +91,25 @@ export const LocalStorageParameters: Record<
       positive: 'on',
       conditionalRender: true,
    },
+   staticHeaderMode: {
+      name: 'staticHeaderMode',
+      conditionalRender: false,
+      defaultValue: 'off',
+      negative: 'off',
+      positive: 'on',
+   },
+   purchaseAnimation: {
+      name: 'purchaseAnimation',
+      conditionalRender: false,
+      defaultValue: 'on',
+      negative: 'off',
+      positive: 'on',
+   },
 }
 
 export const Start_balance = 500_000
+
+export const queryKeys = {
+   Favorite: 'Favorite',
+   Purchase: 'Purchase',
+}

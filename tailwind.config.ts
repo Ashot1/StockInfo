@@ -39,7 +39,7 @@ const config: Config = {
             border: 'hsl(var(--border))',
             input: 'hsl(var(--input))',
             ring: 'hsl(var(--ring))',
-            background: 'var(--background)',
+            background: 'hsl(var(--background))',
             foreground: 'hsl(var(--foreground))',
             primary: {
                DEFAULT: 'hsl(var(--primary))',
@@ -107,6 +107,14 @@ const config: Config = {
                   transform: 'scale(1)',
                },
             },
+            'scaling-normal-kf': {
+               from: {
+                  transform: 'scale(0.7)',
+               },
+               to: {
+                  transform: 'scale(1)',
+               },
+            },
             aurora: {
                from: {
                   backgroundPosition: '50% 50%, 50% 50%',
@@ -128,6 +136,7 @@ const config: Config = {
             'middle-appearance-moving-top':
                'appearance-moving-top-kf .9s ease-out',
             scaling: 'scaling-kf .5s ease-in-out',
+            'scaling-normal': 'scaling-normal-kf .5s ease-in-out',
             aurora: 'aurora 60s linear infinite',
          },
       },

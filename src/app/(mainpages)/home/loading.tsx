@@ -1,5 +1,5 @@
-import { BalanceInfoLoading } from '@/components/widgets/BalanceInfo'
-import { PurchasesLoading } from '@/components/widgets/Purchases'
+import { BalanceInfoLoading } from '@/components/module/BalanceInfo'
+import { PurchasesLoading } from '@/components/module/Purchases'
 
 export default function Loading() {
    return (

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 
 export type useQueryProps<T, K> = {
    queryFn: () => Promise<{ data?: T | undefined; error?: string }>
@@ -39,7 +39,7 @@ const reducer = <T, K>(state: QueryState<K>, action: QueryAction<T, K>) => {
    }
 }
 
-export function useQuery<T, K>({
+export function useQueryOUTDATED<T, K>({
    queryFn,
    select,
 }: useQueryProps<T, K>): QueryState<K> {

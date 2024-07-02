@@ -20,7 +20,8 @@ export default function PrettyButton({
    className: classNameProp,
 }: PrettyButtonProps) {
    const className: ClassValue = `px-4 py-2 text-sm rounded-full text-white prettyButtonEffect relative overflow-hidden block`
-   const WrapperClasName: ClassValue = 'prettyButtonEffectWrapper relative'
+   const WrapperClasName: ClassValue =
+      'prettyButtonEffectWrapper relative rounded-full p-0'
 
    if (href) {
       return (

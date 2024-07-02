@@ -1,8 +1,8 @@
 import { getCurrency } from '@/actions/Security/Currency'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { Metadata } from 'next'
-import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
-import { URLList } from '@/utils/const'
+import DefaultListItem from '@/components/ui/Lists/DefaultList/DefaultListItem'
+import { URLList } from '@/utils/config'
 
 export const revalidate = 7200
 
@@ -66,8 +66,9 @@ const MainContent = async () => {
                   rightSubtext={parseFloat(percent.toFixed(3))}
                   img={`${URLList.logos_currency}/${item.CharCode}.png`}
                   defaultIMG="/Menu/Shortcuts/Currency.png"
-                  className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards
-                            delay-${100 * animIndex}`}
+                  className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards delay-${
+                     100 * animIndex
+                  }`}
                />
             )
          })}

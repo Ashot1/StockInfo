@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# StockInfo
+![image](https://github.com/Ashot1/StockInfo/assets/44030386/3b1a89d1-1b7e-48c5-8d3b-f91851954908)
+Проект, позволяющий просматривать актуальные котировки ценных бумаг, а так же покупать/продавать их с помощью виртуального счета.
 
-## Getting Started
+[Ссылка на сайт](https://stock-info-theta.vercel.app) (Актуальная ссылка всегда находится в описаниии проекта).
 
-First, run the development server:
+#### Список всех api: 
+- Для получения данных об котировках акций используется [API Московской биржи](https://www.moex.com/a2193).
+- Для получения данных о текущих курсах валют используется сервис [CBR-XML-DAILY](https://www.cbr-xml-daily.ru/).
+- Для аутентификации, сохранении данных о пользователе и его виртальном счете используется [Supabase](https://supabase.com/).
 
+## Основные функции
+- Изменение темы (темная, светлая, системная)
+
+## Локальный запуск
+1. **Для начала необходимо создать проект на Supabase.**
+   * Для этого необходимо перейти на одноименный сайт (ссылка в списке api), зарегистрироваться и настроить проект.
+   * После этих дейстий создаем базу данных. Она должна содержать 2 таблицы. Их наименования:
+     - Transactions
+     - UserMainData
+     
+     Структуру можно посмотреть по пути [`/src/types/supabase.types.ts`](src/types/supabase.types.ts) в типе `Database` в поле `public/Tables`.
+   * Далее добавляем в проект на сайте Enums.
+   Их можно посмотреть по пути [`/src/types/supabase.types.ts`](src/types/supabase.types.ts) в типе `Database` в поле `public/Enums`.
+   * В конце создаем/заменяем строку для генерации типов в `package.json/scripts` на собственную.
+   ```
+    "generate:types": "npx supabase gen types typescript --project-id НАЗВАНИЕ_ПРОЕКТА --schema public > ./src/types/supabase.types.ts"
+    ```
+   Подробнее можно узнать в документации supabase.
+> [!WARNING]
+> При изменении структуры базы данных необходимо заново сгенерировать типы. 
+>
+> Для лучше типизации после генерации рекомендуется заменить значения в полях 
+> "favorites" - TFavoritesList[] | null, "purchases" - TPurchasesList[] | null и "created_at" на Date
+
+2. Для начала необходимо создать .env файл. В него необходимо вставить ключ от [API](https://www.weatherapi.com/).
+```
+WEATHER_API_KEY=your_api_key
+```
+3. Далее идет установка всех зависимостей проекта.
+```bas 232
+.\
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+4. После установки зависимостей можно запускать проект.
 ```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
+> [!WARNING]
+> В случае проблем с запуском можно попробовать отключить turbopack. Для этого в `package.json` в разделе `scripts` в строке `dev` уберите приписку `--turbo`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Если запуск произошел успешно, то перейдите по адресу http://localhost:3000 в браузере.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Зависимости
+- Typescript (5.4.5): типизированный расширенный набор JavaScript, который компилируется в простой JavaScript.
+- React (18.3.1): JavaScript-библиотека с открытым исходным кодом для разработки пользовательских интерфейсов.
+- Next js (14.2.3): открытый JavaScript фреймворк, созданный поверх React.js для создания веб-приложений.
+- Tailwind CSS (3.4.3): CSS-фреймворк с открытым исходным кодом.
+- ShadCN UI: коллекция переиспользуемых компонентов, основанная на Radix UI.
+- Framer Motion (11.2.10): библиотека для создания продвинутых react анимаций.
+- Supabase js (2.43.4): JavaScript SDK для работы с Supabase.
+- Chart js (4.4.3): библиотека для построения графиков.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+[//]: # (- React hot toast &#40;2.4.1&#41;:)
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[//]: # (- React hook form &#40;7.51.5&#41;:)
+- И более мелкие вспомогательные библиотеки.

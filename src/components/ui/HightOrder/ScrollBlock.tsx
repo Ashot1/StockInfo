@@ -1,6 +1,14 @@
 'use client'
 
-import { forwardRef, ReactNode, UIEvent, useState } from 'react'
+import {
+   forwardRef,
+   ReactNode,
+   UIEvent,
+   useEffect,
+   useImperativeHandle,
+   useRef,
+   useState,
+} from 'react'
 import { cn } from '@/utils/utils'
 
 export type ScrollBlockProps = {
@@ -43,13 +51,24 @@ const variants = {
 
 const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
    ({ children, className, direction = 'vertical' }, ref) => {
-      const [State, setState] = useState<'first' | 'second' | 'fir&sec'>(
-         'second'
+      const [State, setState] = useState<'first' | 'second' | 'fir&sec' | null>(
+         null
       )
+      const Element = useRef<HTMLDivElement>(null)
 
       const Variant = variants[direction]
 
+      useEffect(() => {
+         if (!Element.current) return
+
+         if (Element.current.scrollHeight > Element.current.clientHeight)
+            setState('second')
+      }, [Element])
+
       const ScrollChanges = (e: UIEvent) => {
+         if (e.currentTarget.scrollHeight <= e.currentTarget.clientHeight)
+            return
+
          const maxScroll =
                e.currentTarget.scrollHeight - e.currentTarget.clientHeight,
             currentScroll = e.currentTarget.scrollTop
@@ -62,9 +81,11 @@ const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
          setState('fir&sec')
       }
 
+      useImperativeHandle(ref, () => Element.current!, [Element])
+
       return (
          <div
-            ref={ref}
+            ref={Element}
             onScroll={ScrollChanges}
             className={cn(
                `custom-scroll rounded-2xl duration-300 ${Variant.main}`,

@@ -1,7 +1,7 @@
 import { Session } from '@supabase/auth-js'
 import { FC } from 'react'
 import HeroBlock from '@/components/entity/Front/HeroBlock'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 
 const MainBlock: FC<{
    session: Session | null

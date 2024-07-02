@@ -1,15 +1,15 @@
 'use client'
 
-import { useColor } from 'color-thief-react'
 import { FC, ReactNode } from 'react'
 import { cn } from '@/utils/utils'
+import { useColor } from '@/hooks/Colors'
 
 const IMGcolorCard: FC<{
    img: string
    children?: ReactNode
    className?: string
 }> = ({ img, children, className }) => {
-   const { data, error } = useColor(img, 'hex')
+   const { data, error } = useColor({ image: img, mode: 'hex' })
 
    return (
       <div className="relative h-full">

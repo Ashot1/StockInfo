@@ -5,7 +5,7 @@ import {
 } from '@/types/Auth.types'
 import { SupabaseCustomClient } from '@/utils/supabase/client'
 import { getCurrentNews } from '@/actions/Security/News'
-import { TFormatedFavoriteList } from '@/components/widgets/Favorite'
+import { TFormatedFavoriteList } from '@/components/module/Favorite'
 import {
    SecurityGetAllData,
    SecurityGetAllMarket,
@@ -94,6 +94,7 @@ export async function FetchFavorites(list?: TFavoritesList[] | null) {
                LOW: 0,
                SECID: `${NewsInfo.id}`,
                UPDATETIME: NewsInfo.published_at,
+               MARKETPRICE: 0,
             })
          }
       }
@@ -117,6 +118,7 @@ export async function FetchFavorites(list?: TFavoritesList[] | null) {
                LAST: Currency.Value,
                LOW: 0,
                UPDATETIME: '',
+               MARKETPRICE: Currency.Value,
             })
          }
       }
@@ -145,8 +147,11 @@ export async function FetchFavorites(list?: TFavoritesList[] | null) {
          const marketData = prices.find((item) => item.SECID === current.SECID)
          let definition = undefined
 
-         if (marketData?.LAST && marketData?.OPEN)
-            definition = calculateDefinition(marketData.OPEN, marketData.LAST)
+         if (marketData)
+            definition = calculateDefinition(
+               marketData.OPEN,
+               marketData.MARKETPRICE || marketData.LAST
+            )
 
          return {
             SECID: current.SECID,
@@ -154,7 +159,7 @@ export async function FetchFavorites(list?: TFavoritesList[] | null) {
             SECNAME: current.SECNAME,
             image: supabaseData?.image || current.SECID,
             type: supabaseData?.type || 'Stock',
-            price: marketData?.LAST,
+            price: marketData?.MARKETPRICE || marketData?.LAST,
             definition: definition,
          }
       })

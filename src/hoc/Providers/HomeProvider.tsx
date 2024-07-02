@@ -1,12 +1,13 @@
 'use client'
 
-import { createContext, ReactNode, useCallback, useContext } from 'react'
-import { AuthContext } from '@/hoc/AuthProvider'
-import { useQuery } from '@/hooks/Query'
-import { TFormatedFavoriteList } from '@/components/widgets/Favorite'
+import { createContext, ReactNode, useContext } from 'react'
+import { useAuthContext } from '@/hoc/Providers/AuthProvider'
+import { TFormatedFavoriteList } from '@/components/module/Favorite'
 import { TPurchasesList } from '@/types/Auth.types'
 import { FetchFavorites } from '@/actions/Account/Client'
 import { getTransactionInfo } from '@/utils/utils'
+import { useQuery } from '@tanstack/react-query'
+import { queryKeys } from '@/utils/config'
 
 type StateType =
    | (TFormatedFavoriteList & {
@@ -28,28 +29,21 @@ const initialState: homeContextType = {
    loading: true,
 }
 
-export const HomeContext = createContext<homeContextType>(initialState)
+const HomeContext = createContext<homeContextType>(initialState)
 
 export default function HomeProvider({ children }: { children: ReactNode }) {
-   const Context = useContext(AuthContext).mainInfo
+   const Context = useAuthContext().mainInfo
    const Context_Purchases = Context?.purchases
    const Context_Transactions = Context?.transactions
 
-   const {
-      data: Purchases,
-      error,
-      loading,
-   } = useQuery<TFormatedFavoriteList[], StateType>({
-      queryFn: useCallback(() => {
-         if (Context_Purchases && Context_Purchases.length > 0)
-            return FetchFavorites(Context_Purchases)
-         else return new Promise((resolve, reject) => resolve({}))
-      }, [Context_Purchases]),
-
-      select: (fetchData) => {
-         if (!fetchData || !Context_Purchases || !Context_Transactions)
-            return undefined
+   const { error, data, isLoading } = useQuery({
+      queryKey: [queryKeys.Purchase],
+      queryFn: () => FetchFavorites(Context_Purchases),
+      select: ({ data: fetchData }) => {
          const newData: StateType = []
+
+         if (!fetchData || !Context_Purchases || !Context_Transactions)
+            return newData
 
          const dataMAP = new Map(
             fetchData.map((item) => [item.SECID, { ...item }])
@@ -74,11 +68,17 @@ export default function HomeProvider({ children }: { children: ReactNode }) {
          }
          return newData
       },
+      retry: 2,
+      staleTime: Infinity,
    })
 
    return (
-      <HomeContext.Provider value={{ loading, error, Purchases }}>
+      <HomeContext.Provider
+         value={{ loading: isLoading, error: error?.message, Purchases: data }}
+      >
          {children}
       </HomeContext.Provider>
    )
 }
+
+export const useHomeContext = () => useContext(HomeContext)

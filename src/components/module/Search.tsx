@@ -9,7 +9,7 @@ import {
    SecuritySearchRequest,
 } from '@/types/Security.types'
 import toast from 'react-hot-toast'
-import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
+import DefaultListItem from '@/components/ui/Lists/DefaultList/DefaultListItem'
 
 export type TSearch = {
    searchRequest: (
@@ -43,6 +43,10 @@ const Search: FC<TSearch & Pick<any, any>> = ({
    return (
       <CustomModalCommand
          className="min-h-[40dvh] 768p:min-h-0"
+         header={{
+            title: 'Поиск',
+            description: 'Поиск инструмента по названию/тикеру',
+         }}
          onSend={sendFunc}
          placeholder="Найти"
          hotKey={{ key: 'i', ctrl: true, shift: false }}
@@ -58,7 +62,10 @@ const Search: FC<TSearch & Pick<any, any>> = ({
          {SearchData && (
             <CommandGroup>
                {SearchData.map((item) => (
-                  <CommandItem key={item.secid} className="cursor-pointer">
+                  <CommandItem
+                     key={item.secid}
+                     className="cursor-pointer aria-selected:bg-transparent"
+                  >
                      <DefaultListItem
                         defaultIMG={defaultSRC || '/StockPlaceHolder.png'}
                         url={`${url}/${item.secid}`}
@@ -68,7 +75,7 @@ const Search: FC<TSearch & Pick<any, any>> = ({
                         rightText={
                            item.is_traded ? 'Торгуется' : 'Не торгуется'
                         }
-                        className="hover:none w-full items-center"
+                        className="w-full items-center"
                         onErrorClass="dark:invert"
                      />
                   </CommandItem>

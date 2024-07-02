@@ -1,7 +1,7 @@
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import PriceInfoCard from '@/components/entity/PriceInfoCard'
-import { SecurityTemplateProps } from '@/components/module/SecurityTemplate'
-import TransactionsButtons from '@/components/entity/ModalsContent/Transactions/TransactionsButtons'
+import { SecurityTemplateProps } from '@/components/widgets/SecurityTemplate'
+import BuyMenuButtons from '@/components/entity/ModalsContent/BuyMenu/BuyMenuButtons'
 import SecurityFace from '@/components/ui/SecurityFace'
 import { FavoritesListTypes } from '@/types/Auth.types'
 
@@ -34,7 +34,7 @@ export default function SecurityMainInfo({
             image={img}
             type={type}
          />
-         <TransactionsButtons
+         <BuyMenuButtons
             type={type}
             secID={secID}
             secCode={secCode}

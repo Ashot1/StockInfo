@@ -1,5 +1,5 @@
 'use client'
-import { createContext, FC, ReactNode, useState } from 'react'
+import { createContext, FC, ReactNode, useContext, useState } from 'react'
 import { Tables } from '@/types/supabase.types'
 import { User } from '@supabase/supabase-js'
 import { TTransactionsList } from '@/types/Auth.types'
@@ -33,7 +33,7 @@ type basics = {
    mainInfo: mainInfo
 }
 
-export const AuthContext = createContext<
+const AuthContext = createContext<
    {
       setMainInfo?: (data: mainInfo) => void
       setAuthInfo?: (user: TUser) => void
@@ -51,7 +51,7 @@ const AuthProvider: FC<{
 }> = ({ children, value }) => {
    const [State, setState] = useState<basics>(value)
 
-   const changeMain = (data: mainInfo) => {
+   const changeMain = async (data: mainInfo) => {
       setState((prev) => ({ ...prev, mainInfo: data }))
    }
    const changeAuth = (data: TUser) => {
@@ -66,5 +66,7 @@ const AuthProvider: FC<{
       </AuthContext.Provider>
    )
 }
+
+export const useAuthContext = () => useContext(AuthContext)
 
 export default AuthProvider

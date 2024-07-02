@@ -15,10 +15,7 @@ const MemoPlaceholder = memo(InfoPlaceHolder)
 const ProfileDefaultModalContent: FC<ModalContent> = forwardRef(
    ({ avatar, UserInfo, className }, ref: ForwardedRef<HTMLDivElement>) => {
       return (
-         <ScrollBlock
-            className={cn(`custom-scroll overflow-y-auto`, className)}
-            ref={ref}
-         >
+         <ScrollBlock direction="vertical" className={className} ref={ref}>
             <aside className="mt-3 grid w-full place-items-center">
                {avatar ? (
                   <Avatar className="size-20">

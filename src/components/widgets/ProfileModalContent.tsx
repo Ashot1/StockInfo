@@ -67,6 +67,7 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
       <CustomModalContent
          key="default"
          title="Профиль"
+         description="Данные о пользователе"
          type={type}
          AnotherFooter={ChooseFooter}
       >

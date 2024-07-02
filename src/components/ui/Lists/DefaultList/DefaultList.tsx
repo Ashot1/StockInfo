@@ -4,7 +4,7 @@ import { FC, ReactNode } from 'react'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import CalculatePagination from '@/utils/Pagination'
 import { cn } from '@/utils/utils'
-import { DefaultListItemLoader } from '@/components/ui/DefaultList/DefaultListItem'
+import { DefaultListItemLoader } from '@/components/ui/Lists/DefaultList/DefaultListItem'
 
 type WithSwipe = {
    CurrentStartIndex: number

@@ -1,21 +1,27 @@
 'use client'
 
 import { FC, useContext } from 'react'
-import PurchaseList from '@/components/ui/PurchaseList/PurchaseList'
+import PurchaseList from '@/components/ui/Lists/PurchaseList/PurchaseList'
 import PurchaseListItem, {
    PurchaseListItemLoading,
-} from '@/components/ui/PurchaseList/PurchaseListItem'
+} from '@/components/ui/Lists/PurchaseList/PurchaseListItem'
 import { cn, getDataByType } from '@/utils/utils'
-import { HomeContext } from '@/hoc/HomeProvider'
-import { AuthContext } from '@/hoc/AuthProvider'
-import { URLList } from '@/utils/const'
+import { useHomeContext } from '@/hoc/Providers/HomeProvider'
+import { useAuthContext } from '@/hoc/Providers/AuthProvider'
+import { LocalStorageParameters, URLList } from '@/utils/config'
 import { ConvertDate } from '@/utils/Date'
+import { LocalStorageCheckerContext } from '@/hoc/LocalSettingsChecker'
+import ErrorMessage from '@/components/ui/ErrorMessage'
 
 const Purchases: FC = () => {
-   const { Purchases, error, loading } = useContext(HomeContext)
-   const mainInfo = useContext(AuthContext).mainInfo
+   const { Purchases, loading, error } = useHomeContext()
+   const mainInfo = useAuthContext().mainInfo
+   const isAnimated =
+      useContext(LocalStorageCheckerContext) ===
+      LocalStorageParameters.purchaseAnimation.positive
 
    if (loading) return <PurchasesLoading />
+   if (error) return <ErrorMessage errMessage={error} />
 
    return (
       <PurchaseList className={cn('w-[70%] 300p:w-[80%] 768p:w-[80%]')}>
@@ -30,6 +36,7 @@ const Purchases: FC = () => {
             shortname="Российский рубль"
             needCurrentPrice={false}
             className="min-h-full"
+            isAnimated={isAnimated}
          />
          {Purchases?.map((item) => {
             const { img, url } = getDataByType({
@@ -52,6 +59,7 @@ const Purchases: FC = () => {
                   difference={(price - item.average_buy_price) * item.quantity}
                   url={url[item.type]}
                   quantity={item.quantity}
+                  isAnimated={isAnimated}
                />
             )
          })}

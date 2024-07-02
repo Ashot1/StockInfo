@@ -23,7 +23,11 @@ const SettingsModalContent: FC<Pick<IModalContent, 'type'>> = ({ type }) => {
    }
 
    return (
-      <CustomModalContent title="Настройки" type={type}>
+      <CustomModalContent
+         title="Настройки"
+         type={type}
+         description="Настройки приложения"
+      >
          <AnimatePresence initial={false} mode="wait">
             {Mode.name === 'default' && (
                <MotionSettingsDefaultModalContent

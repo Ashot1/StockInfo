@@ -39,20 +39,21 @@ export type SecurityGetAllMarket = {
    HIGH: number
    LAST: number
    UPDATETIME: string
+   MARKETPRICE: number
 }
 
-export type SecurityPriceListRequest = [
+export type SecurityPriceHistoryRequest = [
    {
       charsetinfo: {
          name: string
       }
    },
    {
-      candles: PriceListType[]
+      candles: PriceHistoryType[]
    },
 ]
 
-export type PriceListType = {
+export type PriceHistoryType = {
    open: number
    close: number
    high: number
@@ -61,7 +62,7 @@ export type PriceListType = {
    end: string
 }
 
-export type PriceListReqProps = {
+export type PriceHistoryReqProps = {
    stock: string
    from: string
    till?: string
@@ -89,6 +90,7 @@ export type MarketPriceRequest = [
             HIGH: number
             LAST: number
             UPDATETIME: string
+            MARKETPRICE: number
          },
       ]
    },

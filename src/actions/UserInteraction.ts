@@ -157,7 +157,7 @@ export async function SellSecurities(
          throw new Error('Вы ничего не выставляете на продажу')
 
       // получаем данные о пользователе и бумагах
-      const { data: prevUserData, error: prevError } = await GetUserMainData()
+      const { data: prevUserData } = await GetUserMainData()
       const supabase = SupabaseCustomServer()
       const supabaseService = SupabaseCustomService()
       const { user } = await getSupabaseUser(supabase)

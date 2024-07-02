@@ -2,16 +2,15 @@ import { TryCatch } from '@/utils/utils'
 import { BondsRequest, CouponsRequest } from '@/types/Bonds.types'
 import {
    MarketPriceRequest,
-   PriceListReqProps,
+   PriceHistoryReqProps,
    SecurityGetAllRequest,
-   SecurityPriceListRequest,
+   SecurityPriceHistoryRequest,
 } from '@/types/Security.types'
 
 export async function getBondsList(start: string = '0', limit: number) {
    return TryCatch<BondsRequest>(async () => {
       const result = await fetch(
-         `https://iss.moex.com/iss/history/engines/stock/markets/bonds/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.json=extended&history.columns=SHORTNAME,SECID,TRADEDATE,OPEN,CLOSE&numtrades=1`,
-         { next: { revalidate: 3600 } }
+         `https://iss.moex.com/iss/history/engines/stock/markets/bonds/securities.json?start=${start}&limit=${limit}&iss.meta=off&iss.json=extended&history.columns=SHORTNAME,SECID,TRADEDATE,OPEN,CLOSE,MARKETPRICE2,MARKETPRICE3&numtrades=1`
       )
       const data: BondsRequest = await result.json()
 
@@ -50,8 +49,7 @@ export async function getAllBonds(
       const formatedList = list.join(',')
 
       const result = await fetch(
-         `https://iss.moex.com/iss/engines/stock/markets/bonds/securities.json?securities=${formatedList}&iss.json=extended&iss.meta=off&iss.only=securities,marketdata&securities.columns=SECID,SHORTNAME,SECNAME&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME${optional}`,
-         { next: { revalidate: 3600 } }
+         `https://iss.moex.com/iss/engines/stock/markets/bonds/securities.json?securities=${formatedList}&iss.json=extended&iss.meta=off&iss.only=securities,marketdata&securities.columns=SECID,SHORTNAME,SECNAME&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME,MARKETPRICE${optional}`
       )
       const data: SecurityGetAllRequest = await result.json()
 
@@ -61,14 +59,14 @@ export async function getAllBonds(
    })
 }
 
-export async function getBondPriceList({
+export async function getBondPriceHistory({
    from,
    start = 0,
    interval = 24,
    stock,
    till,
-}: PriceListReqProps) {
-   return TryCatch<SecurityPriceListRequest>(async () => {
+}: PriceHistoryReqProps) {
+   return TryCatch<SecurityPriceHistoryRequest>(async () => {
       const result = await fetch(
          `https://iss.moex.com/iss/engines/stock/markets/bonds/securities/${stock}/candles.json?iss.meta=off&iss.json=extended&interval=${interval}&start=${start}&from=${from}${
             till && `&till=${till}`
@@ -76,7 +74,7 @@ export async function getBondPriceList({
          { next: { revalidate: 3600 } }
       )
 
-      const data: SecurityPriceListRequest = await result.json()
+      const data: SecurityPriceHistoryRequest = await result.json()
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
@@ -84,11 +82,12 @@ export async function getBondPriceList({
    })
 }
 
-export async function getBondMarketPrice(secid: string) {
+export async function getBondMarketPrice(secid: string[]) {
    return TryCatch<MarketPriceRequest>(async () => {
+      const secs = secid.join(',')
+
       const result = await fetch(
-         `https://iss.moex.com/iss/engines/stock/markets/bonds/securities.json?iss.meta=off&iss.json=extended&securities=${secid}&iss.only=securities,marketdata&securities.columns=SECID&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME`,
-         { next: { revalidate: 1800 } }
+         `https://iss.moex.com/iss/engines/stock/markets/bonds/securities.json?iss.meta=off&iss.json=extended&securities=${secs}&iss.only=securities,marketdata&securities.columns=SECID&marketdata.columns=SECID,OPEN,LOW,HIGH,LAST,UPDATETIME,MARKETPRICE`
       )
 
       const data: MarketPriceRequest = await result.json()

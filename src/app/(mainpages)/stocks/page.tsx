@@ -1,11 +1,12 @@
-import { getStocksList } from '@/actions/Security/Stocks'
-import { PageStartCounter, URLList } from '@/utils/const'
+import { getStockMarketPrice, getStocksList } from '@/actions/Security/Stocks'
+import { PageStartCounter, URLList } from '@/utils/config'
 import { Metadata } from 'next'
 import ErrorMessage from '@/components/ui/ErrorMessage'
-import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
-import SecurityListTemplate from '@/components/module/SecurityListTemplate'
+import DefaultListItem from '@/components/ui/Lists/DefaultList/DefaultListItem'
+import SecurityListTemplate from '@/components/widgets/SecurityListTemplate'
+import { calculateDefinition, convertMoney } from '@/utils/utils'
 
-export const revalidate = 3600
+export const revalidate = 300
 
 export const metadata: Metadata = {
    title: 'Акции',
@@ -55,22 +56,12 @@ const MainContent = async ({ start }: { start?: string }) => {
          dataLength={StocksList.length}
       >
          {StocksList.map((stock, index) => {
-            let price: number | string = stock.CLOSE
+            let price: number | string =
+               stock.MARKETPRICE2 || stock.MARKETPRICE3 || stock.CLOSE
 
-            const differencePrices =
-               ((price - stock.OPEN) / ((stock.OPEN + price) / 2)) * 100
-
-            let percent = (differencePrices / price) * 100
-
-            price = Intl.NumberFormat('ru', {
-               style: 'currency',
-               currency: 'RUB',
-               currencyDisplay: 'symbol',
-            }).format(price || 0)
+            price = convertMoney(price || 0)
 
             const animIndex = index <= 15 ? index : 15
-
-            percent = percent == Infinity ? 0 : percent
 
             return (
                <DefaultListItem
@@ -80,10 +71,10 @@ const MainContent = async ({ start }: { start?: string }) => {
                   subtext={`${stock.SECID}`}
                   text={stock.SHORTNAME as string}
                   rightText={price}
-                  rightSubtext={parseFloat(percent.toFixed(3))}
                   url={`${URLList.current_stock}/${stock.SECID}`}
-                  className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards
-                            delay-${100 * animIndex}`}
+                  className={`animate-appearance-moving opacity-0 transition-opacity fill-mode-forwards delay-${
+                     100 * animIndex
+                  }`}
                />
             )
          })}

@@ -1,11 +1,15 @@
+'use client'
+
 import IMGcolorCard from '@/components/ui/Img/IMGcolorCard'
 import ImageErrorCheck from '@/components/ui/Img/ImageErrorCheck'
 import { TriangleDownIcon } from '@radix-ui/react-icons'
-import { cn } from '@/utils/utils'
+import { cn, convertMoney } from '@/utils/utils'
 import { FC } from 'react'
 import Link from 'next/link'
 import { Skeleton } from '@/components/ui/ShadCN/skeleton'
 import { FavoritesListTypes } from '@/types/Auth.types'
+import { motion } from 'framer-motion'
+import { useMatchMedia } from '@/hooks/MatchMedia'
 
 export type PurchaseListItemProps = {
    image: string
@@ -20,6 +24,7 @@ export type PurchaseListItemProps = {
    quantity?: number
    needCurrentPrice?: boolean
    className?: string
+   isAnimated?: boolean
 }
 
 export default function PurchaseListItem({
@@ -35,16 +40,38 @@ export default function PurchaseListItem({
    quantity,
    needCurrentPrice = true,
    className,
+   isAnimated,
 }: PurchaseListItemProps) {
+   const MotionLink = motion(Link)
+   const isTouchDevice = useMatchMedia('(pointer: coarse)')
+
+   let animOptions = { initial: 'rest', animation: 'rest' }
+
+   if (isAnimated)
+      animOptions = isTouchDevice
+         ? { initial: 'rest', animation: 'tap' }
+         : { initial: 'tap', animation: 'rest' }
+
    return (
-      <Link
+      <MotionLink
          href={url}
          className="cursor-pointer rounded-2xl border-2 border-transparent duration-300 hover:border-black dark:hover:border-white"
          prefetch={false}
+         initial={animOptions.initial}
+         whileHover={animOptions.animation}
+         whileTap={animOptions.animation}
+         variants={{ tap: { scale: 0.95 }, rest: { scale: 1 } }}
       >
          <IMGcolorCard img={image} key={SECID} className={className}>
-            <div className="flex flex-col px-4 py-4">
-               <div className="flex w-full items-center justify-center gap-3">
+            <div className="flex min-h-[200px] flex-col px-4 py-4">
+               <motion.div
+                  className="flex w-full items-center justify-center gap-3"
+                  variants={{
+                     tap: { height: 180, justifyContent: 'center' },
+                     rest: { height: 'auto' },
+                  }}
+                  transition={{ duration: 0.2 }}
+               >
                   <span className="relative aspect-square size-10 min-h-10 min-w-10 500p:size-12">
                      <ImageErrorCheck
                         alt={SECID}
@@ -61,20 +88,29 @@ export default function PurchaseListItem({
                         {SECID}
                      </p>
                   </span>
-               </div>
-               <PriceInfo
-                  buy_price={buy_price}
-                  current_price={current_price}
-                  difference={difference}
-                  quantity={quantity}
-                  needCurrentPrice={needCurrentPrice}
-               />
-               {date && (
-                  <p className="mt-2 text-center text-xs opacity-80">{date}</p>
-               )}
+               </motion.div>
+               <motion.div
+                  layout
+                  className="infoAnimate block overflow-hidden"
+                  variants={{ tap: { height: 0 }, rest: { height: 'auto' } }}
+                  transition={{ duration: 0.2 }}
+               >
+                  <PriceInfo
+                     buy_price={buy_price}
+                     current_price={current_price}
+                     difference={difference}
+                     quantity={quantity}
+                     needCurrentPrice={needCurrentPrice}
+                  />
+                  {date && (
+                     <p className="mt-2 text-center text-xs opacity-80">
+                        {date}
+                     </p>
+                  )}
+               </motion.div>
             </div>
          </IMGcolorCard>
-      </Link>
+      </MotionLink>
    )
 }
 
@@ -90,27 +126,21 @@ const PriceInfo: FC<
 > = ({ current_price, buy_price, difference, quantity, needCurrentPrice }) => {
    const positiveCondition = difference && difference > 0
 
-   const RUB = Intl.NumberFormat('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
-      maximumFractionDigits: 3,
-   })
-
    return (
       <div className="mt-5 grid place-items-center">
          {buy_price && (
             <p className="text-xs opacity-50 500p:text-sm">
-               {buy_price.toFixed(3)}
+               {convertMoney(buy_price)}
             </p>
          )}
          {buy_price && <TriangleDownIcon className="size-5 opacity-50" />}
          {needCurrentPrice && (
             <p className="text-sm 500p:text-base">
-               {current_price.toFixed(3)} {quantity ? `x${quantity}` : null}
+               {convertMoney(current_price)} {quantity ? `x${quantity}` : null}
             </p>
          )}
          {quantity && (
-            <p className="mt-4"> {RUB.format(current_price * quantity)}</p>
+            <p className="mt-4"> {convertMoney(current_price * quantity)}</p>
          )}
          {difference ? (
             <p
@@ -122,7 +152,7 @@ const PriceInfo: FC<
                )}
             >
                {positiveCondition && '+'}
-               {RUB.format(difference)}
+               {convertMoney(difference)}
             </p>
          ) : null}
       </div>

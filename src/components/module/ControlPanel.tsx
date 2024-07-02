@@ -2,12 +2,12 @@
 import BackButton from '@/components/entity/BackButton'
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { usePathname } from 'next/navigation'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 import PageTitle from '@/components/ui/PageTitle'
-import { FC, memo, ReactNode, useContext } from 'react'
-import { AuthContext } from '@/hoc/AuthProvider'
-import Favorite from '@/components/widgets/Favorite'
-import Search from '@/components/widgets/Search'
+import { FC, ReactNode } from 'react'
+import { useAuthContext } from '@/hoc/Providers/AuthProvider'
+import Favorite from '@/components/module/Favorite'
+import Search from '@/components/module/Search'
 import {
    searchBond,
    searchStock,
@@ -15,14 +15,14 @@ import {
 
 const ControlPanel = () => {
    const path = usePathname()
-   const { user_metadata } = useContext(AuthContext).authInfo
+   const { user_metadata } = useAuthContext().authInfo
 
    const homeTitleContent = (
       <span className="max-w-[50%]">
          <p className="text-xs opacity-50 768p:text-center 768p:text-sm">
             Добро пожаловать
          </p>
-         <p className="truncate 768p:text-center 768p:text-lg">
+         <p className="truncate bg-gradient-to-r from-[#4c6ca8] to-[#b94e76] bg-clip-text text-transparent 768p:text-center 768p:text-lg">
             {user_metadata.full_name}
          </p>
       </span>
@@ -71,7 +71,7 @@ const ControlPanel = () => {
       },
    }
 
-   const isInContent = Object.values(URLList).includes(path)
+   const isInContent = Object.keys(PathContent).includes(path)
 
    return (
       <div className="mb-10 flex animate-appearance flex-col gap-6">

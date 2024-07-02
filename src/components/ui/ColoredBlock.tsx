@@ -58,7 +58,7 @@ const ColoredBlock: FC<BalanceBlockProps> = forwardRef(
             onClick={action}
             className={cn(
                variants({ variant, className }),
-               'relative flex animate-scaling'
+               'animate-scaling-normal relative flex'
             )}
          >
             <span className="flex h-[75%] max-w-[80%] flex-col justify-center pl-4 500p:pl-8">
@@ -93,14 +93,37 @@ ColoredBlock.displayName = 'ColoredBlock'
 
 export default ColoredBlock
 
-export const ColoredBlockLoading: FC<{ className?: string }> = ({
-   className,
-}) => {
+export const ColoredBlockLoading: FC<{
+   className?: string
+   title?: string
+   content?: string
+}> = ({ className, title, content }) => {
    return (
       <div className={cn(variants({ variant: 'default', className }))}>
-         <span className="flex h-[75%] max-w-full flex-col justify-center gap-4 pl-4 500p:pl-8">
-            <Skeleton className="h-4 w-24" />
-            <Skeleton className="h-8 w-48" />
+         <span className="flex h-[95%] max-w-[80%] flex-col justify-center gap-2 pl-4 500p:pl-8">
+            {title ? (
+               <p
+                  className={cn(
+                     'text-start text-xs 500p:text-sm 768p:text-base',
+                     raleway.className
+                  )}
+               >
+                  {title}
+               </p>
+            ) : (
+               <Skeleton className="h-4 w-24" />
+            )}
+            {content ? (
+               <h1
+                  className={cn(
+                     'overflow-hidden overflow-ellipsis text-base font-bold 500p:text-lg 768p:text-xl'
+                  )}
+               >
+                  {content}
+               </h1>
+            ) : (
+               <Skeleton className="h-8 w-48" />
+            )}
          </span>
       </div>
    )

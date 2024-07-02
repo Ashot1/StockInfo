@@ -1,7 +1,7 @@
 'use client'
 
-import { FC, ReactNode, useEffect, useState } from 'react'
-import { LocalStorageParameters, MobileScreen } from '@/utils/const'
+import { createContext, FC, ReactNode, useEffect, useState } from 'react'
+import { LocalStorageParameters, MobileScreen } from '@/utils/config'
 import Notification from '@/components/entity/Notification'
 import { useMatchMedia } from '@/hooks/MatchMedia'
 
@@ -14,6 +14,10 @@ type withoutAlert = {
    needAlert?: true
    textAlert: { title: string; text: string }
 }
+
+export const LocalStorageCheckerContext = createContext<string | undefined>(
+   undefined
+)
 
 const LocalSettingsChecker: FC<
    {
@@ -52,7 +56,11 @@ const LocalSettingsChecker: FC<
 
    if (Params.conditionalRender && Value === Params.negative) return <></>
 
-   return children
+   return (
+      <LocalStorageCheckerContext.Provider value={Value}>
+         {children}
+      </LocalStorageCheckerContext.Provider>
+   )
 }
 
 export default LocalSettingsChecker

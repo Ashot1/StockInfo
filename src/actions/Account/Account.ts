@@ -7,7 +7,7 @@ import {
 } from '@supabase/supabase-js'
 import { Tables } from '@/types/supabase.types'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
-import { Start_balance } from '@/utils/const'
+import { AuthFormPatterns, Start_balance } from '@/utils/config'
 import { cache } from 'react'
 import { TryCatch } from '@/utils/utils'
 import { SupabaseCustomService } from '@/utils/supabase/service'
@@ -62,8 +62,14 @@ export async function DeleteUser() {
          .delete()
          .eq('user_id', user.id)
 
-      if (DeleteMainError || DeleteTransactionsError)
-         throw DeleteMainError || DeleteTransactionsError
+      const extension = user.user_metadata.avatar_url.split('.').at(-1)
+
+      const { error: StorageError } = await supabaseServer.storage
+         .from('Avatars')
+         .remove([`public/${user.id}.${extension}`])
+
+      if (DeleteMainError || DeleteTransactionsError || StorageError)
+         throw DeleteMainError || DeleteTransactionsError || StorageError
 
       const { error } = await supabase.auth.signOut()
 
@@ -95,9 +101,17 @@ export async function UpdateUser({
 
       let attributes: UserAttributes = {}
       const email = IncomingData.email
-      if (User.email !== email) attributes = { email: email }
+      const password = IncomingData.password
+
+      if (User.email !== email) attributes = { ...attributes, email }
+      if (
+         password &&
+         password.length >= AuthFormPatterns.password.minLength.value
+      )
+         attributes = { ...attributes, password }
 
       delete IncomingData.email
+      delete IncomingData.password
 
       for (let item in IncomingData) {
          if (User.user_metadata[item] !== IncomingData[item]) {

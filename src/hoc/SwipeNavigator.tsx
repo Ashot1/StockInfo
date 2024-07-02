@@ -4,7 +4,7 @@ import { FC, ReactNode, useRef } from 'react'
 import type { TouchEvent } from 'react'
 import { cn } from '@/utils/utils'
 import { useRouter } from 'next/navigation'
-import { SwipeLength } from '@/utils/const'
+import { SwipeLength } from '@/utils/config'
 
 const SwipeNavigator: FC<{
    children: ReactNode

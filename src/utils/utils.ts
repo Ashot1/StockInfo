@@ -5,7 +5,7 @@ import {
    TFavoritesList,
    TTransactionsList,
 } from '@/types/Auth.types'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 
 export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs))
@@ -94,4 +94,22 @@ export function getDataByType({
 
 export function calculateDefinition(open: number, last: number) {
    return ((last - open) / ((open + last) / 2)) * 100
+}
+
+export function debounce(func: Function, wait: number) {
+   let timeout: NodeJS.Timeout
+
+   return function (this: any, ...args: any[]) {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => func.apply(this, args), wait)
+   }
+}
+export const convertMoney = (value: number, len = 3) => {
+   return Intl.NumberFormat('ru-RU', {
+      currency: 'RUB',
+      style: 'currency',
+      notation: 'standard',
+      currencyDisplay: 'symbol',
+      maximumFractionDigits: len,
+   }).format(value)
 }

@@ -1,11 +1,8 @@
 'use client'
-import { FC, useEffect } from 'react'
+import { useEffect } from 'react'
 import { AuroraBackground } from '@/components/ui/HightOrder/AuroraBackground'
-import { cn } from '@/utils/utils'
-import FadedButton from '@/components/ui/FadedButton'
-import Link from 'next/link'
-import BackButton from '@/components/entity/BackButton'
-import { tektur } from '@/utils/fonts'
+import FadedButton from '@/components/ui/Buttons/FadedButton'
+import ErrorMessage from '@/components/ui/ErrorMessage'
 
 export default function Error({
    error,
@@ -18,27 +15,18 @@ export default function Error({
 
    return (
       <AuroraBackground allowFullScreen={true}>
-         <div className="z-30 grid max-w-[75%] grid-cols-1 gap-3 text-center dark:text-white">
-            <h2
-               className={cn(
-                  'animate-fast-appearance text-lg text-red-400 768p:text-xl',
-                  tektur.className
-               )}
-            >
-               Произошла ошибка
-            </h2>
-            <p className="text-center text-sm opacity-85 768p:text-base">
-               {error.message}
-            </p>
+         <ErrorMessage
+            className="z-30 max-w-[75%] gap-3 dark:text-white"
+            errMessage={error.message}
+         >
             <FadedButton
                variant="outlined"
                onClick={() => reset()}
-               className="mt-5 animate-appearance p-0 py-1.5 text-center"
+               className="mt-5 animate-appearance"
             >
                Повторить
             </FadedButton>
-            <BackButton className="animate-appearance" />
-         </div>
+         </ErrorMessage>
       </AuroraBackground>
    )
 }

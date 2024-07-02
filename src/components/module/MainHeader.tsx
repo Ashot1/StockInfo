@@ -1,10 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { MobileScreen, URLList } from '@/utils/const'
+import { LocalStorageParameters, MobileScreen, URLList } from '@/utils/config'
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion'
-import { FC, Fragment, memo, useRef, useState } from 'react'
+import { FC, useContext, useEffect, useRef, useState } from 'react'
 import Logo from '@/components/ui/Logo'
 import { motion } from 'framer-motion'
 import { useMatchMedia } from '@/hooks/MatchMedia'
@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation'
 import { raleway } from '@/utils/fonts'
 import Image from 'next/image'
 import { cn } from '@/utils/utils'
+import { LocalStorageCheckerContext } from '@/hoc/LocalSettingsChecker'
 
 interface IMainHeader {
    HeaderButtons: { text: string; icon: StaticImport; link: string }[]
@@ -24,8 +25,12 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
    const prevScrollValue = useRef(40)
    const isMobile = useMatchMedia(MobileScreen)
    const direction = isMobile ? 150 : -150
+   const staticMode = useContext(LocalStorageCheckerContext)
 
    useMotionValueEvent(scrollY, 'change', (latest) => {
+      if (staticMode === LocalStorageParameters.staticHeaderMode.positive)
+         return
+
       const difference = prevScrollValue.current < latest
       prevScrollValue.current = latest
 
@@ -36,6 +41,11 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
       return () => clearTimeout(timer)
    })
 
+   useEffect(() => {
+      staticMode === LocalStorageParameters.staticHeaderMode.positive &&
+         setIsHidden(false)
+   }, [staticMode])
+
    if (isMobile === null) return
 
    return (
@@ -43,22 +53,14 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
          initial={{ y: direction }}
          animate={{ y: IsHidden ? direction : 0 }}
          transition={{ duration: 0.4 }}
-         className="pointer-events-none fixed bottom-4 z-30 grid
-       w-full place-items-center px-3
-        300p:px-6 768p:bottom-auto 768p:top-6 768p:px-10"
+         className="pointer-events-none fixed bottom-4 z-30 grid w-full place-items-center px-3 300p:px-6 768p:bottom-auto 768p:top-6 768p:px-10"
       >
          <nav
-            className="pointer-events-auto flex h-full w-full min-w-[200px] max-w-[500px] justify-evenly rounded-[30px]
-        border border-[rgba(190,190,190,.3)] bg-[rgb(190,190,190,.05)] px-3 py-3 shadow-lg backdrop-blur-lg
-        duration-100 hover:border-[rgba(190,190,190,.4)] hover:bg-[rgb(210,210,210,.15)]
-        dark:border-[rgba(242,242,242,.1)] dark:bg-[rgba(242,242,242,.05)]
-        dark:shadow-[0_10px_25px_rgba(0,0,0,.15)] dark:hover:border-[rgba(242,242,242,.15)]
-        dark:hover:bg-[rgba(242,242,242,.07)] 768p:max-w-[1000px] 768p:grid-cols-6 768p:justify-between 768p:rounded-[10px] 768p:px-6"
+            className={`pointer-events-auto flex h-full w-full min-w-[200px] max-w-[500px] justify-evenly rounded-[30px] border border-[rgba(190,190,190,.3)] bg-[rgb(190,190,190,.05)] px-3 py-3 shadow-lg backdrop-blur-lg duration-100 hover:border-[rgba(190,190,190,.4)] hover:bg-[rgb(210,210,210,.15)] dark:border-[rgba(242,242,242,.1)] dark:bg-[rgba(242,242,242,.05)] dark:shadow-[0_10px_25px_rgba(0,0,0,.15)] dark:hover:border-[rgba(242,242,242,.15)] dark:hover:bg-[rgba(242,242,242,.07)] 768p:max-w-[1000px] 768p:grid-cols-6 768p:justify-between 768p:rounded-[10px] 768p:px-6`}
          >
             <Link
                href={URLList.home}
-               className="hidden w-32 items-center opacity-80
-            transition-all duration-500 hover:drop-shadow-[0_0_15px_var(--Main)] hover:[text-shadow:_0_0_10px_#3b82f6] 768p:flex"
+               className="hidden w-32 items-center opacity-80 transition-all duration-500 hover:drop-shadow-[0_0_15px_var(--Main)] hover:[text-shadow:_0_0_10px_#3b82f6] 768p:flex"
             >
                <Logo
                   scale={0.55}

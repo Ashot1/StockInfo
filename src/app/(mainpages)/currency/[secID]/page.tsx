@@ -1,5 +1,5 @@
-import SecurityTemplate from '@/components/module/SecurityTemplate'
-import { URLList } from '@/utils/const'
+import SecurityTemplate from '@/components/widgets/SecurityTemplate'
+import { URLList } from '@/utils/config'
 import { CurrentStockDescription } from '@/types/Stocks.types'
 import { getCurrency } from '@/actions/Security/Currency'
 import { redirect } from 'next/navigation'

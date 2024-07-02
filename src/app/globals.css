@@ -4,7 +4,7 @@
 
 @layer base {
    :root {
-      --background: #f7f7f7;
+      --background: 0, 0%, 97%;
       --foreground: 240 10% 3.9%;
 
       --card: 0 0% 100%;
@@ -61,7 +61,7 @@
    }
 
    .dark {
-      --background: #121212;
+      --background: 0, 0%, 7%;
       --foreground: 0 0% 98%;
 
       --card: 240 10% 3.9%;
@@ -442,4 +442,8 @@ body {
 .translateZFromCard {
    transform: translateZ(60px);
    backdrop-filter: blur(2px);
+}
+
+.bg-gradient-main-page {
+   background: linear-gradient(90deg, #354b75, #4c6ca8, #6f89b9, #789bfb);
 }

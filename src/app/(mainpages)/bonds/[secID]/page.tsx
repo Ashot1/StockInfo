@@ -1,14 +1,14 @@
 import {
    getBondMarketPrice,
-   getBondPriceList,
+   getBondPriceHistory,
    getCoupons,
 } from '@/actions/Security/Bonds'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import EmptyListText from '@/components/ui/Lists/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { ConvertDate } from '@/utils/Date'
 import { CouponsRequest } from '@/types/Bonds.types'
-import SecurityTemplate from '@/components/module/SecurityTemplate'
-import { URLList } from '@/utils/const'
+import SecurityTemplate from '@/components/widgets/SecurityTemplate'
+import { URLList } from '@/utils/config'
 import { getCurrentSecurity } from '@/actions/Security/CommonSecurity'
 
 export async function generateMetadata({
@@ -82,12 +82,12 @@ export default async function CurrentBond({
    const date = new Date()
    date.setMonth(date.getMonth() - 1)
 
-   const priceListReq = getBondPriceList({
+   const priceListReq = getBondPriceHistory({
       stock: secID,
       from: date.toISOString().substring(0, 10),
    })
 
-   const MarketDataReq = getBondMarketPrice(secID)
+   const MarketDataReq = getBondMarketPrice([secID])
 
    const [bondRes, couponsRes, priceListRes, MarketDataRes] = await Promise.all(
       [bondReq, couponsReq, priceListReq, MarketDataReq]
@@ -95,8 +95,8 @@ export default async function CurrentBond({
 
    const { data, error } = bondRes
    const { data: CouponsData, error: CouponsError } = couponsRes
-   const { data: PriceList, error: PriceListError } = priceListRes
-   const { data: MarketData, error: MarketDataError } = MarketDataRes
+   const { data: PriceList } = priceListRes
+   const { data: MarketData } = MarketDataRes
 
    const couponsContent = {
       name: 'Купоны',
@@ -126,7 +126,7 @@ export default async function CurrentBond({
             image={`${URLList.logos_bonds}/${secID}.png`}
             priceList={priceListCondition ? PriceList[1].candles : undefined}
             MarketData={{
-               last: MarketDataContent?.LAST,
+               last: MarketDataContent?.MARKETPRICE || MarketDataContent?.LAST,
                high: MarketDataContent?.HIGH,
                low: MarketDataContent?.LOW,
                open: MarketDataContent?.OPEN,

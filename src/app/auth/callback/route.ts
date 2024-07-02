@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 import { CreateTable } from '@/actions/Account/Account'
 
 export async function GET(request: NextRequest) {

@@ -1,13 +1,17 @@
 'use client'
 
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import SecurityFace, { SecurityFaceProps } from '@/components/ui/SecurityFace'
 import { Button } from '@/components/ui/ShadCN/button'
 import { nunito } from '@/utils/fonts'
-import StyledInput from '@/components/ui/StyledInput'
+import StyledInput from '@/components/ui/Inputs/StyledInput'
 import { SubmitHandler, useController, useForm } from 'react-hook-form'
-import { AuthContext } from '@/hoc/AuthProvider'
-import { CompleteDivision, getTransactionInfo } from '@/utils/utils'
+import { useAuthContext } from '@/hoc/Providers/AuthProvider'
+import {
+   CompleteDivision,
+   convertMoney,
+   getTransactionInfo,
+} from '@/utils/utils'
 import { TPurchasesList, TTransactionsList } from '@/types/Auth.types'
 
 export type TransactionInputs = { Quantity: string }
@@ -22,18 +26,17 @@ export type TransactionsBuyModalContentProps = Omit<
    needAdditionalyCan?: boolean
 }
 
-const TransactionModalContent: FC<TransactionsBuyModalContentProps> = ({
+const BuyMenuModalContent: FC<TransactionsBuyModalContentProps> = ({
    secCode,
    secID,
    secTitle,
    image,
-   className,
    current_price,
    submit,
    text,
    needAdditionalyCan = true,
 }) => {
-   const context = useContext(AuthContext)
+   const context = useAuthContext()
    const mainInfo = context.mainInfo
 
    return (
@@ -59,7 +62,7 @@ const TransactionModalContent: FC<TransactionsBuyModalContentProps> = ({
    )
 }
 
-export default TransactionModalContent
+export default BuyMenuModalContent
 
 const Controls: FC<{
    Submit: SubmitHandler<TransactionInputs>
@@ -87,7 +90,7 @@ const Controls: FC<{
             title="Количество"
             register={register}
             defaultValue={value}
-            background="peer-focus:bg-[var(--background)]"
+            background="peer-focus:bg-[hsl(var(--background))]"
             options={{
                required: {
                   value: true,
@@ -121,11 +124,7 @@ const AdditionalInfo: FC<
    text,
    needAdditionalyCan,
 }) => {
-   const formated_price = Intl.NumberFormat('ru-RU', {
-      currency: 'RUB',
-      style: 'currency',
-      maximumFractionDigits: 3,
-   }).format(current_price)
+   const formated_price = convertMoney(current_price)
 
    const item_in_purchase = purchases?.find((item) => item.secID === secID)
 

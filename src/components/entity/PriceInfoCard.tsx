@@ -1,6 +1,6 @@
-import { cn } from '@/utils/utils'
+import { calculateDefinition, cn, convertMoney } from '@/utils/utils'
 import { nunito, comfortaa } from '@/utils/fonts'
-import { SecurityTemplateProps } from '@/components/module/SecurityTemplate'
+import { SecurityTemplateProps } from '@/components/widgets/SecurityTemplate'
 
 export type PriceInfoCardProps = Partial<
    Pick<SecurityTemplateProps, 'MarketData'>
@@ -17,11 +17,12 @@ export default function PriceInfoCard({
       { name: 'Пред', value: MarketData?.prev },
    ]
 
-   const current_price = Intl.NumberFormat('ru-RU', {
-      currency: 'RUB',
-      style: 'currency',
-      maximumFractionDigits: 3,
-   }).format(MarketData?.last || 0)
+   const current_price = convertMoney(MarketData?.last || 0)
+
+   const definition =
+      MarketData?.open &&
+      MarketData?.last &&
+      calculateDefinition(MarketData?.open, MarketData?.last)
 
    return (
       <div
@@ -31,9 +32,22 @@ export default function PriceInfoCard({
          )}
       >
          <p className="text-sm text-black/60 dark:text-white/40">Цена</p>
-         <h2 className={cn('text-lg dark:text-white', nunito.className)}>
-            {current_price}
-         </h2>
+         <span className="flex">
+            <h2 className={cn('text-lg dark:text-white', nunito.className)}>
+               {current_price}
+            </h2>
+            {definition && (
+               <p
+                  className={cn(
+                     'ml-2 flex items-center text-sm font-bold',
+                     definition > 0 ? 'text-green-700' : 'text-red-800'
+                  )}
+               >
+                  {definition > 0 ? '+' : ''}
+                  {definition.toFixed(3)}%
+               </p>
+            )}
+         </span>
          <span
             className={cn(
                'spacin mt-3 flex gap-2 text-sm tracking-wide opacity-70',

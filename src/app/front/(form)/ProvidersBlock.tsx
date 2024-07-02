@@ -1,7 +1,7 @@
 'use client'
 
 import { FC } from 'react'
-import LoginProviderButton from '@/components/ui/LoginProviderButton'
+import LoginProviderButton from '@/components/ui/Buttons/LoginProviderButton'
 import Image from 'next/image'
 import { OAuthProviders } from '@/types/Auth.types'
 import { LoginWithOAuth } from '@/actions/Account/Client'
@@ -16,17 +16,13 @@ const LoginWithprovider = async (e: MouseEvent<HTMLButtonElement>) => {
 
    if (error || !data)
       return toast.error(error || 'Ошибка входа', { id: toastID })
-
-   toast.success('Успешный вход', { id: toastID })
 }
 
 const ProvidersBlock: FC = () => {
    return (
       <>
          <div
-            className={`mt-5 flex w-full items-center gap-4
-                before:block before:h-[2px] before:flex-1 before:rounded-full before:bg-black/10
-                after:block after:h-[2px] after:flex-1 after:rounded-full after:bg-black/10`}
+            className={`mt-5 flex w-full items-center gap-4 before:block before:h-[2px] before:flex-1 before:rounded-full before:bg-black/10 after:block after:h-[2px] after:flex-1 after:rounded-full after:bg-black/10`}
          >
             <p className="text-sm">или</p>
          </div>

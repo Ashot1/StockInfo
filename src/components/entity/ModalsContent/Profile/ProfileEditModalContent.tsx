@@ -6,21 +6,20 @@ import {
    forwardRef,
    LegacyRef,
    MouseEvent,
-   useContext,
    useRef,
    useState,
 } from 'react'
 import { ProfileModeEdit, UserProfileInfo } from '@/types/Modals.types'
 import { cn } from '@/utils/utils'
-import StyledInput from '@/components/ui/StyledInput'
+import StyledInput from '@/components/ui/Inputs/StyledInput'
 import { Button } from '@/components/ui/ShadCN/button'
 import { Path, SubmitHandler, useForm } from 'react-hook-form'
-import { AuthFormPatterns } from '@/utils/const'
+import { AuthFormPatterns } from '@/utils/config'
 import { ReloadIcon } from '@radix-ui/react-icons'
 import toast from 'react-hot-toast'
 import ChangeAvatar from '@/components/entity/ChangeAvatar'
 import { UpdateUser } from '@/actions/Account/Account'
-import { AuthContext } from '@/hoc/AuthProvider'
+import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import { SupabaseCustomClient } from '@/utils/supabase/client'
 
 export type EditableInputs = { avatar?: FileList } & {
@@ -40,7 +39,7 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
 
       const [AvatarURL, setAvatarURL] = useState<string | undefined>(avatar)
       const InputFileRef = useRef<HTMLInputElement | null>(null)
-      const context = useContext(AuthContext)
+      const context = useAuthContext()
       const setUser = context.setAuthInfo
 
       // сохранение изменений
@@ -131,7 +130,8 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
                            <StyledInput<EditableInputs>
                               options={
                                  AuthFormPatterns[
-                                    item.Value as keyof typeof AuthFormPatterns
+                                    (item.Value as keyof typeof AuthFormPatterns) ||
+                                       {}
                                  ]
                               }
                               register={register}
@@ -141,10 +141,23 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
                               type={item.type}
                               title={item.Title}
                               defaultValue={item.Text}
-                              background="peer-focus:bg-[var(--background)]"
+                              background={`peer-focus:bg-black peer-focus:text-white
+                                 dark:peer-focus:bg-white dark:peer-focus:text-black`}
+                              autoComplete={item.Value}
                            />
                         )
                   })}
+                  <StyledInput
+                     options={AuthFormPatterns.passwordWithoutRequire}
+                     register={register}
+                     error={errors.password}
+                     name="password"
+                     key="password"
+                     type="password"
+                     title="Пароль"
+                     background="peer-focus:bg-black dark:peer-focus:bg-white peer-focus:text-white dark:peer-focus:text-black"
+                     autoComplete="new-password"
+                  />
                </section>
                <div className="mt-5 flex justify-center gap-4">
                   <Button variant="outline" onClick={ResetClick}>

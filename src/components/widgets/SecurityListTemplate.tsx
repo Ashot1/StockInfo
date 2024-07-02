@@ -1,9 +1,7 @@
 import CustomPagination from '@/components/entity/CustomElements/CustomPagination'
-import DefaultList from '@/components/ui/DefaultList/DefaultList'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import DefaultList from '@/components/ui/Lists/DefaultList/DefaultList'
+import EmptyListText from '@/components/ui/Lists/DefaultList/EmptyListText'
 import { ReactNode } from 'react'
-import Search, { TSearch } from '@/components/widgets/Search'
-import Favorite from '@/components/widgets/Favorite'
 
 export default async function SecurityListTemplate({
    startIndex,

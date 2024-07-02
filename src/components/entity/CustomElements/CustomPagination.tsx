@@ -11,7 +11,7 @@ import {
    PaginationPrevious,
 } from '@/components/ui/ShadCN/pagination'
 import { usePathname } from 'next/navigation'
-import { PageStartCounter } from '@/utils/const'
+import { PageStartCounter } from '@/utils/config'
 import CalculatePagination from '@/utils/Pagination'
 
 const CustomPagination: FC<{

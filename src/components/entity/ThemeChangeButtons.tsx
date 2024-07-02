@@ -23,7 +23,7 @@ const ThemeChangeButtons: FC = () => {
    return (
       <div className="mt-10 flex w-full justify-center">
          <Select defaultValue={theme} onValueChange={(e) => setTheme(e)}>
-            <SelectTrigger className="h-14 w-full border-0 bg-secondary">
+            <SelectTrigger className="h-14 w-full border-0 bg-secondary/50">
                <SelectValue />
             </SelectTrigger>
             <SelectContent>

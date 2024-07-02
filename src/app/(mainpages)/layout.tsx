@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import MainHeader from '@/components/module/MainHeader'
-import AuthProvider from '@/hoc/AuthProvider'
-import { LocalStorageParameters, URLList } from '@/utils/const'
+import AuthProvider from '@/hoc/Providers/AuthProvider'
+import { LocalStorageParameters, URLList } from '@/utils/config'
 import StockIcon from '@/../public/Menu/stocks.svg'
 import NewsIcon from '@/../public/Menu/News.svg'
 import HomeIcon from '@/../public/Menu/home.svg'
@@ -17,6 +17,7 @@ import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
 import ControlPanel from '@/components/module/ControlPanel'
 import ThemeProvider from '@/hoc/ThemeProvider'
+import ReactQueryProvider from '@/hoc/Providers/ReactQueryProvider'
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },
@@ -63,27 +64,30 @@ export default async function MainPagesLayout({
                },
             }}
          >
-            <div>
-               <LocalSettingsChecker
-                  Params={LocalStorageParameters.glowBG}
-                  needAlert={true}
-                  textAlert={{
-                     title: 'Эффект свечения включен',
-                     text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
-                  }}
-               >
-                  <div className="glow-effect transform-gpu" />
-               </LocalSettingsChecker>
-               <MainHeader HeaderButtons={HeaderButtons} />
-               <ScrollStateBar />
-            </div>
-            <main
-               className="mb-10 mt-6 flex min-h-dvh flex-col
-                    px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]"
-            >
-               <ControlPanel />
-               {children}
-            </main>
+            <ReactQueryProvider>
+               <div>
+                  <LocalSettingsChecker
+                     Params={LocalStorageParameters.glowBG}
+                     needAlert={true}
+                     textAlert={{
+                        title: 'Эффект свечения включен',
+                        text: 'Если будут наблюдаться проблемы с производительностью вы сможете отключить его в настройках',
+                     }}
+                  >
+                     <div className="glow-effect transform-gpu" />
+                  </LocalSettingsChecker>
+                  <LocalSettingsChecker
+                     Params={LocalStorageParameters.staticHeaderMode}
+                  >
+                     <MainHeader HeaderButtons={HeaderButtons} />
+                  </LocalSettingsChecker>
+                  <ScrollStateBar />
+               </div>
+               <main className="mb-10 mt-6 flex min-h-dvh flex-col px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]">
+                  <ControlPanel />
+                  {children}
+               </main>
+            </ReactQueryProvider>
          </AuthProvider>
       </ThemeProvider>
    )

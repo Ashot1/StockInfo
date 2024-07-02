@@ -1,12 +1,6 @@
 'use client'
 
-import {
-   FC,
-   ForwardRefExoticComponent,
-   RefAttributes,
-   useContext,
-   useState,
-} from 'react'
+import { FC, ForwardRefExoticComponent, RefAttributes, useState } from 'react'
 import { DropdownMenuItem } from '@/components/ui/ShadCN/dropdown-menu'
 import {
    Dialog,
@@ -29,9 +23,9 @@ import {
 import { Avatar, AvatarImage } from '@/components/ui/ShadCN/avatar'
 import { DialogTriggerProps } from '@radix-ui/react-dialog'
 import { IconProps } from '@radix-ui/react-icons/dist/types'
-import { AuthContext } from '@/hoc/AuthProvider'
+import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import { usePathname, useRouter } from 'next/navigation'
-import { MobileScreen, URLList } from '@/utils/const'
+import { MobileScreen, URLList } from '@/utils/config'
 import SettingsModalContent from '@/components/widgets/SettingsModalContent'
 import ProfileModalContent from '@/components/widgets/ProfileModalContent'
 import { UserProfileInfo } from '@/types/Modals.types'
@@ -64,7 +58,7 @@ export default function MainMenuDropDown() {
 
    const center: string = 'flex items-center gap-2.5'
    const isMobile = useMatchMedia(MobileScreen)
-   const user = useContext(AuthContext).authInfo
+   const user = useAuthContext().authInfo
    const signWith = user.app_metadata.provider
    const verifyEmail = user.user_metadata.email_verified
 

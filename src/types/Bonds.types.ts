@@ -16,6 +16,8 @@ export type BondsHistory = {
    TRADEDATE: string
    OPEN: number
    CLOSE: number
+   MARKETPRICE2: number
+   MARKETPRICE3: number
 }
 
 export type BondsCursor = {

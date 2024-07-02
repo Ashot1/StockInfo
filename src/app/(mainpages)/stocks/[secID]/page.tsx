@@ -1,14 +1,14 @@
 import {
    getDividends,
    getStockMarketPrice,
-   getStockPriceList,
+   getStockPriceHistory,
 } from '@/actions/Security/Stocks'
-import SecurityTemplate from '@/components/module/SecurityTemplate'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import SecurityTemplate from '@/components/widgets/SecurityTemplate'
+import EmptyListText from '@/components/ui/Lists/DefaultList/EmptyListText'
 import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { DividendsRequest } from '@/types/Stocks.types'
 import { ConvertDate } from '@/utils/Date'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 import { getCurrentSecurity } from '@/actions/Security/CommonSecurity'
 
 export async function generateMetadata({
@@ -83,12 +83,12 @@ export default async function CurrentStock({
    const date = new Date()
    date.setMonth(date.getMonth() - 1)
 
-   const priceListReq = getStockPriceList({
+   const priceListReq = getStockPriceHistory({
       stock: secID,
       from: date.toISOString().substring(0, 10),
    })
 
-   const MarketDataReq = getStockMarketPrice(secID)
+   const MarketDataReq = getStockMarketPrice([secID])
 
    const [stockRes, dividentsRes, priceListRes, MarketDataRes] =
       await Promise.all([stockReq, dividentsReq, priceListReq, MarketDataReq])
@@ -125,7 +125,7 @@ export default async function CurrentStock({
             secID={secID}
             image={`${URLList.logos_stock}/${secID}.svg`}
             MarketData={{
-               last: MarketDataContent?.LAST,
+               last: MarketDataContent?.MARKETPRICE || MarketDataContent?.LAST,
                high: MarketDataContent?.HIGH,
                low: MarketDataContent?.LOW,
                open: MarketDataContent?.OPEN,

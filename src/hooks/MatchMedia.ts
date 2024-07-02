@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-export type TUseMatchMedia = (maxWidth: number) => boolean | null
+export type TUseMatchMedia = (maxWidth: number | string) => boolean | null
 
 export const useMatchMedia: TUseMatchMedia = (maxWidth) => {
    const [MatchState, setMatchState] = useState<boolean | null>(null)
@@ -10,7 +10,9 @@ export const useMatchMedia: TUseMatchMedia = (maxWidth) => {
    useEffect(() => {
       const checkSize = () => {
          const condition = window.matchMedia(
-            `(max-width: ${maxWidth}px)`
+            typeof maxWidth === 'number'
+               ? `(max-width: ${maxWidth}px)`
+               : maxWidth
          ).matches
 
          setMatchState(condition)

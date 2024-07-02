@@ -1,28 +1,23 @@
 'use client'
 
-import {
-   FC,
-   KeyboardEvent as KBevent,
-   ReactNode,
-   useEffect,
-   useRef,
-   useState,
-} from 'react'
+import { FC, KeyboardEvent as KBevent, ReactNode, useState } from 'react'
 import {
    CommandDialog,
    CommandEmpty,
    CommandInput,
    CommandList,
 } from '@/components/ui/ShadCN/command'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
-import FadedButton from '@/components/ui/FadedButton'
+import EmptyListText from '@/components/ui/Lists/DefaultList/EmptyListText'
+import FadedButton from '@/components/ui/Buttons/FadedButton'
 import { cn } from '@/utils/utils'
 import { THotKey, useHotKey } from '@/hooks/HotKeys'
+import { DialogDescription, DialogTitle } from '@/components/ui/ShadCN/dialog'
 
 export type TCustomCommand = {
    placeholder: string
    triggerText: string | ReactNode
    classNameTrigger?: string
+   header: { title: string; description: string }
    hotKey?: THotKey
    children?: ReactNode
    onSend: (value: string) => void
@@ -36,6 +31,7 @@ const CustomModalCommand: FC<TCustomCommand> = ({
    hotKey,
    children,
    onSend,
+   header,
    className,
 }) => {
    const [Open, setOpen] = useHotKey(hotKey)
@@ -57,6 +53,8 @@ const CustomModalCommand: FC<TCustomCommand> = ({
             {triggerText}
          </FadedButton>
          <CommandDialog open={Open} onOpenChange={() => setOpen(false)}>
+            <DialogTitle>{header.title}</DialogTitle>
+            <DialogDescription>{header.description}</DialogDescription>
             <CommandInput
                placeholder={placeholder}
                onKeyUp={EnterSearch}

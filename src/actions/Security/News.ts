@@ -1,6 +1,5 @@
 import { CurrentNewsRequest, NewsRequest } from '@/types/News.types'
 import { TryCatch } from '@/utils/utils'
-import { next } from 'sucrase/dist/types/parser/tokenizer'
 
 export async function getNews(start = '0') {
    return TryCatch<NewsRequest>(async () => {

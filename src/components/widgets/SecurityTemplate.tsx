@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 import CustomTabs, {
    TabsContentType,
 } from '@/components/entity/CustomElements/CustomTabs'
@@ -9,7 +9,7 @@ import { CurrentStockRequest } from '@/types/Stocks.types'
 import CustomChart from '@/components/entity/CustomElements/CustomChart'
 import { ConvertDate } from '@/utils/Date'
 import { ChartData, Point } from 'chart.js'
-import { PriceListType } from '@/types/Security.types'
+import { PriceHistoryType } from '@/types/Security.types'
 import { FavoritesListTypes } from '@/types/Auth.types'
 
 async function checkImageExists(imageUrl: string) {
@@ -26,7 +26,7 @@ export type SecurityTemplateProps = {
    data?: CurrentStockRequest
    error?: string
    type: FavoritesListTypes
-   priceList?: PriceListType[]
+   priceList?: PriceHistoryType[]
    MarketData?: Partial<{
       open: number
       low: number

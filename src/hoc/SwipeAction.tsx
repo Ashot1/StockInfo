@@ -1,7 +1,7 @@
 'use client'
 
 import { FC, ReactNode, useRef, type TouchEvent } from 'react'
-import { SwipeLength } from '@/utils/const'
+import { SwipeLength } from '@/utils/config'
 
 export type TSwipeAction = {
    children?: ReactNode

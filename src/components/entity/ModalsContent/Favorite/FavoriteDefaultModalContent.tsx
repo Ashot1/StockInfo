@@ -1,10 +1,10 @@
 'use client'
 
 import { FC, memo } from 'react'
-import { TFormatedFavoriteList } from '@/components/widgets/Favorite'
+import { TFormatedFavoriteList } from '@/components/module/Favorite'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Button } from '@/components/ui/ShadCN/button'
-import DefaultListItem from '@/components/ui/DefaultList/DefaultListItem'
+import DefaultListItem from '@/components/ui/Lists/DefaultList/DefaultListItem'
 import { DividerHorizontalIcon } from '@radix-ui/react-icons'
 import { getDataByType } from '@/utils/utils'
 

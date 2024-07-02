@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 import { CookieOptions, createServerClient } from '@supabase/ssr'
 import { updateSession } from '@/utils/supabase/middleware'
 

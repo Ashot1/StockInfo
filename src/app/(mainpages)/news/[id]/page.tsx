@@ -1,4 +1,4 @@
-import { URLList } from '@/utils/const'
+import { URLList } from '@/utils/config'
 import { raleway } from '@/utils/fonts'
 import ArrowSeparator from '@/components/ui/ArrowSeparator'
 import { redirect } from 'next/navigation'

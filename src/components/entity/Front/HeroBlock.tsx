@@ -4,7 +4,7 @@ import { CaretDownIcon } from '@radix-ui/react-icons'
 import { cn } from '@/utils/utils'
 import { russoOne } from '@/utils/fonts'
 import SmoothAppearanceWords from '@/components/ui/SmoothAppearanceWords'
-import PrettyButton from '@/components/ui/PrettyButton'
+import PrettyButton from '@/components/ui/Buttons/PrettyButton'
 
 export default function HeroBlock({
    className,

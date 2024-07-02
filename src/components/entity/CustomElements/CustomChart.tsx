@@ -1,7 +1,6 @@
 'use client'
-import { cn } from '@/utils/utils'
-import { useTheme } from 'next-themes'
 
+import { cn } from '@/utils/utils'
 import {
    Chart as ChartJS,
    ArcElement,
@@ -15,7 +14,7 @@ import {
    Filler,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { usePalette } from 'color-thief-react'
+import { usePalette } from '@/hooks/Colors'
 
 ChartJS.register(
    ArcElement,
@@ -38,12 +37,11 @@ export default function CustomChart({
    img,
    data,
 }: CustomChartProps) {
-   const { theme } = useTheme()
-   const { data: IMGdata, error } = usePalette(
-      img || '/StockPlaceHolder.png',
-      2,
-      'rgbArray'
-   )
+   const { data: IMGdata, error } = usePalette({
+      image: img || '/StockPlaceHolder.png',
+      mode: 'rgb',
+      quality: 5,
+   })
 
    return (
       <div
@@ -84,6 +82,7 @@ export default function CustomChart({
                maintainAspectRatio: false,
                plugins: {
                   tooltip: { multiKeyBackground: 'transparent' },
+                  legend: { display: false },
                },
                interaction: { intersect: false },
                scales: {

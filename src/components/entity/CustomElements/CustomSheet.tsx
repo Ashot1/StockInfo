@@ -4,6 +4,7 @@ import { FC, ReactNode } from 'react'
 import {
    Sheet,
    SheetContent,
+   SheetDescription,
    SheetHeader,
    SheetTitle,
    SheetTrigger,
@@ -15,6 +16,7 @@ import { THotKey, useHotKey } from '@/hooks/HotKeys'
 export type TCustomSheet = {
    TriggerText: string | ReactNode
    Title: string | ReactNode
+   Description?: string | ReactNode
    classNameTrigger?: string
    className?: string
    children?: ReactNode
@@ -28,6 +30,7 @@ const CustomSheet: FC<TCustomSheet> = ({
    className,
    children,
    hotKey,
+   Description,
 }) => {
    const [Open, setOpen] = useHotKey(hotKey)
 
@@ -39,6 +42,7 @@ const CustomSheet: FC<TCustomSheet> = ({
          <SheetContent className={cn('', className)}>
             <SheetHeader>
                <SheetTitle>{Title}</SheetTitle>
+               <SheetDescription>{Description}</SheetDescription>
             </SheetHeader>
             {children}
          </SheetContent>

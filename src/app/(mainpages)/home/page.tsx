@@ -1,14 +1,17 @@
-import BalanceInfo from '@/components/widgets/BalanceInfo'
-import Purchases from '@/components/widgets/Purchases'
-import HomeProvider from '@/hoc/HomeProvider'
+import BalanceInfo from '@/components/module/BalanceInfo'
+import Purchases from '@/components/module/Purchases'
+import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
+import { LocalStorageParameters } from '@/utils/config'
 
 export default async function Home() {
    return (
-      <HomeProvider>
-         <div className="mt-10 grid grid-cols-1 place-items-center gap-14 768p:mt-8">
-            <BalanceInfo />
+      <div className="mt-10 grid grid-cols-1 place-items-center gap-14 768p:mt-8">
+         <BalanceInfo />
+         <LocalSettingsChecker
+            Params={LocalStorageParameters.purchaseAnimation}
+         >
             <Purchases />
-         </div>
-      </HomeProvider>
+         </LocalSettingsChecker>
+      </div>
    )
 }

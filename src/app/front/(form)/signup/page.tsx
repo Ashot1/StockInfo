@@ -1,10 +1,10 @@
 'use client'
 
-import BaseInput from '@/components/ui/BaseInput'
+import BaseInput from '@/components/ui/Inputs/BaseInput'
 import toast from 'react-hot-toast'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import { AuthFormPatterns, URLList } from '@/utils/const'
+import { AuthFormPatterns, URLList } from '@/utils/config'
 import { Button } from '@/components/ui/ShadCN/button'
 import Link from 'next/link'
 import ProvidersBlock from '@/app/front/(form)/ProvidersBlock'
@@ -38,7 +38,7 @@ export default function RegisterPage() {
          return toast.error(error || 'Ошибка регистрации', { id: toastID })
 
       toast.success('Вы успешно зарегистрировались', { id: toastID })
-      router.push(URLList.home)
+      router.refresh()
    }
 
    return (

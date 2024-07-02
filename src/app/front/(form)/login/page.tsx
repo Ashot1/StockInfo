@@ -1,10 +1,10 @@
 'use client'
 
-import BaseInput from '@/components/ui/BaseInput'
+import BaseInput from '@/components/ui/Inputs/BaseInput'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/ShadCN/button'
 import { useRouter } from 'next/navigation'
-import { AuthFormPatterns, URLList } from '@/utils/const'
+import { AuthFormPatterns, URLList } from '@/utils/config'
 import { LoginWithPassword } from '@/actions/Account/Auth'
 import toast from 'react-hot-toast'
 import Link from 'next/link'
@@ -29,7 +29,7 @@ export default function LoginPage() {
          return toast.error(error || 'Ошибка входа', { id: toastID })
 
       toast.success('Успешный вход', { id: toastID })
-      router.push(URLList.home)
+      router.refresh()
    }
 
    return (

@@ -1,12 +1,12 @@
 import NewsListItem from '@/components/ui/NewsListItem'
-import { PageStartCounter, URLList } from '@/utils/const'
+import { PageStartCounter, URLList } from '@/utils/config'
 import { Metadata } from 'next'
 import CustomPagination from '@/components/entity/CustomElements/CustomPagination'
 import { getNews } from '@/actions/Security/News'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
 import CalculatePagination from '@/utils/Pagination'
-import EmptyListText from '@/components/ui/DefaultList/EmptyListText'
+import EmptyListText from '@/components/ui/Lists/DefaultList/EmptyListText'
 
 export const metadata: Metadata = {
    title: 'Новости',
@@ -66,8 +66,7 @@ const MainContent = async ({ start }: { start?: string }) => {
          <SwipeNavigator
             next={nextLink}
             prev={prevLink}
-            className="my-5 flex flex-1 flex-col
-                rounded-2xl border-2 bg-neutral-300/40 p-2 opacity-85 dark:bg-neutral-900/50 500p:ml-0 500p:w-full 768p:p-4"
+            className="my-5 flex flex-1 flex-col rounded-2xl border-2 bg-neutral-300/40 p-2 opacity-85 dark:bg-neutral-900/50 500p:ml-0 500p:w-full 768p:p-4"
          >
             {siteNews.length <= 0 && <EmptyListText text="Пусто" />}
 

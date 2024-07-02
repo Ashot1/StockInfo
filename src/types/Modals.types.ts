@@ -1,9 +1,14 @@
 import { InputHTMLAttributes, ReactNode } from 'react'
-import { DrawerHeader, DrawerTitle } from '@/components/ui/ShadCN/drawer'
+import {
+   DrawerDescription,
+   DrawerHeader,
+   DrawerTitle,
+} from '@/components/ui/ShadCN/drawer'
 import { TConfirmMessage } from '@/components/entity/CongirmMessage'
 
 export interface IModalContent {
    title: string
+   description?: string
    AnotherHeader?: ReactNode
    AnotherFooter?: ReactNode
    children?: ReactNode
@@ -13,6 +18,7 @@ export interface IModalContent {
 export type TModalSubContent = Omit<IModalContent, 'type'> & {
    HeaderComponent: typeof DrawerHeader
    HeaderTitleComponent: typeof DrawerTitle
+   DescriptionComponent: typeof DrawerDescription
 }
 
 export type ModalContent = {
