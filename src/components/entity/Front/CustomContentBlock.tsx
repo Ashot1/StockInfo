@@ -24,7 +24,10 @@ export default async function CustomContentBlock({
          className={cn('relative grid place-items-center', className)}
          id={id}
       >
-         <section className="grid grid-cols-1 place-items-center gap-16 768p:grid-cols-2">
+         <section
+            className="grid grid-cols-1 place-items-center gap-16 768p:grid-cols-2"
+            aria-label="Блок с информацией"
+         >
             <div
                className={cn(
                   'relative grid animate-appearance grid-cols-1 gap-4',
@@ -33,6 +36,7 @@ export default async function CustomContentBlock({
             >
                <FrontTitle>{text.title}</FrontTitle>
                <p
+                  aria-label="Описание"
                   className={cn(
                      'text-pretty text-center text-sm fill-mode-forwards 1024p:text-base',
                      comfortaa.className,
@@ -61,7 +65,9 @@ export default async function CustomContentBlock({
                   : '-top-[10%] 500p:-top-60 768p:-left-[60dvw] 768p:bottom-32 1024p:-left-[30%] 4k:left-[10%] 4k:top-0'
             )}
          >
-            {gradient && <Image src={gradient} alt="gradient" />}
+            {gradient && (
+               <Image src={gradient} alt="gradient" aria-hidden={true} />
+            )}
          </span>
       </div>
    )

@@ -10,6 +10,7 @@ export type FrontText = HTMLAttributes<HTMLParagraphElement> & MotionProps
 const FrontText: FC<FrontText> = ({ className, children, ...props }) => {
    return (
       <motion.p
+         aria-label="Описание"
          className={cn(
             'z-20 overflow-hidden text-pretty rounded-2xl p-4 text-sm backdrop-blur 1024p:text-base',
             comfortaa.className,

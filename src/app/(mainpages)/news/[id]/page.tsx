@@ -86,7 +86,7 @@ const MainContent = async ({ id }: { id: string }) => {
             prev="RouterBack"
             className={`w-full text-pretty text-center text-lg ${raleway.className}`}
          >
-            <p dangerouslySetInnerHTML={{ __html: title }}></p>
+            <h2 dangerouslySetInnerHTML={{ __html: title }}></h2>
             <AddToFavorite
                secID={id}
                type="News"
@@ -95,13 +95,16 @@ const MainContent = async ({ id }: { id: string }) => {
             />
             <ArrowSeparator />
          </SwipeNavigator>
-         <span className="m-0 mb-3 flex w-full items-center justify-start gap-1 text-xs opacity-50">
+         <span
+            className="m-0 mb-3 flex w-full items-center justify-start gap-1 text-xs opacity-50"
+            aria-label="Дата написания"
+         >
             <FilePlusIcon />
             {ConvertDate(publishedAt)}
          </span>
          <div
-            className="styledNewsContent overflow-x-auto rounded-lg bg-neutral-200
-          bg-opacity-20 p-3 text-sm shadow dark:bg-neutral-900 dark:bg-opacity-50 768p:p-6"
+            aria-label="Содержимое новости"
+            className="styledNewsContent overflow-x-auto rounded-lg bg-neutral-200 bg-opacity-20 p-3 text-sm shadow dark:bg-neutral-900 dark:bg-opacity-50 768p:p-6"
             dangerouslySetInnerHTML={{
                __html: body,
             }}

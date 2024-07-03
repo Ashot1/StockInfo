@@ -34,11 +34,12 @@ const SmoothAppearanceWords: FC<SmoothAppearanceWords> = ({
    const currentWord = words[CurrentIndex]
 
    return (
-      <div className={cn('', className)}>
+      <div className={cn('', className)} aria-label={currentWord}>
          {currentWord.split(' ').map((word, index) => {
             const delay = 100 * index * 2
             return (
                <p
+                  aria-hidden={true}
                   key={`${word}${index}`}
                   className={cn(
                      `delay-${delay} animate-appearance opacity-0 fill-mode-forwards`,

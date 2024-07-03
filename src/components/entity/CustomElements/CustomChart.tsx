@@ -30,12 +30,14 @@ export type CustomChartProps = {
    className?: string
    img?: string
    data: ChartData<'line', (number | Point | null)[], unknown>
+   ariaLabel?: string
 }
 
 export default function CustomChart({
    className,
    img,
    data,
+   ariaLabel,
 }: CustomChartProps) {
    const { data: IMGdata, error } = usePalette({
       image: img || '/StockPlaceHolder.png',
@@ -56,6 +58,7 @@ export default function CustomChart({
                   ? 'transparent'
                   : `rgb(${IMGdata[1][0]}, ${IMGdata[1][1]}, ${IMGdata[1][2]}, .1)`,
          }}
+         aria-label={ariaLabel}
       >
          <Line
             data={data}

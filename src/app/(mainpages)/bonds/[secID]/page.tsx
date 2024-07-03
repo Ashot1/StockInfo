@@ -154,7 +154,11 @@ const CouponsList = ({ CouponsData }: { CouponsData: CouponsRequest }) => {
 
    return (
       <div className="500p:px-[10%]">
-         <CustomTable header={header} content={content} />
+         <CustomTable
+            header={header}
+            content={content}
+            caption="Таблица с выплатами купонов этой облигации"
+         />
       </div>
    )
 }

@@ -56,8 +56,18 @@ export default function SecurityFace({
                      : 'text-center'
                )}
             >
-               <p className="mb-1 text-sm 768p:text-base">{secTitle}</p>
-               <p className="text-xs opacity-45 768p:text-sm">{secCode}</p>
+               <p
+                  aria-label="Название бумаги"
+                  className="mb-1 text-sm 768p:text-base"
+               >
+                  {secTitle}
+               </p>
+               <p
+                  aria-label="Код бумаги"
+                  className="text-xs opacity-45 768p:text-sm"
+               >
+                  {secCode}
+               </p>
             </span>
             {type && (
                <AddToFavorite

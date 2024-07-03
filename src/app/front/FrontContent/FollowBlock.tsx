@@ -36,7 +36,10 @@ const FollowBlock: FC<{ id: string }> = async ({ id }) => {
             title: 'Будь в курсе рыночных тенденций',
          }}
       >
-         <div className="rotateCard z-20 rounded-2xl border-2 border-primary/40 bg-primary/10 p-5 shadow-2xl shadow-white/10">
+         <div
+            className="rotateCard z-20 rounded-2xl border-2 border-primary/40 bg-primary/10 p-5 shadow-2xl shadow-white/10"
+            aria-label="Визуальное представление"
+         >
             <SecurityFace
                className="translateZFromCard"
                secID={Securities[0].secID}
@@ -47,6 +50,7 @@ const FollowBlock: FC<{ id: string }> = async ({ id }) => {
             />
          </div>
          <div
+            aria-label="Визуальное представление"
             className={cn(
                'rotateCard grid grid-cols-2 text-lg',
                russoOne.className

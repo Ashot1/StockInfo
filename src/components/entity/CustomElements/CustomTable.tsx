@@ -21,9 +21,13 @@ export default function CustomTable({
       <Table>
          {caption && <TableCaption>{caption}</TableCaption>}
          <TableHeader className="[&_tr]:border-b-0">
-            <TableRow>
+            <TableRow aria-label="Наименования колонок">
                {header.map((item, index) => (
-                  <TableHead key={index} className="last:text-end">
+                  <TableHead
+                     key={index}
+                     className="last:text-end"
+                     aria-label={item.text}
+                  >
                      {item.text}
                   </TableHead>
                ))}
@@ -31,9 +35,13 @@ export default function CustomTable({
          </TableHeader>
          <TableBody>
             {content.map((row, index) => (
-               <TableRow key={index} className="border-b-0">
+               <TableRow key={index} className="border-b-0" tabIndex={0}>
                   {row.map((col) => (
-                     <TableCell className="last:text-end" key={`col-${index}`}>
+                     <TableCell
+                        className="last:text-end"
+                        key={`col-${index}`}
+                        aria-label={col}
+                     >
                         {col}
                      </TableCell>
                   ))}

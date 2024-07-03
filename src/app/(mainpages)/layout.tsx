@@ -15,9 +15,10 @@ import {
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
 import LocalSettingsChecker from '@/hoc/LocalSettingsChecker'
-import ControlPanel from '@/components/module/ControlPanel'
 import ThemeProvider from '@/hoc/ThemeProvider'
 import ReactQueryProvider from '@/hoc/Providers/ReactQueryProvider'
+import dynamic from 'next/dynamic'
+const ControlPanel = dynamic(() => import('@/components/module/ControlPanel'))
 
 const HeaderButtons = [
    { text: 'Новости', icon: NewsIcon, link: URLList.news },

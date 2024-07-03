@@ -28,7 +28,10 @@ export default async function ImageBlock({
                bgClass
             )}
          >
-            <section className="grid h-full w-full grid-cols-1 place-items-center bg-[#121212]/50 px-[10%] 768p:grid-cols-2 768p:bg-[#121212]/80 1080p:px-[20%]">
+            <section
+               className="grid h-full w-full grid-cols-1 place-items-center bg-[#121212]/50 px-[10%] 768p:grid-cols-2 768p:bg-[#121212]/80 1080p:px-[20%]"
+               aria-label="Блок с информацией"
+            >
                <FrontTitle
                   className={cn(
                      'z-20 px-4 py-2',
@@ -47,7 +50,7 @@ export default async function ImageBlock({
                   {text.content}
                </FrontText>
                <span className="absolute z-10 768p:right-4">
-                  <Image src={gradient} alt="gradient" />
+                  <Image src={gradient} alt="gradient" aria-hidden={true} />
                </span>
             </section>
          </div>

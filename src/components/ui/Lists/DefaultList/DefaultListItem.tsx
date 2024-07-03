@@ -40,21 +40,32 @@ export default function DefaultListItem({
                      `rounded bg-transparent dark:bg-transparent`,
                      onErrorClass
                   )}
-                  alt={subtext || 'Logo'}
+                  alt={`Логотип ${subtext}` || 'Логотип'}
                />
             </span>
             <span>
-               <p className="clipText break-words text-xs 300p:text-sm 768p:text-base">
+               <p
+                  className="clipText break-words text-xs 300p:text-sm 768p:text-base"
+                  aria-label={text}
+               >
                   {text}
                </p>
                {subtext && (
-                  <p className="text-xs opacity-50 768p:text-sm">{subtext}</p>
+                  <p
+                     className="text-xs opacity-50 768p:text-sm"
+                     aria-label={subtext}
+                  >
+                     {subtext}
+                  </p>
                )}
             </span>
          </div>
          <div className="max-w-[50%]">
             {rightText && (
-               <p className="text-nowrap text-end text-xs 300p:text-sm 768p:text-base">
+               <p
+                  className="text-nowrap text-end text-xs 300p:text-sm 768p:text-base"
+                  aria-label={`${rightText}`}
+               >
                   {rightText}
                </p>
             )}
@@ -87,7 +98,9 @@ export default function DefaultListItem({
          {content}
       </Link>
    ) : (
-      <div className={cn(defaultClass, className)}>{content}</div>
+      <div className={cn(defaultClass, className)} tabIndex={0}>
+         {content}
+      </div>
    )
 }
 

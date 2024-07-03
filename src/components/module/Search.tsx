@@ -10,6 +10,7 @@ import {
 } from '@/types/Security.types'
 import toast from 'react-hot-toast'
 import DefaultListItem from '@/components/ui/Lists/DefaultList/DefaultListItem'
+import { useRouter } from 'next/navigation'
 
 export type TSearch = {
    searchRequest: (
@@ -31,6 +32,8 @@ const Search: FC<TSearch & Pick<any, any>> = ({
    const [SearchData, setSearchData] = useState<
       SecuritySearchData[] | undefined
    >(undefined)
+
+   const router = useRouter()
 
    const sendFunc = (value: string) => {
       searchRequest(value).then(({ data, error }) => {
@@ -65,10 +68,10 @@ const Search: FC<TSearch & Pick<any, any>> = ({
                   <CommandItem
                      key={item.secid}
                      className="cursor-pointer aria-selected:bg-transparent"
+                     onSelect={() => router.push(`${url}/${item.secid}`)}
                   >
                      <DefaultListItem
                         defaultIMG={defaultSRC || '/StockPlaceHolder.png'}
-                        url={`${url}/${item.secid}`}
                         text={item.shortname}
                         subtext={item.secid}
                         img={`${imgURL}/${item.secid}.${imgType}`}

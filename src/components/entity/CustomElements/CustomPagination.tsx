@@ -89,14 +89,20 @@ const CustomPagination: FC<{
    const minEllipsisLink = pathname + `?start=0`
 
    return (
-      <Pagination className={animated ? 'animate-appearance' : ''}>
+      <Pagination
+         className={animated ? 'animate-appearance' : ''}
+         aria-label="Навигация по страницам (пагинация)"
+      >
          <PaginationContent className={className}>
             <PaginationItem>
                <PaginationPrevious href={prevLink} />
             </PaginationItem>
             {needEllipsisMin && (
                <PaginationItem>
-                  <PaginationLink href={minEllipsisLink}>
+                  <PaginationLink
+                     href={minEllipsisLink}
+                     aria-label="Первая страница"
+                  >
                      <PaginationEllipsis />
                   </PaginationLink>
                </PaginationItem>
@@ -104,7 +110,10 @@ const CustomPagination: FC<{
             {...buttons}
             {needEllipsisMax && (
                <PaginationItem>
-                  <PaginationLink href={maxEllipsisLink}>
+                  <PaginationLink
+                     href={maxEllipsisLink}
+                     aria-label="Последняя страница"
+                  >
                      <PaginationEllipsis />
                   </PaginationLink>
                </PaginationItem>

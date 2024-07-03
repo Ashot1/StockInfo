@@ -39,6 +39,7 @@ const FavoriteDefaultModalContent: FC<{
             <AnimatePresence>
                {EditMode && (
                   <MotionButton
+                     aria-label={`Удалить ${item.SECID} из избранного`}
                      initial={{ scale: 0 }}
                      animate={{ scale: 1 }}
                      exit={{ scale: 0 }}

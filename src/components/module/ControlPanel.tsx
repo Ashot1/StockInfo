@@ -1,4 +1,5 @@
 'use client'
+
 import BackButton from '@/components/entity/BackButton'
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { usePathname } from 'next/navigation'
@@ -18,14 +19,14 @@ const ControlPanel = () => {
    const { user_metadata } = useAuthContext().authInfo
 
    const homeTitleContent = (
-      <span className="max-w-[50%]">
-         <p className="text-xs opacity-50 768p:text-center 768p:text-sm">
+      <h2 className="grid max-w-[50%] grid-cols-1">
+         <span className="text-xs opacity-50 768p:text-center 768p:text-sm">
             Добро пожаловать
-         </p>
-         <p className="truncate bg-gradient-to-r from-[#4c6ca8] to-[#b94e76] bg-clip-text text-transparent 768p:text-center 768p:text-lg">
+         </span>
+         <span className="truncate bg-gradient-to-r from-[#4c6ca8] to-[#b94e76] bg-clip-text text-transparent 768p:text-center 768p:text-lg">
             {user_metadata.full_name}
-         </p>
-      </span>
+         </span>
+      </h2>
    )
 
    const PathContent: {

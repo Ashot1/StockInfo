@@ -15,6 +15,7 @@ import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import { FavoritesListTypes } from '@/types/Auth.types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/utils/config'
+import { DialogDescription, DialogTitle } from '@/components/ui/ShadCN/dialog'
 
 export type TransactionsButtonsProps = Omit<
    TransactionsBuyModalContentProps,
@@ -92,6 +93,12 @@ const BuyMenuButtons: FC<TransactionsButtonsProps> = ({
             classNameTrigger="px-4 py-1.5 text-sm border-2 border-transparent hover:border-[var(--grayBG)] sticky top-2"
          >
             <DialogBody>
+               <DialogTitle className="h-0 overflow-hidden">
+                  Приобретение активов
+               </DialogTitle>
+               <DialogDescription className="h-0 overflow-hidden">
+                  Покупка акции, облигации или валюты
+               </DialogDescription>
                <BuyMenuModalContent
                   secID={secID}
                   secTitle={secTitle}
@@ -109,6 +116,12 @@ const BuyMenuButtons: FC<TransactionsButtonsProps> = ({
             classNameTrigger="bg-primary text-primary-foreground shadow hover:bg-primary/90 px-4 py-1.5 text-sm"
          >
             <DialogBody>
+               <DialogTitle className="h-0 overflow-hidden">
+                  Продажа активов
+               </DialogTitle>
+               <DialogDescription className="h-0 overflow-hidden">
+                  Реализуйте акции, облигации и валюту.
+               </DialogDescription>
                <BuyMenuModalContent
                   secID={secID}
                   secTitle={secTitle}

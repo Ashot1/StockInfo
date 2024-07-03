@@ -76,6 +76,7 @@ const AddToFavorite: FC<TFavoritesList & { className?: string }> = ({
 
    return (
       <Button
+         aria-label="Добавить в избранное"
          variant="ghost"
          className={className}
          onClick={() =>

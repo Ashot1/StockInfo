@@ -20,7 +20,8 @@ export type TabsContentType = {
 
 const CustomTabs: FC<{
    content: TabsContentType[]
-}> = ({ content }) => {
+   ariaLabel?: string
+}> = ({ content, ariaLabel }) => {
    const [Value, setValue] = useState(content[0].value)
 
    const NextSwipe = () => {
@@ -47,7 +48,10 @@ const CustomTabs: FC<{
          value={Value}
          onValueChange={(value) => setValue(value)}
       >
-         <TabsList className="mb-12 flex w-full flex-wrap gap-2 bg-transparent 300p:mb-9">
+         <TabsList
+            className="mb-12 flex w-full flex-wrap gap-2 bg-transparent 300p:mb-9"
+            aria-label={ariaLabel}
+         >
             {content.map((info) => (
                <TabsTrigger
                   key={info.value}

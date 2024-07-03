@@ -78,7 +78,7 @@ export default async function CurrentStock({
    params: { secID: string }
 }) {
    const stockReq = getCurrentSecurity(secID)
-   const dividentsReq = getDividends(secID)
+   const dividendsReq = getDividends(secID)
 
    const date = new Date()
    date.setMonth(date.getMonth() - 1)
@@ -91,19 +91,19 @@ export default async function CurrentStock({
    const MarketDataReq = getStockMarketPrice([secID])
 
    const [stockRes, dividentsRes, priceListRes, MarketDataRes] =
-      await Promise.all([stockReq, dividentsReq, priceListReq, MarketDataReq])
+      await Promise.all([stockReq, dividendsReq, priceListReq, MarketDataReq])
 
    const { data, error } = stockRes
    const { data: DividendsData, error: DividendsError } = dividentsRes
    const { data: PriceList, error: PriceListError } = priceListRes
    const { data: MarketData, error: MarketDataError } = MarketDataRes
 
-   const dividentContent = {
+   const dividendContent = {
       name: 'Дивиденты',
       value: 'dividends',
       component:
          DividendsData && !DividendsError ? (
-            <DividentsList DividendsData={DividendsData} />
+            <DividendsList DividendsData={DividendsData} />
          ) : (
             <EmptyListText text={DividendsError || 'Не найдено'} />
          ),
@@ -121,7 +121,7 @@ export default async function CurrentStock({
             type="Stock"
             data={data}
             error={error}
-            secondsContent={dividentContent}
+            secondsContent={dividendContent}
             secID={secID}
             image={`${URLList.logos_stock}/${secID}.svg`}
             MarketData={{
@@ -136,7 +136,7 @@ export default async function CurrentStock({
 }
 
 // Another component
-const DividentsList = ({
+const DividendsList = ({
    DividendsData,
 }: {
    DividendsData: DividendsRequest
@@ -152,7 +152,11 @@ const DividentsList = ({
 
    return (
       <div className="500p:px-[10%]">
-         <CustomTable header={header} content={content} />
+         <CustomTable
+            header={header}
+            content={content}
+            caption="Таблица с дивидентными выплатами этой акции"
+         />
       </div>
    )
 }

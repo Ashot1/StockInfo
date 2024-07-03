@@ -57,6 +57,7 @@ const Info: FC<InfoProps> = ({
 
    return (
       <CustomTable
+         caption="Таблица с подробной информацией о транзакции"
          header={[{ text: 'Параметр' }, { text: 'Значение' }]}
          content={[
             ['Тип транзакции', transaction_type],

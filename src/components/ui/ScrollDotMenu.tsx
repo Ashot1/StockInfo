@@ -37,11 +37,9 @@ export default function ScrollDotMenu({
    ...props
 }: ScrollDotMenuProps) {
    return (
-      <div
+      <nav
          className={cn(
-            `translateCenter absolute z-30 flex animate-scaling gap-4 rounded-full
-            border border-primary/10 bg-primary/5 duration-300 hover:border-primary/15 hover:bg-primary/10
-            500p:gap-2`,
+            `translateCenter absolute z-30 flex animate-scaling gap-4 rounded-full border border-primary/10 bg-primary/5 duration-300 hover:border-primary/15 hover:bg-primary/10 500p:gap-2`,
             direction === 'top' || direction === 'bottom'
                ? 'px-4 py-2'
                : 'flex-col px-2 py-4',
@@ -54,6 +52,7 @@ export default function ScrollDotMenu({
          {links?.map((link) => {
             return (
                <Link
+                  aria-label={link}
                   replace
                   key={link}
                   href={link}
@@ -64,6 +63,6 @@ export default function ScrollDotMenu({
                />
             )
          })}
-      </div>
+      </nav>
    )
 }

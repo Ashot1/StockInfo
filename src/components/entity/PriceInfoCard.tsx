@@ -11,10 +11,10 @@ export default function PriceInfoCard({
    className,
 }: PriceInfoCardProps) {
    const info = [
-      { name: 'Мин', value: MarketData?.low },
-      { name: 'Макс', value: MarketData?.high },
-      { name: 'Откр', value: MarketData?.open },
-      { name: 'Пред', value: MarketData?.prev },
+      { name: 'Мин', value: MarketData?.low, label: 'Минимальная цена' },
+      { name: 'Макс', value: MarketData?.high, label: 'Максимальная цена' },
+      { name: 'Откр', value: MarketData?.open, label: 'Цена открытия' },
+      { name: 'Пред', value: MarketData?.prev, label: 'Предыдущая цена' },
    ]
 
    const current_price = convertMoney(MarketData?.last || 0)
@@ -31,13 +31,22 @@ export default function PriceInfoCard({
             className
          )}
       >
-         <p className="text-sm text-black/60 dark:text-white/40">Цена</p>
+         <p
+            aria-label="Название блока"
+            className="text-sm text-black/60 dark:text-white/40"
+         >
+            Цена
+         </p>
          <span className="flex">
-            <h2 className={cn('text-lg dark:text-white', nunito.className)}>
+            <h2
+               aria-label="Текущая цена"
+               className={cn('text-lg dark:text-white', nunito.className)}
+            >
                {current_price}
             </h2>
             {definition && (
                <p
+                  aria-label="Разница цены открытия и последней цены"
                   className={cn(
                      'ml-2 flex items-center text-sm font-bold',
                      definition > 0 ? 'text-green-700' : 'text-red-800'
@@ -57,7 +66,7 @@ export default function PriceInfoCard({
             {info.map((item) => {
                if (!item.value) return ''
                return (
-                  <p key={item.name}>
+                  <p key={item.name} aria-label={item.label}>
                      {item.name}: {item.value}
                   </p>
                )

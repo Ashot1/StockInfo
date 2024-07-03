@@ -13,7 +13,7 @@ const TripleDropDown: FC<{ children: ReactNode }> = ({ children }) => {
 
    return (
       <DropdownMenu open={Active} onOpenChange={setActive}>
-         <DropdownMenuTrigger>
+         <DropdownMenuTrigger aria-label="Выпадающее меню">
             <TripleMenu
                dopClassRows={`bg-main transition-all group-hover:shadow-[0_0_15px_var(--Main)] duration-200`}
                Active={Active}

@@ -29,6 +29,11 @@ export type CustomCircleChartProps = Omit<
    legendPosition?: 'bottom' | 'right'
 }
 
+type CustomOptions = ChartOptions<'doughnut'> & {
+   main: string
+   second: string
+}
+
 const CustomCircleChart: FC<CustomCircleChartProps> = ({
    data,
    className,
@@ -38,7 +43,7 @@ const CustomCircleChart: FC<CustomCircleChartProps> = ({
    colors: { main, second },
    ...props
 }) => {
-   const options: ChartOptions<'doughnut'> = {
+   const options: CustomOptions = {
       maintainAspectRatio: false,
       borderColor: 'transparent',
       plugins: {
@@ -54,6 +59,8 @@ const CustomCircleChart: FC<CustomCircleChartProps> = ({
          },
       },
       cutout: '97%',
+      main,
+      second,
    }
 
    const textCenterPainter: Plugin<'doughnut'> = {
@@ -64,7 +71,10 @@ const CustomCircleChart: FC<CustomCircleChartProps> = ({
 
          const { top, height, left, width } = chart.chartArea
 
-         ctx.fillStyle = main
+         const { main: mainColor, second: secondColor } =
+            chart.options as CustomOptions
+
+         ctx.fillStyle = mainColor
          ctx.font = `24px serif`
          ctx.textAlign = 'center'
          ctx.fillText(textCenter.mainText, width / 2, top + height / 2)
@@ -76,7 +86,7 @@ const CustomCircleChart: FC<CustomCircleChartProps> = ({
          const ySpace =
             metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent
 
-         ctx.fillStyle = second
+         ctx.fillStyle = secondColor
          ctx.font = `18px serif`
          ctx.textAlign = 'center'
          ctx.fillText(textCenter.subText, width / 2, top + height / 2 - ySpace)

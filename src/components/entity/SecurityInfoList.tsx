@@ -7,7 +7,10 @@ export default function SecurityInfoList({
    currencyList: CurrentStockDescription[]
 }) {
    return (
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2">
+      <section
+         className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-2"
+         aria-hidden={true}
+      >
          {currencyList.map((currency) => {
             return (
                <InfoPlaceHolder

@@ -50,6 +50,7 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
 
    return (
       <motion.header
+         aria-hidden={true}
          initial={{ y: direction }}
          animate={{ y: IsHidden ? direction : 0 }}
          transition={{ duration: 0.4 }}
@@ -67,6 +68,7 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
                   variant="filled"
                   color="var(--Main)"
                   className="h-[20px]"
+                  ariaLabel="Переход на главную страницу (логотип)"
                />
             </Link>
             <Buttons HeaderButtons={HeaderButtons} />

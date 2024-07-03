@@ -98,12 +98,16 @@ export default async function SecurityTemplate({
          />
          {priceData && (
             <CustomChart
+               ariaLabel="График цены"
                img={isValid ? image : '/StockPlaceHolder.png'}
                data={priceData}
                className={isValid ? '' : 'dark:invert'}
             />
          )}
-         <CustomTabs content={Info} />
+         <CustomTabs
+            content={Info}
+            ariaLabel="Переключение между вкладками информации"
+         />
       </div>
    )
 }

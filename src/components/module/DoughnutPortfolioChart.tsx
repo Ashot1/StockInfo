@@ -12,6 +12,7 @@ import ErrorMessage from '@/components/ui/ErrorMessage'
 import { useMatchMedia } from '@/hooks/MatchMedia'
 import { MobileScreen } from '@/utils/config'
 import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
+import Loader from '@/components/ui/Loaders/loader'
 
 const DoughnutPortfolioChart: FC = () => {
    const {
@@ -20,7 +21,7 @@ const DoughnutPortfolioChart: FC = () => {
       loading: ContextLoading,
    } = useHomeContext()
 
-   const { theme } = useTheme()
+   const { resolvedTheme } = useTheme()
 
    const isMobile = useMatchMedia(MobileScreen)
 
@@ -60,15 +61,29 @@ const DoughnutPortfolioChart: FC = () => {
       mode: 'rgb',
    })
 
-   if (ContextLoading || loading) return <CenterScreenLoader />
+   const height = `${(isMobile ? 300 : 100) + (purchases?.length || 5) * 30}px`
+
+   if (ContextLoading || loading || !Colors || Colors?.length <= 0)
+      return (
+         <div style={{ height }} className="grid place-items-center">
+            <Loader />
+         </div>
+      )
    if (ContextError || !purchases || !auth.transactions)
       return (
-         <ErrorMessage errMessage={ContextError || 'Ошибка получения данных'} />
+         <ErrorMessage
+            errMessage={ContextError || 'Ошибка получения данных'}
+            style={{ height }}
+         />
       )
 
-   if (error) return <ErrorMessage errMessage={error || 'Цвета не найдены'} />
-
-   if (!Colors || Colors?.length <= 0) return
+   if (error)
+      return (
+         <ErrorMessage
+            errMessage={error || 'Цвета не найдены'}
+            style={{ height }}
+         />
+      )
 
    const data: ChartData<'doughnut', number[], unknown> = {
       labels: purchases.map((p) => p.SHORTNAME),
@@ -84,10 +99,11 @@ const DoughnutPortfolioChart: FC = () => {
       ],
    }
 
-   const color = theme === 'dark' ? 'rgb(255,255,255,0.9)' : 'rgb(0,0,0,0.9)'
+   const color =
+      resolvedTheme === 'dark' ? 'rgb(255,255,255,0.9)' : 'rgb(0,0,0,0.9)'
 
    const SecondColor =
-      theme === 'dark' ? 'rgb(255,255,255,0.3)' : 'rgb(0,0,0,0.3)'
+      resolvedTheme === 'dark' ? 'rgb(255,255,255,0.3)' : 'rgb(0,0,0,0.3)'
 
    const generateLabels = (chart: Chart) => {
       const datasets = chart.data.datasets
@@ -105,10 +121,12 @@ const DoughnutPortfolioChart: FC = () => {
       <div
          className="grid min-h-[20dvh] w-full place-items-center 300p:px-6 500p:px-[10%] 768p:px-0"
          style={{
-            height: `${(isMobile ? 300 : 100) + purchases.length * 30}px`,
+            height: height,
+            minHeight: height,
          }}
       >
          <CustomCircleChart
+            aria-label="Диаграмма по состоянию счета"
             data={data}
             textCenter={{ mainText: convertMoney(summary), subText: 'Баланс' }}
             colors={{ main: color, second: SecondColor }}

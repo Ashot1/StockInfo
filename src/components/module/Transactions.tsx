@@ -46,7 +46,7 @@ const Transactions: FC = () => {
    const modalType = isMobile ? 'Drawer' : 'Dialog'
 
    return (
-      <div>
+      <div aria-label="Список транзакций">
          {Object.entries(FormatedTransactions).map(
             ([date, transactionList]) => {
                return (
@@ -75,7 +75,10 @@ const List: FC<{
    modalType: 'Drawer' | 'Dialog'
 }> = ({ transactionList, date, modalType }) => {
    return (
-      <ul className="mt-2 flex w-full flex-col gap-4">
+      <ul
+         className="mt-2 flex w-full flex-col gap-4"
+         aria-label="Список транзакций за дату"
+      >
          {transactionList.map(
             ({
                transaction_type,
@@ -91,22 +94,24 @@ const List: FC<{
                transaction_id,
             }) => {
                return (
-                  <TransactionListItem
-                     key={`${date} - ${time} - ${secID}`}
-                     type={modalType}
-                     transaction_id={transaction_id}
-                     Title={Title}
-                     price={price}
-                     quantity={quantity}
-                     remainder={remainder}
-                     image={image}
-                     transaction_type={transaction_type}
-                     security_type={security_type}
-                     secID={secID}
-                     time={time}
-                     date={created_at}
-                     CustomComponent="li"
-                  />
+                  <li className="flex-1" aria-label={Title}>
+                     <TransactionListItem
+                        classNameTrigger="w-full"
+                        key={`${date} - ${time} - ${secID}`}
+                        type={modalType}
+                        transaction_id={transaction_id}
+                        Title={Title}
+                        price={price}
+                        quantity={quantity}
+                        remainder={remainder}
+                        image={image}
+                        transaction_type={transaction_type}
+                        security_type={security_type}
+                        secID={secID}
+                        time={time}
+                        date={created_at}
+                     />
+                  </li>
                )
             }
          )}

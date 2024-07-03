@@ -1,9 +1,11 @@
 'use client'
 
 import { cn, convertMoney, getDataByType } from '@/utils/utils'
-import { ElementType, FC } from 'react'
+import { ElementType, FC, Fragment } from 'react'
 import { FormatedTransactionsListType } from '@/components/module/Transactions'
-import CustomModal from '@/components/entity/CustomElements/CustomModal'
+import CustomModal, {
+   TCustomModal,
+} from '@/components/entity/CustomElements/CustomModal'
 import CustomModalContent from '@/components/ui/HightOrder/CustomModalContent'
 import { IModalContent } from '@/types/Modals.types'
 import TransactionsModalContent from '@/components/entity/ModalsContent/Transactions/TransactionsModalContent'
@@ -15,7 +17,8 @@ export type TransactionListItemProps = {
    CustomComponent?: ElementType
 } & (withoutTime | WithTime) &
    Omit<FormatedTransactionsListType, 'time' | 'created_at'> &
-   Pick<IModalContent, 'type'>
+   Pick<IModalContent, 'type'> &
+   Pick<TCustomModal, 'className' | 'classNameTrigger'>
 
 type WithTime = {
    time: string
@@ -43,6 +46,8 @@ type ModalTriggerProps = Pick<
 export default function TransactionListItem({
    type,
    transaction_id,
+   className,
+   classNameTrigger,
    ...props
 }: TransactionListItemProps) {
    const { img, url } = getDataByType({
@@ -50,11 +55,17 @@ export default function TransactionListItem({
       imgSRC: props.image,
    })
 
+   const timeCondition = !!props.time && !!props.date
+
    return (
       <CustomModal
-         classNameTrigger="group"
+         className={cn('p-1 pl-2', className)}
          text={<ModalTrigger {...props} image={img[props.security_type]} />}
-         className="p-1"
+         classNameTrigger={cn(
+            'grid flex-1 group',
+            timeCondition ? 'grid-cols-2 768p:grid-cols-3' : 'grid-cols-2',
+            classNameTrigger
+         )}
       >
          <ScrollBlock className="max-h-[80dvh] pt-6">
             <CustomModalContent
@@ -91,15 +102,10 @@ const ModalTrigger: FC<ModalTriggerProps> = ({
    secID,
 }) => {
    const timeCondition = !!time && !!date
-   const Component = CustomComponent || 'div'
+   const Component = CustomComponent || Fragment
 
    return (
-      <Component
-         className={cn(
-            'grid flex-1',
-            timeCondition ? 'grid-cols-2 768p:grid-cols-3' : 'grid-cols-2'
-         )}
-      >
+      <Component>
          <MainBlock image={image} secID={secID} secTitle={Title} />
          {timeCondition && <TimeBlock time={time} date={date} />}
          <PriceBlock

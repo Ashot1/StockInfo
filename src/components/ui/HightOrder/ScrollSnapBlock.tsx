@@ -68,6 +68,17 @@ const ScrollSnapBlock: FC<ScrollSnapBlockProps> = ({
 
    return (
       <>
+         {isMobile !== null && (
+            <ScrollDotMenu
+               aria-label="Список слайдов"
+               links={formatedLinks}
+               direction={
+                  isMobile ? navigationPosition.mobile : navigationPosition.wide
+               }
+               activeItemLink={NowInVision}
+               className={navigatesClassName}
+            />
+         )}
          <div
             className={cn(
                'scroll-hidden hideScrollBar parent-snap-selector max-h-dvh snap-mandatory scroll-smooth',
@@ -80,16 +91,6 @@ const ScrollSnapBlock: FC<ScrollSnapBlockProps> = ({
          >
             {children}
          </div>
-         {isMobile !== null && (
-            <ScrollDotMenu
-               links={formatedLinks}
-               direction={
-                  isMobile ? navigationPosition.mobile : navigationPosition.wide
-               }
-               activeItemLink={NowInVision}
-               className={navigatesClassName}
-            />
-         )}
       </>
    )
 }

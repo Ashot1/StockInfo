@@ -50,7 +50,10 @@ const TechBlock: FC<{ id: string }> = async ({ id }) => {
          }}
          revert
       >
-         <div className="grid grid-cols-3 gap-6">
+         <div
+            className="grid grid-cols-3 gap-6"
+            aria-label="Список технологий, используемых на сайте"
+         >
             {img.map((item) => (
                <Link
                   target="_blank"

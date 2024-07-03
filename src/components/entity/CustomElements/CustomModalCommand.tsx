@@ -53,8 +53,12 @@ const CustomModalCommand: FC<TCustomCommand> = ({
             {triggerText}
          </FadedButton>
          <CommandDialog open={Open} onOpenChange={() => setOpen(false)}>
-            <DialogTitle>{header.title}</DialogTitle>
-            <DialogDescription>{header.description}</DialogDescription>
+            <DialogTitle className="h-0 overflow-hidden">
+               {header.title}
+            </DialogTitle>
+            <DialogDescription className="h-0 overflow-hidden">
+               {header.description}
+            </DialogDescription>
             <CommandInput
                placeholder={placeholder}
                onKeyUp={EnterSearch}
