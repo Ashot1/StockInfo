@@ -94,10 +94,13 @@ const List: FC<{
                transaction_id,
             }) => {
                return (
-                  <li className="flex-1" aria-label={Title}>
+                  <li
+                     className="flex-1"
+                     aria-label={Title}
+                     key={`${date} - ${time} - ${secID}`}
+                  >
                      <TransactionListItem
                         classNameTrigger="w-full"
-                        key={`${date} - ${time} - ${secID}`}
                         type={modalType}
                         transaction_id={transaction_id}
                         Title={Title}
