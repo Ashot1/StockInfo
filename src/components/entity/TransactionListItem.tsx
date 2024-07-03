@@ -52,8 +52,9 @@ export default function TransactionListItem({
 
    return (
       <CustomModal
-         classNameTrigger="group hover:shadow-lg dark:hover:shadow-white/10"
+         classNameTrigger="group"
          text={<ModalTrigger {...props} image={img[props.security_type]} />}
+         className="p-1"
       >
          <ScrollBlock className="max-h-[80dvh] pt-6">
             <CustomModalContent
@@ -114,7 +115,7 @@ const TimeBlock: FC<{ time: string; date: Date }> = ({ time, date }) => {
    return (
       <time
          className={cn(
-            'col-start-2 row-start-2 flex justify-center text-sm 768p:row-start-1 1024p:items-center 1024p:text-base',
+            'col-start-2 row-start-2 flex justify-center text-xs duration-300 300p:group-hover:-translate-x-3 768p:row-start-1 768p:items-center 768p:text-base 768p:group-hover:translate-x-0',
             bellota.className
          )}
          dateTime={new Date(date).toISOString()}
@@ -132,7 +133,7 @@ const PriceBlock: FC<
    return (
       <div
          className={cn(
-            'col-start-2 flex justify-center text-base 768p:col-start-3 1024p:items-center',
+            'col-start-2 flex justify-center text-sm duration-300 300p:group-hover:-translate-x-3 768p:col-start-3 768p:items-center 768p:text-base',
             !isBuy && 'text-green-800'
          )}
       >
