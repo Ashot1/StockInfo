@@ -42,6 +42,8 @@ const BuyMenuButtons: FC<TransactionsButtonsProps> = ({
 
    const mutation = useMutation({
       mutationFn: async ({ func, Quantity, text }: MutationProps) => {
+         const tID = toast.loading('Производится транзакция...')
+
          const { data, error } = await func([
             {
                secID: secID,
@@ -52,10 +54,10 @@ const BuyMenuButtons: FC<TransactionsButtonsProps> = ({
          ])
          if (!data || error) throw new Error(error || text.error)
 
-         return { successMessage: text.success, data }
+         return { successMessage: text.success, data, toastID: tID }
       },
       onError: (error) => toast.error(error.message),
-      onSuccess: async ({ successMessage, data }) => {
+      onSuccess: async ({ successMessage, data, toastID }) => {
          if (setMainInfo)
             setMainInfo({
                ...data.user,
@@ -66,7 +68,7 @@ const BuyMenuButtons: FC<TransactionsButtonsProps> = ({
 
          await queryClient.invalidateQueries({ queryKey: [queryKeys.Purchase] })
 
-         toast.success(successMessage)
+         toast.success(successMessage, { id: toastID })
       },
    })
 
