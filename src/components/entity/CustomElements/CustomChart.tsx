@@ -39,11 +39,13 @@ export default function CustomChart({
    data,
    ariaLabel,
 }: CustomChartProps) {
-   const { data: IMGdata, error } = usePalette({
+   const { data: IMGdata } = usePalette({
       image: img || '/StockPlaceHolder.png',
       mode: 'rgb',
       quality: 5,
    })
+
+   if (!IMGdata) return
 
    return (
       <div
@@ -53,10 +55,7 @@ export default function CustomChart({
             className
          )}
          style={{
-            background:
-               error || !IMGdata
-                  ? 'transparent'
-                  : `rgb(${IMGdata[1][0]}, ${IMGdata[1][1]}, ${IMGdata[1][2]}, .1)`,
+            background: `rgb(${IMGdata[1][0]}, ${IMGdata[1][1]}, ${IMGdata[1][2]}, .1)`,
          }}
          aria-label={ariaLabel}
       >
@@ -72,14 +71,8 @@ export default function CustomChart({
                   },
                   line: {
                      fill: true,
-                     borderColor:
-                        error || !IMGdata
-                           ? 'var(--Main)'
-                           : `rgb(${IMGdata[0][0]},${IMGdata[0][1]},${IMGdata[0][2]})`,
-                     backgroundColor:
-                        error || !IMGdata
-                           ? 'var(--Main)'
-                           : `rgb(${IMGdata[0][0]},${IMGdata[0][1]},${IMGdata[0][2]},.2)`,
+                     borderColor: `rgb(${IMGdata[0][0]},${IMGdata[0][1]},${IMGdata[0][2]})`,
+                     backgroundColor: `rgb(${IMGdata[0][0]},${IMGdata[0][1]},${IMGdata[0][2]},.2)`,
                   },
                },
                maintainAspectRatio: false,

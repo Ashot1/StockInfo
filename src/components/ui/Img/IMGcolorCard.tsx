@@ -9,8 +9,7 @@ const IMGcolorCard: FC<{
    children?: ReactNode
    className?: string
 }> = ({ img, children, className }) => {
-   const { data, error } = useColor({ image: img, mode: 'hex' })
-
+   const { data, loading } = useColor({ image: img, mode: 'hex' })
    return (
       <div className="relative h-full">
          <div
@@ -23,9 +22,7 @@ const IMGcolorCard: FC<{
          </div>
          <span
             style={{
-               background: error
-                  ? 'var(--Main)'
-                  : `radial-gradient(${data} 5%, transparent)`,
+               background: `radial-gradient(${data} 5%, transparent)`,
             }}
             className="absolute left-0 top-0 -z-10 size-full rounded-2xl opacity-40 dark:opacity-30"
          ></span>

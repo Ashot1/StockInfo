@@ -11,7 +11,6 @@ import { useTheme } from 'next-themes'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { useMatchMedia } from '@/hooks/MatchMedia'
 import { MobileScreen } from '@/utils/config'
-import CenterScreenLoader from '@/components/entity/CenterScreenLoader'
 import Loader from '@/components/ui/Loaders/loader'
 
 const DoughnutPortfolioChart: FC = () => {
@@ -52,11 +51,7 @@ const DoughnutPortfolioChart: FC = () => {
       images.push(img[purchase.type])
    }
 
-   const {
-      data: Colors,
-      loading,
-      error,
-   } = useColorMany({
+   const { data: Colors, loading } = useColorMany({
       images: images,
       mode: 'rgb',
    })
@@ -73,14 +68,6 @@ const DoughnutPortfolioChart: FC = () => {
       return (
          <ErrorMessage
             errMessage={ContextError || 'Ошибка получения данных'}
-            style={{ height }}
-         />
-      )
-
-   if (error)
-      return (
-         <ErrorMessage
-            errMessage={error || 'Цвета не найдены'}
             style={{ height }}
          />
       )

@@ -49,6 +49,53 @@ const loadImage = (image: string) =>
       img.onerror = (error) => reject(error)
    })
 
+type getRandomColorProps =
+   | {
+        singleElement: true
+        elementsArray?: never
+     }
+   | { singleElement?: never; elementsArray: any[] }
+
+const getRandomColor = ({
+   singleElement,
+   elementsArray,
+}: getRandomColorProps) => {
+   if (singleElement) {
+      const color = [
+         Math.floor(Math.random() * 256),
+         Math.floor(Math.random() * 256),
+         Math.floor(Math.random() * 256),
+      ] as RGBColor
+
+      return {
+         hex: rgbToHex(...color),
+         rgbString: rgbToString(...color),
+         rgb: color,
+      } as Record<ColorMode, string | RGBColor>
+   }
+   const hex: string[] = []
+   const rgbString: string[] = []
+   const rgb: RGBColor[] = []
+
+   elementsArray.forEach((element) => {
+      const color = [
+         Math.floor(Math.random() * 256),
+         Math.floor(Math.random() * 256),
+         Math.floor(Math.random() * 256),
+      ] as RGBColor
+
+      hex.push(rgbToHex(...color))
+      rgbString.push(rgbToString(...color))
+      rgb.push(color)
+   })
+
+   return {
+      hex: hex,
+      rgbString: rgbString,
+      rgb: rgb,
+   } as Record<ColorMode, string[] | RGBColor[]>
+}
+
 type useColorManyState = {
    data: undefined | string[] | RGBColor[]
 } & defaultState
@@ -74,9 +121,10 @@ export const useColorMany = ({
                error: 'Список цветов пуст',
                loading: false,
             })
+         let imgs: HTMLImageElement[] = []
 
          try {
-            const imgs = await Promise.all(images.map(loadImage))
+            imgs = await Promise.all(images.map(loadImage))
             const colors = imgs.map((img) => ColorModule.getColor(img))
             const baseColor: RGBColor = [0, 0, 0]
 
@@ -89,13 +137,18 @@ export const useColorMany = ({
             }
 
             setColorData({ data: data[mode], error: undefined, loading: false })
-            imgs.forEach((img) => img.remove())
          } catch (error) {
+            const data = getRandomColor({
+               elementsArray: images,
+            })
+
             return setColorData({
-               data: undefined,
+               data: data[mode] as RGBColor[],
                error: (error as Error).message,
                loading: false,
             })
+         } finally {
+            imgs.forEach((img) => img.remove())
          }
       }
 
@@ -129,8 +182,10 @@ export const useColor = ({ image, mode, quality }: ThiefHooksProps) => {
                loading: false,
             })
 
+         let img: HTMLImageElement | null = null
+
          try {
-            const img = await loadImage(image)
+            img = await loadImage(image)
             const color = ColorModule.getColor(img)
             if (!color) throw new Error('Не удалось получить цвет')
 
@@ -141,13 +196,15 @@ export const useColor = ({ image, mode, quality }: ThiefHooksProps) => {
             }
 
             setColorData({ data: data[mode], error: undefined, loading: false })
-            img.remove()
          } catch (error) {
+            const data = getRandomColor({ singleElement: true })
             return setColorData({
-               data: undefined,
+               data: data[mode] as RGBColor,
                error: (error as Error).message,
                loading: false,
             })
+         } finally {
+            img && img.remove()
          }
       }
 
@@ -181,8 +238,10 @@ export const usePalette = ({ image, mode, quality }: ThiefHooksProps) => {
                loading: false,
             })
 
+         let img: HTMLImageElement | null = null
+
          try {
-            const img = await loadImage(image)
+            img = await loadImage(image)
             let Colors = ColorModule.getPalette(img)
             if (!Colors) throw new Error('Не удалось получить цвет')
 
@@ -195,13 +254,19 @@ export const usePalette = ({ image, mode, quality }: ThiefHooksProps) => {
             }
 
             setColorData({ data: data[mode], error: undefined, loading: false })
-            img.remove()
          } catch (error) {
+            const colorsLen = [0, 1, 2, 3, 4, 5]
+            const data = getRandomColor({
+               elementsArray: colorsLen,
+            })
+
             return setColorData({
-               data: undefined,
+               data: data[mode] as RGBColor[],
                error: (error as Error).message,
                loading: false,
             })
+         } finally {
+            img && img.remove()
          }
       }
 
