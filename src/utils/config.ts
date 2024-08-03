@@ -2,7 +2,7 @@ export const URLList = new (class {
    front = '/front' as const
    login = `${this.front}/login` as const
    register = `${this.front}/signup` as const
-   errorLoginPage = `${this.front}`
+   errorLoginPage = `${this.front}` as const
 
    home = '/home' as const
    transactions = `${this.home}/transactions` as const

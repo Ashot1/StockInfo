@@ -64,7 +64,7 @@ const ScrollSnapBlock: FC<ScrollSnapBlockProps> = ({
       }, autoScroll.duration)
 
       return () => clearTimeout(nextSlide)
-   }, [NowInVision, autoScroll, formatedLinks])
+   }, [NowInVision, autoScroll, formatedLinks, isMobile])
 
    return (
       <>
