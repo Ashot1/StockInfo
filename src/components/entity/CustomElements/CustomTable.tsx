@@ -24,7 +24,7 @@ export default function CustomTable({
             <TableRow aria-label="Наименования колонок">
                {header.map((item, index) => (
                   <TableHead
-                     key={index}
+                     key={index + item.text}
                      className="last:text-end"
                      aria-label={item.text}
                   >
@@ -39,7 +39,7 @@ export default function CustomTable({
                   {row.map((col) => (
                      <TableCell
                         className="last:text-end"
-                        key={`col-${index}`}
+                        key={`col-${index} ${col}`}
                         aria-label={col}
                      >
                         {col}
