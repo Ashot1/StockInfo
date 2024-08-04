@@ -104,6 +104,7 @@ export function debounce(func: Function, wait: number) {
       timeout = setTimeout(() => func.apply(this, args), wait)
    }
 }
+
 export const convertMoney = (value: number, len = 3) => {
    return Intl.NumberFormat('ru-RU', {
       currency: 'RUB',
@@ -112,4 +113,10 @@ export const convertMoney = (value: number, len = 3) => {
       currencyDisplay: 'symbol',
       maximumFractionDigits: len,
    }).format(value)
+}
+
+export const changeThemeMetaTag = (theme: 'dark' | 'light') => {
+   const tag = document.querySelector('meta[name="theme-color"]')
+   if (tag)
+      tag.setAttribute('content', theme === 'dark' ? '#121212' : '#fafafa')
 }

@@ -4,15 +4,14 @@ import './globals.css'
 import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const viewport: Viewport = {
    themeColor: [
-      { color: '#121212', media: '(prefers-color-scheme: dark)' },
       {
          color: '#fafafa',
-         media: '(prefers-color-scheme: light)',
       },
    ],
    colorScheme: 'light dark',
@@ -59,6 +58,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
    return (
       <html lang="ru">
          <body className={inter.className}>
+            <Script id="ThemeInitMeta" strategy="beforeInteractive">{`
+               let themeStorage = localStorage.getItem('theme')
+               const tag = document.querySelector('meta[name="theme-color"]')
+               if(!themeStorage || themeStorage === 'system') 
+                  themeStorage = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+               
+               if (tag)
+                  tag.setAttribute('content', themeStorage === 'dark' ? '#121212' : '#fafafa')
+            `}</Script>
+
             <Toaster
                position="top-right"
                reverseOrder={true}

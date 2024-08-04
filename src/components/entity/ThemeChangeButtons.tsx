@@ -10,9 +10,10 @@ import {
    SelectTrigger,
    SelectValue,
 } from '@/components/ui/ShadCN/select'
+import { changeThemeMetaTag } from '@/utils/utils'
 
 const ThemeChangeButtons: FC = () => {
-   const { setTheme, theme } = useTheme()
+   const { setTheme, theme, systemTheme } = useTheme()
 
    const Buttons: { value: string; icon: ReactNode; text: string }[] = [
       { value: 'light', icon: <SunIcon />, text: 'Светлая тема' },
@@ -22,7 +23,17 @@ const ThemeChangeButtons: FC = () => {
 
    return (
       <div className="mt-10 flex w-full justify-center">
-         <Select defaultValue={theme} onValueChange={(e) => setTheme(e)}>
+         <Select
+            defaultValue={theme}
+            onValueChange={(e) => {
+               setTheme(e)
+               changeThemeMetaTag(
+                  e === 'system'
+                     ? (systemTheme as 'dark' | 'light')
+                     : (e as 'dark' | 'light')
+               )
+            }}
+         >
             <SelectTrigger className="h-14 w-full border-0 bg-secondary/50">
                <SelectValue />
             </SelectTrigger>
