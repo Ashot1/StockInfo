@@ -52,7 +52,7 @@ const Search: FC<TSearch & Pick<any, any>> = ({
          }}
          onSend={sendFunc}
          placeholder="Найти"
-         hotKey={{ key: 'i', ctrl: true, shift: false }}
+         hotKey={{ code: 'KeyI', ctrl: true, shift: false }}
          triggerText={
             <>
                <MagnifyingGlassIcon /> Поиск

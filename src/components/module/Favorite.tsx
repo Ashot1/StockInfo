@@ -103,7 +103,7 @@ const Favorite: FC = () => {
 
    return (
       <CustomSheet
-         hotKey={{ ctrl: true, shift: false, key: 'y' }}
+         hotKey={{ ctrl: true, shift: false, code: 'KeyY' }}
          TriggerText={
             <FadedButton anotherElement>
                <BookmarkFilledIcon /> Избранное

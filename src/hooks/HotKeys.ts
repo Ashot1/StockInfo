@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export type THotKey = { ctrl: boolean; shift: boolean; key: string }
+export type THotKey = { ctrl: boolean; shift: boolean; code: string }
 
 export const useHotKey = (hotKey?: THotKey) => {
    const [State, setState] = useState(false)
@@ -12,13 +12,7 @@ export const useHotKey = (hotKey?: THotKey) => {
          const CTRL = hotKey.ctrl ? e.ctrlKey : !e.ctrlKey
          const shift = hotKey.shift ? e.shiftKey : !e.shiftKey
 
-         if (
-            e.key &&
-            e.key.toLowerCase() === hotKey.key.toLowerCase() &&
-            CTRL &&
-            shift
-         )
-            setState(true)
+         if (e.code === hotKey.code && CTRL && shift) setState(true)
       }
 
       window.addEventListener('keyup', listener)
