@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, useContext } from 'react'
+import { FC } from 'react'
 import PurchaseList from '@/components/ui/Lists/PurchaseList/PurchaseList'
 import PurchaseListItem, {
    PurchaseListItemLoading,
@@ -10,14 +10,15 @@ import { useHomeContext } from '@/hoc/Providers/HomeProvider'
 import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import { LocalStorageParameters, URLList } from '@/utils/config'
 import { ConvertDate } from '@/utils/Date'
-import { LocalStorageCheckerContext } from '@/hoc/LocalSettingsChecker'
 import ErrorMessage from '@/components/ui/ErrorMessage'
+import { useSettings } from '@/hoc/Providers/Settings'
 
 const Purchases: FC = () => {
    const { Purchases, loading, error } = useHomeContext()
    const mainInfo = useAuthContext().mainInfo
+   const { Settings } = useSettings()
    const isAnimated =
-      useContext(LocalStorageCheckerContext) ===
+      Settings.get(LocalStorageParameters.purchaseAnimation.name) ===
       LocalStorageParameters.purchaseAnimation.positive
 
    if (loading) return <PurchasesLoading />

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { LocalStorageParameters, MobileScreen, URLList } from '@/utils/config'
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { AnimatePresence, useMotionValueEvent, useScroll } from 'framer-motion'
-import { FC, useContext, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import Logo from '@/components/ui/Logo'
 import { motion } from 'framer-motion'
 import { useMatchMedia } from '@/hooks/MatchMedia'
@@ -13,7 +13,7 @@ import { usePathname } from 'next/navigation'
 import { raleway } from '@/utils/fonts'
 import Image from 'next/image'
 import { cn } from '@/utils/utils'
-import { LocalStorageCheckerContext } from '@/hoc/LocalSettingsChecker'
+import { useSettings } from '@/hoc/Providers/Settings'
 
 interface IMainHeader {
    HeaderButtons: { text: string; icon: StaticImport; link: string }[]
@@ -25,7 +25,8 @@ export default function MainHeader({ HeaderButtons }: IMainHeader) {
    const prevScrollValue = useRef(40)
    const isMobile = useMatchMedia(MobileScreen)
    const direction = isMobile ? 150 : -150
-   const staticMode = useContext(LocalStorageCheckerContext)
+   const { Settings } = useSettings()
+   const staticMode = Settings.get(LocalStorageParameters.staticHeaderMode.name)
 
    useMotionValueEvent(scrollY, 'change', (latest) => {
       if (staticMode === LocalStorageParameters.staticHeaderMode.positive)

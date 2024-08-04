@@ -2,7 +2,6 @@ import CheckBoxRow, {
    CheckBoxRowProps,
 } from '@/components/ui/CheckBox/CheckBoxRow'
 import ThemeChangeButtons from '@/components/entity/ThemeChangeButtons'
-import { useLocalStorage } from '@/hooks/LocalStorage'
 import { LocalStorageParameters } from '@/utils/config'
 import packageJSON from '@/../package.json'
 import { Button } from '@/components/ui/ShadCN/button'
@@ -19,6 +18,7 @@ import { clearUserTransactions } from '@/actions/Account/Account'
 import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import toast from 'react-hot-toast'
 import FadedButton from '@/components/ui/Buttons/FadedButton'
+import { useSettings } from '@/hoc/Providers/Settings'
 
 const SettingsDefaultModalContent = forwardRef(
    (
@@ -59,11 +59,6 @@ const SettingsDefaultModalContent = forwardRef(
          >
             <div className="flex flex-col gap-8 px-5">
                <ThemeChangeButtons />
-               <div className="grid w-full place-items-center">
-                  <FadedButton onClick={() => window.location.reload()}>
-                     Перезагрузить
-                  </FadedButton>
-               </div>
                <Option
                   text="Эффект свечения"
                   equalTo="positive"
@@ -103,29 +98,24 @@ type OptionProps = {
 } & Pick<CheckBoxRowProps, 'text'>
 
 const Option: FC<OptionProps> = ({ localParam, text, equalTo }) => {
-   const [Parameter, setParameter] = useLocalStorage(
-      localParam.name,
-      localParam.defaultValue
-   )
-   const [WasEdited, setWasEdited] = useState(false)
+   const { Settings, updateSettings } = useSettings()
+   const Parameter = Settings.get(localParam.name)
 
    return (
       <CheckBoxRow
          text={text}
-         click={() => {
-            setParameter(
-               Parameter === localParam.positive
-                  ? localParam.negative
-                  : localParam.positive
-            )
-            setWasEdited((prev) => !prev)
-         }}
-         checked={Parameter === localParam[equalTo]}
-         additional={
-            WasEdited
-               ? 'Для применения изменений требуется перезагрузка'
-               : undefined
+         click={() =>
+            updateSettings([
+               {
+                  name: localParam.name,
+                  value:
+                     Parameter === localParam.positive
+                        ? localParam.negative
+                        : localParam.positive,
+               },
+            ])
          }
+         checked={Parameter === localParam[equalTo]}
       />
    )
 }
