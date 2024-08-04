@@ -19,10 +19,12 @@ export default function PriceInfoCard({
 
    const current_price = convertMoney(MarketData?.last || 0)
 
-   const definition =
-      MarketData?.open &&
-      MarketData?.last &&
-      calculateDefinition(MarketData?.open, MarketData?.last)
+   let definition
+
+   if (MarketData?.open && MarketData?.last)
+      definition = calculateDefinition(MarketData?.open, MarketData?.last)
+   else if (MarketData?.prev && MarketData?.last)
+      definition = calculateDefinition(MarketData?.prev, MarketData?.last)
 
    return (
       <div
