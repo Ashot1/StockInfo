@@ -6,6 +6,7 @@ import CustomTable from '@/components/entity/CustomElements/CustomTable'
 import { FormatedTransactionsListType } from '@/components/module/Transactions'
 import { ConvertDate } from '@/utils/Date'
 import Link from 'next/link'
+import { convertMoney } from '@/utils/utils'
 
 export type TransactionsModalContentProps = Required<SecurityFaceProps> &
    Omit<FormatedTransactionsListType, 'transaction_id' | 'time' | 'Title'> & {
@@ -64,7 +65,8 @@ const Info: FC<InfoProps> = ({
             ['Тип бумаги', security_type],
             ['Количество', `${quantity}`],
             ['Из них осталось', `${remainder}`],
-            ['Цена', `${price}`],
+            ['Цена', `${convertMoney(price)}`],
+            ['Сумма', `${convertMoney(quantity * price)}`],
             ['Дата', date],
          ]}
       />
