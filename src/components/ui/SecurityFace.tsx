@@ -31,10 +31,7 @@ export default function SecurityFace({
             className
          )}
       >
-         <IMGshadowCard
-            img={image || '/StockPlaceHolder.png'}
-            className="relative size-20"
-         >
+         <IMGshadowCard img={image} className="relative size-20">
             <ImageErrorCheck
                src={image || '/StockPlaceHolder.png'}
                alt={secID}

@@ -113,14 +113,28 @@ export const useColorMany = ({
 
    const last_img = images?.at(-1)
 
+   const ReturnRandomColor = (error: Error, IMGs: string[]) => {
+      const data = getRandomColor({
+         elementsArray: IMGs,
+      })
+
+      return setColorData({
+         data: data[mode] as RGBColor[],
+         error: error.message,
+         loading: false,
+      })
+   }
+
    useEffect(() => {
       const getColor = async () => {
          if (!images)
-            return setColorData({
-               data: undefined,
-               error: 'Список цветов пуст',
-               loading: false,
-            })
+            return ReturnRandomColor(new Error('Список цветов пуст'), [
+               '1',
+               '2',
+               '3',
+               '4',
+            ])
+
          let imgs: HTMLImageElement[] = []
 
          try {
@@ -138,15 +152,7 @@ export const useColorMany = ({
 
             setColorData({ data: data[mode], error: undefined, loading: false })
          } catch (error) {
-            const data = getRandomColor({
-               elementsArray: images,
-            })
-
-            return setColorData({
-               data: data[mode] as RGBColor[],
-               error: (error as Error).message,
-               loading: false,
-            })
+            ReturnRandomColor(error as Error, images)
          } finally {
             imgs.forEach((img) => img.remove())
          }
@@ -173,14 +179,18 @@ export const useColor = ({ image, mode, quality }: ThiefHooksProps) => {
       loading: true,
    })
 
+   const ReturnRandomColor = (error: Error) => {
+      const data = getRandomColor({ singleElement: true })
+      return setColorData({
+         data: data[mode] as RGBColor,
+         error: error.message,
+         loading: false,
+      })
+   }
+
    useEffect(() => {
       const getColor = async () => {
-         if (!image)
-            return setColorData({
-               data: undefined,
-               error: 'Цвет отсутствует',
-               loading: false,
-            })
+         if (!image) return ReturnRandomColor(new Error('Цвет отсутствует'))
 
          let img: HTMLImageElement | null = null
 
@@ -197,12 +207,7 @@ export const useColor = ({ image, mode, quality }: ThiefHooksProps) => {
 
             setColorData({ data: data[mode], error: undefined, loading: false })
          } catch (error) {
-            const data = getRandomColor({ singleElement: true })
-            return setColorData({
-               data: data[mode] as RGBColor,
-               error: (error as Error).message,
-               loading: false,
-            })
+            ReturnRandomColor(error as Error)
          } finally {
             img && img.remove()
          }
@@ -229,14 +234,22 @@ export const usePalette = ({ image, mode, quality }: ThiefHooksProps) => {
       loading: true,
    })
 
+   const ReturnRandomColor = (error: Error) => {
+      const colorsLen = [0, 1, 2, 3, 4, 5]
+      const data = getRandomColor({
+         elementsArray: colorsLen,
+      })
+
+      return setColorData({
+         data: data[mode] as RGBColor[],
+         error: error.message,
+         loading: false,
+      })
+   }
+
    useEffect(() => {
       const getPalette = async () => {
-         if (!image)
-            return setColorData({
-               data: undefined,
-               error: 'Цвет отсутствует',
-               loading: false,
-            })
+         if (!image) return ReturnRandomColor(new Error('Цвет отсутствует'))
 
          let img: HTMLImageElement | null = null
 
@@ -255,16 +268,7 @@ export const usePalette = ({ image, mode, quality }: ThiefHooksProps) => {
 
             setColorData({ data: data[mode], error: undefined, loading: false })
          } catch (error) {
-            const colorsLen = [0, 1, 2, 3, 4, 5]
-            const data = getRandomColor({
-               elementsArray: colorsLen,
-            })
-
-            return setColorData({
-               data: data[mode] as RGBColor[],
-               error: (error as Error).message,
-               loading: false,
-            })
+            ReturnRandomColor(error as Error)
          } finally {
             img && img.remove()
          }
