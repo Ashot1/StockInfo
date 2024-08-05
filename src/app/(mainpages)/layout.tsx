@@ -51,35 +51,33 @@ export default async function MainPagesLayout({
    if (!user || error) return redirect(URLList.front)
 
    return (
-      <ThemeProvider defaultTheme="system" enableSystem attribute="class">
-         <AuthProvider
-            value={{
-               authInfo: user,
-               mainInfo: {
-                  user_id: mainInfo?.user_id || '',
-                  transactions: transactions?.data,
-                  current_money: mainInfo?.current_money || 0,
-                  start_money: mainInfo?.start_money || 0,
-                  favorites: mainInfo?.favorites || [],
-                  purchases: mainInfo?.purchases || [],
-                  visits: mainInfo?.visits || [],
-               },
-            }}
-         >
-            <ReactQueryProvider>
-               <SettingsProvider>
-                  <div>
-                     <GlowBG />
-                     <MainHeader HeaderButtons={HeaderButtons} />
-                     <ScrollStateBar />
-                  </div>
-                  <main className="mb-10 mt-6 flex min-h-dvh flex-col px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]">
-                     <ControlPanel />
-                     {children}
-                  </main>
-               </SettingsProvider>
-            </ReactQueryProvider>
-         </AuthProvider>
-      </ThemeProvider>
+      <AuthProvider
+         value={{
+            authInfo: user,
+            mainInfo: {
+               user_id: mainInfo?.user_id || '',
+               transactions: transactions?.data,
+               current_money: mainInfo?.current_money || 0,
+               start_money: mainInfo?.start_money || 0,
+               favorites: mainInfo?.favorites || [],
+               purchases: mainInfo?.purchases || [],
+               visits: mainInfo?.visits || [],
+            },
+         }}
+      >
+         <ReactQueryProvider>
+            <SettingsProvider>
+               <div>
+                  <GlowBG />
+                  <MainHeader HeaderButtons={HeaderButtons} />
+                  <ScrollStateBar />
+               </div>
+               <main className="mb-10 mt-6 flex min-h-dvh flex-col px-2 500p:ml-[10%] 500p:w-[80%] 768p:mt-40 1080p:px-[15dvw]">
+                  <ControlPanel />
+                  {children}
+               </main>
+            </SettingsProvider>
+         </ReactQueryProvider>
+      </AuthProvider>
    )
 }

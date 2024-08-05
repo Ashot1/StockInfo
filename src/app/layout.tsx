@@ -5,6 +5,7 @@ import packageJSON from '@/../package.json'
 import { ReactNode } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Script from 'next/script'
+import ThemeProvider from '@/hoc/ThemeProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -79,7 +80,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                }}
             />
             <div id="modal"></div>
-            {children}
+            <ThemeProvider
+               defaultTheme="system"
+               enableSystem
+               attribute="class"
+               disableTransitionOnChange
+            >
+               {children}
+            </ThemeProvider>
          </body>
       </html>
    )

@@ -30,8 +30,7 @@ const LoginProviderButton: FC<LoginProviderButtonProps> = ({
          {...props}
       >
          <span
-            className={`z-10 h-full w-full rounded-2xl border-2 border-transparent p-4
-               duration-300 group-hover:border-black/50 group-hover:bg-black/10 group-hover:backdrop-blur-sm`}
+            className={`z-10 h-full w-full rounded-2xl border-2 border-transparent p-4 duration-300 group-hover:border-black/50 group-hover:bg-black/10 group-hover:backdrop-blur-sm dark:group-hover:border-white/50 dark:group-hover:bg-white/10`}
          >
             {children}
          </span>

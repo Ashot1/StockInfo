@@ -29,7 +29,7 @@ export default async function ImageBlock({
             )}
          >
             <section
-               className="grid h-full w-full grid-cols-1 place-items-center bg-[#121212]/50 px-[10%] 768p:grid-cols-2 768p:bg-[#121212]/80 1080p:px-[20%]"
+               className="grid h-full w-full grid-cols-1 place-items-center bg-[#8A8A8A]/50 px-[10%] dark:bg-[#121212]/50 768p:grid-cols-2 768p:bg-[#8A8A8A]/80 768p:dark:bg-[#121212]/80 1080p:px-[20%]"
                aria-label="Блок с информацией"
             >
                <FrontTitle

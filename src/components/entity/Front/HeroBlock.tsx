@@ -23,7 +23,7 @@ export default function HeroBlock({
 }) {
    return (
       <AuroraBackground className={cn('bottomHiddenMask', className)} id={id}>
-         <div className="flex flex-col gap-2 text-pretty text-center text-white">
+         <div className="flex flex-col gap-2 text-pretty text-center text-primary">
             <h2
                className={cn(
                   russoOne.className,

@@ -313,6 +313,12 @@ body {
    .startTextMask {
       color: transparent;
       mask-image: none;
+      background: linear-gradient(to bottom, #121212, #505050, #2e2e2e);
+      background-clip: text;
+   }
+   .dark .startTextMask {
+      color: transparent;
+      mask-image: none;
       background: linear-gradient(to bottom, #ffffff, #c2c2c2, #9e9e9e);
       background-clip: text;
    }
