@@ -10,12 +10,13 @@ import {
    useState,
 } from 'react'
 import { cn } from '@/utils/utils'
+import { motion, MotionProps } from 'framer-motion'
 
 export type ScrollBlockProps = {
    children?: ReactNode
    className?: string
    direction?: 'horizontal' | 'vertical'
-}
+} & MotionProps
 
 const variants = {
    horizontal: {
@@ -50,7 +51,7 @@ const variants = {
 }
 
 const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
-   ({ children, className, direction = 'vertical' }, ref) => {
+   ({ children, className, direction = 'vertical', ...MotionProps }, ref) => {
       const [State, setState] = useState<'first' | 'second' | 'fir&sec' | null>(
          null
       )
@@ -84,7 +85,7 @@ const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
       useImperativeHandle(ref, () => Element.current!, [Element])
 
       return (
-         <div
+         <motion.div
             ref={Element}
             onScroll={ScrollChanges}
             className={cn(
@@ -97,9 +98,10 @@ const ScrollBlock = forwardRef<HTMLDivElement, ScrollBlockProps>(
                   `${Variant.light['fir&sec']} ${Variant.dark['fir&sec']}`,
                className
             )}
+            {...MotionProps}
          >
             {children}
-         </div>
+         </motion.div>
       )
    }
 )

@@ -12,6 +12,9 @@ import ProfileButtons from '@/components/entity/ModalsContent/Profile/ProfileBut
 import ProfileEditModalContent from '@/components/entity/ModalsContent/Profile/ProfileEditModalContent'
 import ProfileEditButtons from '@/components/entity/ModalsContent/Profile/ProfileEditButtons'
 
+// создание motion компонентов
+const MotionProfileEditModalContent = motion(ProfileEditModalContent)
+
 const ProfileModalContent: FC<TProfileModalContent> = ({
    type,
    UserInfo,
@@ -20,11 +23,6 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
    const [Mode, setMode] = useState<ProfileModeState>({
       name: 'default',
    })
-
-   // создание motion компонентов
-   const MotionProfileDefaultModalContent = motion(ProfileDefaultModalContent)
-   const MotionConfirmMessage = motion(ConfirmMessage)
-   const MotionProfileEditModalContent = motion(ProfileEditModalContent)
 
    // выбор футера
    const Drawerfooter = ({ BtnComponent }: { BtnComponent: ElementType }) => (
@@ -53,8 +51,13 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
          <Footer BtnComponent={ProfileEditButtons} />
       ) : undefined
 
-   // анимации
    const Animations = {
+      main: {
+         initial: { x: -100, opacity: 0 },
+         animate: { x: 0, opacity: 1 },
+         exit: { x: -200, opacity: 0 },
+         transition: { duration: 0.1 },
+      },
       side: {
          initial: { x: 100, opacity: 0 },
          animate: { x: 0, opacity: 1 },
@@ -73,20 +76,17 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
       >
          <AnimatePresence initial={false} mode="wait">
             {Mode.name === 'default' && (
-               <MotionProfileDefaultModalContent
-                  initial={{ x: -200, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -200, opacity: 0 }}
-                  transition={{ duration: 0.1 }}
-                  key="default"
+               <ProfileDefaultModalContent
+                  {...Animations.main}
+                  key="DefaultProfileModal"
                   UserInfo={UserInfo}
                   avatar={avatar}
                />
             )}
             {Mode.name === 'confirm' && (
-               <MotionConfirmMessage
+               <ConfirmMessage
                   {...Animations.side}
-                  key="confirm"
+                  key="ConfirmProfileModal"
                   action={Mode.action}
                   className="h-full w-full px-5 768p:h-[40dvh]"
                   BackFunction={Mode.BackFunction}
@@ -98,9 +98,9 @@ const ProfileModalContent: FC<TProfileModalContent> = ({
             {Mode.name === 'edit' && (
                <MotionProfileEditModalContent
                   {...Animations.side}
+                  key="EditProfileModal"
                   avatar={avatar}
                   className="768p:h-[52dvh]"
-                  key="edit"
                   Info={UserInfo}
                />
             )}

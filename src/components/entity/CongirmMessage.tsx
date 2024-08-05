@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/ShadCN/button'
-import { FC, forwardRef, LegacyRef, useEffect, useTransition } from 'react'
+import { FC, forwardRef, LegacyRef, Ref, useEffect, useTransition } from 'react'
 import { useFormState } from 'react-dom'
 import { cn } from '@/utils/utils'
 import {
@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/ShadCN/card'
 import toast from 'react-hot-toast'
 import { ReloadIcon } from '@radix-ui/react-icons'
+import { motion, MotionProps } from 'framer-motion'
 
 export type TDefaultConfirmMessageProps = {
    Title: string
@@ -25,12 +26,20 @@ export type TDefaultConfirmMessageProps = {
       | (() => Promise<{ error?: string }>)
 }
 
-export type TConfirmMessage = TDefaultConfirmMessageProps
+export type TConfirmMessage = TDefaultConfirmMessageProps & MotionProps
 
-const ConfirmMessage: FC<TConfirmMessage> = forwardRef(
+const ConfirmMessage = forwardRef<HTMLDivElement, TConfirmMessage>(
    (
-      { Title, Description, BackFunction, CallbackText, className, action },
-      ref: LegacyRef<HTMLDivElement>
+      {
+         Title,
+         Description,
+         BackFunction,
+         CallbackText,
+         className,
+         action,
+         ...MotionProps
+      },
+      ref
    ) => {
       const [pending, startTransition] = useTransition()
       const [state, formAction] = useFormState(action, { error: undefined })
@@ -46,7 +55,11 @@ const ConfirmMessage: FC<TConfirmMessage> = forwardRef(
       }, [state])
 
       return (
-         <div ref={ref} className={cn('grid place-items-center', className)}>
+         <motion.div
+            ref={ref}
+            className={cn('grid place-items-center', className)}
+            {...MotionProps}
+         >
             <Card>
                <CardHeader>
                   <CardTitle>{Title}</CardTitle>
@@ -62,7 +75,7 @@ const ConfirmMessage: FC<TConfirmMessage> = forwardRef(
                   </form>
                </CardFooter>
             </Card>
-         </div>
+         </motion.div>
       )
    }
 )
