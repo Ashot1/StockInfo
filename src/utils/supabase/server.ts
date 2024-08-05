@@ -1,5 +1,5 @@
 import { cookies } from 'next/headers'
-import { CookieOptions, createServerClient } from '@supabase/ssr'
+import { createServerClient } from '@supabase/ssr'
 import { Database } from '@/types/supabase.types'
 import 'server-only'
 
@@ -11,18 +11,19 @@ export function SupabaseCustomServer() {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
          cookies: {
-            get(name: string) {
-               return cookieStore.get(name)?.value
+            getAll() {
+               return cookieStore.getAll()
             },
-            set(name: string, value: any, options: CookieOptions) {
+            setAll(cookiesToSet) {
                try {
-                  cookieStore.set(name, value)
-               } catch (error) {}
-            },
-            remove(name: string, options: CookieOptions) {
-               try {
-                  cookieStore.set({ name, value: '', ...options })
-               } catch (error) {}
+                  cookiesToSet.forEach(({ name, value, options }) =>
+                     cookieStore.set(name, value, options)
+                  )
+               } catch {
+                  // The `setAll` method was called from a Server Component.
+                  // This can be ignored if you have middleware refreshing
+                  // user sessions.
+               }
             },
          },
       }
