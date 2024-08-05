@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/ShadCN/avatar'
 import { PersonIcon } from '@radix-ui/react-icons'
 import InfoPlaceHolder from '@/components/ui/InfoPlaceHolder'
-import { cn } from '@/utils/utils'
 import ScrollBlock from '@/components/ui/HightOrder/ScrollBlock'
 
 const MemoPlaceholder = memo(InfoPlaceHolder)
