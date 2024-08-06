@@ -141,8 +141,10 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
                               type={item.type}
                               title={item.Title}
                               defaultValue={item.Text}
-                              background={`peer-focus:bg-black peer-focus:text-white
-                                 dark:peer-focus:bg-white dark:peer-focus:text-black`}
+                              background={`peer-focus:bg-black peer-focus:text-white 
+                                 dark:peer-focus:bg-white dark:peer-focus:text-black
+                                 peer-autofill:bg-black peer-autofill:text-white
+                                 dark:peer-autofill:bg-white dark:peer-autofill:text-black`}
                               autoComplete={item.Value}
                            />
                         )
@@ -155,7 +157,10 @@ const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
                      key="password"
                      type="password"
                      title="Пароль"
-                     background="peer-focus:bg-black dark:peer-focus:bg-white peer-focus:text-white dark:peer-focus:text-black"
+                     background={`peer-focus:bg-black peer-focus:text-white
+                         dark:peer-focus:bg-white dark:peer-focus:text-black
+                         peer-autofill:bg-black peer-autofill:text-white
+                         dark:peer-autofill:bg-white dark:peer-autofill:text-black`}
                      autoComplete="new-password"
                   />
                </section>

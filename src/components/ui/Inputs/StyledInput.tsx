@@ -43,36 +43,35 @@ const StyledInput = <T extends FieldValues>({
 
    return (
       <label className="relative flex cursor-text flex-col">
-         <input
-            {...additionalProps}
-            name={name}
-            type={type}
-            defaultValue={defaultValue}
-            className={cn(
-               `peer rounded-lg border-2 border-transparent bg-[var(--grayBG)]
-               px-2 py-2
-               text-transparent duration-300
-               focus:border-black focus:bg-transparent focus:text-black dark:focus:border-white dark:focus:text-white`,
-               comfortaa.className,
-               error && 'border-red-900'
-            )}
-         />
-         <span
-            className={cn(
-               `absolute left-3 top-[50%] flex max-w-[80%] translate-y-[-100%] items-center gap-3 rounded px-2 duration-200 peer-focus:-top-3.5 peer-focus:translate-y-0 peer-focus:text-sm`,
-               background
-            )}
-         >
-            <p className="">{title}</p>
-            {defaultValue && '/'}
-            {defaultValue && (
-               <p className="truncate text-sm opacity-25">{defaultValue}</p>
-            )}
-         </span>
+         <div className="relative">
+            <input
+               {...additionalProps}
+               name={name}
+               type={type}
+               defaultValue={defaultValue}
+               className={cn(
+                  `peer w-full rounded-lg border-2 border-transparent bg-[var(--grayBG)] px-2 py-2 text-transparent duration-300 focus:border-black focus:bg-transparent focus:text-black dark:focus:border-white dark:focus:text-white`,
+                  comfortaa.className,
+                  error && 'border-red-900'
+               )}
+            />
+            <span
+               className={cn(
+                  `absolute left-3 top-[50%] flex max-w-[80%] translate-y-[-50%] items-center gap-3 rounded px-2 duration-200 peer-autofill:-top-3.5 peer-autofill:translate-y-0 peer-autofill:text-sm peer-focus:-top-3.5 peer-focus:translate-y-0 peer-focus:text-sm`,
+                  background
+               )}
+            >
+               <p className="">{title}</p>
+               {defaultValue && '/'}
+               {defaultValue && (
+                  <p className="truncate text-sm opacity-25">{defaultValue}</p>
+               )}
+            </span>
+         </div>
 
          <span className="ml-2 flex min-h-6 items-center gap-2 text-sm text-red-900">
             {error && <ExclamationTriangleIcon className="mt-0.5 size-4" />}
-            {error ? error?.message || <>Ошибка</> : ''}
+            {error ? error?.message : ''}
          </span>
       </label>
    )
