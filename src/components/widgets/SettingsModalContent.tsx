@@ -11,7 +11,6 @@ const SettingsModalContent: FC<Pick<IModalContent, 'type'>> = ({ type }) => {
    const [Mode, setMode] = useState<SettingsModalMods>({ name: 'default' })
 
    const MotionSettingsDefaultModalContent = motion(SettingsDefaultModalContent)
-   const MotionConfirmMessage = motion(ConfirmMessage)
 
    const Animations = {
       side: {
@@ -40,7 +39,7 @@ const SettingsModalContent: FC<Pick<IModalContent, 'type'>> = ({ type }) => {
                />
             )}
             {Mode.name === 'confirm' && (
-               <MotionConfirmMessage
+               <ConfirmMessage
                   key="confirmSettings"
                   {...Mode}
                   {...Animations.side}

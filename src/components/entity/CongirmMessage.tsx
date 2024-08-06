@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/ShadCN/button'
-import { FC, forwardRef, LegacyRef, Ref, useEffect, useTransition } from 'react'
+import { FC, useEffect, useTransition } from 'react'
 import { useFormState } from 'react-dom'
 import { cn } from '@/utils/utils'
 import {
@@ -28,57 +28,51 @@ export type TDefaultConfirmMessageProps = {
 
 export type TConfirmMessage = TDefaultConfirmMessageProps & MotionProps
 
-const ConfirmMessage = forwardRef<HTMLDivElement, TConfirmMessage>(
-   (
-      {
-         Title,
-         Description,
-         BackFunction,
-         CallbackText,
-         className,
-         action,
-         ...MotionProps
-      },
-      ref
-   ) => {
-      const [pending, startTransition] = useTransition()
-      const [state, formAction] = useFormState(action, { error: undefined })
+const ConfirmMessage: FC<TConfirmMessage> = ({
+   Title,
+   Description,
+   BackFunction,
+   CallbackText,
+   className,
+   action,
+   ...MotionProps
+}) => {
+   const [pending, startTransition] = useTransition()
+   const [state, formAction] = useFormState(action, { error: undefined })
 
-      const Action = (payload: FormData) => {
-         startTransition(async () => await formAction(payload))
-      }
-
-      useEffect(() => {
-         if (state.error) {
-            toast.error(state.error || 'Ошибка')
-         }
-      }, [state])
-
-      return (
-         <motion.div
-            ref={ref}
-            className={cn('grid place-items-center', className)}
-            {...MotionProps}
-         >
-            <Card>
-               <CardHeader>
-                  <CardTitle>{Title}</CardTitle>
-                  <CardDescription>{Description}</CardDescription>
-               </CardHeader>
-               <CardFooter className="flex gap-3">
-                  <form className="flex gap-3" action={Action}>
-                     <Buttons
-                        clickBack={BackFunction}
-                        state={pending}
-                        text={CallbackText}
-                     />
-                  </form>
-               </CardFooter>
-            </Card>
-         </motion.div>
-      )
+   const Action = (payload: FormData) => {
+      startTransition(async () => await formAction(payload))
    }
-)
+
+   useEffect(() => {
+      if (state.error) {
+         toast.error(state.error || 'Ошибка')
+      }
+   }, [state])
+
+   return (
+      <motion.div
+         className={cn('grid place-items-center', className)}
+         {...MotionProps}
+      >
+         <Card>
+            <CardHeader>
+               <CardTitle>{Title}</CardTitle>
+               <CardDescription>{Description}</CardDescription>
+            </CardHeader>
+            <CardFooter className="flex gap-3">
+               <form className="flex gap-3" action={Action}>
+                  <Buttons
+                     clickBack={BackFunction}
+                     state={pending}
+                     text={CallbackText}
+                  />
+               </form>
+            </CardFooter>
+         </Card>
+      </motion.div>
+   )
+}
 
 const Buttons: FC<{
    state: boolean
@@ -104,5 +98,4 @@ const Buttons: FC<{
    )
 }
 
-ConfirmMessage.displayName = 'ConfirmMessage'
 export default ConfirmMessage
