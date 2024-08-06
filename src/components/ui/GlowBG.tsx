@@ -34,7 +34,7 @@ const GlowBG: FC = () => {
             },
          ])
       }
-   }, [])
+   }, [updateSettings])
 
    return State && <div className="glow-effect transform-gpu" />
 }
