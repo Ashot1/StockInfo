@@ -5,7 +5,7 @@ import {
    RegisterOptions,
    UseFormRegister,
 } from 'react-hook-form'
-import { InputHTMLAttributes } from 'react'
+import { forwardRef, InputHTMLAttributes, ReactElement, Ref } from 'react'
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons'
 import { cn } from '@/utils/utils'
 import { comfortaa } from '@/utils/fonts'
@@ -18,19 +18,24 @@ export type StyledInputProps<T extends FieldValues> = {
    options?: RegisterOptions<T>
    error?: FieldError
    background?: string
+   labelClassName?: string
 } & InputHTMLAttributes<HTMLInputElement>
 
-const StyledInput = <T extends FieldValues>({
-   type,
-   defaultValue,
-   title,
-   register,
-   name,
-   options,
-   error,
-   background,
-   ...props
-}: StyledInputProps<T>) => {
+const StyledInputComponent = <T extends FieldValues>(
+   {
+      type,
+      defaultValue,
+      title,
+      register,
+      name,
+      options,
+      error,
+      background,
+      labelClassName,
+      ...props
+   }: StyledInputProps<T>,
+   ref: Ref<HTMLInputElement>
+) => {
    let additionalProps = props
 
    if (register)
@@ -42,9 +47,12 @@ const StyledInput = <T extends FieldValues>({
       }
 
    return (
-      <label className="relative flex cursor-text flex-col">
+      <label
+         className={cn('relative flex cursor-text flex-col', labelClassName)}
+      >
          <div className="relative">
             <input
+               ref={ref}
                {...additionalProps}
                name={name}
                type={type}
@@ -61,7 +69,7 @@ const StyledInput = <T extends FieldValues>({
                   background
                )}
             >
-               <p className="">{title}</p>
+               <p>{title}</p>
                {defaultValue && '/'}
                {defaultValue && (
                   <p className="truncate text-sm opacity-25">{defaultValue}</p>
@@ -76,5 +84,9 @@ const StyledInput = <T extends FieldValues>({
       </label>
    )
 }
+
+const StyledInput = forwardRef(StyledInputComponent) as <T extends FieldValues>(
+   p: StyledInputProps<T> & { ref?: Ref<HTMLInputElement> }
+) => ReactElement
 
 export default StyledInput
