@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, ReactNode, useContext } from 'react'
-import { useManyLocalStorage } from '@/hooks/LocalStorage'
+import { useManyStorage } from '@/hooks/Storage'
 import { LocalStorageParameters } from '@/utils/config'
 
 type SettingsContextReturn = {
@@ -27,7 +27,7 @@ export default function SettingsProvider({
       return result
    }
 
-   const [Settings, updateSettings] = useManyLocalStorage(parameters())
+   const [Settings, updateSettings] = useManyStorage(parameters())
 
    return (
       <SettingsContext.Provider
