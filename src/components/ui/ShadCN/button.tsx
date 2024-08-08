@@ -37,7 +37,10 @@ const buttonVariants = cva(
 )
 
 export interface ButtonProps
-   extends Omit<SlotProps & RefAttributes<HTMLElement> & MotionProps, 'ref'>,
+   extends Omit<
+         SlotProps & RefAttributes<HTMLButtonElement> & MotionProps,
+         'ref'
+      >,
       VariantProps<typeof buttonVariants> {
    asChild?: boolean
    disabled?: boolean

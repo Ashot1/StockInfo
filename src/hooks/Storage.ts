@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
+type StorageType = 'local' | 'session'
+
 export function useStorage(
    name: string,
    initialValue = '',
-   storageType: 'local' | 'session' = 'local'
+   storageType: StorageType = 'local'
 ) {
    const [data, setData] = useState<string>(() => {
       if (typeof window === 'undefined') return initialValue
@@ -36,9 +38,16 @@ export function useStorage(
    return [data, setLocalStorage] as const
 }
 
+export type ManyStorageReturnDataType = Map<string, string>
+export type UpdateManyStorageType = (
+   values: { name: string; value: string }[]
+) => void
+
+export type ManyStorageParameters = { name: string; initialValue: string }[]
+
 export function useManyStorage(
-   parameters: { name: string; initialValue: string }[],
-   storageType: 'local' | 'session' = 'local'
+   parameters: ManyStorageParameters,
+   storageType: StorageType = 'local'
 ) {
    const initStorage = () => {
       const result = new Map<string, string>()
@@ -55,9 +64,9 @@ export function useManyStorage(
       return result
    }
 
-   const [data, setData] = useState<Map<string, string>>(initStorage)
+   const [data, setData] = useState<ManyStorageReturnDataType>(initStorage)
 
-   const updateStorage = (values: { name: string; value: string }[]) => {
+   const updateStorage: UpdateManyStorageType = (values) => {
       const result = new Map<string, string>(data)
       for (const param of values) {
          result.set(param.name, param.value)
