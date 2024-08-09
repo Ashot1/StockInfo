@@ -13,6 +13,7 @@ import {
    searchBond,
    searchStock,
 } from '@/actions/Security/CLIENT-CommonSecurity'
+import GradientText from '@/components/ui/Text/GradientText'
 
 const ControlPanel = () => {
    const path = usePathname()
@@ -23,9 +24,9 @@ const ControlPanel = () => {
          <span className="text-xs opacity-50 768p:text-center 768p:text-sm">
             Добро пожаловать
          </span>
-         <span className="truncate bg-gradient-to-r from-[#4c6ca8] to-[#b94e76] bg-clip-text text-transparent 768p:text-center 768p:text-lg">
+         <GradientText className="truncate 768p:text-center 768p:text-lg">
             {user_metadata.full_name}
-         </span>
+         </GradientText>
       </h2>
    )
 
