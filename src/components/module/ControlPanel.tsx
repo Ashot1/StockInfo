@@ -1,10 +1,10 @@
 'use client'
 
-import BackButton from '@/components/entity/BackButton'
+import BackButton from '@/components/entity/Buttons/BackButton'
 import MainMenuDropDown from '@/components/module/MainMenuDropDown'
 import { usePathname } from 'next/navigation'
 import { URLList } from '@/utils/config'
-import PageTitle from '@/components/ui/PageTitle'
+import PageTitle from '@/components/ui/Text/PageTitle'
 import { FC, ReactNode } from 'react'
 import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import Favorite from '@/components/module/Favorite'

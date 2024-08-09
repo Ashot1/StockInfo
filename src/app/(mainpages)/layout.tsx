@@ -14,7 +14,6 @@ import {
 } from '@/actions/Account/Account'
 import ScrollStateBar from '@/components/entity/ScrollStateBar'
 import { redirect } from 'next/navigation'
-import ThemeProvider from '@/hoc/ThemeProvider'
 import ReactQueryProvider from '@/hoc/Providers/ReactQueryProvider'
 import dynamic from 'next/dynamic'
 import SettingsProvider from '@/hoc/Providers/Settings'

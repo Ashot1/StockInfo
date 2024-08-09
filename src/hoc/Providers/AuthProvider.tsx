@@ -1,4 +1,5 @@
 'use client'
+
 import { createContext, FC, ReactNode, useContext, useState } from 'react'
 import { Tables } from '@/types/supabase.types'
 import { User } from '@supabase/supabase-js'

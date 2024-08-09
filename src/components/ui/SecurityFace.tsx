@@ -1,6 +1,6 @@
 import IMGshadowCard from '@/components/ui/Img/IMGshadowCard'
 import ImageErrorCheck from '@/components/ui/Img/ImageErrorCheck'
-import AddToFavorite from '@/components/entity/AddToFavorite'
+import AddToFavorite from '@/components/entity/Buttons/AddToFavorite'
 import { FavoritesListTypes } from '@/types/Auth.types'
 import { cn } from '@/utils/utils'
 

@@ -1,7 +1,7 @@
 import CheckBoxRow, {
    CheckBoxRowProps,
 } from '@/components/ui/CheckBox/CheckBoxRow'
-import ThemeChangeButtons from '@/components/entity/ThemeChangeButtons'
+import ThemeChangeButtons from '@/components/entity/Buttons/ThemeChangeButtons'
 import { LocalStorageParameters } from '@/utils/config'
 import packageJSON from '@/../package.json'
 import { Button } from '@/components/ui/ShadCN/button'

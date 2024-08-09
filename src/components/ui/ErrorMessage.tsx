@@ -1,7 +1,7 @@
 import { HTMLAttributes, ReactNode } from 'react'
 import { cn } from '@/utils/utils'
 import { tektur } from '@/utils/fonts'
-import BackButton from '@/components/entity/BackButton'
+import BackButton from '@/components/entity/Buttons/BackButton'
 
 export type ErrorMessageProps = {
    errMessage?: string

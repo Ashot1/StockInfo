@@ -1,1 +1,0 @@
-При генерации типов надо заменить поля в "favorite type" на TFavoritesList[] и "purchases" на TPurchasesList[] и "transactions" на TTransactionsList[]

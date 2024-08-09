@@ -6,7 +6,7 @@ import { ConvertDate } from '@/utils/Date'
 import { FilePlusIcon } from '@radix-ui/react-icons'
 import { getCurrentNews } from '@/actions/Security/News'
 import SwipeNavigator from '@/hoc/SwipeNavigator'
-import AddToFavorite from '@/components/entity/AddToFavorite'
+import AddToFavorite from '@/components/entity/Buttons/AddToFavorite'
 
 export const revalidate = 3600
 
