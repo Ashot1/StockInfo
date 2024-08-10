@@ -15,8 +15,9 @@ const ProfileButtons: FC<{
 
    // выход из аккаунта
    const QuitAccount = async () => {
-      const { error } = await SignOut()
-      if (error) return { error }
+      const response = await SignOut()
+
+      if (response?.error) return { error: response.error }
 
       refresh()
 
@@ -35,8 +36,8 @@ const ProfileButtons: FC<{
 
    // удаление аккаунта
    const DeleteAccount = async () => {
-      const { error } = await DeleteUser()
-      if (error) return { error: error }
+      const response = await DeleteUser()
+      if (response?.error) return { error: response?.error }
       refresh()
       return {}
    }
