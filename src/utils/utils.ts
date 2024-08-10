@@ -12,13 +12,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export async function TryCatch<T>(
-   fn: () => Promise<{ data: T }>
-): Promise<{ data?: T; error?: string }> {
+   fn: () => Promise<{ data: T; error: null }>
+): Promise<{ data: T | null; error: string | null }> {
    try {
       return await fn()
    } catch (error) {
       console.error(error)
-      return { error: (error as Error).message }
+      return { error: (error as Error).message, data: null }
    }
 }
 

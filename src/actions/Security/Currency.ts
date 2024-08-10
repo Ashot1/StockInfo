@@ -10,6 +10,6 @@ export async function getCurrency() {
 
       if (!result || !data) throw new Error('Акции не найдены')
 
-      return { data }
+      return { data, error: null }
    })
 }

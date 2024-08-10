@@ -12,14 +12,14 @@ export async function LoginWithPassword({
    email,
 }: LoginPasswordInfo) {
    return TryCatch<User>(async () => {
-      const supabase = await SupabaseCustomServer()
+      const supabase = SupabaseCustomServer()
       const { error, data } = await supabase.auth.signInWithPassword({
          password: password,
          email: email,
       })
       if (error) throw error
 
-      return { data: data.user }
+      return { data: data.user, error: null }
    })
 }
 
@@ -39,7 +39,7 @@ export async function RegisterWithPassword({
          },
       })
 
-      if (error || !data || !data.user?.id)
+      if (error || !data || !data?.user?.id)
          throw error || new Error('Ошибка регистрации')
 
       const { error: TableError, data: TableData } = await CreateTable(
@@ -53,17 +53,20 @@ export async function RegisterWithPassword({
 
       if (!TableData) throw new Error('Ошибка получения таблицы')
 
-      return { data: { user: data.user, table: TableData[0] } }
+      return {
+         data: { user: data.user, table: TableData[0] },
+         error: null,
+      }
    })
 }
 
 export async function SignOut() {
-   return TryCatch(async () => {
+   return TryCatch<null>(async () => {
       const supabase = SupabaseCustomServer()
 
       const { error } = await supabase.auth.signOut({ scope: 'local' })
       if (error) throw error
 
-      return { data: undefined }
+      return { data: null, error: null }
    })
 }

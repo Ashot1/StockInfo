@@ -23,8 +23,8 @@ export type SecurityTemplateProps = {
    secID: string
    secondsContent?: TabsContentType
    image: string
-   data?: CurrentStockRequest
-   error?: string
+   data?: CurrentStockRequest | null
+   error?: string | null
    type: FavoritesListTypes
    priceList?: PriceHistoryType[]
    MarketData?: Partial<{

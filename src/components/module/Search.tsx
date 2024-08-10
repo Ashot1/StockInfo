@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation'
 export type TSearch = {
    searchRequest: (
       value: string
-   ) => Promise<{ data?: SecuritySearchRequest; error?: string }>
+   ) => Promise<{ data: SecuritySearchRequest | null; error: string | null }>
    url: string
    imgURL: string
    imgType: string

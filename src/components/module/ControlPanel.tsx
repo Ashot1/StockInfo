@@ -17,7 +17,7 @@ import GradientText from '@/components/ui/Text/GradientText'
 
 const ControlPanel = () => {
    const path = usePathname()
-   const { user_metadata } = useAuthContext().authInfo
+   const { user_metadata } = useAuthContext()?.authInfo
 
    const homeTitleContent = (
       <h2 className="grid max-w-[50%] grid-cols-1">

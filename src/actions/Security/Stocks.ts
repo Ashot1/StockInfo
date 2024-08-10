@@ -16,7 +16,7 @@ export async function getStocksList(start: string = '0', limit: number) {
 
       if (!result || !data) throw new Error('Акции не найдены')
 
-      return { data }
+      return { data, error: null }
    })
 }
 
@@ -31,7 +31,7 @@ export async function getDividends(stock: string) {
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
-      return { data }
+      return { data, error: null }
    })
 }
 
@@ -56,7 +56,7 @@ export async function getAllStocks(
 
       if (!result || !data) throw new Error('Ошибка запроса')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
 
@@ -79,7 +79,7 @@ export async function getStockPriceHistory({
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
-      return { data }
+      return { data, error: null }
    })
 }
 
@@ -94,6 +94,6 @@ export async function getStockMarketPrice(secid: string[]) {
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }

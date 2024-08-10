@@ -12,6 +12,6 @@ export async function getCurrentSecurity(stock: string) {
       if (!result || !data || !data[1].description.length)
          throw new Error('Акция не найдена')
 
-      return { data }
+      return { data, error: null }
    })
 }

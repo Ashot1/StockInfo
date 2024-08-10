@@ -16,7 +16,7 @@ export async function getBondsList(start: string = '0', limit: number) {
 
       if (!result || !data) throw new Error('Облигации не найдены')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
 
@@ -30,7 +30,7 @@ export async function getCoupons(bond: string) {
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
 
@@ -55,7 +55,7 @@ export async function getAllBonds(
 
       if (!result || !data) throw new Error('Ошибка запроса')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
 
@@ -78,7 +78,7 @@ export async function getBondPriceHistory({
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
-      return { data }
+      return { data, error: null }
    })
 }
 
@@ -94,6 +94,6 @@ export async function getBondMarketPrice(secid: string[]) {
 
       if (!result || !data) throw new Error('Ошибка получения данных')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }

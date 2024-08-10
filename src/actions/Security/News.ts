@@ -12,7 +12,7 @@ export async function getNews(start = '0') {
 
       if (!result || !data) throw new Error('Новости не найдены')
 
-      return { data }
+      return { data, error: null }
    })
 }
 
@@ -27,6 +27,6 @@ export async function getCurrentNews(id: string) {
       if (!result || !data || !data[1].content.length)
          throw new Error('Новость не найдена')
 
-      return { data }
+      return { data, error: null }
    })
 }

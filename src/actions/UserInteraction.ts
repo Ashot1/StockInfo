@@ -142,7 +142,10 @@ export async function BuySecurities(
       if (!newUserData || newError || TransactionError || !TransactionData)
          throw TransactionError || new Error(newError || 'Ошибка транзакции')
 
-      return { data: { user: newUserData, transactions: TransactionData } }
+      return {
+         data: { user: newUserData, transactions: TransactionData },
+         error: null,
+      }
    })
 }
 
@@ -314,6 +317,7 @@ export async function SellSecurities(
             user: updatedUser,
             transactions: [...transactionsDataBase, ...updatedTransactions],
          },
+         error: null,
       }
    })
 }

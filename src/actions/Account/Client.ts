@@ -33,13 +33,13 @@ export async function LoginWithOAuth(provider: OAuthProviders) {
 
       if (error) throw error
 
-      return { data }
+      return { data, error: null }
    })
 }
 
 export async function FetchFavorites(list?: TFavoritesList[] | null) {
    return TryCatch<TFormatedFavoriteList[]>(async () => {
-      if (!list || list.length <= 0) return { data: [] }
+      if (!list || list.length <= 0) return { data: [], error: null }
 
       const SortedList = SortBySecurityType(list)
 
@@ -164,6 +164,6 @@ export async function FetchFavorites(list?: TFavoritesList[] | null) {
          }
       })
 
-      return { data: formated }
+      return { data: formated, error: null }
    })
 }

@@ -4,7 +4,7 @@ import { tektur } from '@/utils/fonts'
 import BackButton from '@/components/entity/Buttons/BackButton'
 
 export type ErrorMessageProps = {
-   errMessage?: string
+   errMessage?: string | null
    className?: string
    children?: ReactNode
 } & HTMLAttributes<HTMLDivElement>

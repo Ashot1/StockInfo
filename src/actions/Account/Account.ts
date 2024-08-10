@@ -40,7 +40,7 @@ export async function getSupabaseUser(supabase: SupabaseClient) {
 }
 
 export async function DeleteUser() {
-   return TryCatch<undefined>(async () => {
+   return TryCatch<null>(async () => {
       const supabase = SupabaseCustomServer()
       const supabaseServer = SupabaseCustomService()
 
@@ -75,7 +75,7 @@ export async function DeleteUser() {
 
       if (error) throw error
 
-      return { data: undefined }
+      return { data: null, error: null }
    })
 }
 
@@ -85,7 +85,7 @@ export async function GetUser() {
 
       const { user } = await getSessionUser(supabase)
 
-      return { data: user }
+      return { data: user, error: null }
    })
 }
 
@@ -122,7 +122,8 @@ export async function UpdateUser({
          }
       }
 
-      if (Object.keys(attributes).length <= 0) return { data: User }
+      if (Object.keys(attributes).length <= 0)
+         return { data: User, error: null }
 
       const {
          data: { user },
@@ -131,7 +132,7 @@ export async function UpdateUser({
 
       if (error || !user) throw error
 
-      return { data: user }
+      return { data: user, error: null }
    })
 }
 
@@ -149,7 +150,7 @@ export const GetUserMainData = async () => {
 
          if (error || !data) throw error || new Error('Ошибка получения данных')
 
-         return { data: data[0] }
+         return { data: data[0], error: null }
       })
    )
 }
@@ -169,7 +170,7 @@ export async function UpdateUserMainData(incomingData: TincomingData) {
 
       if (!data || error) throw error || new Error('Ошибка обновления')
 
-      return { data: data[0] }
+      return { data: data[0], error: null }
    })
 }
 
@@ -206,7 +207,7 @@ export async function getAllUserTransactions(option?: {
       if (!data || error)
          throw error || new Error('Ошибка получения транзакций')
 
-      return { data: { data, count } }
+      return { data: { data, count }, error: null }
    })
 }
 
@@ -227,7 +228,7 @@ export async function getActualUserTransactions() {
       if (!data || error)
          throw error || new Error('Ошибка получения транзакций')
 
-      return { data: { data, count } }
+      return { data: { data, count }, error: null }
    })
 }
 
@@ -252,7 +253,7 @@ export async function clearUserTransactions() {
 
       if (TransactionError) throw TransactionError
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
 
@@ -271,6 +272,6 @@ export async function CreateTable(id: string) {
 
       if (error || !data) throw error || new Error('Ошибка создания таблицы')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }

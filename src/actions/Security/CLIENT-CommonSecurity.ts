@@ -23,7 +23,7 @@ export async function searchStock(
 
       if (!result || !data) throw new Error('Ошибка запроса')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
 
@@ -40,6 +40,6 @@ export async function searchBond(bond: string, limit?: string, start?: string) {
 
       if (!result || !data) throw new Error('Ошибка запроса')
 
-      return { data: data }
+      return { data: data, error: null }
    })
 }
