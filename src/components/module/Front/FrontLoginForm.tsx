@@ -10,7 +10,7 @@ import Link from 'next/link'
 import ProvidersBlock from '@/components/entity/Front/ProvidersBlock'
 import SiteHeading from '@/components/ui/Front/SiteHeading'
 import StyledInput from '@/components/ui/Inputs/StyledInput'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect } from 'react'
 import { motion, useAnimate } from 'framer-motion'
 
 type loginInputs = { email: string; password: string }
@@ -21,7 +21,8 @@ const FrontLoginForm: FC = () => {
    const {
       handleSubmit,
       control,
-      formState: { isValid, isSubmitting, isSubmitSuccessful },
+      register,
+      formState: { isValid, isSubmitting, isSubmitSuccessful, errors },
    } = useForm<loginInputs>({ mode: 'all' })
 
    const router = useRouter()
@@ -84,23 +85,16 @@ const FrontLoginForm: FC = () => {
                      />
                   )}
                />
-               <Controller
+               <StyledInput<loginInputs>
                   name="password"
-                  rules={AuthFormPatterns.password}
-                  control={control}
-                  render={({ field, fieldState }) => (
-                     <StyledInput
-                        title="Пароль"
-                        labelClassName="opacity-0 fill-mode-forwards"
-                        background="peer-focus:bg-background peer-focus:text-primary peer-autofill:bg-background peer-autofill:text-primary"
-                        error={fieldState.error}
-                        type="password"
-                        autoComplete="current-password"
-                        defaultValue={field.value}
-                        {...field}
-                        value={field.value || ''}
-                     />
-                  )}
+                  title="Пароль"
+                  labelClassName="opacity-0 fill-mode-forwards"
+                  background="peer-focus:bg-background peer-focus:text-primary peer-autofill:bg-background peer-autofill:text-primary"
+                  error={errors.password}
+                  type="password"
+                  autoComplete="current-password"
+                  options={AuthFormPatterns.password}
+                  register={register}
                />
                <Button
                   variant="secondary"
