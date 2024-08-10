@@ -24,8 +24,9 @@ const CloseButton: FC<CloseButtonProps> = ({ href, className, onClick }) => {
                'absolute right-4 top-4 rounded-full p-2 text-foreground duration-200 hover:bg-secondary',
                className
             )}
+            aria-label="Закрыть окно"
          >
-            <Cross1Icon className="size-4" />
+            <Cross1Icon className="size-4" aria-hidden />
          </MotionLink>
       )
 
@@ -34,8 +35,9 @@ const CloseButton: FC<CloseButtonProps> = ({ href, className, onClick }) => {
          variant="ghost"
          onClick={onClick}
          className={cn('absolute right-4 top-4 rounded-full', className)}
+         aria-label="Закрыть окно"
       >
-         <Cross1Icon className="size-4" />
+         <Cross1Icon className="size-4" aria-hidden />
       </Button>
    )
 }

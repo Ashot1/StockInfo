@@ -23,16 +23,19 @@ const ProfileDefaultModalContent = forwardRef<
          ref={ref}
          {...MotionProps}
       >
-         <aside className="mt-3 grid w-full place-items-center">
+         <div className="mt-3 grid w-full place-items-center">
             {avatar ? (
-               <Avatar className="size-20">
+               <Avatar className="size-20" aria-label="Аватарка пользователя">
                   <AvatarImage src={avatar} />
                   <AvatarFallback>A</AvatarFallback>
                </Avatar>
             ) : (
-               <PersonIcon className="size-12" />
+               <PersonIcon
+                  className="size-12"
+                  aria-label="Иконка пользователя"
+               />
             )}
-         </aside>
+         </div>
          <section className="mb-5 mt-10 flex w-full flex-col gap-4 px-4 500p:px-24 768p:px-6">
             {UserInfo.map((item) => (
                <MemoPlaceholder

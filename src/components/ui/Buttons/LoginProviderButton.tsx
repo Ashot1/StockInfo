@@ -23,7 +23,10 @@ const LoginProviderButton = forwardRef<
 >(({ children, color, className, ...props }, ref) => {
    return (
       <button
-         className={cn('group relative flex aspect-square', className)}
+         className={cn(
+            'group relative flex aspect-square rounded-2xl',
+            className
+         )}
          ref={ref}
          {...props}
       >

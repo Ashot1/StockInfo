@@ -33,12 +33,13 @@ export default function InfoPlaceHolder({
                error: (e) => e.message,
             })
          }
+         aria-label={`${title} - ${text}. Копировать при нажатии`}
       >
-         <div className="max-w-[80%]">
+         <div className="max-w-[80%]" aria-hidden>
             <span className={cn('opacity-70', titleClassName)}>{title}</span>
             <p className={cn('truncate', textClassName)}>{text}</p>
          </div>
-         <CopyIcon className="size-4 opacity-40" />
+         <CopyIcon className="size-4 opacity-40" aria-hidden />
       </div>
    )
 }

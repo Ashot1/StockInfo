@@ -49,6 +49,7 @@ const StyledInputComponent = <T extends FieldValues>(
    return (
       <label
          className={cn('relative flex cursor-text flex-col', labelClassName)}
+         aria-label={`Поле ввода для ${title}`}
       >
          <div className="relative">
             <input
@@ -69,10 +70,15 @@ const StyledInputComponent = <T extends FieldValues>(
                   background
                )}
             >
-               <p>{title}</p>
+               <p aria-label={title}>{title}</p>
                {defaultValue && '/'}
                {defaultValue && (
-                  <p className="truncate text-sm opacity-35">{defaultValue}</p>
+                  <p
+                     className="truncate text-sm opacity-35"
+                     aria-label={defaultValue}
+                  >
+                     {defaultValue}
+                  </p>
                )}
             </span>
          </div>

@@ -46,11 +46,17 @@ const NavButton = forwardRef<
          {...props}
       >
          {direction === 'left' && (
-            <ChevronLeftIcon className="size-6 duration-200 group-hover:translate-x-2" />
+            <ChevronLeftIcon
+               className="size-6 duration-200 group-hover:translate-x-2"
+               aria-hidden
+            />
          )}
          {children}
          {direction === 'right' && (
-            <ChevronRightIcon className="size-6 duration-200 group-hover:-translate-x-2" />
+            <ChevronRightIcon
+               className="size-6 duration-200 group-hover:-translate-x-2"
+               aria-hidden
+            />
          )}
       </Button>
    )

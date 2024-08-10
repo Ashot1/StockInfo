@@ -22,7 +22,7 @@ const SiteHeading = forwardRef<
       >
          <Image
             src={Icon}
-            alt="logo"
+            alt="Иконка приложения"
             width={60}
             height={60}
             className="drop-shadow-xl"
@@ -31,6 +31,7 @@ const SiteHeading = forwardRef<
             variant="filled"
             scale={0.65}
             className="mt-4 h-5 w-[8.8rem] dark:invert"
+            ariaLabel="Логотип Stockinfo"
          />
          {children}
          <div className="radial-top-mask background-grid absolute -z-[1] h-full w-full overflow-hidden bg-sky-700 opacity-35" />
