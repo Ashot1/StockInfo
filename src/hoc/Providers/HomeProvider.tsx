@@ -4,7 +4,7 @@ import { createContext, ReactNode, useContext } from 'react'
 import { useAuthContext } from '@/hoc/Providers/AuthProvider'
 import { TFormatedFavoriteList } from '@/components/module/Favorite'
 import { TPurchasesList } from '@/types/Auth.types'
-import { FetchFavorites } from '@/actions/Account/Client'
+import { FetchInfo } from '@/actions/Security/CommonSecurity'
 import { getTransactionInfo } from '@/utils/utils'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/utils/config'
@@ -38,7 +38,7 @@ export default function HomeProvider({ children }: { children: ReactNode }) {
 
    const { error, data, isLoading } = useQuery({
       queryKey: [queryKeys.Purchase],
-      queryFn: () => FetchFavorites(Context_Purchases),
+      queryFn: () => FetchInfo(Context_Purchases),
       select: ({ data: fetchData }) => {
          const newData: StateType = []
 

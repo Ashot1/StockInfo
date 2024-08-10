@@ -13,7 +13,7 @@ import toast from 'react-hot-toast'
 import ScrollBlock from '@/components/ui/HightOrder/ScrollBlock'
 import FavoriteDefaultModalContent from '@/components/entity/ModalsContent/Favorite/FavoriteDefaultModalContent'
 import FavoriteButtons from '@/components/entity/ModalsContent/Favorite/FavoriteButtons'
-import { FetchFavorites } from '@/actions/Account/Client'
+import { FetchInfo } from '@/actions/Security/CommonSecurity'
 import { DefaultListLoading } from '@/components/ui/Lists/DefaultList/DefaultList'
 import ErrorMessage from '@/components/ui/ErrorMessage'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -41,7 +41,7 @@ const Favorite: FC = () => {
       isLoading,
    } = useQuery({
       queryKey: [queryKeys.Favorite],
-      queryFn: () => FetchFavorites(mainInfo?.favorites),
+      queryFn: () => FetchInfo(mainInfo?.favorites),
       select: ({ data }) => data,
       retry: 2,
       staleTime: Infinity,

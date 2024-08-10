@@ -15,7 +15,7 @@ import { Tables } from '@/types/supabase.types'
 import { v4 } from 'uuid'
 import { SupabaseCustomServer } from '@/utils/supabase/server'
 import { SupabaseCustomService } from '@/utils/supabase/service'
-import { FetchFavorites } from '@/actions/Account/Client'
+import { FetchInfo } from '@/actions/Security/CommonSecurity'
 
 type BuySellReturns = {
    user: Tables<'UserMainData'>
@@ -44,7 +44,7 @@ export async function BuySecurities(
       }))
 
       const { data: SecuritiesData, error: SecuritiesDataError } =
-         await FetchFavorites(FormatedSecList)
+         await FetchInfo(FormatedSecList)
 
       if (SecuritiesDataError || !SecuritiesData || SecuritiesData.length <= 0)
          throw (
@@ -189,7 +189,7 @@ export async function SellSecurities(
       }))
 
       const { data: SecuritiesData, error: SecuritiesDataError } =
-         await FetchFavorites(FormatedSecList)
+         await FetchInfo(FormatedSecList)
 
       if (SecuritiesDataError || !SecuritiesData || SecuritiesData.length <= 0)
          throw (
