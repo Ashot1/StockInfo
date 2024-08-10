@@ -1,6 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { URLList } from '@/utils/config'
-import { CookieOptions, createServerClient } from '@supabase/ssr'
+import { NextRequest } from 'next/server'
 import { updateSession } from '@/utils/supabase/middleware'
 
 export async function middleware(req: NextRequest) {
@@ -22,6 +20,6 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
    matcher: [
-      '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif)$).*)',
+      '/((?!_next/static|_next/image|__nextjs_original-stack-frame|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|json)$).*)',
    ],
 }
