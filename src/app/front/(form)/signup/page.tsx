@@ -1,96 +1,72 @@
 'use client'
 
-import BaseInput from '@/components/ui/Inputs/BaseInput'
-import toast from 'react-hot-toast'
-import { useForm } from 'react-hook-form'
-import { useRouter } from 'next/navigation'
-import { AuthFormPatterns, URLList } from '@/utils/config'
-import { Button } from '@/components/ui/ShadCN/button'
 import Link from 'next/link'
-import ProvidersBlock from '@/app/front/(form)/ProvidersBlock'
-import { RegisterWithPassword } from '@/actions/Account/Auth'
+import { signUpSteps, URLList } from '@/utils/config'
+import SmoothAppearanceWords from '@/components/ui/Text/SmoothAppearanceWords'
+import { cn } from '@/utils/utils'
+import { comfortaa, tektur } from '@/utils/fonts'
+import PrettyButton from '@/components/ui/Buttons/PrettyButton'
+import CloseButton from '@/components/entity/Buttons/CloseButton'
+import { motion, useAnimate } from 'framer-motion'
+import { useRouter } from 'next/navigation'
+import GradientText from '@/components/ui/Text/GradientText'
+import { useSteps } from '@/hoc/front/SignUpProvider'
 
-type registerFields = {
-   name: string
-   email: string
-   password: string
-}
+const MotionLink = motion(Link)
 
-export default function RegisterPage() {
-   const {
-      handleSubmit,
-      register,
-      formState: { errors, isValid, isSubmitting },
-   } = useForm<registerFields>({ mode: 'all' })
-
+export default function WelcomeSignUpPage() {
+   const [scope, animate] = useAnimate()
    const router = useRouter()
 
-   const onSubmit = async ({ password, email, name }: registerFields) => {
-      const toastID = toast.loading('Регистрация...')
+   const { nextStep } = useSteps('start', signUpSteps)
 
-      const { data, error } = await RegisterWithPassword({
-         password,
-         email,
-         metadata: { full_name: name, email_verified: false, avatar_url: '' },
-      })
-
-      if (error || !data)
-         return toast.error(error || 'Ошибка регистрации', { id: toastID })
-
-      toast.success('Вы успешно зарегистрировались', { id: toastID })
-      router.refresh()
+   const click = async () => {
+      await animate(
+         scope.current,
+         { filter: 'blur(8px)', opacity: 0 },
+         { duration: 0.5 }
+      )
+      router.push(URLList.register + `/${nextStep}`)
    }
 
    return (
-      <section className="flex flex-col justify-center px-10 py-10">
-         <h1 className="w-full text-center text-xl uppercase">Регистрация</h1>
-         <form
-            className="mt-10 flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmit)}
+      <div
+         className={cn(
+            'flex h-full w-full flex-col items-center justify-center text-pretty text-center',
+            comfortaa.className
+         )}
+         ref={scope}
+      >
+         <CloseButton href={URLList.front} />
+         <h1 className="mb-1 animate-appearance text-2xl">
+            Добро пожаловать в <GradientText>StockInfo</GradientText>
+         </h1>
+         <p className="opacity-70" aria-label="Описание">
+            Управляйте инвестициями легко и удобно.
+         </p>
+         <SmoothAppearanceWords
+            words={['Готовы начать?']}
+            className={cn('mb-7 mt-14 flex gap-2 text-lg', tektur.className)}
+         />
+         <PrettyButton
+            className="z-[1]"
+            onClick={click}
+            initial={{ y: 10, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
          >
-            <BaseInput
-               name="name"
-               placeholder="Введите имя/никнейм/полное имя"
-               register={register}
-               error={errors.name}
-               options={AuthFormPatterns.full_name}
-               type="text"
-               autoComplete="name"
-            />
-            <BaseInput
-               name="email"
-               placeholder="Введите email"
-               register={register}
-               error={errors.email}
-               options={AuthFormPatterns.email}
-               type="email"
-               autoComplete="email"
-            />
-            <BaseInput
-               name="password"
-               placeholder="Введите пароль"
-               register={register}
-               error={errors.password}
-               options={AuthFormPatterns.password}
-               type="password"
-               autoComplete="new-password"
-            />
-            <Button
-               variant="secondary"
-               className="animate-appearance rounded-xl py-6"
-               disabled={!isValid || isSubmitting}
-            >
-               Зарегистрироваться
-            </Button>
-         </form>
-         <Link
+            Зарегистрироваться
+         </PrettyButton>
+         <MotionLink
             href={URLList.login}
-            className="mt-4 w-full animate-appearance text-center text-black/50 underline"
+            className="mt-7 w-full text-center text-primary/50 underline"
+            initial={{ x: -10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.5 }}
          >
-            Войти
-         </Link>
-         <ProvidersBlock />
-      </section>
+            Войти в аккаунт
+         </MotionLink>
+      </div>
    )
 }
 //bg-gradient-to-l from-[#3e3853] to-[#682337]

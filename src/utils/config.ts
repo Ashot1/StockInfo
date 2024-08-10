@@ -31,6 +31,10 @@ export const MobileScreen = 820
 
 export const SwipeLength = 100
 
+// Пароль всегда последний, так как его нельзя сохранять локально. Контекст игнорирует и не сохраняет последний шаг
+// первый элемент - вступительный экран. ТОже игнорируется контекстом
+export const signUpSteps = ['start', 'name', 'email', 'password']
+
 export const AuthFormPatterns = {
    email: {
       required: {
@@ -40,6 +44,10 @@ export const AuthFormPatterns = {
       maxLength: {
          value: 80,
          message: `Максимальная длинна 80 символов`,
+      },
+      pattern: {
+         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+         message: 'Не правильный email',
       },
    },
    full_name: {
