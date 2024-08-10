@@ -3,8 +3,7 @@
 import {
    ButtonHTMLAttributes,
    DetailedHTMLProps,
-   FC,
-   HTMLAttributes,
+   forwardRef,
    ReactNode,
 } from 'react'
 import { cn } from '@/utils/utils'
@@ -18,15 +17,14 @@ export type LoginProviderButtonProps = {
    HTMLButtonElement
 >
 
-const LoginProviderButton: FC<LoginProviderButtonProps> = ({
-   children,
-   color,
-   className,
-   ...props
-}) => {
+const LoginProviderButton = forwardRef<
+   HTMLButtonElement,
+   LoginProviderButtonProps
+>(({ children, color, className, ...props }, ref) => {
    return (
       <button
          className={cn('group relative flex aspect-square', className)}
+         ref={ref}
          {...props}
       >
          <span
@@ -40,6 +38,8 @@ const LoginProviderButton: FC<LoginProviderButtonProps> = ({
          />
       </button>
    )
-}
+})
+
+LoginProviderButton.displayName = 'LoginProviderButton'
 
 export default LoginProviderButton

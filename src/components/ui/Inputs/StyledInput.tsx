@@ -65,14 +65,14 @@ const StyledInputComponent = <T extends FieldValues>(
             />
             <span
                className={cn(
-                  `absolute left-3 top-[50%] flex max-w-[80%] translate-y-[-50%] items-center gap-3 rounded px-2 duration-200 peer-autofill:-top-3.5 peer-autofill:translate-y-0 peer-autofill:text-sm peer-focus:-top-3.5 peer-focus:translate-y-0 peer-focus:text-sm`,
+                  `absolute left-3 top-[50%] flex max-w-[80%] translate-y-[-50%] items-center gap-3 rounded px-2 text-primary duration-200 peer-autofill:-top-3.5 peer-autofill:translate-y-0 peer-autofill:text-sm peer-focus:-top-3.5 peer-focus:translate-y-0 peer-focus:text-sm`,
                   background
                )}
             >
                <p>{title}</p>
                {defaultValue && '/'}
                {defaultValue && (
-                  <p className="truncate text-sm opacity-25">{defaultValue}</p>
+                  <p className="truncate text-sm opacity-35">{defaultValue}</p>
                )}
             </span>
          </div>

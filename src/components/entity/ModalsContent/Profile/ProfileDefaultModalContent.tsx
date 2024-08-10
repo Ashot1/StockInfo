@@ -39,6 +39,7 @@ const ProfileDefaultModalContent = forwardRef<
                   key={item.Title}
                   title={item.Title}
                   text={item.Text || 'Пусто'}
+                  titleClassName="capitalize"
                />
             ))}
          </section>
