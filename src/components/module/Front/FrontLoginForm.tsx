@@ -22,7 +22,7 @@ const FrontLoginForm: FC = () => {
       handleSubmit,
       control,
       register,
-      formState: { isValid, isSubmitting, isSubmitSuccessful, errors },
+      formState: { isValid, isSubmitting, errors },
    } = useForm<loginInputs>({ mode: 'all' })
 
    const router = useRouter()
@@ -98,11 +98,10 @@ const FrontLoginForm: FC = () => {
                />
                <Button
                   variant="secondary"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.45 }}
+                  initial={{ filter: 'blur(8px)' }}
+                  animate={{ filter: 'blur(0px)' }}
                   className="rounded-xl py-6"
-                  disabled={!isValid || isSubmitting || isSubmitSuccessful}
+                  disabled={!isValid || isSubmitting}
                >
                   Войти
                </Button>

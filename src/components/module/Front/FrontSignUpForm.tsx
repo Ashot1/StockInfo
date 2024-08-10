@@ -62,12 +62,8 @@ const FrontSignUpForm: FC<{
             nextStep={nextStep}
             prevStep={prevStep}
             isLastStep={isLastStep}
-            disableNext={
-               !formState.isValid ||
-               formState.isSubmitting ||
-               formState.isSubmitSuccessful
-            }
-            disableSubmit={!formState.isValid}
+            disableNext={!formState.isValid || formState.isSubmitting}
+            disableSubmit={!formState.isValid || formState.isSubmitting}
          />
       </form>
    )
