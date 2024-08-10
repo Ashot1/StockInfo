@@ -5,7 +5,7 @@ import { useSignUpData } from '@/hoc/front/SignUpProvider'
 import { useEffect, useState } from 'react'
 import { UserProfileInfo } from '@/types/Modals.types'
 
-export default function ProfilePreviewPage() {
+export default function SignUpUserInfoSection() {
    const [UserInfo, setUserInfo] = useState<UserProfileInfo[]>([])
    const { data } = useSignUpData()
 
