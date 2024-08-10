@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode } from 'react'
+import { FC } from 'react'
 import { FormState, UseFormRegister } from 'react-hook-form'
 import { useRegisterForm, useSteps } from '@/hoc/front/SignUpProvider'
 import { Progress } from '@/components/ui/ShadCN/progress'
@@ -13,10 +13,9 @@ import SmoothAppearanceWords from '@/components/ui/Text/SmoothAppearanceWords'
 
 // главный компонент
 const FrontSignUpForm: FC<{
-   children: ReactNode
    steps: string[]
    step: string
-}> = ({ children, steps, step }) => {
+}> = ({ steps, step }) => {
    const { nextStep, currentStep, prevStep, progress } = useSteps(step, steps)
    const isLastStep = currentStep === nextStep
 
@@ -59,7 +58,6 @@ const FrontSignUpForm: FC<{
             aria-label={`Прогресс регистрации - ${progress.toFixed(0)}%`}
          />
          {stepsComponents[currentStep]}
-         {children}
          <SignUpNavigation
             nextStep={nextStep}
             prevStep={prevStep}
