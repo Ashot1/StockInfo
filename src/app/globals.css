@@ -450,6 +450,50 @@ body {
    backdrop-filter: blur(2px);
 }
 
-.bg-gradient-main-page {
+.background-gradient-main-page {
    background: linear-gradient(90deg, #354b75, #4c6ca8, #6f89b9, #789bfb);
+}
+
+.background-grid {
+   background-size: 30px 30px;
+   background-image: linear-gradient(
+         to right,
+         rgba(0, 0, 0, 0.7) 1px,
+         transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 1px, transparent 1px);
+}
+
+.radial-top-mask {
+   mask-image: radial-gradient(
+      at 50% 20%,
+      rgba(0, 0, 0, 0.6) 20%,
+      transparent 70%
+   );
+}
+
+.perspective-400 {
+   perspective: 700px;
+   perspective-origin: 50% 50%;
+}
+
+.front-login-image {
+   transform: rotateX(2deg) rotateY(8deg) rotateZ(-1deg);
+   filter: drop-shadow(-10px 0 15px rgba(0, 0, 0, 0.5));
+}
+
+.front-login-bg {
+   /*background: radial-gradient(ellipse at bottom, #7ba5b4 0%, #f0f0f0 100%);*/
+   /*background: radial-gradient(ellipse at bottom, #a0c4d8 0%, #e0e0e0 100%);*/
+   /*background: radial-gradient(ellipse at bottom, #d0e0f0 0%, #e9f1fc 100%);*/
+   /*background: radial-gradient(ellipse at bottom, #e0f0ff 0%, #f0f5ff 100%);*/
+   background: radial-gradient(
+      ellipse at bottom,
+      rgba(160, 192, 224, 0.7) 0%,
+      rgba(208, 224, 240, 0.9) 50%,
+      #f0f5ff 100%
+   );
+}
+.dark .front-login-bg {
+   background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
 }

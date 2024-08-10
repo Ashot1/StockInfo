@@ -1,77 +1,29 @@
-'use client'
-
-import BaseInput from '@/components/ui/Inputs/BaseInput'
-import { useForm } from 'react-hook-form'
-import { Button } from '@/components/ui/ShadCN/button'
-import { useRouter } from 'next/navigation'
-import { AuthFormPatterns, URLList } from '@/utils/config'
-import { LoginWithPassword } from '@/actions/Account/Auth'
-import toast from 'react-hot-toast'
-import Link from 'next/link'
-import ProvidersBlock from '@/app/front/(form)/ProvidersBlock'
-
-type loginInputs = { email: string; password: string }
+import FrontLoginForm from '@/components/module/Front/FrontLoginForm'
+import Image from 'next/image'
+import WideImage from '@/../public/manifest/Screenshots/Home-wide.png'
+import MobileImage from '@/../public/manifest/Screenshots/Home.png'
+import Phone from '@/components/ui/Phone'
 
 export default function LoginPage() {
-   const {
-      handleSubmit,
-      register,
-      formState: { errors, isValid, isSubmitting },
-   } = useForm<loginInputs>({ mode: 'all' })
-
-   const router = useRouter()
-
-   const onSubmit = async ({ password, email }: loginInputs) => {
-      const toastID = toast.loading('Вход...')
-      const { data, error } = await LoginWithPassword({ email, password })
-
-      if (error || !data)
-         return toast.error(error || 'Ошибка входа', { id: toastID })
-
-      toast.success('Успешный вход', { id: toastID })
-      router.refresh()
-   }
-
    return (
-      <section className="flex flex-col justify-center px-10 py-10">
-         <h1 className="w-full text-center text-xl uppercase">Вход</h1>
-         <form
-            className="mt-10 flex flex-col gap-4"
-            onSubmit={handleSubmit(onSubmit)}
-         >
-            <BaseInput
-               name="email"
-               placeholder="Введите email"
-               register={register}
-               error={errors.email}
-               options={AuthFormPatterns.email}
-               type="email"
-               autoComplete="email"
-            />
-            <BaseInput
-               name="password"
-               placeholder="Введите пароль"
-               register={register}
-               error={errors.password}
-               options={AuthFormPatterns.password}
-               type="password"
-               autoComplete="current-password"
-            />
-            <Button
-               variant="secondary"
-               className="animate-appearance rounded-xl py-6"
-               disabled={!isValid || isSubmitting}
-            >
-               Войти
-            </Button>
-         </form>
-         <Link
-            href={URLList.register}
-            className="mt-4 w-full animate-appearance text-center text-black/50 underline"
-         >
-            Зарегистрироваться
-         </Link>
-         <ProvidersBlock />
-      </section>
+      <div className="grid flex-1 grid-cols-1 shadow 768p:grid-cols-[1fr_500px]">
+         <div className="front-login-bg order-2 grid min-h-[60dvh] place-items-center bg-secondary 768p:order-1">
+            <div className="perspective-400 relative">
+               <Image
+                  src={WideImage}
+                  alt="Главный экран приложения на ПК"
+                  className="front-login-image w-full max-w-[1000px] rounded-2xl 768p:w-[80%]"
+               />
+               <Phone className="front-login-image absolute -bottom-4 right-[5%] flex w-[30%] max-w-[150px] bg-neutral-900 p-2.5 768p:right-[10%] 768p:w-[20%] 768p:max-w-[300px]">
+                  <Image
+                     src={MobileImage}
+                     alt="Главный экран приложения на мобильном устройстве"
+                     className="flex-1 rounded-xl"
+                  />
+               </Phone>
+            </div>
+         </div>
+         <FrontLoginForm />
+      </div>
    )
 }
