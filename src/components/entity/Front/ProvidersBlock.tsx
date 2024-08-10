@@ -4,20 +4,11 @@ import { FC } from 'react'
 import LoginProviderButton from '@/components/ui/Buttons/LoginProviderButton'
 import Image from 'next/image'
 import { OAuthProviders } from '@/types/Auth.types'
-import { LoginWithOAuth } from '@/actions/Account/Client'
 import toast from 'react-hot-toast'
 import { MouseEvent } from 'react'
 import { motion } from 'framer-motion'
-
-const LoginWithprovider = async (e: MouseEvent<HTMLButtonElement>) => {
-   const toastID = toast.loading('Вход...')
-   const { data, error } = await LoginWithOAuth(
-      e.currentTarget.value as OAuthProviders
-   )
-
-   if (error || !data)
-      return toast.error(error || 'Ошибка входа', { id: toastID })
-}
+import { LoginWithOAuth } from '@/actions/Account/Auth'
+import { useRouter } from 'next/navigation'
 
 const MotionLoginProviderButton = motion(LoginProviderButton)
 
@@ -27,6 +18,20 @@ const ProvidersBlock: FC = () => {
       animate: { transform: 'scale(1)', opacity: 1 },
    }
 
+   const router = useRouter()
+
+   const LoginWithProvider = async (e: MouseEvent<HTMLButtonElement>) => {
+      const toastID = toast.loading('Вход...')
+      const response = await LoginWithOAuth(
+         e.currentTarget.value as OAuthProviders
+      )
+
+      if (response?.error || !response?.data)
+         return toast.error(response?.error || 'Ошибка входа', { id: toastID })
+
+      router.replace(response.data.url)
+   }
+
    return (
       <>
          <div className="flex w-full items-center justify-center gap-6">
@@ -34,7 +39,7 @@ const ProvidersBlock: FC = () => {
                {...Animation}
                color="#7289da"
                value="discord"
-               onClick={LoginWithprovider}
+               onClick={LoginWithProvider}
                aria-label="Войти с помощью discord"
             >
                <Image
@@ -48,7 +53,7 @@ const ProvidersBlock: FC = () => {
                {...Animation}
                color="white"
                value="google"
-               onClick={LoginWithprovider}
+               onClick={LoginWithProvider}
                aria-label="Войти с помощью google"
             >
                <Image

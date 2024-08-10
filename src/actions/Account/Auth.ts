@@ -6,6 +6,24 @@ import { TryCatch } from '@/utils/utils'
 import { CreateTable, DeleteUser } from '@/actions/Account/Account'
 import { User } from '@supabase/supabase-js'
 import { Tables } from '@/types/supabase.types'
+import { OAuthProviders } from '@/types/Auth.types'
+
+export async function LoginWithOAuth(provider: OAuthProviders) {
+   return TryCatch(async () => {
+      const supabase = SupabaseCustomServer()
+
+      const response = await supabase.auth.signInWithOAuth({
+         provider: provider,
+         options: {
+            redirectTo: `${process.env.NEXT_PUBLIC_SITEURL!}/front/auth/callback`,
+         },
+      })
+
+      if (response?.error) throw response?.error
+
+      return { data: response?.data, error: null }
+   })
+}
 
 export async function LoginWithPassword({
    password,
