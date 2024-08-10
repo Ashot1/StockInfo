@@ -4,7 +4,7 @@
    "launch_handler": {
       "client_mode": "navigate-existing"
    },
-   "version": "2.2",
+   "version": "3.0",
    "keywords": ["StockInfo", "Акции", "Облигации", "Котировки", "Валюта"],
    "shortcuts": [
       {
