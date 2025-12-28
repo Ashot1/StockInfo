@@ -1,14 +1,14 @@
 
 
-# Setup Guide: Cursor + Codex + GitHub Projects + AnythingLLM
+# Setup Guide: Cursor + Codex + GitHub Projects + Archon
 
 Этот гайд описывает, как с нуля настроить систему агентной разработки:
 - Kanban в GitHub Projects
 - Issues + Context Packs
 - `AGENTS.md`
-- AnythingLLM как база знаний
+- Archon как база знаний
 - Автоматизации статусов (PR → In Review, merge → Done)
-- Минимальный “конвейер ролей”: Planner → Workers → Reviewer
+- Минимальный "конвейер ролей": Planner → Workers → Reviewer
 
 > Безопасность и enterprise-настройки вне scope: цель — быстрый запуск для pet‑проекта.
 
@@ -23,7 +23,7 @@
 
 Рекомендация по структуре репозитория:
 - `AI-workflow/` — документация процессов (эти файлы)
-- `context-packs/` — Context Packs
+- `context/` — Context Packs
 - `.github/` — templates, actions
 
 ---
@@ -59,7 +59,7 @@
 
 ### 2.1 Создай папки
 - `AI-workflow/`
-- `context-packs/`
+- `context/`
 
 ### 2.2 Добавь документы процесса
 Убедись, что в репо есть:
@@ -95,7 +95,7 @@
 
 ### 4.1 Шаблон Context Pack
 Создай шаблон, например:
-- `context-packs/_TEMPLATE.md`
+- `context/_TEMPLATE.md`
 
 Рекомендуемая структура:
 - Goal
@@ -107,11 +107,11 @@
 - Progress notes
 
 ### 4.2 Правило именования
-- `context-packs/ISSUE-<номер>-<slug>.md`
+- `context/ISSUE-<номер>-<slug>.md`
 
 ### 4.3 Правило связывания
 В каждую Task Issue добавляй строку:
-- `Context Pack: context-packs/ISSUE-<n>-<slug>.md`
+- `Context Pack: context/ISSUE-<n>-<slug>.md`
 
 ---
 
@@ -154,17 +154,17 @@ Task должен содержать:
 
 ---
 
-## 7) Настроить AnythingLLM (Knowledge Base)
+## 7) Настроить Archon (Knowledge Base)
 
 ### 7.1 Быстрый запуск
-Запусти AnythingLLM (самый простой путь — docker). Цель:
+Запусти Archon (самый простой путь — docker). Цель:
 - получить UI
 - создать workspace “Project KB”
 
 ### 7.2 Что индексировать
 Минимум добавь в KB:
 - `AGENTS.md`
-- папку `context-packs/`
+- папку `context/`
 - `docs/` (если есть)
 - `AI-workflow/` (чтобы агенты могли находить процессы)
 
@@ -173,7 +173,7 @@ Task должен содержать:
 - вручную “re-ingest” после больших изменений
 
 Лучше:
-- GitHub Action, который на merge в `main` триггерит переиндексацию через API AnythingLLM.
+- GitHub Action, который на merge в `main` триггерит переиндексацию через API Archon.
 
 > Главное: KB должна быть актуальной, иначе автономность падает.
 
@@ -246,10 +246,10 @@ Reviewer (ты или агент):
 
 - [ ] Есть GitHub Project board и статусы
 - [ ] Есть `AGENTS.md`
-- [ ] Есть `context-packs/` и шаблон `_TEMPLATE.md`
+- [ ] Есть `context/` и шаблон `_TEMPLATE.md`
 - [ ] Есть issue templates (epic/task)
 - [ ] Есть PR template
-- [ ] AnythingLLM индексирует `context-packs/` и `AGENTS.md`
+- [ ] Archon индексирует `context/` и `AGENTS.md`
 - [ ] Работает правило статусов PR→In Review / merge→Done
 - [ ] Есть процесс: Planner → Workers → Reviewer
 
@@ -257,8 +257,8 @@ Reviewer (ты или агент):
 
 ## Что дальше улучшить (опционально)
 - Добавить минимальный CI (lint/test) если ещё нет
-- Добавить автоматический re-ingest AnythingLLM на merge
-- Добавить “Definition of Ready” для задач (что должно быть, чтобы попасть в Ready)
+- Добавить автоматический re-ingest Archon на merge
+- Добавить "Definition of Ready" для задач (что должно быть, чтобы попасть в Ready)
 - Добавить label-политику и WIP-лимиты
 - Добавить “Reviewer gate” на `main`
 
