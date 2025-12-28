@@ -4,11 +4,17 @@ import { CurrentStockDescription } from '@/types/Stocks.types'
 import { getCurrency } from '@/actions/Security/Currency'
 import { redirect } from 'next/navigation'
 
-export async function generateMetadata({
-   params: { secID },
-}: {
-   params: { secID: string }
-}) {
+export async function generateMetadata(
+   props: {
+      params: Promise<{ secID: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      secID
+   } = params;
+
    const { data, error } = await getCurrency()
 
    const defaultMeta = {
@@ -63,11 +69,17 @@ export async function generateMetadata({
 }
 
 // PAGE
-export default async function CurrentCurrencyPage({
-   params: { secID },
-}: {
-   params: { secID: string }
-}) {
+export default async function CurrentCurrencyPage(
+   props: {
+      params: Promise<{ secID: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      secID
+   } = params;
+
    const { data: CurrencyData, error } = await getCurrency()
 
    if (!CurrencyData || error) return redirect(URLList.notFound)

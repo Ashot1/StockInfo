@@ -1,10 +1,10 @@
-import { cookies } from 'next/headers'
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr'
 import { Database } from '@/types/supabase.types'
 import 'server-only'
 
 export function SupabaseCustomServer() {
-   const cookieStore = cookies()
+   const cookieStore = (cookies() as unknown as UnsafeUnwrappedCookies)
 
    return createServerClient<Database>(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,

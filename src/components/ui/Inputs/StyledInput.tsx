@@ -93,6 +93,6 @@ const StyledInputComponent = <T extends FieldValues>(
 
 const StyledInput = forwardRef(StyledInputComponent) as <T extends FieldValues>(
    p: StyledInputProps<T> & { ref?: Ref<HTMLInputElement> }
-) => ReactElement
+) => ReactElement<any>
 
 export default StyledInput

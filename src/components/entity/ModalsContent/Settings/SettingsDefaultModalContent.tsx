@@ -9,7 +9,7 @@ import {
    Dispatch,
    FC,
    forwardRef,
-   LegacyRef,
+   Ref,
    SetStateAction,
    useState,
 } from 'react'
@@ -23,7 +23,7 @@ import { useSettings } from '@/hoc/Providers/Settings'
 const SettingsDefaultModalContent = forwardRef(
    (
       { setMode }: { setMode: Dispatch<SetStateAction<SettingsModalMods>> },
-      ref: LegacyRef<HTMLDivElement>
+      ref: Ref<HTMLDivElement>
    ) => {
       const { setMainInfo } = useAuthContext()
 

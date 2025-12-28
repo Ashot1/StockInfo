@@ -1,8 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/ShadCN/button'
-import { FC, useEffect, useTransition } from 'react'
-import { useFormState } from 'react-dom'
+import { FC, useEffect, useTransition, useActionState } from 'react';
 import { cn } from '@/utils/utils'
 import {
    Card,
@@ -38,7 +37,7 @@ const ConfirmMessage: FC<TConfirmMessage> = ({
    ...MotionProps
 }) => {
    const [pending, startTransition] = useTransition()
-   const [state, formAction] = useFormState(action, { error: undefined })
+   const [state, formAction] = useActionState(action, { error: undefined })
 
    const Action = (payload: FormData) => {
       startTransition(async () => await formAction(payload))

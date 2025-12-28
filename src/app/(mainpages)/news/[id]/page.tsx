@@ -10,7 +10,8 @@ import AddToFavorite from '@/components/entity/Buttons/AddToFavorite'
 
 export const revalidate = 3600
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata(props: { params: Promise<{ id: string }> }) {
+   const params = await props.params;
    const { data: resJSON, error } = await getCurrentNews(params.id)
    if (!resJSON || error)
       return {
@@ -58,11 +59,17 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
    }
 }
 
-export default async function SpecificNews({
-   params: { id },
-}: {
-   params: { id: string }
-}) {
+export default async function SpecificNews(
+   props: {
+      params: Promise<{ id: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      id
+   } = params;
+
    return (
       <div className="animate-appearance">
          <MainContent id={id} />

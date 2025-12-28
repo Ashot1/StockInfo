@@ -29,11 +29,17 @@ export const metadata: Metadata = {
    },
 }
 
-export default async function BondsPage({
-   searchParams: { start },
-}: {
-   searchParams: { start?: string }
-}) {
+export default async function BondsPage(
+   props: {
+      searchParams: Promise<{ start?: string }>
+   }
+) {
+   const searchParams = await props.searchParams;
+
+   const {
+      start
+   } = searchParams;
+
    return <MainContent start={start} />
 }
 

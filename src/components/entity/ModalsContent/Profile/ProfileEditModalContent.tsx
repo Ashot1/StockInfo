@@ -4,7 +4,7 @@ import {
    ChangeEvent,
    FC,
    forwardRef,
-   LegacyRef,
+   Ref,
    MouseEvent,
    useRef,
    useState,
@@ -29,7 +29,7 @@ export type EditableInputs = { avatar?: FileList } & {
 }
 
 const ProfileEditModalContent: FC<ProfileModeEdit> = forwardRef(
-   ({ Info, className, avatar }, ref: LegacyRef<HTMLDivElement>) => {
+   ({ Info, className, avatar }, ref: Ref<HTMLDivElement>) => {
       const {
          handleSubmit,
          register,

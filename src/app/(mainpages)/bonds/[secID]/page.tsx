@@ -11,11 +11,17 @@ import SecurityTemplate from '@/components/widgets/SecurityTemplate'
 import { URLList } from '@/utils/config'
 import { getCurrentSecurity } from '@/actions/Security/CommonSecurity'
 
-export async function generateMetadata({
-   params: { secID },
-}: {
-   params: { secID: string }
-}) {
+export async function generateMetadata(
+   props: {
+      params: Promise<{ secID: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      secID
+   } = params;
+
    const { data, error } = await getCurrentSecurity(secID)
 
    const defaultMeta = {
@@ -71,11 +77,17 @@ export async function generateMetadata({
 }
 
 // PAGE
-export default async function CurrentBond({
-   params: { secID },
-}: {
-   params: { secID: string }
-}) {
+export default async function CurrentBond(
+   props: {
+      params: Promise<{ secID: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      secID
+   } = params;
+
    const bondReq = getCurrentSecurity(secID)
    const couponsReq = getCoupons(secID)
 

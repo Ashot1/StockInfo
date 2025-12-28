@@ -29,11 +29,12 @@ export const metadata: Metadata = {
    },
 }
 
-export default async function StocksPage({
-   searchParams,
-}: {
-   searchParams: { start?: string }
-}) {
+export default async function StocksPage(
+   props: {
+      searchParams: Promise<{ start?: string }>
+   }
+) {
+   const searchParams = await props.searchParams;
    return <MainContent start={searchParams?.start} />
 }
 

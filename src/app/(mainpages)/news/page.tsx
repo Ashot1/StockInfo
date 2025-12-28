@@ -29,11 +29,12 @@ export const metadata: Metadata = {
    },
 }
 
-export default async function News({
-   searchParams,
-}: {
-   searchParams: { start?: string }
-}) {
+export default async function News(
+   props: {
+      searchParams: Promise<{ start?: string }>
+   }
+) {
+   const searchParams = await props.searchParams;
    return <MainContent start={searchParams?.start} />
 }
 

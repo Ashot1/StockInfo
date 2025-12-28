@@ -4,11 +4,12 @@ import SiteHeading from '@/components/ui/Front/SiteHeading'
 import FrontSignUpForm from '@/components/module/Front/FrontSignUpForm'
 import { redirect } from 'next/navigation'
 
-export default function SignUpStepPage({
-   params,
-}: {
-   params: { step: string }
-}) {
+export default async function SignUpStepPage(
+   props: {
+      params: Promise<{ step: string }>
+   }
+) {
+   const params = await props.params;
    if (params.step === signUpSteps[0] || !signUpSteps.includes(params.step))
       return redirect(URLList.register)
 

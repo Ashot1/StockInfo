@@ -11,11 +11,17 @@ import { ConvertDate } from '@/utils/Date'
 import { URLList } from '@/utils/config'
 import { getCurrentSecurity } from '@/actions/Security/CommonSecurity'
 
-export async function generateMetadata({
-   params: { secID },
-}: {
-   params: { secID: string }
-}) {
+export async function generateMetadata(
+   props: {
+      params: Promise<{ secID: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      secID
+   } = params;
+
    const { data, error } = await getCurrentSecurity(secID)
 
    const defaultMeta = {
@@ -72,11 +78,17 @@ export async function generateMetadata({
    }
 }
 
-export default async function CurrentStock({
-   params: { secID },
-}: {
-   params: { secID: string }
-}) {
+export default async function CurrentStock(
+   props: {
+      params: Promise<{ secID: string }>
+   }
+) {
+   const params = await props.params;
+
+   const {
+      secID
+   } = params;
+
    const stockReq = getCurrentSecurity(secID)
    const dividendsReq = getDividends(secID)
 
