@@ -1,241 +1,407 @@
-# Management Process (GitHub Projects Kanban)
+# Management Process (Archon MCP)
 
 ## Зачем этот документ
 Этот документ описывает **как мы управляем работой**:
-- как устроен Kanban в GitHub Projects
-- как заводить Epic и задачи (Issues)
+- как устроено управление задачами в Archon MCP
+- как заводить Projects и Tasks
 - что обязательно должно быть в каждой задаче
-- как связываем задачи с **Context Pack** (долгоживущая память)
+- как связываем задачи с **Archon Documents** (долгоживущая память)
 - как агенты двигают работу по статусам
 
 ---
 
-## Канбан-доска: статусы и правила
+## Управление через Archon MCP
 
-### Колонки (Status)
-Рекомендуемые колонки в GitHub Projects (поле `Status`):
-1. **Backlog** — идеи/сырой список (ещё не готово к работе)
-2. **Ready** — хорошо описано, можно брать в работу
-3. **In Progress** — выполняется (есть владелец/агент)
-4. **In Review** — открыт PR, идёт ревью (обязательная стадия)
-5. **Blocked** — заблокировано зависимостью/решением/внешним фактором
-6. **Done** — смёрджено, критерии выполнены
+### Основные сущности
+1. **Projects** — проекты (Epic-уровень или группы задач)
+2. **Tasks** — задачи внутри проектов
+3. **Documents** — документация задач и проектов
 
-> Минимально достаточно: Backlog / Ready / In Progress / In Review / Done.
+### Статусы задач
+Все задачи в Archon используют следующие статусы:
+1. **todo** — задача готова к работе
+2. **doing** — выполняется (есть владелец/агент)
+3. **review** — открыт PR, идёт ревью (обязательная стадия)
+4. **done** — смёрджено, критерии выполнены
+5. **blocked** — заблокировано зависимостью/решением/внешним фактором
 
 ### WIP-лимиты (чтобы не расползалось)
-- На одного исполнителя (человек или агент) — **не более 1–2 задач в In Progress**.
+- На одного исполнителя (человек или агент) — **не более 1–2 задач в doing**.
 - Если больше — сначала довести текущую до PR/Review.
 
 ### Источник правды
-- **Project Board** — источник правды по статусам.
-- Issue-текст и Context Pack — источник правды по требованиям и решениям.
+- **Archon Tasks** — источник правды по статусам и задачам.
+- **Archon Documents** — источник правды по требованиям и решениям.
 
 ---
 
-## Типы карточек: Epic vs Task
+## Типы задач: Project vs Task
 
-### Epic (большая задача)
-Epic — это Issue, которое описывает крупную цель/фичу и содержит:
+### Project (Epic-уровень)
+Project в Archon — это группа связанных задач, описывающая крупную цель/фичу:
 - общую цель
 - границы (scope / non-goals)
-- high-level acceptance criteria
-- список подзадач (Issues) + зависимости/параллельность
-- ссылку на Epic Context Pack (опционально, но полезно)
+- список задач (Tasks) + зависимости/параллельность
+- документацию (опционально, через Archon Documents)
 
-Epic НЕ закрывается одним PR. Epic закрывается, когда закрыты все Task-issues.
+Создание Project:
+```bash
+project = manage_project("create",
+  title="EPIC: User Authentication System",
+  description="Complete authentication flow with OAuth and email/password",
+  github_repo="https://github.com/org/repo"
+)
+```
+
+Project НЕ закрывается одним PR. Project закрывается, когда закрыты все Tasks.
 
 ### Task (единица работы)
-Task — это Issue, которое:
+Task в Archon — это задача, которая:
 - имеет 1 владельца (worker-агент или ты)
 - приводит к 1 PR (обычно)
-- имеет **обязательный Context Pack**
+- имеет **обязательный Archon Document**
 - имеет чёткий DoD (Definition of Done)
+
+Создание Task:
+```bash
+task = manage_task("create",
+  project_id=project.id,
+  title="Setup Supabase auth providers",
+  description="Configure OAuth and email/password authentication",
+  status="todo",
+  task_order=10,  # higher = more priority
+  assignee="Worker Agent"
+)
+```
 
 ---
 
-## Обязательное правило: Context Pack на каждую задачу
+## Обязательное правило: Archon Document на каждую задачу
 
 ### Что это
-**Context Pack** — один markdown-док в репозитории, связанный с Issue.
+**Archon Document** — документ в Archon MCP, связанный с Task.
 Он нужен для:
 - долговременной памяти задачи
 - стабильной автономности агентов
 - предсказуемого ревью (DoD + тест-план)
 
 ### Где хранить
-Рекомендуемая структура:
-- `context-packs/`
-  - `ISSUE-<номер>-<slug>.md`
+Документы хранятся в **Archon MCP server**, не в локальных файлах.
 
-Пример:
-- `context-packs/ISSUE-123-auth-flow.md`
+### Создание документа для задачи
+```bash
+# После создания задачи
+doc = manage_document("create",
+  project_id=task.project_id,
+  title=f"Issue #{task.id}: Setup Supabase auth",
+  document_type="spec",
+  content={
+    "goal": "Configure authentication providers in Supabase",
+    "definition_of_done": [
+      "OAuth providers configured",
+      "Email/password auth enabled",
+      "Test users created"
+    ],
+    "architecture": "Use Supabase Auth with multiple providers",
+    "files_affected": ["src/utils/supabase/client.ts", "src/actions/Account/Auth.ts"],
+    "test_plan": {
+      "manual_steps": ["Open login page", "Test OAuth flow", "Test email login"],
+      "expected_results": ["Successful login", "User session created"],
+      "edge_cases": ["Invalid credentials", "Network errors"]
+    }
+  },
+  tags=["task", f"issue-{task.id}"]
+)
+```
 
-### Ссылка из Issue
-В тексте Issue обязательно есть ссылка вида:
-- `Context Pack: context-packs/ISSUE-123-auth-flow.md`
+### Поиск документа задачи
+```bash
+# По ID задачи в заголовке
+docs = find_documents(project_id=task.project_id, query=f"Issue #{task.id}")
 
-### Минимальный шаблон Context Pack
+# По ID документа
+doc = find_documents(project_id=task.project_id, document_id="doc-xxx")
+```
+
+### Минимальное содержимое документа
 - Goal / Definition of Done (DoD)
 - Архитектура / решение (коротко)
 - Файлы / точки входа
 - Тест-план
 - Риски / долги
-- Notes / Progress (по желанию)
+- Progress notes (обновляется по ходу работы)
+- Implementation summary (после завершения)
 
 ---
 
-## Как описывать Epic (шаблон)
+## Как описывать Project (Epic)
 
-### Epic Issue template
-**Title:** `EPIC: <кратко>`  
-**Body:**
-- **Goal:** что должно появиться для пользователя/системы
-- **Why:** зачем это делаем (коротко)
-- **Scope:** что входит
-- **Non-goals:** что точно не делаем
-- **Acceptance Criteria (high-level):** 5–10 пунктов
-- **Constraints:** тех/временные ограничения
-- **Risks:** 2–5 пунктов
-- **Plan:** (позже) список Task-issues + зависимости/параллельные группы
-- **Links:** дизайн/доки/референсы
+### Project в Archon
+При создании Project указываем:
+- **Title:** `EPIC: <кратко>`
+- **Description:** 
+  - Goal: что должно появиться для пользователя/системы
+  - Why: зачем это делаем (коротко)
+  - Scope: что входит
+  - Non-goals: что точно не делаем
+  - Constraints: тех/временные ограничения
+  - Risks: 2–5 пунктов
+
+Пример:
+```bash
+project = manage_project("create",
+  title="EPIC: User Authentication System",
+  description="""
+## Goal
+Implement complete user authentication with OAuth and email/password
+
+## Why
+Enable user accounts and personalized experience
+
+## Scope
+- Supabase Auth integration
+- OAuth providers (Google, Discord)
+- Email/password authentication
+- User profile management
+
+## Non-goals
+- SSO for enterprises
+- Biometric authentication
+
+## Constraints
+- Must use Supabase Auth (existing infrastructure)
+- Complete in 2 weeks
+
+## Risks
+- OAuth provider API changes
+- Migration of existing users
+  """,
+  github_repo="https://github.com/org/StockInfo"
+)
+```
 
 ### Правило декомпозиции
-Planner-агент должен разбить Epic на **8–15 задач**:
+Planner-агент должен разбить Project на **8–15 задач**:
 - каждая задача должна быть достаточно маленькой, чтобы её можно было довести до PR
-- каждая задача должна иметь свой Context Pack
+- каждая задача должна иметь свой Archon Document
 
 ---
 
-## Как описывать Task (Issue) — шаблон
+## Как описывать Task — примеры
 
-**Title:** `<глагол + объект> (коротко)`  
+**Title:** `<глагол + объект> (коротко)`
+
 Примеры:
 - `Add login endpoint`
 - `Implement portfolio table rendering`
 - `Fix caching for quotes endpoint`
 
-**Body (минимум):**
-- **Context:** 2–5 строк (что и где)
-- **Goal:** что именно нужно сделать
-- **Definition of Done (DoD):** чеклист 5–12 пунктов
-- **Out of scope:** что не делаем
-- **Context Pack:** `context-packs/ISSUE-<n>-<slug>.md`
-- **Test plan:** как проверить (ручное/авто)
-- **Dependencies:** блокеры/предусловия (если есть)
-- **Notes:** любые подсказки
+### Создание Task в Archon
+```bash
+task = manage_task("create",
+  project_id=project.id,
+  title="Setup Supabase auth providers",
+  description="""
+## Context
+We need to configure authentication in Supabase for user login.
+
+## Goal
+Configure OAuth providers (Google, Discord) and email/password authentication in Supabase dashboard and integrate with the app.
+
+## Definition of Done (DoD)
+- [ ] OAuth providers configured in Supabase
+- [ ] Email/password authentication enabled
+- [ ] Auth client configured in src/utils/supabase/
+- [ ] Test users created and verified
+- [ ] Documentation updated
+- [ ] Archon Document updated with implementation details
+- [ ] PR opened and linked
+
+## Out of Scope
+- User profile UI (separate task)
+- Password reset flow (separate task)
+
+## Test Plan
+1. Open login page
+2. Test Google OAuth flow
+3. Test Discord OAuth flow
+4. Test email/password login
+5. Verify user session persistence
+
+## Dependencies
+None
+
+## Notes
+Use existing Supabase project
+  """,
+  status="todo",
+  task_order=10,
+  feature="authentication"
+)
+```
 
 ### Пример DoD (типовой)
 - [ ] Реализовано согласно Goal
 - [ ] Добавлены/обновлены тесты (или обосновано почему нет)
 - [ ] Не ломает существующий функционал
 - [ ] Обновлены docs/комментарии при необходимости
-- [ ] Context Pack обновлён итоговым решением и шагами проверки
-- [ ] PR оформлен и привязан к Issue
+- [ ] Archon Document обновлён итоговым решением и шагами проверки
+- [ ] PR оформлен и привязан к Task
 
 ---
 
-## Маркировки (labels) — чтобы агентам было легче
+## Метаданные задач (для фильтрации и поиска)
 
-Рекомендуемые label-группы:
-- `type: epic | task | bug | chore`
-- `area: frontend | backend | infra | docs`
-- `prio: p0 | p1 | p2`
-- `size: s | m | l` (примерно)
-- `agent: planner | worker | reviewer` (опционально)
-- `blocked` (если нужно дублировать статус)
+Рекомендуемые поля в Task:
+- **status**: `todo | doing | review | done | blocked`
+- **task_order**: приоритет (0-100, выше = важнее)
+- **assignee**: кто исполняет (`"User"`, `"Worker Agent"`, `"Planner Agent"` и т.д.)
+- **feature**: группировка по фиче (`"authentication"`, `"portfolio"`, `"api"`)
 
-> Смысл labels: помогать фильтровать и выдавать агентам “очередь задач”.
+Поиск и фильтрация:
+```bash
+# Все задачи проекта
+tasks = find_tasks(filter_by="project", filter_value=project.id)
+
+# Задачи в работе
+tasks = find_tasks(filter_by="status", filter_value="doing")
+
+# Задачи по фиче
+tasks = find_tasks(query="authentication", per_page=20)
+
+# Конкретная задача
+task = find_tasks(task_id="task-xxx")
+```
+
+> Смысл метаданных: помогать фильтровать и выдавать агентам "очередь задач".
 
 ---
 
 ## Зависимости и параллельность
 
 ### Как отмечать зависимости
-В Task issue добавляй:
-- `Dependencies: #<issue>, #<issue>`
+В Task description или в Archon Document добавляй:
+- `Dependencies: Task #<id>, Task #<id>`
 
-В Epic — держи раздел:
+В описании Project — держи информацию о зависимостях:
 - **Dependency map:** какие задачи блокируют какие
 
-### Как отмечать “можно параллельно”
-Используй один из вариантов:
-- label `parallel`
-- или в Epic в плане группируй:
-  - **Parallel group A:** #1 #2 #3
-  - **Parallel group B:** #4 #5
+### Как отмечать "можно параллельно"
+В описании Project группируй задачи:
+- **Parallel group A:** Task #1, #2, #3
+- **Parallel group B:** Task #4, #5
+
+Или используй поле `feature` для группировки:
+```bash
+# Все задачи одной фичи могут выполняться параллельно
+tasks = find_tasks(query="authentication")
+```
 
 ---
 
-## Жизненный цикл задачи (как она движется по Kanban)
+## Жизненный цикл задачи (как она движется по статусам)
 
-### Backlog → Ready
-Переводим в Ready только когда:
-- есть понятный Goal
-- есть DoD
-- есть Context Pack (хотя бы скелет)
-- понятно, как тестировать
-
-### Ready → In Progress
+### todo → doing
 Когда задачу берёт Worker:
-- назначает себя (assignee)
-- пишет короткий комментарий “беру в работу”
-- убеждается, что Context Pack есть и актуален
+```bash
+# Назначить себя и начать работу
+manage_task("update", task_id="task-xxx", status="doing", assignee="Worker Agent")
+```
+- пишет короткий комментарий в description "беру в работу"
+- убеждается, что Archon Document есть и актуален
 
-### In Progress → In Review
+### doing → review
 Когда открыт PR:
-- PR **связан с Issue** (в PR description: `Closes #<issue>` или `Refs #<issue>`)
-- статус переводится в **In Review**
-- Worker обновляет Context Pack “что сделано / как проверить”
+```bash
+# Перевести в ревью
+manage_task("update", task_id="task-xxx", status="review")
 
-### In Review → Done
+# Обновить документацию
+manage_document("update", document_id="doc-xxx", content={
+  ...existing,
+  "implementation_summary": "Added auth providers configuration...",
+  "status": "In Review"
+})
+```
+- PR **связан с Task** (в PR description: `Closes Task #<id>`)
+- Worker обновляет Archon Document "что сделано / как проверить"
+
+### review → done
 Когда PR смёрджен:
-- автоматом (GitHub Actions) переводим в Done
-- или вручную (если автоматика ещё не включена)
+```bash
+# Завершить задачу
+manage_task("update", task_id="task-xxx", status="done")
 
-### Blocked
-Переводим в Blocked, если:
+# Обновить статус в документации
+manage_document("update", document_id="doc-xxx", content={
+  ...existing,
+  "status": "Done"
+})
+```
+
+### blocked
+Переводим в blocked, если:
 - нужна внешняя инфа/решение
 - заблокировано другой задачей
 - требуется согласование архитектуры
 
-В Blocked обязательно:
-- комментарий “почему” + что нужно, чтобы разблокировать
+```bash
+manage_task("update", task_id="task-xxx", status="blocked")
+```
+
+В blocked обязательно:
+- комментарий в description "почему" + что нужно, чтобы разблокировать
 
 ---
 
-## Автоматизация статусов (обязательное правило системы)
+## Управление статусами через Archon
 
-Цель автоматики:
-- **PR открыт → In Review**
-- **PR merged → Done**
+Все изменения статусов выполняются через Archon MCP tools:
 
-Реализация:
-- GitHub Actions + GitHub Projects API (или простой агент-правила)
+```bash
+# Получить задачи для проверки
+blocked_tasks = find_tasks(filter_by="status", filter_value="blocked")
+doing_tasks = find_tasks(filter_by="status", filter_value="doing")
 
-Даже если автоматика ещё не настроена:
-- рабочее правило остаётся: PR = In Review, merge = Done.
+# Обновить статус
+manage_task("update", task_id="task-xxx", status="todo")  # разблокировать
+```
 
 ---
 
-## Ритуалы (минимальные)
+## Регулярные проверки
 
 ### Daily / ad-hoc (быстро)
-- проверить колонку **Blocked**
+```bash
+# Проверить блокированные задачи
+blocked = find_tasks(filter_by="status", filter_value="blocked")
+
+# Проверить задачи в работе
+doing = find_tasks(filter_by="status", filter_value="doing")
+```
 - снять блокеры
-- убедиться, что In Progress не растёт бесконечно
+- убедиться, что doing не растёт бесконечно (WIP limit)
 
 ### Weekly (10–20 минут)
-- привести Backlog в порядок
-- уточнить приоритеты
-- закрыть/архивировать устаревшее
-- убедиться, что Epic действительно разбит на задачи
+```bash
+# Все проекты
+projects = find_projects()
+
+# Задачи по проектам
+for project in projects:
+    tasks = find_tasks(filter_by="project", filter_value=project.id)
+```
+- привести задачи в порядок
+- уточнить приоритеты (task_order)
+- убедиться, что Projects разбиты на задачи
 
 ---
 
-## Быстрые “anti-patterns” (чего избегать)
-- Задачи без DoD (“сделай красиво”)
-- Задачи без Context Pack (память теряется, агенты буксуют)
+## Быстрые "anti-patterns" (чего избегать)
+- Задачи без DoD ("сделай красиво")
+- Задачи без Archon Document (память теряется, агенты буксуют)
 - Одна задача = половина проекта (невозможно параллелить)
-- In Progress неделями без PR (лучше дробить ещё)
-- PR без связи с Issue (ломает автоматику и трекинг)
+- doing неделями без PR (лучше дробить ещё)
+- PR без связи с Task (ломает трекинг)
+- Забывать обновлять Archon Document перед PR
+- Не переводить статусы в Archon после изменений
